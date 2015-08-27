@@ -1,0 +1,20 @@
+<!DOCTYPE patchbay>
+<patchbay version="0.3.9" name="rayalsa">
+ <output-sockets>
+  <socket exclusive="off" client="pyo" type="jack-audio" name="Output Socket 1">
+   <plug>output_1</plug>
+   <plug>output_2</plug>
+  </socket>
+ </output-sockets>
+ <input-sockets>
+  <socket exclusive="off" client="alsa_out" type="jack-audio" name="Input Socket 1">
+   <plug>playback_1</plug>
+   <plug>playback_2</plug>
+  </socket>
+ </input-sockets>
+ <slots/>
+ <cables>
+  <cable output="Output Socket 1" input="Input Socket 1" type="jack-audio"/>
+ </cables>
+</patchbay>
+
