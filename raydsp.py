@@ -1,8 +1,41 @@
 from pyo import *
+import numpy
+import pyaudio
+import analyse
+import math
 
 s = Server(audio="jack").boot()
 s.start()
 a = SfPlayer("/home/pi/Shanghai/wav/Strat F- 52.wav", loop=False, mul=.4)
-b = Freeverb(a, size=[.79,.8], damp=.9, bal=.3).out()
-time.sleep(10)
-print("ray")
+b = Freeverb(a, size=[.79,.8], damp=.9, bal=.3)
+
+chunk = 1024
+#wf = wave.open('thesong.wav', 'rb')
+pyaud = pyaudio.PyAudio()
+lastfeq = 0
+
+stream = pyaud.open(
+    format = pyaudio.paInt16,
+    channels = 1,
+    rate = 44100,
+    input_device_index = 1,
+    input = True,
+    output = True)
+    
+while True:
+    # Read raw microphone data
+    rawsamps = stream.read(chunk)
+    # Convert raw data to NumPy array
+    samps = numpy.fromstring(rawsamps, dtype=numpy.int16)
+    rayfeq = analyse.musical_detect_pitch(samps)
+    #print (analyse.loudness(samps), rayfeq)
+    if rayfeq > 0 and math.fabs(rayfeq-lastfeq) > 2:
+        print (analyse.loudness(samps), rayfeq)
+        a.setPath("/home/pi/Shanghai/wav/Strat F- 82.wav")
+        #b.setInput(a)
+        b.out()
+        lastfeq = rayfeq
+    else:
+        lastfeq = 0
+
+pyaud.terminate()
