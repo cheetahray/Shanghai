@@ -36,10 +36,10 @@ while True:
         stream.stop_stream()
         print (analyse.loudness(samps), round(rayfeq))
         a.setPath("/home/pi/Shanghai/wav/Strat F- " + str(int(round(rayfeq))) + ".wav")
-        #b.setInput(a)
+        b.setInput(a)
         b.out()
-        time.sleep(30)
         lastfeq = rayfeq
+        time.sleep(5)
         stream.start_stream()
     else:
         lastfeq = 0
