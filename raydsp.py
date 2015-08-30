@@ -9,7 +9,7 @@ s.start()
 a = SfPlayer("/home/pi/Shanghai/wav/Strat F- 52.wav", loop=False, mul=.4)
 b = Freeverb(a, size=[.79,.8], damp=.9, bal=.3)
 
-chunk = 1024
+CHUNK = 8192
 #wf = wave.open('thesong.wav', 'rb')
 pyaud = pyaudio.PyAudio()
 lastfeq = 0
@@ -21,7 +21,9 @@ stream = pyaud.open(
     input_device_index = 1,
     input = True,
     output_device_index = 1,
-    output = False)
+    output = False,
+    frames_per_buffer=CHUNK
+    )
     
 while True:
     # Read raw microphone data
