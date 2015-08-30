@@ -20,7 +20,8 @@ stream = pyaud.open(
     rate = 44100,
     input_device_index = 1,
     input = True,
-    output = True)
+    output_device_index = 1,
+    output = False)
     
 while True:
     # Read raw microphone data

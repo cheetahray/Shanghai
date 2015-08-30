@@ -12,9 +12,12 @@ stream = pyaud.open(
     format = pyaudio.paInt16,
     channels = 1,
     rate = 44100,
-    input_device_index = 0,
+    input_device_index = 1,
     input = True,
-    frames_per_buffer=CHUNK)
+    output_device_index = 1,
+    output = False,
+    frames_per_buffer=CHUNK
+    )
 
 while True:
     # Read raw microphone data
