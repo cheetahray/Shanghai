@@ -30,13 +30,14 @@ while True:
     rawsamps = stream.read(CHUNK)
     # Convert raw data to NumPy array
     samps = numpy.fromstring(rawsamps, dtype=numpy.int16)
-    rayfeq = analyse.musical_detect_pitch(samps)
+    #rayfeq = analyse.musical_detect_pitch(samps)
     print (analyse.loudness(samps), rayfeq)
     if rayfeq > 0 and math.fabs(rayfeq-lastfeq) > 2:
-        #print (analyse.loudness(samps), rayfeq)
-        a.setPath("/home/pi/Shanghai/wav/Strat F- 82.wav")
+        print (analyse.loudness(samps), rayfeq)
+        a.setPath("/home/pi/Shanghai/wav/Strat F- " + round(rayfeq) + ".wav")
         #b.setInput(a)
         b.out()
+        time.sleep(20)
         lastfeq = rayfeq
     else:
         lastfeq = 0
