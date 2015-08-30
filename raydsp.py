@@ -33,14 +33,14 @@ while True:
     rayfeq = analyse.musical_detect_pitch(samps)
     #print (analyse.loudness(samps), rayfeq)
     if rayfeq > 0 and math.fabs(rayfeq-lastfeq) > 2:
-        stream.close()
+        stream.stop_stream()
         print (analyse.loudness(samps), round(rayfeq))
         a.setPath("/home/pi/Shanghai/wav/Strat F- " + str(int(round(rayfeq))) + ".wav")
         #b.setInput(a)
         b.out()
-        time.sleep(20)
+        time.sleep(30)
         lastfeq = rayfeq
-        stream.open()
+        stream.start_stream()
     else:
         lastfeq = 0
 
