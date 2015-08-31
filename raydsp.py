@@ -16,6 +16,7 @@ def assign():
     #global mm
     mm.setAmp(vin=0, vout=0, amp=20)
 
+pat = Pattern(function=assign) 
 CHUNK = 8192
 pyaud = pyaudio.PyAudio()
 lastfeq = 0
