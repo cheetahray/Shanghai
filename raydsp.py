@@ -35,7 +35,7 @@ while True:
     if rayfeq > 0 and math.fabs(rayfeq-lastfeq) > 2:
         stream.stop_stream()
         print (analyse.loudness(samps), rayfeq)
-        a.setPath("/home/pi/Shanghai/wav/Strat F- " + str(int(round(rayfeq))) + ".wav")
+        a.setPath("/home/pi/Shanghai/wav/Strat F- " + str(int(round(rayfeq))+12) + ".wav")
         b.setInput(a)
         b.out()
         lastfeq = rayfeq
