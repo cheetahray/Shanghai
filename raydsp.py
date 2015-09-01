@@ -6,7 +6,7 @@ import math
 
 s = Server(audio="jack").boot()
 s.start()
-a = SfPlayer("/home/pi/Shanghai/wav/Strat F- 52.wav", loop=False, mul=.4)
+a = SfPlayer("/home/pi/Shanghai/wav/52.wav", loop=False, mul=.4)
 mm = Mixer()
 mm.addInput(0,a)
 b = Freeverb(mm[0], size=[.79,.8], damp=.9, bal=.3).out()
@@ -42,10 +42,10 @@ while True:
     if rayfeq > 0 and math.fabs(rayfeq-lastfeq) > 2:
         stream.stop_stream()
         print (analyse.loudness(samps), rayfeq)
-        a.setPath("/home/pi/Shanghai/wav/Strat F- " + str(int(round(rayfeq))+12) + ".wav")
+        a.setPath("/home/pi/Shanghai/wav/" + str(int(round(rayfeq))) + ".wav")
         #b.setInput(a)
         #b.out()
-        pat = Pattern(function=assign).play() 
+        pat.play() 
         lastfeq = rayfeq
         time.sleep(5)
         stream.start_stream()
@@ -53,3 +53,4 @@ while True:
         lastfeq = 0
 
 pyaud.terminate()
+
