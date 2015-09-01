@@ -10,7 +10,7 @@ s.start()
 a = SfPlayer("/home/pi/Shanghai/wav/52.wav", loop=False, mul=.4)
 mm = Mixer()
 mm.addInput(0,a)
-b = Freeverb(mm[0], size=[.79,.8], damp=.9, bal=.3).out()
+b = Freeverb(mm[0], size=[.79,.8], damp=.9).out()
 
 # Dynamic assignation of inputs to outputs with random amplitude
 def assign():
