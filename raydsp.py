@@ -43,7 +43,7 @@ while True:
         stream.stop_stream()
         print (analyse.loudness(samps), rayfeq)
         a.setPath("/home/pi/Shanghai/wav/" + str(int(round(rayfeq))) + ".wav")
-        #b.setInput(a)
+        b.setInput(mm[0])
         #b.out()
         pat.play() 
         lastfeq = rayfeq
