@@ -4,11 +4,11 @@ import pyaudio
 import analyse
 import math
 
-s = Server(audio="jack").boot()
+s = Server(audio="jack",duplex=0).boot()
 s.start()
 
 def assign():
-    mm.setAmp(vin=0, vout=0, amp=5)
+    mm.setAmp(vin=0, vout=0, amp=10)
 
 CHUNK = 8192
 pyaud = pyaudio.PyAudio()
@@ -18,7 +18,7 @@ stream = pyaud.open(
     format = pyaudio.paInt16,
     channels = 1,
     rate = 44100,
-    input_device_index = 1,
+    input_device_index = 0,
     input = True,
     output_device_index = 1,
     output = False,
@@ -45,7 +45,7 @@ while True:
         #b.out()
         #pat.play() 
         lastfeq = rayfeq
-        time.sleep(5)
+        #time.sleep(6)
         stream.start_stream()
     else:
         lastfeq = 0
