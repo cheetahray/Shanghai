@@ -38,7 +38,7 @@ while True:
         a = SfPlayer(raystr, loop=False, mul=.4)
         mm = Mixer()
         mm.addInput(0,a)
-        b = Freeverb(mm[0], size=[.79,.8], damp=.9).out()
+        b = WGVerb(mm[0], feedback=0.9, bal=1).out()
         pat = Pattern(function=assign).play()
         #a.setPath(raystr)
         #b.setInput(a)
@@ -51,4 +51,5 @@ while True:
         lastfeq = 0
 
 pyaud.terminate()
+
 
