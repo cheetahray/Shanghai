@@ -4,6 +4,9 @@ import pyaudio
 import analyse
 import math
 
+def raymap(value, istart, istop, ostart, ostop):
+    return ostart + (ostop - ostart) * ((value - istart) / (istop - istart));
+
 s = Server(audio="jack",duplex=0).boot()
 s.start()
 
@@ -29,13 +32,16 @@ while True:
     #print (analyse.loudness(samps), rayfeq)
     if rayfeq > 0 and math.fabs(rayfeq-lastfeq) > 2:
         stream.stop_stream()
-        print (analyse.loudness(samps), rayfeq)
+        rayloud = analyse.loudness(samps)
+        print (rayloud, rayfeq)
         raystr = "/home/pi/Shanghai/wav/" + str(int(round(rayfeq))) + ".wav"
         print(raystr)
         a = SfPlayer(raystr, loop=False, mul=.4)
         mm = Mixer()
         mm.addInput(0,a)
-        mm.setAmp(vin=0, vout=0, amp=10)
+        rayampval = raymap(rayloud, -24, -1, 0, 20)
+        print(rayampval)
+        mm.setAmp(vin=0, vout=0, amp=rayampval)
         b = WGVerb(mm[0], feedback=0.9, bal=1).out()
         #pat = Pattern(function=assign,time=0).play()
         #a.setPath(raystr)
