@@ -34,7 +34,7 @@ while True:
         stream.stop_stream()
         rayloud = analyse.loudness(samps)
         print (rayloud, rayfeq)
-        raystr = "/home/pi/Shanghai/wav/" + str(int(round(rayfeq))) + ".wav"
+        raystr = "/home/pi/Shanghai/wav/guitar/" + str(int(round(rayfeq))) + ".wav"
         print(raystr)
         a = SfPlayer(raystr, loop=False, mul=.4)
         mm = Mixer()
