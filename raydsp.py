@@ -3,9 +3,16 @@ import numpy
 import pyaudio
 import analyse
 import math
+import socket
 
 def raymap(value, istart, istop, ostart, ostop):
     return ostart + (ostop - ostart) * ((value - istart) / (istop - istart));
+
+UDP_IP = "127.0.0.1"
+UDP_PORT = 5005
+sock = socket.socket(socket.AF_INET, # Internet
+                     socket.SOCK_DGRAM) # UDP
+sock.bind((UDP_IP, UDP_PORT))
 
 s = Server(audio="jack",duplex=0).boot()
 s.start()
@@ -26,21 +33,22 @@ stream = pyaud.open(
     )
     
 while True:
+    #data, addr = sock.recvfrom(1024) # buffer size is 1024 bytes
+    #print ("received message:", data)
     rawsamps = stream.read(CHUNK) # Read raw microphone data
     samps = numpy.fromstring(rawsamps, dtype=numpy.int16) # Convert raw data to NumPy array
     rayfeq = analyse.musical_detect_pitch(samps)
-    #print (analyse.loudness(samps), rayfeq)
     if rayfeq > 0 and math.fabs(rayfeq-lastfeq) > 2:
         stream.stop_stream()
         rayloud = analyse.loudness(samps)
         print (rayloud, rayfeq)
         raystr = "/home/pi/Shanghai/wav/guitar/" + str(int(round(rayfeq))) + ".wav"
-        print(raystr)
+        #print(raystr)
         a = SfPlayer(raystr, loop=False, mul=.4)
         mm = Mixer()
         mm.addInput(0,a)
         rayampval = raymap(rayloud, -24, -1, 0, 20)
-        print(rayampval)
+        #print(rayampval)
         mm.setAmp(vin=0, vout=0, amp=rayampval)
         b = WGVerb(mm[0], feedback=0.9, bal=1).out()
         #pat = Pattern(function=assign,time=0).play()
