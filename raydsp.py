@@ -3,16 +3,9 @@ import numpy
 import pyaudio
 import analyse
 import math
-import socket
 
 def raymap(value, istart, istop, ostart, ostop):
     return ostart + (ostop - ostart) * ((value - istart) / (istop - istart));
-
-UDP_IP = "127.0.0.1"
-UDP_PORT = 5005
-sock = socket.socket(socket.AF_INET, # Internet
-                     socket.SOCK_DGRAM) # UDP
-sock.bind((UDP_IP, UDP_PORT))
 
 s = Server(audio="jack",duplex=0).boot()
 s.start()
