@@ -35,21 +35,17 @@ while True:
         stream.stop_stream()
         rayloud = analyse.loudness(samps)
         print (rayloud, rayfeq)
-        raystr = "/home/pi/Shanghai/wav/guitar/" + str(int(round(rayfeq))) + ".wav"
-        #print(raystr)
-        a = SfPlayer(raystr, loop=False, mul=.4)
-        mm = Mixer()
-        mm.addInput(0,a)
-        rayampval = raymap(rayloud, -24, -1, 0, 20)
-        #print(rayampval)
-        mm.setAmp(vin=0, vout=0, amp=rayampval)
-        b = WGVerb(mm[0], feedback=0.9, bal=1).out()
-        #pat = Pattern(function=assign,time=0).play()
-        #a.setPath(raystr)
-        #b.setInput(a)
-        #b.out()
+        raystr = "/home/pi/Shanghai/wav/piano/" + str(int(round(rayfeq))) + ".wav"
+        print(raystr)
+        rayampval = raymap(rayloud, -19, -1, 0, 4)
+        print(rayampval)
+        a = SfPlayer(raystr, loop=False, mul=rayampval)
+        #mm = Mixer()
+        #mm.addInput(0,a)
+        #mm.setAmp(vin=0, vout=0, amp=rayampval)
+        b = WGVerb(a, feedback=0.95, bal=0.5).out()
         lastfeq = rayfeq
-        #time.sleep(6)
+        time.sleep(1)
         stream.start_stream()
     else:
         lastfeq = 0
