@@ -2,7 +2,6 @@ from pyo import *
 import numpy
 import pyaudio
 import analyse
-import math
 
 def raymap(value, istart, istop, ostart, ostop):
     return ostart + (ostop - ostart) * ((value - istart) / (istop - istart));
@@ -12,7 +11,6 @@ s.start()
 
 CHUNK = 8192
 pyaud = pyaudio.PyAudio()
-lastfeq = 0
 
 stream = pyaud.open(
     format = pyaudio.paInt16,
@@ -31,24 +29,23 @@ while True:
     rawsamps = stream.read(CHUNK) # Read raw microphone data
     samps = numpy.fromstring(rawsamps, dtype=numpy.int16) # Convert raw data to NumPy array
     rayfeq = analyse.musical_detect_pitch(samps)
-    if rayfeq > 0 and math.fabs(rayfeq-lastfeq) > 2:
+    if rayfeq > 0:
         stream.stop_stream()
-        rayloud = analyse.loudness(samps)
-        print (rayloud, rayfeq)
-        raystr = "/home/pi/Shanghai/wav/piano/" + str(int(round(rayfeq))) + ".wav"
-        print(raystr)
-        rayampval = raymap(rayloud, -19, -1, 0, 4)
-        print(rayampval)
-        a = SfPlayer(raystr, loop=False, mul=rayampval)
-        #mm = Mixer()
-        #mm.addInput(0,a)
-        #mm.setAmp(vin=0, vout=0, amp=rayampval)
-        b = WGVerb(a, feedback=0.95, bal=0.5).out()
-        lastfeq = rayfeq
-        time.sleep(1)
+        rayint = int(round(rayfeq))
+        if rayint >= 43 and rayint <= 62:
+            raystr = "/home/pi/Shanghai/wav/horn/" + str(rayint) + ".wav"
+            print(raystr)
+            rayloud = analyse.loudness(samps)
+            print (rayloud, rayfeq)
+            rayampval = raymap(rayloud, -19, -1, 0, 4)
+            print(rayampval)
+            a = SfPlayer(raystr, loop=False, mul=rayampval)
+            #mm = Mixer()
+            #mm.addInput(0,a)
+            #mm.setAmp(vin=0, vout=0, amp=rayampval)
+            b = WGVerb(a, feedback=0.95, bal=0.5).out()
+            time.sleep(1)
         stream.start_stream()
-    else:
-        lastfeq = 0
 
 pyaud.terminate()
 
