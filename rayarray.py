@@ -77,12 +77,12 @@ def parse_arguments():
 
 def raysound(arr):
     t = DataTable(size=len(arr), init=arr.T.tolist())
-    return TableRead(t, freq=t.getRate(), loop = False, mul = .0005)
+    return TableRead(t, freq=t.getRate(), loop = False, mul = .0002)
 
 def main():
 
     global raydiv 
-    raystart = -1
+    raystart = -100
 
     s = Server(audio="jack",duplex=0).boot()
     s.start()
@@ -96,7 +96,7 @@ def main():
 
     fps, sound = wavfile.read(args.wav.name)
 
-    tones = range(raystart, 2)
+    tones = range(raystart, 100)
     sys.stdout.write('Transponding sound file... ')
     sys.stdout.flush()
     transposed_sounds = [pitchshift(sound, n) for n in tones]
@@ -115,7 +115,7 @@ def main():
     raycnt = 0
     for i in sounds:
         rayint = raymid + (raystart + raycnt)/raydiv
-        rec = Record(i.out(), , filename="/home/pi/Shanghai/wav/rayhorn/" + str("%.1f" % rayint) + ".wav")
+        rec = Record(i.out(), chnls=1, filename="/home/pi/Shanghai/wav/rayhorn/" + str("%.1f" % rayint) + ".wav")
         Clean_objects(4.5, rec).start()
         print (raycnt) 
         raycnt = raycnt + 1
@@ -140,7 +140,7 @@ def main():
              # Stops with 50ms fadeout
         #    key_sound[key].fadeout(50)        
         #    is_playing[key] = False
-raydiv = 1
+raydiv = 10 
 raymid = 53
 
 if __name__ == '__main__':
