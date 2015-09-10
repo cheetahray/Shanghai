@@ -45,7 +45,7 @@ def stretch(snd_array, factor, window_size, h):
 
 def pitchshift(snd_array, n, window_size=2**13, h=2**11):
     """ Changes the pitch of a sound by ``n`` semitones. """
-    factor = 2**(1.0 * n / 12.0)
+    factor = 2**(1.0 * n / 120.0)
     stretched = stretch(snd_array, 1.0/factor, window_size, h)
     return speedx(stretched[window_size:], factor)
 
@@ -75,7 +75,7 @@ def parse_arguments():
 
 def raysound(arr):
     t = DataTable(size=len(arr), init=arr.T.tolist())
-    return TableRead(t, freq=t.getRate(), loop = False, mul = .001)
+    return TableRead(t, freq=t.getRate(), loop = False, mul = .0005)
 
 def main():
     s = Server(audio="jack",duplex=0).boot()
@@ -90,7 +90,7 @@ def main():
 
     fps, sound = wavfile.read(args.wav.name)
 
-    tones = range(-5, 5)
+    tones = range(-90, 100)
     sys.stdout.write('Transponding sound file... ')
     sys.stdout.flush()
     transposed_sounds = [pitchshift(sound, n) for n in tones]
@@ -101,18 +101,19 @@ def main():
     # For the focus
     #screen = pygame.display.set_mode((150, 150))
 
-    keys = args.keyboard.read().split('\n')
-    sounds = map(raysound, transposed_sounds)
-   
+    #keys = args.keyboard.read().split('\n')
+    sounds = map(raysound, transposed_sounds)   
     #key_sound = dict(zip(keys, sounds))
     #is_playing = {k: False for k in keys}
 
     raycnt = 0
     for i in sounds:
-        i.out()
+        rayint = 43 + i/10
+        rec = Record(i.out(), , filename="/home/pi/Shanghai/wav/rayhorn/" + str(rayint) + ".wav")
+        Clean_objects(4.5, rec).start()
         print (raycnt) 
         raycnt = raycnt + 1
-        time.sleep(2)
+        time.sleep(4.5)
 
     #while True:
         #event = pygame.event.wait()
@@ -122,7 +123,7 @@ def main():
 
         #if event.type == pygame.KEYDOWN:
         #    if (key in key_sound.keys()) and (not is_playing[key]):
-        #        key_sound[key].out()
+        #        key_sound[key].play(fade_ms=50)
         #        is_playing[key] = True
 
         #    elif event.key == pygame.K_ESCAPE:
@@ -130,6 +131,8 @@ def main():
         #        raise KeyboardInterrupt
 
         #elif event.type == pygame.KEYUP and key in key_sound.keys():
+             # Stops with 50ms fadeout
+        #    key_sound[key].fadeout(50)        
         #    is_playing[key] = False
 
 
@@ -138,5 +141,3 @@ if __name__ == '__main__':
         main()
     except KeyboardInterrupt:
         print('Goodbye')
-
-
