@@ -115,7 +115,7 @@ def main():
     raycnt = 0
     for i in sounds:
         rayint = raymid + (raystart + raycnt)/raydiv
-        rec = Record(i.out(), , filename="/home/pi/Shanghai/wav/rayhorn/" + str(rayint) + ".wav")
+        rec = Record(i.out(), , filename="/home/pi/Shanghai/wav/rayhorn/" + str("%.1f" % rayint) + ".wav")
         Clean_objects(4.5, rec).start()
         print (raycnt) 
         raycnt = raycnt + 1
