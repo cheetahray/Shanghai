@@ -42,15 +42,17 @@ def stretch(snd_array, factor, window_size, h):
 
     return result.astype('int16')
 
-
 def pitchshift(snd_array, n, window_size=2**13, h=2**11):
     """ Changes the pitch of a sound by ``n`` semitones. """
-    factor = 2**(1.0 * n / 120.0)
+    global raydiv
+    factor = 2**(1.0 * n / ( 12.0 * raydiv )  )
     stretched = stretch(snd_array, 1.0/factor, window_size, h)
     return speedx(stretched[window_size:], factor)
 
 
 def parse_arguments():
+    global raymid 
+
     description = ('Use your computer keyboard as a "piano"')
 
     parser = argparse.ArgumentParser(description=description)
@@ -58,8 +60,8 @@ def parse_arguments():
         '--wav', '-w',
         metavar='FILE',
         type=argparse.FileType('r'),
-        default='/home/pi/Shanghai/wav/horn/52.wav',
-        help='WAV file (default: 52.wav)')
+        default='/home/pi/Shanghai/wav/horn/' + str(raymid) + '.wav',
+        help='WAV file (default: ' + str(raymid) + '.wav)')
     parser.add_argument(
         '--keyboard', '-k',
         metavar='FILE',
@@ -78,6 +80,10 @@ def raysound(arr):
     return TableRead(t, freq=t.getRate(), loop = False, mul = .0005)
 
 def main():
+
+    global raydiv 
+    raystart = -1
+
     s = Server(audio="jack",duplex=0).boot()
     s.start()
 
@@ -90,7 +96,7 @@ def main():
 
     fps, sound = wavfile.read(args.wav.name)
 
-    tones = range(-90, 100)
+    tones = range(raystart, 2)
     sys.stdout.write('Transponding sound file... ')
     sys.stdout.flush()
     transposed_sounds = [pitchshift(sound, n) for n in tones]
@@ -108,7 +114,7 @@ def main():
 
     raycnt = 0
     for i in sounds:
-        rayint = 43 + i/10
+        rayint = raymid + (raystart + raycnt)/raydiv
         rec = Record(i.out(), , filename="/home/pi/Shanghai/wav/rayhorn/" + str(rayint) + ".wav")
         Clean_objects(4.5, rec).start()
         print (raycnt) 
@@ -134,7 +140,8 @@ def main():
              # Stops with 50ms fadeout
         #    key_sound[key].fadeout(50)        
         #    is_playing[key] = False
-
+raydiv = 1
+raymid = 53
 
 if __name__ == '__main__':
     try:

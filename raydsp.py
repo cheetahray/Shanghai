@@ -42,7 +42,7 @@ while True:
             if rayampval > 0:
                 a = SfPlayer(raystr, loop=False, mul=rayampval)
                 b = WGVerb(a, feedback=0.95, bal=0.5).out()
-                time.sleep(1)
+                Clean_objects(4, a, b).start()
         stream.start_stream()
 
 pyaud.terminate()
