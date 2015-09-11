@@ -31,7 +31,7 @@ while True:
     rayfeq = analyse.musical_detect_pitch(samps)
     if rayfeq > 0:
         stream.stop_stream()
-        rayint = int(round(rayfeq))
+        rayint = round(rayfeq,1)
         if rayint >= 43 and rayint <= 62:
             raystr = "/home/pi/Shanghai/wav/horn/" + str(rayint) + ".wav"
             print(raystr)
