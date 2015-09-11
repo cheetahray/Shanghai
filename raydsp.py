@@ -33,7 +33,7 @@ while True:
         stream.stop_stream()
         rayint = round(rayfeq,1)
         if rayint >= 43 and rayint <= 62:
-            raystr = "/home/pi/Shanghai/wav/horn/" + str(rayint) + ".wav"
+            raystr = "/home/pi/Shanghai/wav/rayhorn/" + str(rayint) + ".wav"
             print(raystr)
             rayloud = analyse.loudness(samps)
             print (rayloud, rayfeq)
@@ -42,7 +42,7 @@ while True:
             if rayampval > 0:
                 a = SfPlayer(raystr, loop=False, mul=rayampval)
                 b = WGVerb(a, feedback=0.95, bal=0.5).out()
-                Clean_objects(4, a, b).start()
+                #Clean_objects(4.5, a, b).start()
         stream.start_stream()
 
 pyaud.terminate()

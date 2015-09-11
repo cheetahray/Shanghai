@@ -60,7 +60,7 @@ def parse_arguments():
         '--wav', '-w',
         metavar='FILE',
         type=argparse.FileType('r'),
-        default='/home/pi/Shanghai/wav/horn/' + str(raymid) + '.wav',
+        default='/home/pi/Shanghai/wav/guitar/' + str(raymid) + '.wav',
         help='WAV file (default: ' + str(raymid) + '.wav)')
     parser.add_argument(
         '--keyboard', '-k',
@@ -82,7 +82,7 @@ def raysound(arr):
 def main():
 
     global raydiv 
-    raystart = 0
+    raystart = -100
 
     s = Server(audio="jack",duplex=0).boot()
     s.start()
@@ -96,7 +96,7 @@ def main():
 
     fps, sound = wavfile.read(args.wav.name)
 
-    tones = range(raystart, 50)
+    tones = range(raystart, -50)
     sys.stdout.write('Transponding sound file... ')
     sys.stdout.flush()
     transposed_sounds = [pitchshift(sound, n) for n in tones]
@@ -116,7 +116,7 @@ def main():
     for i in sounds:
         rayint = raymid + (raystart + raycnt)/raydiv
         print(rayint)
-        rec = Record(i.out(), chnls=1, filename="/home/pi/Shanghai/wav/rayhorn/" + str("%.1f" % rayint) + ".wav")
+        rec = Record(i.out(), chnls=1, filename="/home/pi/Shanghai/wav/rayguitar/" + str("%.1f" % rayint) + ".wav")
         Clean_objects(4.5, rec).start()
         raycnt = raycnt + 1
         time.sleep(4.5)
