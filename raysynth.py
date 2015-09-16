@@ -3,22 +3,60 @@ import pyaudio
 import analyse
 import time
 import fluidsynth
+import socket
 
 def raymap(value, istart, istop, ostart, ostop):
     return ostart + (ostop - ostart) * ((value - istart) / (istop - istart));
 
-CHUNK = 4096
 pa = pyaudio.PyAudio()
 strm = pa.open(
     format = pyaudio.paInt16,
     channels = 1,
     rate = 44100,
     input_device_index = 0,
-    input = True,
-    frames_per_buffer = CHUNK
+    input = True
     )
 
-s = []
+sock = socket.socket(socket.AF_INET, socket.SOCK_DGRAM) # UDP    
+UDP_PORT = 5005
+UDP_IP = "192.168.11.178"
+        
+def raymr(tid)
+    global sock
+    global UDP_PORT
+    global UDP_IP
+    rndrayint = 0.0
+    while tid != rndrayint :
+        rayint, rayampval = raypitch()
+        if rayampval > 0 :
+            rndrayint = round(rayint,1)
+            if tid < rndrayint:
+                sock.sendto("ms", (UDP_IP, UDP_PORT))
+                sock.sendto("a", (UDP_IP, UDP_PORT))
+            else:
+                sock.sendto("mh", (UDP_IP, UDP_PORT))
+                sock.sendto("a", (UDP_IP, UDP_PORT))
+            time.sleep(5)
+    return True
+    
+def rayudp():
+    global sock
+    global UDP_PORT
+    global UDP_IP
+    sock.bind(("127.0.0.1", UDP_PORT))
+    sock.sendto("tsh", (UDP_IP, UDP_PORT))
+    data, addr = sock.recvfrom(1024) # buffer size is 1024 bytes
+    if data == 'tshe':
+        sock.sendto("tph", (UDP_IP, UDP_PORT))
+        data, addr = sock.recvfrom(1024) # buffer size is 1024 bytes
+        if data == 'tphe'
+            for x in range(45, 62)
+                raymr(x)
+        else:
+            return False
+    else:
+        return False
+    
 
 fl = fluidsynth.Synth()
 fl.start('alsa')
@@ -26,9 +64,10 @@ fl.start('alsa')
 sfid = fl.sfload("/home/pi/Shanghai/FluidR3_GM.sf2")
 fl.program_select(0, sfid, 0, 60)
 
-while True:
+def raypitch()
+    global strm
     try:
-        rawsamps = strm.read(CHUNK) # Read raw microphone data
+        rawsamps = strm.read(1024) # Read raw microphone data
         samps = numpy.fromstring(rawsamps, dtype=numpy.int16) # Convert raw data to NumPy array
         rayfeq = analyse.musical_detect_pitch(samps)
         if rayfeq > 0:
@@ -40,7 +79,7 @@ while True:
                 print (rayloud, rayfeq)
                 rayampval = raymap(rayloud, -17, -2, 0, 127)
                 print(rayampval)
-                fl.noteon(0, rayint, rayampval)
+                return rayint, rayampval
             #strm.start_stream()
         #else:
             #fl.noteon(0, 60, 127)
@@ -51,4 +90,10 @@ while True:
         else:
             raise
 
+
+while True:
+    rayint, rayampval = raypitch()       
+    if rayampval > 0 :
+        fl.noteon(0, rayint, rayampval)
+    
 fl.delete()pyaud.terminate()
