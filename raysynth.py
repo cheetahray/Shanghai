@@ -26,6 +26,7 @@ def raymr(tid):
     global sock
     global UDP_PORT
     global UDP_IP
+    global rayshift
     rndrayint = 0.0
     while tid != rndrayint :
         rayint, rayampval = raypitch()
@@ -38,6 +39,7 @@ def raymr(tid):
                 sock.sendto("mh", (UDP_IP, UDP_PORT))
                 sock.sendto("a", (UDP_IP, UDP_PORT))
             time.sleep(5)
+    sock.sendto("mr" + str(tid-rayshift), (UDP_IP, UDP_PORT))
     return True
     
 def rayudp():
@@ -58,12 +60,12 @@ def rayudp():
     else:
         return False
     
-
+rayshift = 44
 fl = fluidsynth.Synth()
 fl.start('alsa')
 chnl = 0
 sfid = fl.sfload("/home/pi/Shanghai/FluidR3_GM.sf2")
-fl.program_select(chnl, sfid, 0, 60)
+fl.program_select(chnl, sfid, 0, 27)
 
 def raypitch():
     global strm
@@ -117,14 +119,18 @@ def readlineCR(port):
 
 def raylist(mylist):
     global fl
+    global rayshift
     if mylist[0] == '144':
         if mylist[2] == '0':
             fl.noteoff(chnl, int(mylist[1]))
         else:
-            fl.noteon(chnl, int(mylist[1]), int(mylist[2]))
+            noteint = int(mylist[1])
+            sock.sendto("m" + str(noteint - rayshift), (UDP_IP, UDP_PORT))
+            sock.sendto("a", (UDP_IP, UDP_PORT))
+            fl.noteon(chnl, noteint, int(mylist[2]))
     elif mylist[0] == '224':
         bendint = int(mylist[2])
-        fl.pitch_bend( chnl,raymap(bendint, 0, 127, 0, 2048))
+        fl.pitch_bend( chnl,raymap(bendint, 0, 127, -8192, 8192))
         
 
 port = serial.Serial("/dev/ttyAMA0", baudrate=115200, timeout=3.0)
