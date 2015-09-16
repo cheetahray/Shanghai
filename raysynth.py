@@ -1,8 +1,11 @@
-import time
 import numpy
 import pyaudio
-import fluidsynth
 import analyse
+import time
+import fluidsynth
+
+def raymap(value, istart, istop, ostart, ostop):
+    return ostart + (ostop - ostart) * ((value - istart) / (istop - istart));
 
 CHUNK = 4096
 pa = pyaudio.PyAudio()
@@ -19,11 +22,9 @@ s = []
 
 fl = fluidsynth.Synth()
 fl.start('alsa')
-# Initial silence is 1 second
-#s = numpy.append(s, fl.get_samples(44100 * 1))
 
-sfid = fl.sfload("FluidR3_GM.sf2")
-fl.program_select(0, sfid, 0, 0)
+sfid = fl.sfload("/home/pi/Shanghai/FluidR3_GM.sf2")
+fl.program_select(0, sfid, 0, 60)
 
 while True:
     try:
@@ -39,15 +40,15 @@ while True:
                 print (rayloud, rayfeq)
                 rayampval = raymap(rayloud, -17, -2, 0, 127)
                 print(rayampval)
-                fl.noteon(0, rayint, 127)
+                fl.noteon(0, rayint, rayampval)
             #strm.start_stream()
-        else:
-            fl.noteon(0, 60, 127)
-            time.sleep(5)
+        #else:
+            #fl.noteon(0, 60, 127)
+            #time.sleep(5)
     except IOError, e:
         if e.args[1] == pyaudio.paInputOverflowed:
             rawsamps  = '\x00'*CHUNK
         else:
             raise
-fl.delete()
 
+fl.delete()pyaud.terminate()
