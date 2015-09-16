@@ -98,11 +98,11 @@ def rayslide(begin,end,velocity, raysleep):
         fl.noteon(chnl, y, velocity) 
         fl.noteoff(chnl,y-1)
         if 1 == interpo:
-            for z in range (0, 4096, 1):
+            for z in range (0, 2048, 1):
                 fl.pitch_bend(chnl,z) 
                 #time.sleep(raysleep)
         else:
-            for z in range (0, -4096, -1):
+            for z in range (0, -2048, -1):
                 fl.pitch_bend(chnl,z)
                 #time.sleep(raysleep)
     fl.noteoff(chnl,end-1)
@@ -111,22 +111,35 @@ def readlineCR(port):
     rv = ""
     while True:
         ch = port.read()
-        rv += ch
         if ch=='\r' or ch=='':
             return rv
+        rv += ch
+
+def raylist(mylist):
+    global fl
+    if mylist[0] == '144':
+        if mylist[2] == '0':
+            fl.noteoff(chnl, int(mylist[1]))
+        else:
+            fl.noteon(chnl, int(mylist[1]), int(mylist[2]))
+    elif mylist[0] == '224':
+        bendint = int(mylist[2])
+        fl.pitch_bend( chnl,raymap(bendint, 0, 127, 0, 2048))
+        
 
 port = serial.Serial("/dev/ttyAMA0", baudrate=115200, timeout=3.0)
 
 while True:
     rcv = readlineCR(port)
-    rayint, rayampval = raypitch()       
-    if rayampval > 0 :
-        fl.noteon(chnl, rayint, rayampval)
-    else:
+    #print(repr(rcv))
+    mylist = rcv.split(" ")
+    print(mylist)
+    raylist(mylist)
+    #rayint, rayampval = raypitch()       
+    #if rayampval > 0 :
+        #fl.noteon(chnl, rayint, rayampval)
+    #else:
         #rayslide(45,63,64,0.0001)
-        fl.noteon(chnl,60,127)
-        fl.cc(chnl, 91, 127) 
-        time.sleep(10)
     
 fl.delete()
 pyaud.terminate()
