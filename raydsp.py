@@ -6,7 +6,7 @@ import analyse
 def raymap(value, istart, istop, ostart, ostop):
     return ostart + (ostop - ostart) * ((value - istart) / (istop - istart));
 
-s = Server(audio="jack",duplex=0).boot()
+s = Server(duplex=0).boot()
 s.start()
 
 CHUNK = 8192
