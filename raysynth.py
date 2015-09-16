@@ -91,13 +91,34 @@ def raypitch():
             raise
     return 0,0
 
+def rayslide(begin,end,velocity, raysleep):
+    global fl
+    interpo = 1
+    if begin > end:
+        interpo = -1
+    for y in range (begin, end, interpo ):
+        fl.pitch_bend(0,0)
+        fl.noteon(0, y, velocity) 
+        fl.noteoff(0,y-1)
+        if 1 == interpo:
+            for z in range (0, 4096, 1):
+                fl.pitch_bend(0,z) 
+                #time.sleep(raysleep)
+        else:
+            for z in range (0, -4096, -1):
+                fl.pitch_bend(0,z)
+                #time.sleep(raysleep)
+    fl.noteoff(0,end-1)
+
 while True:
     rayint, rayampval = raypitch()       
     if rayampval > 0 :
         fl.noteon(0, rayint, rayampval)
-    #else:
-        #fl.noteon(0, 60, 127)
-        #time.sleep(10)
+    else:
+        #rayslide(45,63,64,0.0001)
+        #fl.noteon(0,60,127)
+        #fl.cc(0, 91, 0) 
+        #time.sleep(4)
     
 fl.delete()
 pyaud.terminate()
