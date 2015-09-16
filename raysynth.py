@@ -4,6 +4,7 @@ import analyse
 import time
 import fluidsynth
 import socket
+import serial
 
 def raymap(value, istart, istop, ostart, ostop):
     return ostart + (ostop - ostart) * ((value - istart) / (istop - istart));
@@ -106,7 +107,18 @@ def rayslide(begin,end,velocity, raysleep):
                 #time.sleep(raysleep)
     fl.noteoff(chnl,end-1)
 
+def readlineCR(port):
+    rv = ""
+    while True:
+        ch = port.read()
+        rv += ch
+        if ch=='\r' or ch=='':
+            return rv
+
+port = serial.Serial("/dev/ttyAMA0", baudrate=115200, timeout=3.0)
+
 while True:
+    rcv = readlineCR(port)
     rayint, rayampval = raypitch()       
     if rayampval > 0 :
         fl.noteon(chnl, rayint, rayampval)
