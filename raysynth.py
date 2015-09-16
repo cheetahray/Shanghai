@@ -21,7 +21,7 @@ sock = socket.socket(socket.AF_INET, socket.SOCK_DGRAM) # UDP
 UDP_PORT = 5005
 UDP_IP = "192.168.11.178"
         
-def raymr(tid)
+def raymr(tid):
     global sock
     global UDP_PORT
     global UDP_IP
@@ -49,8 +49,8 @@ def rayudp():
     if data == 'tshe':
         sock.sendto("tph", (UDP_IP, UDP_PORT))
         data, addr = sock.recvfrom(1024) # buffer size is 1024 bytes
-        if data == 'tphe'
-            for x in range(45, 62)
+        if data == 'tphe':
+            for x in range(45, 62):
                 raymr(x)
         else:
             return False
@@ -64,7 +64,7 @@ fl.start('alsa')
 sfid = fl.sfload("/home/pi/Shanghai/FluidR3_GM.sf2")
 fl.program_select(0, sfid, 0, 60)
 
-def raypitch()
+def raypitch():
     global strm
     try:
         rawsamps = strm.read(1024) # Read raw microphone data
@@ -86,15 +86,18 @@ def raypitch()
             #time.sleep(5)
     except IOError, e:
         if e.args[1] == pyaudio.paInputOverflowed:
-            rawsamps  = '\x00'*CHUNK
+            rawsamps  = '\x00' # * CHUNK
         else:
             raise
-
+    return 0,0
 
 while True:
     rayint, rayampval = raypitch()       
     if rayampval > 0 :
         fl.noteon(0, rayint, rayampval)
+    #else:
+        #fl.noteon(0, 60, 127)
+        #time.sleep(10)
     
 fl.delete()
 pyaud.terminate()
