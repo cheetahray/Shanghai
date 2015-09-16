@@ -96,4 +96,5 @@ while True:
     if rayampval > 0 :
         fl.noteon(0, rayint, rayampval)
     
-fl.delete()pyaud.terminate()
+fl.delete()
+pyaud.terminate()
