@@ -60,9 +60,9 @@ def rayudp():
 
 fl = fluidsynth.Synth()
 fl.start('alsa')
-
+chnl = 0
 sfid = fl.sfload("/home/pi/Shanghai/FluidR3_GM.sf2")
-fl.program_select(0, sfid, 0, 60)
+fl.program_select(chnl, sfid, 0, 60)
 
 def raypitch():
     global strm
@@ -72,7 +72,6 @@ def raypitch():
         rayfeq = analyse.musical_detect_pitch(samps)
         if rayfeq > 0:
             #strm.stop_stream()
-            #fl.noteoff(0, rayint)
             rayint = round(rayfeq,1)
             if rayint >= 43 and rayint <= 62:
                 rayloud = analyse.loudness(samps)
@@ -81,9 +80,6 @@ def raypitch():
                 print(rayampval)
                 return rayint, rayampval
             #strm.start_stream()
-        #else:
-            #fl.noteon(0, 60, 127)
-            #time.sleep(5)
     except IOError, e:
         if e.args[1] == pyaudio.paInputOverflowed:
             rawsamps  = '\x00' # * CHUNK
@@ -97,28 +93,28 @@ def rayslide(begin,end,velocity, raysleep):
     if begin > end:
         interpo = -1
     for y in range (begin, end, interpo ):
-        fl.pitch_bend(0,0)
-        fl.noteon(0, y, velocity) 
-        fl.noteoff(0,y-1)
+        fl.pitch_bend(chnl,0)
+        fl.noteon(chnl, y, velocity) 
+        fl.noteoff(chnl,y-1)
         if 1 == interpo:
             for z in range (0, 4096, 1):
-                fl.pitch_bend(0,z) 
+                fl.pitch_bend(chnl,z) 
                 #time.sleep(raysleep)
         else:
             for z in range (0, -4096, -1):
-                fl.pitch_bend(0,z)
+                fl.pitch_bend(chnl,z)
                 #time.sleep(raysleep)
-    fl.noteoff(0,end-1)
+    fl.noteoff(chnl,end-1)
 
 while True:
     rayint, rayampval = raypitch()       
     if rayampval > 0 :
-        fl.noteon(0, rayint, rayampval)
+        fl.noteon(chnl, rayint, rayampval)
     else:
         #rayslide(45,63,64,0.0001)
-        #fl.noteon(0,60,127)
-        #fl.cc(0, 91, 0) 
-        #time.sleep(4)
+        fl.noteon(chnl,60,127)
+        fl.cc(chnl, 91, 127) 
+        time.sleep(10)
     
 fl.delete()
 pyaud.terminate()
