@@ -126,7 +126,7 @@ def raylist(mylist):
         else:
             noteint = int(mylist[1])
             sock.sendto("m" + str(noteint - rayshift), (UDP_IP, UDP_PORT))
-            sock.sendto("a", (UDP_IP, UDP_PORT))
+            sock.sendto("am" + mylist[2], (UDP_IP, UDP_PORT))
             fl.noteon(chnl, noteint, int(mylist[2]))
     elif mylist[0] == '224':
         bendint = int(mylist[2])
