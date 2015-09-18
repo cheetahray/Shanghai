@@ -28,17 +28,28 @@ def raymr(tid):
     global UDP_IP
     global rayshift
     rndrayint = 0.0
+    righthandsleep = 0.1
+    lefthandsleep = 1 
     while tid != rndrayint :
+        sock.sendto("a", (UDP_IP, UDP_PORT))
         rayint, rayampval = raypitch()
         if rayampval > 0 :
             rndrayint = round(rayint,1)
-            if tid < rndrayint:
-                sock.sendto("ms", (UDP_IP, UDP_PORT))
-                sock.sendto("a", (UDP_IP, UDP_PORT))
+            print(rndrayint)
+            if 45 == tid:
+                if tid < rndrayint:
+                    sock.sendto("tsl", (UDP_IP, UDP_PORT))
+                elif tid > rndrayint:
+                    sock.sendto("tst", (UDP_IP, UDP_PORT))
+                time.sleep(righthandsleep) 
+                sock.sendto("tss", (UDP_IP, UDP_PORT))
             else:
-                sock.sendto("mh", (UDP_IP, UDP_PORT))
-                sock.sendto("a", (UDP_IP, UDP_PORT))
-            time.sleep(5)
+                if tid < rndrayint:
+                    sock.sendto("ml", (UDP_IP, UDP_PORT))
+                else:
+                    sock.sendto("mh", (UDP_IP, UDP_PORT))
+                time.sleep(lefthandsleep)
+                sock.sendto("ms", (UDP_IP, UDP_PORT))
     sock.sendto("mr" + str(tid-rayshift), (UDP_IP, UDP_PORT))
     return True
     
@@ -53,12 +64,18 @@ def rayudp():
         sock.sendto("tph", (UDP_IP, UDP_PORT))
         data, addr = sock.recvfrom(1024) # buffer size is 1024 bytes
         if data == 'tphe':
-            for x in range(45, 62):
-                raymr(x)
+            sock.sendto("tvh", (UDP_IP, UDP_PORT))
+            data, addr = sock.recvfrom(1024) # buffer size is 1024 bytes
+            if data == 'tvhe':
+                for x in range(45, 62):
+                    raymr(x)
+            else:
+                return False 
         else:
             return False
     else:
         return False
+    return True
     
 rayshift = 44
 fl = fluidsynth.Synth()
