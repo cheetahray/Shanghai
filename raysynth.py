@@ -31,7 +31,7 @@ def raymr(tid):
     righthandsleep = 0.1
     lefthandsleep = 1 
     while tid != rndrayint :
-        sock.sendto("a", (UDP_IP, UDP_PORT))
+        sock.sendto("av127", (UDP_IP, UDP_PORT))
         rayint, rayampval = raypitch()
         if rayampval > 0 :
             rndrayint = round(rayint,1)
@@ -41,16 +41,19 @@ def raymr(tid):
                     sock.sendto("tsl", (UDP_IP, UDP_PORT))
                 elif tid > rndrayint:
                     sock.sendto("tst", (UDP_IP, UDP_PORT))
+                else:
+                    sock.sendto("mr" + str(tid-rayshift), (UDP_IP, UDP_PORT))
                 time.sleep(righthandsleep) 
                 sock.sendto("tss", (UDP_IP, UDP_PORT))
             else:
                 if tid < rndrayint:
                     sock.sendto("ml", (UDP_IP, UDP_PORT))
-                else:
+                elif tid > rndrayint:
                     sock.sendto("mh", (UDP_IP, UDP_PORT))
+                else:
+                    sock.sendto("mr" + str(tid-rayshift), (UDP_IP, UDP_PORT))
                 time.sleep(lefthandsleep)
                 sock.sendto("ms", (UDP_IP, UDP_PORT))
-    sock.sendto("mr" + str(tid-rayshift), (UDP_IP, UDP_PORT))
     return True
     
 def rayudp():
@@ -142,8 +145,8 @@ def raylist(mylist):
             fl.noteoff(chnl, int(mylist[1]))
         else:
             noteint = int(mylist[1])
-            sock.sendto("m" + str(noteint - rayshift), (UDP_IP, UDP_PORT))
-            sock.sendto("am" + mylist[2], (UDP_IP, UDP_PORT))
+            sock.sendto("m" + str(noteint - rayshift) + "v250", (UDP_IP, UDP_PORT))
+            sock.sendto("av" + mylist[2], (UDP_IP, UDP_PORT))
             fl.noteon(chnl, noteint, int(mylist[2]))
     elif mylist[0] == '224':
         bendint = int(mylist[2])
@@ -153,6 +156,7 @@ def raylist(mylist):
 port = serial.Serial("/dev/ttyAMA0", baudrate=115200, timeout=3.0)
 
 while True:
+    rayudp()
     rcv = readlineCR(port)
     #print(repr(rcv))
     mylist = rcv.split(" ")
