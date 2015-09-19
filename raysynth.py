@@ -60,8 +60,8 @@ def rayudp():
     global sock
     global UDP_PORT
     global UDP_IP
-    sock.bind(("127.0.0.1", UDP_PORT))
-    sock.sendto("tsh", (UDP_IP, UDP_PORT))
+    sock.bind(("", UDP_PORT))
+    sock.sendto("tsh", (UDP_IP, UDP_PORT) )
     data, addr = sock.recvfrom(1024) # buffer size is 1024 bytes
     if data == 'tshe':
         sock.sendto("tph", (UDP_IP, UDP_PORT))
