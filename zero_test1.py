@@ -12,7 +12,7 @@ stepper_class.io1.wiringPiSetupGpio()
 motor1 = stepper_class.stepperdriver(12800,19,26)
 motor2 = stepper_class.stepperdriver(12800,20,21)
 
-UDP_IP = "192.168.11.27"
+UDP_IP = "192.168.11.78"
 UDP_PORT = 5005
 sock = socket.socket(socket.AF_INET, # Internet
                      socket.SOCK_DGRAM) # UDP
