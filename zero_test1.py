@@ -78,7 +78,7 @@ while True:
         else:
             vindex = data.index('v') 
             motorspeed = int(data[vindex+1:]) 
-            print("Use {0} motor speed to get pitch {1} position from tp[ int(data[1:vindex]) ]".format( motorspeed, int(data[1:vindex]) ) ) #change here
+            print("Use {0} motor speed to get pitch {1} position from tp[ int(data[1:vindex]) - 1 ]".format( motorspeed, int(data[1:vindex]) ) ) #change here
 
 #motor1.gh(-1,20,0.1,6)
 #motor2.gh(1,2,0.1,16)
