@@ -8,12 +8,9 @@ import socket
 #------------------------------------------------------------------------
 tp=[]
 
-#stepper_class.io1.wiringPiSetupGpio()
-#motor1 = stepper_class.stepperdriver(12800,19,26)
-#motor2 = stepper_class.stepperdriver(12800,20,21)
-
-#motor1.gh(-1,20,0.1,6)
-#motor2.gh(1,2,0.1,16)
+stepper_class.io1.wiringPiSetupGpio()
+motor1 = stepper_class.stepperdriver(12800,19,26)
+motor2 = stepper_class.stepperdriver(12800,20,21)
 
 UDP_IP = "192.168.11.27"
 UDP_PORT = 5005
@@ -24,37 +21,39 @@ sock.bind(("", UDP_PORT))
 iftsh = False
 iftph = False
 iftvh = False
-while False == iftsh or False == iftph or False == iftvh:
+#while False == iftsh or False == iftph or False == iftvh:
+while False:
     data, addr = sock.recvfrom(1024)
     if data == "tsh":
-        print("String back home")
-        if True: #if success
+        print("String back home") #change here
+        if True: #change here
             sock.sendto(data + "e", (UDP_IP, UDP_PORT))
             iftsh = True
     elif data == "tph":
-        print("picker back home")
-        if True: #if success
+        print("picker back home") #change here
+        if True: #change here
             sock.sendto(data + "e", (UDP_IP, UDP_PORT))
             iftph = True 
     elif data == "tvh":
-        print("velocity back home")
-        if True: #if success
+        print("velocity back home") #change here
+        if True: #change here
             sock.sendto(data + "e", (UDP_IP, UDP_PORT))
             iftvh = True
 
-pickspeed = 0
-pickvelocity = 0
+pickspeed = 250
+pickvelocity = 127
 ifpickclock = True
 motorspeed = 0
 while True:
     data, addr = sock.recvfrom(1024)
+    #print (data)
     if data[0] == 't':
         if data[1:] == "sl":
-            print("turn string loose")
-        elif data[1:] == "st":
-            print("turn string tight")
+            print("turn string loose") #change here
+        elif data[1:] == "st": 
+            print("turn string tight") #change here
         elif data[1:] == "ss":
-            print("stop turn string")
+            print("stop turn string") #change here
     elif data[0] == 'a':
         if data[1] == 'v':
             pickvelocity = int(data[2:])
@@ -64,15 +63,25 @@ while True:
         elif data[1] == 'w':
             ifpickclock = False
             pickspeed = int(data[2:])
-        print("use picker speed = {0}, picker velocity = {1}, is picker clockwise? {2}".format(pickspeed,pickvelocity,ifpickclock))
+        print("use picker speed = {0}, picker velocity = {1}, is picker clockwise? {2}".format(pickspeed,pickvelocity,ifpickclock)) #change here
     elif data[0] == 'm':
         if data[1] == 'r':
-            tp.insert( int(data[2:]), "Remember pitch {0} position".format( int(data[2:]) ) )
-            print( tp[ int( data[2:] ) ] )
+            tpindex = int(data[2:]) 
+            tp.append("Remember pitch {0} position".format( tpindex ) ) #change here
+            print( tp[ len(tp)-1 ] ) #change here
+        elif data[1] == 'h':
+            print("left hand move high") #change here
+        elif data[1] == 'l':
+            print("left hand move low") #change here
+        elif data[1] == 's':
+            print("left hand stop move") #change here
         else:
-            vindex = data.index('v')
-            motorspeed = int(data[vindex:])
-            print("Use {0} speed to get pitch {1} position {2}".format( motorspeed, int(data[2:vindex]), tp[ int(data[2:vindex]) ] ) )
+            vindex = data.index('v') 
+            motorspeed = int(data[vindex+1:]) 
+            print("Use {0} motor speed to get pitch {1} position from tp[ int(data[1:vindex]) ]".format( motorspeed, int(data[1:vindex]) ) ) #change here
+
+#motor1.gh(-1,20,0.1,6)
+#motor2.gh(1,2,0.1,16)
 
 #motor1.moveto(tp[1],300,20,20)
 #stepper_class.io1.delayMicroseconds(500000)
