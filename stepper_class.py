@@ -2,14 +2,21 @@
 #Code Written by: Albert Lin from Noise Kitchen
 #------------------------------------------------------------------------
 import wiringpi2 as io1
-class stepperdriver(object):
+from threading import Thread
+from Queue import Queue
+
+queue = Queue()
+
+class stepperdriver(Thread):
     def __init__(self,steps_per_rev=12800,p_pin=19,d_pin=26):
+        super(stepperdriver, self).__init__()
         self.steps_per_rev = steps_per_rev
         self.p_pin = p_pin
         self.d_pin = d_pin
         self.motor_address = 0
         io1.pinMode(self.d_pin,1)
         io1.pinMode(self.p_pin,1)
+        self.start()
         
 #------------------------------------------------------------------------
 #----------------rotate by laps------------------------------------------
@@ -151,7 +158,6 @@ class stepperdriver(object):
         StepCounter = 0
         self.motor_address = 0
         
-        
 #------------------------------------------------------------------------
 #----------------rotate by steps-----------------------------------------
 #------------------------------------------------------------------------        
@@ -197,43 +203,48 @@ class stepperdriver(object):
         split_Counter = at_split_point 
         adtCounter = 1
         # Start Acceleration loop
-        while StepCounter < at_steps:
-            #turning the gpio off and on tells the driver to take one step
-            io1.digitalWrite(self.p_pin,0)
-            if split_Counter == StepCounter:
-                if at_WaitTime > peak_WaitTime:
-                    at_WaitTime -= 1
-                split_Counter = at_split_point * adtCounter + split_Counter 
-                adtCounter += 1
-            io1.delayMicroseconds(at_WaitTime)        
-            io1.digitalWrite(self.p_pin,1)
-            StepCounter += 1
-            self.motor_address = self.motor_address + direction
-        StepCounter = 0
-        
-        # Start peak loop        
-        while StepCounter < peak_steps:
-            #turning the gpio off and on tells the driver to take one step
-            io1.digitalWrite(self.p_pin,0)
-            io1.delayMicroseconds(peak_WaitTime)
-            io1.digitalWrite(self.p_pin,1)
-            StepCounter += 1
-            self.motor_address = self.motor_address + direction
-        StepCounter = 0
-        
-        adtCounter = dt_split_point
-        # Start Deceleration loop
-        while StepCounter < dt_steps:
-            #turning the gpio off and on tells the driver to take one step
-            io1.digitalWrite(self.p_pin,0)
-            if adtCounter == StepCounter:
-                at_WaitTime += 1
-                adtCounter += dt_split_point
-            io1.delayMicroseconds(at_WaitTime)
-            io1.digitalWrite(self.p_pin,1)
-            StepCounter += 1
-            self.motor_address = self.motor_address + direction
+        queue.put(True)
         print io1.micros()
+
+    def run(self):
+        while not queue.empty():
+            queue.get()
+            while StepCounter < at_steps:
+                #turning the gpio off and on tells the driver to take one step
+                io1.digitalWrite(self.p_pin,0)
+                if split_Counter == StepCounter:
+                    if at_WaitTime > peak_WaitTime:
+                        at_WaitTime -= 1
+                    split_Counter = at_split_point * adtCounter + split_Counter 
+                    adtCounter += 1
+                io1.delayMicroseconds(at_WaitTime)        
+                io1.digitalWrite(self.p_pin,1)
+                StepCounter += 1
+                self.motor_address = self.motor_address + direction
+            StepCounter = 0
+            
+            # Start peak loop        
+            while StepCounter < peak_steps:
+                #turning the gpio off and on tells the driver to take one step
+                io1.digitalWrite(self.p_pin,0)
+                io1.delayMicroseconds(peak_WaitTime)
+                io1.digitalWrite(self.p_pin,1)
+                StepCounter += 1
+                self.motor_address = self.motor_address + direction
+            StepCounter = 0
+            
+            adtCounter = dt_split_point
+            # Start Deceleration loop
+            while StepCounter < dt_steps:
+                #turning the gpio off and on tells the driver to take one step
+                io1.digitalWrite(self.p_pin,0)
+                if adtCounter == StepCounter:
+                    at_WaitTime += 1
+                    adtCounter += dt_split_point
+                io1.delayMicroseconds(at_WaitTime)
+                io1.digitalWrite(self.p_pin,1)
+                StepCounter += 1
+                self.motor_address = self.motor_address + direction
 
 #------------------------------------------------------------------------
 #------------------------------------------------------------------------
