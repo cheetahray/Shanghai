@@ -21,8 +21,8 @@ sock.bind(("", UDP_PORT))
 iftsh = False
 iftph = False
 iftvh = False
-#while False == iftsh or False == iftph or False == iftvh:
-while False:
+while False == iftsh or False == iftph or False == iftvh:
+#while False:
     data, addr = sock.recvfrom(1024)
     if data == "tsh":
         print("String back home") #change here
