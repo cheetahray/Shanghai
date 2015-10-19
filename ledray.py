@@ -1,6 +1,6 @@
 import bibliopixel
 #causes frame timing information to be output
-bibliopixel.log.setLogLevel(bibliopixel.log.DEBUG)
+#bibliopixel.log.setLogLevel(bibliopixel.log.DEBUG)
 
 #Load driver for the AllPixel
 from bibliopixel.drivers.LPD8806 import *
