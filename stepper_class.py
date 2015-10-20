@@ -159,6 +159,7 @@ class stepperdriver(Thread):
 
         StepCounter = 0
         self.motor_address = 0
+
         
         
 #------------------------------------------------------------------------
