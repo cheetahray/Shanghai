@@ -1,22 +1,31 @@
 import bibliopixel
-#causes frame timing information to be output
-bibliopixel.log.setLogLevel(bibliopixel.log.CRITICAL)
-
 #Load driver for the AllPixel
 from bibliopixel.drivers.LPD8806 import *
-#set number of pixels & LED type here 
-driver = DriverLPD8806(num = 20)
-
-#load the LEDStrip class
 from bibliopixel.led import *
-led = LEDStrip(driver, threadedUpdate = True)
-
-#load channel test animation
-from strip_animations import *
 import bibliopixel.colors as colors
-anim = ColorWipe(led)
-
 import math
+from bibliopixel.animation import BaseStripAnim
+
+class ColorWipe(BaseStripAnim):
+    """Fill the dots progressively along the strip."""
+    __rayIndex = 0
+    lastIndex = 0
+
+    def __init__(self, led, start=0, end=-1):
+        super(ColorWipe, self).__init__(led, start, end)
+
+    def brightcolor(self, bright, color):
+        self._bright = bright
+        self._color = colors.color_scale(color, self._bright)
+
+    def gogo(self, rayIndex = 0): 
+        self.__rayIndex = rayIndex
+        self._led.all_off()
+        #self._led.update()
+
+    def step(self, amt = 1):
+        for i in range(self.__rayIndex):
+            self._led.set(i, self._color)
 
 def rayanim(r,g,b,bright,animpos,animtime):
     anim.brightcolor( bright, (b,r,g) )
@@ -36,6 +45,15 @@ def rayanim(r,g,b,bright,animpos,animtime):
             time.sleep(animtime)
         anim.lastIndex = animpos
         time.sleep(0.2)
+
+#causes frame timing information to be output
+bibliopixel.log.setLogLevel(bibliopixel.log.CRITICAL)
+#set number of pixels & LED type here
+driver = DriverLPD8806(num = 20)
+#load the LEDStrip class
+led = LEDStrip(driver, threadedUpdate = True)
+#load channel test animation
+anim = ColorWipe(led)
 try:
     #run the animation
     rayanim(255,0,0,255,20,3.0)
