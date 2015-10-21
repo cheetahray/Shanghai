@@ -27,24 +27,24 @@ class ColorWipe(BaseStripAnim):
         for i in range(self.__rayIndex):
             self._led.set(i, self._color)
 
-def rayanim(r,g,b,bright,animpos,animtime):
-    anim.brightcolor( bright, (b,r,g) )
-    diff = anim.lastIndex + 1 - animpos
-    animtime = animtime / math.fabs(diff)
-    if diff > 0 :
-        for i in range(anim.lastIndex,animpos-1,-1):
-            anim.gogo(rayIndex = i)
-            anim.run(threaded = True, joinThread = False)
-            time.sleep(animtime)
-        anim.lastIndex = animpos
-        time.sleep(0.2)
-    elif diff < 0:
-        for i in range(anim.lastIndex,animpos+1,1):
-            anim.gogo(rayIndex = i)
-            anim.run(threaded = True, joinThread = False)
-            time.sleep(animtime)
-        anim.lastIndex = animpos
-        time.sleep(0.2)
+    def rayanim(self,r,g,b,bright,animpos,animtime):
+        self.brightcolor( bright, (b,r,g) )
+        diff = self.lastIndex + 1 - animpos
+        animtime = animtime / math.fabs(diff)
+        if diff > 0 :
+            for i in range(self.lastIndex,animpos-1,-1):
+                self.gogo(rayIndex = i)
+                self.run(threaded = True, joinThread = False)
+                time.sleep(animtime)
+            self.lastIndex = animpos
+            time.sleep(0.25)
+        elif diff < 0:
+            for i in range(self.lastIndex,animpos+1,1):
+                self.gogo(rayIndex = i)
+                self.run(threaded = True, joinThread = False)
+                time.sleep(animtime)
+            self.lastIndex = animpos
+            time.sleep(0.25)
 
 #causes frame timing information to be output
 bibliopixel.log.setLogLevel(bibliopixel.log.CRITICAL)
@@ -56,11 +56,12 @@ led = LEDStrip(driver, threadedUpdate = True)
 anim = ColorWipe(led)
 try:
     #run the animation
-    rayanim(255,0,0,255,20,3.0)
-    rayanim(0,255,0,150,5,1.5)
-    rayanim(0,0,255,75,15,0.7)
-    rayanim(255,255,255,30,0,0.5)
+    anim.rayanim(255,0,0,255,20,3.0)
+    anim.rayanim(0,255,0,150,5,1.5)
+    anim.rayanim(0,0,255,75,15,0.7)
+    anim.rayanim(255,255,255,30,0,0.5)
 except KeyboardInterrupt:
     #Ctrl+C will exit the animation and turn the LEDs offs
     led.all_off()
     led.update()
+
