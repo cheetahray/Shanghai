@@ -6,13 +6,14 @@ import bibliopixel.colors as colors
 import math
 from bibliopixel.animation import BaseStripAnim
 
-class ColorWipe(BaseStripAnim):
+class ColorWipe(BaseStripAnim, Thread):
     """Fill the dots progressively along the strip."""
     __rayIndex = 0
     lastIndex = 0
 
     def __init__(self, led, start=0, end=-1):
         super(ColorWipe, self).__init__(led, start, end)
+        self.start()
 
     def brightcolor(self, bright, color):
         self._bright = bright
@@ -31,20 +32,25 @@ class ColorWipe(BaseStripAnim):
         self.brightcolor( bright, (b,r,g) )
         diff = self.lastIndex + 1 - animpos
         animtime = animtime / math.fabs(diff)
-        if diff > 0 :
-            for i in range(self.lastIndex,animpos-1,-1):
-                self.gogo(rayIndex = i)
-                self.run(threaded = True, joinThread = False)
-                time.sleep(animtime)
-            self.lastIndex = animpos
-            time.sleep(0.25)
-        elif diff < 0:
-            for i in range(self.lastIndex,animpos+1,1):
-                self.gogo(rayIndex = i)
-                self.run(threaded = True, joinThread = False)
-                time.sleep(animtime)
-            self.lastIndex = animpos
-            time.sleep(0.25)
+                    
+    def run(self):
+        while True:
+            if diff > 0 :
+                for i in range(self.lastIndex,animpos-1,-1):
+                    self.gogo(rayIndex = i)
+                    self.run(threaded = True, joinThread = False)
+                    time.sleep(animtime)
+                self.lastIndex = animpos
+                time.sleep(0.25)
+            elif diff < 0:
+                for i in range(self.lastIndex,animpos+1,1):
+                    self.gogo(rayIndex = i)
+                    self.run(threaded = True, joinThread = False)
+                    time.sleep(animtime)
+                self.lastIndex = animpos
+                time.sleep(0.25)
+            else:
+                time.sleep(0.05)            
 
 #causes frame timing information to be output
 bibliopixel.log.setLogLevel(bibliopixel.log.CRITICAL)
@@ -57,9 +63,13 @@ anim = ColorWipe(led)
 try:
     #run the animation
     anim.rayanim(255,0,0,255,20,3.0)
+    time.sleep(15)
     anim.rayanim(0,255,0,150,5,1.5)
+    time.sleep(15)
     anim.rayanim(0,0,255,75,15,0.7)
+    time.sleep(15)
     anim.rayanim(255,255,255,30,0,0.5)
+    time.sleep(15)
 except KeyboardInterrupt:
     #Ctrl+C will exit the animation and turn the LEDs offs
     led.all_off()
