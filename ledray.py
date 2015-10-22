@@ -9,51 +9,53 @@ from threading import Thread
 
 class ColorWipe(BaseStripAnim, Thread):
     """Fill the dots progressively along the strip."""
-    __rayIndex = 0
     __lastpos = 0
     __sleeptime = 0.0
     __animpos = 0
+    __interrupt = False
 
     def __init__(self, led, start=0, end=-1):
         super(ColorWipe, self).__init__(led, start, end)
         Thread.__init__(self)
-
-    def brightcolor(self, bright, color):
-        self._bright = bright
-        self._color = colors.color_scale(color, self._bright)
-
-    def gogo(self, rayIndex = 0): 
-        self.__rayIndex = rayIndex
         self._led.all_off()
-        #self._led.update()
 
     def step(self, amt = 1):
-        for i in range(self.__rayIndex):
-            self._led.set(i, self._color)
+        amt = 2
 
     def rayanim(self,r,g,b,bright,animpos,animtime):
-        self.brightcolor( bright, (b,r,g) )
+        self._bright = bright 
+        self._color = colors.color_scale((b,r,g), self._bright)
         self.__sleeptime = animtime / ( math.fabs(self.__lastpos - animpos) + 4 )
         self.__animpos = animpos
-                    
+        for i in range(self.__lastpos):
+            self._led.set(i, self._color)
+        self.__interrupt = True
+
     def run(self):
         while True:
             diff = self.__lastpos - self.__animpos
             if diff > 0 :
                 for i in range(self.__lastpos, self.__animpos-1, -1):
-                    self.gogo(rayIndex = i)
+                    self._led.setOff(i) 
                     BaseStripAnim.run(self, threaded = True, joinThread = False)
-                    time.sleep(self.__sleeptime)
-                self.__lastpos = self.__animpos
+                    self.__lastpos = i
+                    if self.__interrupt == True:
+                        break
+                    else:
+                        time.sleep(self.__sleeptime)
+                self.__interrupt = False    
             elif diff < 0:
                 for i in range(self.__lastpos, self.__animpos+1, 1):
-                    self.gogo(rayIndex = i)
+                    self._led.set(i, self._color) 
                     BaseStripAnim.run(self, threaded = True, joinThread = False)
-                    time.sleep(self.__sleeptime)
-                self.__lastpos = self.__animpos
+                    self.__lastpos = i
+                    if self.__interrupt == True:
+                        break
+                    else:
+                        time.sleep(self.__sleeptime)
+                self.__interrupt = False
             else:
                 time.sleep(0.05)            
-                print ("Ray")
 
 #causes frame timing information to be output
 bibliopixel.log.setLogLevel(bibliopixel.log.CRITICAL)
@@ -66,15 +68,9 @@ anim = ColorWipe(led)
 anim.start()
 try:
     #run the animation
-    anim.rayanim(255,0,0,255,20,3.0)
-    time.sleep(3)
-    anim.rayanim(0,255,0,150,5,1.5)
-    time.sleep(1.5)
-    anim.rayanim(0,0,255,75,15,0.7)
+    anim.rayanim(255,0,0,255,20,0.8)
     time.sleep(0.7)
-    anim.rayanim(255,255,255,30,0,2)
-    time.sleep(2)
-    anim.rayanim(255,0,0,1,0,1)
+    anim.rayanim(255,255,255,40,0,3.0)
 except KeyboardInterrupt:
     #Ctrl+C will exit the animation and turn the LEDs offs
     led.all_off()
