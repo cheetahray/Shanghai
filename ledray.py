@@ -27,7 +27,7 @@ class ColorWipe(BaseMatrixAnim, Thread):
     def rayanim(self,r,g,b,bright,animpos,animtime):
         self._bright = bright 
         self._color = colors.color_scale((b,r,g), self._bright)
-        self.__sleeptime = animtime / self.__width / ( math.fabs(self.__lastpos - animpos) + 4 )
+        self.__sleeptime = animtime / ( math.fabs(self.__lastpos - animpos) + 4 )
         self.__animpos = animpos
         for i in range(self.__lastpos):
             self._led.drawRect(0,0,self.__width,i+1, self._color) #self._led.set(i, self._color)
@@ -75,7 +75,7 @@ coords = [
 #causes frame timing information to be output
 bibliopixel.log.setLogLevel(bibliopixel.log.CRITICAL)
 #set number of pixels & LED type here
-driver = DriverLPD8806(num = 20)
+driver = DriverLPD8806(num = len(coords[0]) * len(coords) )
 #load the LEDStrip class
 #led = LEDStrip(driver, threadedUpdate = True)
 led = LEDMatrix(driver, width = len(coords[0]), height = len(coords), coordMap = coords, threadedUpdate = True)
@@ -87,7 +87,7 @@ anim.start()
 try:
     #run the animation
     anim.rayanim(255,0,0,255,10,0.8)
-    time.sleep(0.7)
+    time.sleep(0.8)
     anim.rayanim(255,255,255,40,0,3.0)
 except KeyboardInterrupt:
     #Ctrl+C will exit the animation and turn the LEDs offs
