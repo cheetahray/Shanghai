@@ -20,7 +20,7 @@ strm = pa.open(
 
 sock = socket.socket(socket.AF_INET, socket.SOCK_DGRAM) # UDP    
 UDP_PORT = 5005
-UDP_IP = "192.168.11.178"
+UDP_IP = "192.168.12.178"
         
 def raymr(tid):
     global sock
@@ -28,37 +28,45 @@ def raymr(tid):
     global UDP_IP
     global rayshift
     rndrayint = 0.0
-    lefthandsleep = 1 
+    avcnt = 0
+    istsl = 0
     while tid != rndrayint :
+        if avcnt == 0:
+            sock.sendto("av126", (UDP_IP, UDP_PORT))
+            print ("av126")
         rayint, rayampval = raypitch()
         if rayampval > 0 :
             rndrayint = round(rayint,1)
-            print(str(tid) + ":"+ str(rndrayint))
-            if 45 == tid:
-                righthandsleep = 0.1 
+            if 42 == tid:
+                print(str(tid) + ":"+ str(rndrayint))
                 if tid < rndrayint:
-                    sock.sendto("tsl", (UDP_IP, UDP_PORT))
-                    time.sleep(righthandsleep)
-                    sock.sendto("tss", (UDP_IP, UDP_PORT))
+                    if istsl != 1:
+                        sock.sendto("tsl", (UDP_IP, UDP_PORT))
+                        print ("tsl")
+                        istsl = 1
                 elif tid > rndrayint:
-                    sock.sendto("tst", (UDP_IP, UDP_PORT))
-                    time.sleep(righthandsleep)
-                    sock.sendto("tss", (UDP_IP, UDP_PORT))
+                    if istsl != 2:
+                        sock.sendto("tst", (UDP_IP, UDP_PORT))
+                        print ("tst")
+                        istsl = 2
                 else:
+                    sock.sendto("tss", (UDP_IP, UDP_PORT))
+                    print ("tss")
+                    istsl = 0
                     sock.sendto("mr" + str(tid-rayshift), (UDP_IP, UDP_PORT))
             else:
-                righthandsleep = 5
                 if tid < rndrayint:
                     sock.sendto("ml", (UDP_IP, UDP_PORT))
-                    time.sleep(lefthandsleep)
                     sock.sendto("ms", (UDP_IP, UDP_PORT))
                 elif tid > rndrayint:
                     sock.sendto("mh", (UDP_IP, UDP_PORT))
-                    time.sleep(lefthandsleep)
                     sock.sendto("ms", (UDP_IP, UDP_PORT))
                 else:
                     sock.sendto("mr" + str(tid-rayshift), (UDP_IP, UDP_PORT))
-            sock.sendto("av126", (UDP_IP, UDP_PORT))
+        if avcnt == 100:
+            avcnt = 0
+        else:
+            avcnt = avcnt + 1
     return True
     
 def rayudp():
@@ -68,16 +76,16 @@ def rayudp():
     sock.bind(("", UDP_PORT))
     data = ''
     #while len(data) == 0: 
-    sock.sendto("tsh", (UDP_IP, UDP_PORT) )
+    sock.sendto("tph", (UDP_IP, UDP_PORT) )
     data, addr = sock.recvfrom(1024) # buffer size is 1024 bytes
-    if data == 'tshe':
-        sock.sendto("tph", (UDP_IP, UDP_PORT))
+    if data == 'tphe':
+        sock.sendto("tvh", (UDP_IP, UDP_PORT))
         data, addr = sock.recvfrom(1024) # buffer size is 1024 bytes
-        if data == 'tphe':
-            sock.sendto("tvh", (UDP_IP, UDP_PORT))
+        if data == 'tvhe':
+            sock.sendto("tsh", (UDP_IP, UDP_PORT))
             data, addr = sock.recvfrom(1024) # buffer size is 1024 bytes
-            if data == 'tvhe':
-                for x in range(45, 62):
+            if data == 'tshe':
+                for x in range(42, 43):
                     raymr(x)
             else:
                 return False 
@@ -87,7 +95,7 @@ def rayudp():
         return False
     return True
     
-rayshift = 44
+rayshift = 41
 fl = fluidsynth.Synth()
 fl.start('alsa')
 chnl = 0
@@ -103,13 +111,13 @@ def raypitch():
         if rayfeq > 0:
             #strm.stop_stream()
             rayint = round(rayfeq,1)
-            if rayint >= 45 and rayint <= 62:
+            if rayint <= 83:
+
                 rayloud = analyse.loudness(samps)
-                print (rayloud, rayfeq)
-                rayampval = raymap(rayloud, -17, -2, 0, 127)
-                print(rayampval)
+                rayampval = rayloud + 127 #rayampval = raymap(rayloud, -127, 0, 0, 127)
+                #print (rayfeq, rayampval)
                 return rayint, rayampval
-                #return 47, 127
+
             #strm.start_stream()
     except IOError, e:
         if e.args[1] == pyaudio.paInputOverflowed:
@@ -165,11 +173,11 @@ port = serial.Serial("/dev/ttyAMA0", baudrate=115200, timeout=3.0)
 
 if True:
     rayudp()
-    rcv = readlineCR(port)
-    mylist = rcv.split(" ")
+    #rcv = readlineCR(port)
+    #mylist = rcv.split(" ")
     #mylist = ['144','55','125']
     #print(mylist)
-    raylist(mylist)
+    #raylist(mylist)
     
 fl.delete()
 #pyaud.terminate()
