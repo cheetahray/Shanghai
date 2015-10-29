@@ -27,19 +27,16 @@ while False == iftsh or False == iftph or False == iftvh:
     data, addr = sock.recvfrom(1024)
     if data == "tsh":
         print("String back home") #tsh change here
-        if True: #tshe change here
-            sock.sendto(data + "e", (UDP_IP, UDP_PORT))
-            iftsh = True
+        sock.sendto(data + "e", (UDP_IP, UDP_PORT))
+        iftsh = True
     elif data == "tph":
         print("picker back home") #tph change here
-        if True: #tphe change here
-            sock.sendto(data + "e", (UDP_IP, UDP_PORT))
-            iftph = True 
+        sock.sendto(data + "e", (UDP_IP, UDP_PORT))
+        iftph = True 
     elif data == "tvh":
         print("velocity back home") #tvh change here
-        if True: #tvhe change here
-            sock.sendto(data + "e", (UDP_IP, UDP_PORT))
-            iftvh = True
+        sock.sendto(data + "e", (UDP_IP, UDP_PORT))
+        iftvh = True
 
 pickspeed = 250
 pickvelocity = 127
@@ -80,9 +77,9 @@ while True:
     elif data[0] == 'm':
         if data[1] == 'r':
             tpindex = int(data[2:]) 
-            tp.append("Remember pitch {0} position".format( tpindex ) ) #mr1 change here
             child_pid = os.fork()
             if child_pid == 0:
+                tp.append("Remember pitch {0} position".format( tpindex ) ) #mr1 change here
                 print( tp[ len(tp)-1 ] ) #mr1 change here
                 os._exit(0)
         elif data[1] == 'h':
