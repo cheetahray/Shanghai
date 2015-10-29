@@ -29,14 +29,14 @@ while False == iftsh or False == iftph or False == iftvh:
         print("String back home") #tsh change here
         sock.sendto(data + "e", (UDP_IP, UDP_PORT))
         iftsh = True
-    elif data == "tph":
-        print("picker back home") #tph change here
-        sock.sendto(data + "e", (UDP_IP, UDP_PORT))
-        iftph = True 
-    elif data == "tvh":
-        print("velocity back home") #tvh change here
-        sock.sendto(data + "e", (UDP_IP, UDP_PORT))
-        iftvh = True
+        if data == "tph":
+            print("picker back home") #tph change here
+            sock.sendto(data + "e", (UDP_IP, UDP_PORT))
+            iftph = True 
+            if data == "tvh":
+                print("velocity back home") #tvh change here
+                sock.sendto(data + "e", (UDP_IP, UDP_PORT))
+                iftvh = True
 
 pickspeed = 250
 pickvelocity = 127
