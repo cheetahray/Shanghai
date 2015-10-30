@@ -28,17 +28,17 @@ def raymr(tid):
     global UDP_IP
     global rayshift
     rndrayint = 0.0
-    avcnt = 0
+    aacnt = 0
     istsl = 0
     while tid != rndrayint :
-        if avcnt == 0:
-            sock.sendto("av126", (UDP_IP, UDP_PORT))
-            print ("av126")
+        if aacnt == 0:
+            sock.sendto("aa", (UDP_IP, UDP_PORT))
+            print ("aa")
         rayint, rayampval = raypitch()
         if rayampval > 0 :
             rndrayint = round(rayint,1)
-            if 42 == tid:
-                print(str(tid) + ":"+ str(rndrayint))
+            print(str(tid) + ":"+ str(rndrayint))
+            if rayshift == tid:
                 if tid < rndrayint:
                     if istsl != 1:
                         sock.sendto("tsl", (UDP_IP, UDP_PORT))
@@ -56,23 +56,31 @@ def raymr(tid):
                     sock.sendto("mr" + str(tid-rayshift), (UDP_IP, UDP_PORT))
             else:
                 if tid < rndrayint:
-                    sock.sendto("ml", (UDP_IP, UDP_PORT))
-                    sock.sendto("ms", (UDP_IP, UDP_PORT))
+                    if istsl != 1:
+                        sock.sendto("ml", (UDP_IP, UDP_PORT))
+                        print ("ml")
+                        istsl = 1
                 elif tid > rndrayint:
-                    sock.sendto("mh", (UDP_IP, UDP_PORT))
-                    sock.sendto("ms", (UDP_IP, UDP_PORT))
+                    if istsl != 2:
+                        sock.sendto("mh", (UDP_IP, UDP_PORT))
+                        print ("mh")
+                        istsl = 2
                 else:
+                    sock.sendto("ms", (UDP_IP, UDP_PORT))
+                    print ("ms")
+                    istsl = 0
                     sock.sendto("mr" + str(tid-rayshift), (UDP_IP, UDP_PORT))
-        if avcnt == 100:
-            avcnt = 0
+        if aacnt == 100:
+            aacnt = 0
         else:
-            avcnt = avcnt + 1
+            aacnt = aacnt + 1
     return True
     
 def rayudp():
     global sock
     global UDP_PORT
     global UDP_IP
+    global rayshift
     sock.bind(("", UDP_PORT))
     data = ''
     #while len(data) == 0: 
@@ -85,7 +93,7 @@ def rayudp():
             sock.sendto("tsh", (UDP_IP, UDP_PORT))
             data, addr = sock.recvfrom(1024) # buffer size is 1024 bytes
             if data == 'tshe':
-                for x in range(42, 43):
+                for x in range(rayshift, 43):
                     raymr(x)
             else:
                 return False 
@@ -95,7 +103,7 @@ def rayudp():
         return False
     return True
     
-rayshift = 41
+rayshift = 42
 fl = fluidsynth.Synth()
 fl.start('alsa')
 chnl = 0
@@ -163,6 +171,7 @@ def raylist(mylist):
             noteint = int(mylist[1])
             sock.sendto("m" + str(noteint - rayshift) + "v248", (UDP_IP, UDP_PORT))
             sock.sendto("av" + mylist[2], (UDP_IP, UDP_PORT))
+            sock.sendto("aa", (UDP_IP, UDP_PORT))
             fl.noteon(chnl, noteint, int(mylist[2]))
     elif mylist[0] == '224':
         bendint = int(mylist[2])
