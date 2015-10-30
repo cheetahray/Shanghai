@@ -15,7 +15,8 @@ stream = pyaud.open(
     input = True,
     output_device_index = 0,
     output = True,
-    stream_callback=callback)
+    stream_callback=callback
+    )
 
 stream.start_stream()
 

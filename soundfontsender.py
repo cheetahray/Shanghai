@@ -28,6 +28,7 @@ def raymr(tid):
     global UDP_IP
     global rayshift
     rndrayint = 0.0
+    lastrayint = 0.0
     aacnt = 0
     istsl = 0
     while tid != rndrayint :
@@ -37,7 +38,9 @@ def raymr(tid):
         rayint, rayampval = raypitch()
         if rayampval > 0 :
             rndrayint = round(rayint,1)
-            print(str(tid) + ":"+ str(rndrayint))
+            if lastrayint != rndrayint:
+                print(str(tid) + ":"+ str(rndrayint))
+                lastrayint = rndrayint
             if rayshift == tid:
                 if tid < rndrayint:
                     if istsl != 1:
@@ -57,11 +60,17 @@ def raymr(tid):
             else:
                 if tid < rndrayint:
                     if istsl != 1:
+                        sock.sendto("ms", (UDP_IP, UDP_PORT))
+                        print ("ms")
+                        time.sleep(0.1)
                         sock.sendto("ml", (UDP_IP, UDP_PORT))
                         print ("ml")
                         istsl = 1
                 elif tid > rndrayint:
                     if istsl != 2:
+                        sock.sendto("ms", (UDP_IP, UDP_PORT))
+                        print ("ms")
+                        time.sleep(0.1)
                         sock.sendto("mh", (UDP_IP, UDP_PORT))
                         print ("mh")
                         istsl = 2
@@ -69,7 +78,9 @@ def raymr(tid):
                     sock.sendto("ms", (UDP_IP, UDP_PORT))
                     print ("ms")
                     istsl = 0
+                    time.sleep(0.1)
                     sock.sendto("mr" + str(tid-rayshift), (UDP_IP, UDP_PORT))
+                    time.sleep(0.5)
         if aacnt == 100:
             aacnt = 0
         else:
@@ -83,23 +94,30 @@ def rayudp():
     global rayshift
     sock.bind(("", UDP_PORT))
     data = ''
-    #while len(data) == 0: 
+    howmanypitch = 18
     sock.sendto("tph", (UDP_IP, UDP_PORT) )
+    print ("tph")
     data, addr = sock.recvfrom(1024) # buffer size is 1024 bytes
     if data == 'tphe':
         sock.sendto("tvh", (UDP_IP, UDP_PORT))
+        print ("tvh")
         data, addr = sock.recvfrom(1024) # buffer size is 1024 bytes
         if data == 'tvhe':
             sock.sendto("tsh", (UDP_IP, UDP_PORT))
+            print ("tsh")
             data, addr = sock.recvfrom(1024) # buffer size is 1024 bytes
             if data == 'tshe':
-                for x in range(rayshift, 43):
+                for x in range(rayshift, rayshift+howmanypitch+1):
                     raymr(x)
+                sock.sendto("m" + str(howmanypitch/2) + "v126", (UDP_IP, UDP_PORT))
+                print("m" + str(howmanypitch/2) + "v126")
+                sock.sendto("m10v126", (UDP_IP, UDP_PORT))
             else:
                 return False 
         else:
             return False
     else:
+        print (data)
         return False
     return True
     
