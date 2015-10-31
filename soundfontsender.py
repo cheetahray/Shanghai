@@ -187,7 +187,7 @@ def raylist(mylist):
             fl.noteoff(chnl, int(mylist[1]))
         else:
             noteint = int(mylist[1])
-            sock.sendto("m" + str(noteint - rayshift) + "v248", (UDP_IP, UDP_PORT))
+            sock.sendto("m" + str(noteint - rayshift) + "v126", (UDP_IP, UDP_PORT))
             sock.sendto("av" + mylist[2], (UDP_IP, UDP_PORT))
             sock.sendto("aa", (UDP_IP, UDP_PORT))
             fl.noteon(chnl, noteint, int(mylist[2]))
