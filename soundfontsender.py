@@ -5,7 +5,6 @@ import time
 import fluidsynth
 import socket
 import serial
-import threading
 
 def raymap(value, istart, istop, ostart, ostop):
     return ostart + (ostop - ostart) * ((value - istart) / (istop - istart));
@@ -168,7 +167,6 @@ def readlineCR(port):
 def raylist(mylist):
     global fl
     global rayshift
-    global timercnt
     if mylist[0] == '144':
         if mylist[2] == '0':
             mylist[2] = 0 #fl.noteoff(chnl, int(mylist[1]))
@@ -178,44 +176,10 @@ def raylist(mylist):
             sock.sendto("m" + str(noteint - rayshift) + "v126", (UDP_IP, UDP_PORT))
             #fl.noteon(chnl, noteint, int(mylist[2]))
             #sock.sendto("av" + mylist[2], (UDP_IP, UDP_PORT))
-            #if 5 == timercnt:
-            #    timercnt = 0
-            #else:
-            #    timercnt = timercnt + 1
-            #if 0 == timercnt:
-            #    timer0 = threading.Timer(0.125, func0)
-            #    timer0.start()
-            #elif 1 == timercnt:
-            #    timer1 = threading.Timer(0.125, func1)
-            #    timer1.start()
-            #elif 2 == timercnt:
-            #    timer2 = threading.Timer(0.125, func2)
-            #    timer2.start()
-            #elif 3 == timercnt:
-            #    timer3 = threading.Timer(0.125, func3)
-            #    timer3.start()
-            #elif 4 == timercnt:           
-            #    timer4 = threading.Timer(0.125, func4)
-            #    timer4.start()
             sock.sendto("aa", (UDP_IP, UDP_PORT))
     elif mylist[0] == '224':
         bendint = int(mylist[2])
         #fl.pitch_bend( chnl,raymap(bendint, 0, 127, -8192, 8192))
-
-def func0():
-    sock.sendto("aa", (UDP_IP, UDP_PORT))
-
-def func1():
-    sock.sendto("aa", (UDP_IP, UDP_PORT))
-
-def func2():
-    sock.sendto("aa", (UDP_IP, UDP_PORT))
-
-def func3():
-    sock.sendto("aa", (UDP_IP, UDP_PORT))
-
-def func4():
-    sock.sendto("aa", (UDP_IP, UDP_PORT))
 
 sock = socket.socket(socket.AF_INET, socket.SOCK_DGRAM) # UDP
 UDP_PORT = 5005
@@ -240,8 +204,6 @@ strm = pa.open(
     )
 
 #rayudp()
-
-timercnt = 0
 
 #while True:
 #    rcv = readlineCR(port)
