@@ -9,15 +9,21 @@ import serial
 def raymap(value, istart, istop, ostart, ostop):
     return ostart + (ostop - ostart) * ((value - istart) / (istop - istart));
 
+def callback(in_data, frame_count, time_info, status):
+    return (in_data, pyaudio.paContinue)
+
 pa = pyaudio.PyAudio()
 strm = pa.open(
     format = pyaudio.paInt16,
     channels = 1,
     rate = 44100,
     input_device_index = 0,
-    input = True
+    input = True,
+    output_device_index = 0,
+    output = True,
+    stream_callback=callback
     )
-
+    
 sock = socket.socket(socket.AF_INET, socket.SOCK_DGRAM) # UDP    
 UDP_PORT = 5005
 UDP_IP = "192.168.12.178"
@@ -121,13 +127,6 @@ def rayudp():
         return False
     return True
     
-rayshift = 42
-fl = fluidsynth.Synth()
-fl.start('alsa')
-chnl = 0
-sfid = fl.sfload("/home/pi/Shanghai/FluidR3_GM.sf2")
-fl.program_select(chnl, sfid, 0, 27)
-
 def raypitch():
     global strm
     try:
@@ -195,16 +194,28 @@ def raylist(mylist):
         bendint = int(mylist[2])
         fl.pitch_bend( chnl,raymap(bendint, 0, 127, -8192, 8192))
         
+rayshift = 42
+#fl = fluidsynth.Synth()
+#fl.start('alsa')
+#chnl = 0
+#sfid = fl.sfload("/home/pi/Shanghai/FluidR3_GM.sf2")
+#fl.program_select(chnl, sfid, 0, 27)
 
 port = serial.Serial("/dev/ttyAMA0", baudrate=115200, timeout=3.0)
 
-if True:
-    rayudp()
-    #rcv = readlineCR(port)
-    #mylist = rcv.split(" ")
-    #mylist = ['144','55','125']
+rayudp()
+while True:
+    rcv = readlineCR(port)
+    mylist = rcv.split(" ")
+    mylist = ['144','55','125']
     #print(mylist)
-    #raylist(mylist)
+    raylist(mylist)
+
+strm.start_stream()
+while stream.is_active():
+    time.sleep(0.1)
+strm.stop_stream()
+strm.close()    
     
-fl.delete()
-#pyaud.terminate()
+#fl.delete()
+pyaud.terminate()
