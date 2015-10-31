@@ -5,6 +5,7 @@ import time
 import fluidsynth
 import socket
 import serial
+import threading
 
 def raymap(value, istart, istop, ostart, ostop):
     return ostart + (ostop - ostart) * ((value - istart) / (istop - istart));
@@ -12,22 +13,6 @@ def raymap(value, istart, istop, ostart, ostop):
 def callback(in_data, frame_count, time_info, status):
     return (in_data, pyaudio.paContinue)
 
-pa = pyaudio.PyAudio()
-strm = pa.open(
-    format = pyaudio.paInt16,
-    channels = 1,
-    rate = 44100,
-    input_device_index = 0,
-    input = True,
-    output_device_index = 0,
-    output = True,
-    stream_callback=callback
-    )
-    
-sock = socket.socket(socket.AF_INET, socket.SOCK_DGRAM) # UDP    
-UDP_PORT = 5005
-UDP_IP = "192.168.12.178"
-        
 def raymr(tid):
     global sock
     global UDP_PORT
@@ -62,7 +47,9 @@ def raymr(tid):
                     sock.sendto("tss", (UDP_IP, UDP_PORT))
                     print ("tss")
                     istsl = 0
+                    time.sleep(0.5)
                     sock.sendto("mr" + str(tid-rayshift), (UDP_IP, UDP_PORT))
+                    time.sleep(0.5)
             else:
                 if tid < rndrayint:
                     if istsl != 1:
@@ -84,7 +71,7 @@ def raymr(tid):
                     sock.sendto("ms", (UDP_IP, UDP_PORT))
                     print ("ms")
                     istsl = 0
-                    time.sleep(0.1)
+                    time.sleep(0.5)
                     sock.sendto("mr" + str(tid-rayshift), (UDP_IP, UDP_PORT))
                     time.sleep(0.5)
         if aacnt == 100:
@@ -112,14 +99,14 @@ def rayudp():
             sock.sendto("tsh", (UDP_IP, UDP_PORT))
             print ("tsh")
             data, addr = sock.recvfrom(1024) # buffer size is 1024 bytes
-            if data == 'tshe':
-                for x in range(rayshift, rayshift+howmanypitch+1):
-                    raymr(x)
-                sock.sendto("m" + str(howmanypitch/2) + "v126", (UDP_IP, UDP_PORT))
-                print("m" + str(howmanypitch/2) + "v126")
-                sock.sendto("m10v126", (UDP_IP, UDP_PORT))
-            else:
-                return False 
+            #if data == 'tshe':
+            #    for x in range(rayshift, rayshift+howmanypitch+1):
+            #        raymr(x)
+            #    sock.sendto("m" + str(howmanypitch/2) + "v126", (UDP_IP, UDP_PORT))
+            #    print("m" + str(howmanypitch/2) + "v126")
+            #    sock.sendto("m10v126", (UDP_IP, UDP_PORT))
+            #else:
+            #    return False 
         else:
             return False
     else:
@@ -146,7 +133,7 @@ def raypitch():
             #strm.start_stream()
     except IOError, e:
         if e.args[1] == pyaudio.paInputOverflowed:
-            rawsamps  = '\x00' # * CHUNK
+            rawsamps  = '\x00'
         else:
             raise
     return 0,0
@@ -181,19 +168,59 @@ def readlineCR(port):
 def raylist(mylist):
     global fl
     global rayshift
+    global timercnt
     if mylist[0] == '144':
         if mylist[2] == '0':
-            fl.noteoff(chnl, int(mylist[1]))
+            mylist[2] = 0 #fl.noteoff(chnl, int(mylist[1]))
         else:
+            #sock.sendto("as", (UDP_IP, UDP_PORT))
             noteint = int(mylist[1])
             sock.sendto("m" + str(noteint - rayshift) + "v126", (UDP_IP, UDP_PORT))
-            sock.sendto("av" + mylist[2], (UDP_IP, UDP_PORT))
+            #fl.noteon(chnl, noteint, int(mylist[2]))
+            #sock.sendto("av" + mylist[2], (UDP_IP, UDP_PORT))
+            #if 5 == timercnt:
+            #    timercnt = 0
+            #else:
+            #    timercnt = timercnt + 1
+            #if 0 == timercnt:
+            #    timer0 = threading.Timer(0.125, func0)
+            #    timer0.start()
+            #elif 1 == timercnt:
+            #    timer1 = threading.Timer(0.125, func1)
+            #    timer1.start()
+            #elif 2 == timercnt:
+            #    timer2 = threading.Timer(0.125, func2)
+            #    timer2.start()
+            #elif 3 == timercnt:
+            #    timer3 = threading.Timer(0.125, func3)
+            #    timer3.start()
+            #elif 4 == timercnt:           
+            #    timer4 = threading.Timer(0.125, func4)
+            #    timer4.start()
             sock.sendto("aa", (UDP_IP, UDP_PORT))
-            fl.noteon(chnl, noteint, int(mylist[2]))
     elif mylist[0] == '224':
         bendint = int(mylist[2])
-        fl.pitch_bend( chnl,raymap(bendint, 0, 127, -8192, 8192))
-        
+        #fl.pitch_bend( chnl,raymap(bendint, 0, 127, -8192, 8192))
+
+def func0():
+    sock.sendto("aa", (UDP_IP, UDP_PORT))
+
+def func1():
+    sock.sendto("aa", (UDP_IP, UDP_PORT))
+
+def func2():
+    sock.sendto("aa", (UDP_IP, UDP_PORT))
+
+def func3():
+    sock.sendto("aa", (UDP_IP, UDP_PORT))
+
+def func4():
+    sock.sendto("aa", (UDP_IP, UDP_PORT))
+
+sock = socket.socket(socket.AF_INET, socket.SOCK_DGRAM) # UDP
+UDP_PORT = 5005
+UDP_IP = "192.168.12.178"
+
 rayshift = 42
 #fl = fluidsynth.Synth()
 #fl.start('alsa')
@@ -201,21 +228,48 @@ rayshift = 42
 #sfid = fl.sfload("/home/pi/Shanghai/FluidR3_GM.sf2")
 #fl.program_select(chnl, sfid, 0, 27)
 
-port = serial.Serial("/dev/ttyAMA0", baudrate=115200, timeout=3.0)
+port = serial.Serial("/dev/ttyAMA0", baudrate=115200)
 
-rayudp()
-while True:
-    rcv = readlineCR(port)
-    mylist = rcv.split(" ")
-    mylist = ['144','55','125']
-    #print(mylist)
-    raylist(mylist)
+pa = pyaudio.PyAudio()
+strm = pa.open(
+    format = pyaudio.paInt16,
+    channels = 1,
+    rate = 44100,
+    input_device_index = 0,
+    input = True
+    )
+
+#rayudp()
+
+timercnt = 0
+
+#while True:
+#    rcv = readlineCR(port)
+#    mylist = rcv.split(" ")
+#    print(mylist)
+#    raylist(mylist)
+
+pa.terminate()
+pa = pyaudio.PyAudio()
+strm = pa.open(
+    format = pyaudio.paInt16,
+    channels = 1,
+    rate = 44100,
+    input_device_index = 0,
+    input = True,
+    output_device_index = 0,
+    output = True,
+    stream_callback=callback
+    )
 
 strm.start_stream()
-while stream.is_active():
-    time.sleep(0.1)
+while strm.is_active():
+    rcv = readlineCR(port)
+    mylist = rcv.split(" ")
+    print(mylist)
+    raylist(mylist)
+    #time.sleep(0.1)
 strm.stop_stream()
 strm.close()    
     
 #fl.delete()
-pyaud.terminate()
