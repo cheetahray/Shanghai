@@ -56,7 +56,7 @@ def raymr(tid):
                     if istsl != 1:
                         sock.sendto("ms", (UDP_IP, UDP_PORT))
                         print ("ms")
-                        time.sleep(0.1)
+                        time.sleep(0.2)
                         sock.sendto("ml", (UDP_IP, UDP_PORT))
                         print ("ml")
                         istsl = 1
@@ -64,7 +64,7 @@ def raymr(tid):
                     if istsl != 2:
                         sock.sendto("ms", (UDP_IP, UDP_PORT))
                         print ("ms")
-                        time.sleep(0.1)
+                        time.sleep(0.2)
                         sock.sendto("mh", (UDP_IP, UDP_PORT))
                         print ("mh")
                         istsl = 2
