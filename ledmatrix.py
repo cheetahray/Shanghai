@@ -20,6 +20,7 @@ class ColorWipe(BaseMatrixAnim, Thread):
         self.__width = width
         Thread.__init__(self)
         self._led.all_off()
+        Thread.start(self)
 
     def step(self, amt = 1):
         amt = 2
@@ -82,7 +83,6 @@ led = LEDMatrix(driver, width = len(coords[0]), height = len(coords), coordMap =
 
 #load channel test animation
 anim = ColorWipe(led, width = len(coords[0]) )
-anim.start()
 
 try:
     #run the animation

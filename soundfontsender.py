@@ -5,6 +5,8 @@ import time
 import fluidsynth
 import socket
 import serial
+import ledstrip
+import math
 
 def raymap(value, istart, istop, ostart, ostop):
     return ostart + (ostop - ostart) * ((value - istart) / (istop - istart));
@@ -54,7 +56,7 @@ def raymr(tid):
                     if istsl != 1:
                         sock.sendto("ms", (UDP_IP, UDP_PORT))
                         print ("ms")
-                        time.sleep(0.2)
+                        time.sleep(0.1)
                         sock.sendto("ml", (UDP_IP, UDP_PORT))
                         print ("ml")
                         istsl = 1
@@ -62,7 +64,7 @@ def raymr(tid):
                     if istsl != 2:
                         sock.sendto("ms", (UDP_IP, UDP_PORT))
                         print ("ms")
-                        time.sleep(0.2)
+                        time.sleep(0.1)
                         sock.sendto("mh", (UDP_IP, UDP_PORT))
                         print ("mh")
                         istsl = 2
@@ -99,10 +101,10 @@ def rayudp():
             print ("tsh")
             data, addr = sock.recvfrom(1024) # buffer size is 1024 bytes
             if data == 'tshe':
-                #for x in range(rayshift, rayshift+howmanypitch+1):
-                #    raymr(x)
-                #sock.sendto("m" + str(howmanypitch/2) + "v126", (UDP_IP, UDP_PORT))
-                #print("m" + str(howmanypitch/2) + "v126")
+                for x in range(rayshift, rayshift+howmanypitch+1):
+                    raymr(x)
+                sock.sendto("m" + str(howmanypitch/2) + "v126", (UDP_IP, UDP_PORT))
+                print("m" + str(howmanypitch/2) + "v126")
                 sock.sendto("m10v126", (UDP_IP, UDP_PORT))
             else:
                 return False 
@@ -167,30 +169,52 @@ def readlineCR(port):
 def raylist(mylist):
     global fl
     global rayshift
+    global lastm
     if mylist[0] == '144':
         if mylist[2] == '0':
-            mylist[2] = 0 #fl.noteoff(chnl, int(mylist[1]))
+            mylist[2] = 0
+            #fl.noteoff(chnl, int(mylist[1]))
         else:
             #sock.sendto("as", (UDP_IP, UDP_PORT))
             noteint = int(mylist[1])
-            sock.sendto("m" + str(noteint - rayshift) + "v126", (UDP_IP, UDP_PORT))
-            fl.noteon(chnl, noteint, int(mylist[2]))
+            #fl.noteon(chnl, noteint, int(mylist[2]))
+            nowm = noteint - rayshift
+            sock.sendto("m" + str(nowm) + "v126", (UDP_IP, UDP_PORT))
+            try:
+                anim.rayanim(255,255,255,255,nowm,math.fabs(nowm-lastm)*0.1)
+                #anim.run(threaded = True, joinThread = False)
+            except KeyboardInterrupt:
+                led.all_off()
+                led.update()
+            #time.sleep(0.2)
+            lastm = nowm
             #sock.sendto("av" + mylist[2], (UDP_IP, UDP_PORT))
             sock.sendto("aa", (UDP_IP, UDP_PORT))
+            #anim.stopThread()
     elif mylist[0] == '224':
         bendint = int(mylist[2])
         #fl.pitch_bend( chnl,raymap(bendint, 0, 127, -8192, 8192))
+
+#causes frame timing information to be output
+ledstrip.log.setLogLevel(ledstrip.log.CRITICAL)
+#set number of pixels & LED type here
+driver = ledstrip.DriverLPD8806(num = 20)
+#load the LEDStrip class
+led = ledstrip.LEDStrip(driver, threadedUpdate = True)
+#load channel test animation
+anim = ledstrip.ColorWipe(led)
 
 sock = socket.socket(socket.AF_INET, socket.SOCK_DGRAM) # UDP
 UDP_PORT = 5005
 UDP_IP = "192.168.12.178"
 
 rayshift = 42
-fl = fluidsynth.Synth()
-fl.start('alsa')
+lastm = 0
+#fl = fluidsynth.Synth()
+#fl.start('alsa')
 chnl = 0
-sfid = fl.sfload("/home/pi/Shanghai/FluidR3_GM.sf2")
-fl.program_select(chnl, sfid, 0, 4)
+#sfid = fl.sfload("/home/pi/Shanghai/FluidR3_GM.sf2")
+#fl.program_select(chnl, sfid, 0, 27)
 
 port = serial.Serial("/dev/ttyAMA0", baudrate=115200)
 
@@ -204,35 +228,40 @@ strm = pa.open(
     )
 
 #rayudp()
-#time.sleep(1)
 
-while True:
-    rcv = readlineCR(port)
-    mylist = rcv.split(" ")
-    print(mylist)
-    raylist(mylist)
-
-#pa.terminate()
-#pa = pyaudio.PyAudio()
-#strm = pa.open(
-#    format = pyaudio.paInt16,
-#    channels = 1,
-#    rate = 44100,
-#    input_device_index = 0,
-#    input = True,
-#    output_device_index = 0,
-#    output = True,
-#    stream_callback=callback
-#    )
-
-#strm.start_stream()
-#while strm.is_active():
+#while True:
 #    rcv = readlineCR(port)
 #    mylist = rcv.split(" ")
 #    print(mylist)
 #    raylist(mylist)
+
+pa.terminate()
+
+pa = pyaudio.PyAudio()
+strm = pa.open(
+    format = pyaudio.paInt16,
+    channels = 1,
+    rate = 44100,
+    input_device_index = 0,
+    input = True,
+    output_device_index = 0,
+    output = True,
+    stream_callback=callback
+    )
+
+#sock.sendto("m0v126", (UDP_IP, UDP_PORT))
+#time.sleep(5)
+#sock.sendto("m18v126", (UDP_IP, UDP_PORT))
+#time.sleep(5)
+
+strm.start_stream()
+while strm.is_active():
+    rcv = readlineCR(port)
+    mylist = rcv.split(" ")
+    print(mylist)
+    raylist(mylist)
     #time.sleep(0.1)
-#strm.stop_stream()
-#strm.close()    
+strm.stop_stream()
+strm.close()    
     
-fl.delete()
+#fl.delete()
