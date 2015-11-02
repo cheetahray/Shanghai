@@ -17,8 +17,6 @@ class ColorWipe(BaseStripAnim, Thread):
     def __init__(self, led, start=0, end=-1):
         super(ColorWipe, self).__init__(led, start, end)
         Thread.__init__(self)
-        led.all_off()
-        led.update()
 
     def brightcolor(self, bright, color):
         self._bright = bright
@@ -60,13 +58,16 @@ class ColorWipe(BaseStripAnim, Thread):
 #causes frame timing information to be output
 bibliopixel.log.setLogLevel(bibliopixel.log.CRITICAL)
 #set number of pixels & LED type here
-driver = DriverLPD8806(num=20)
+driver = DriverLPD8806(num = 20)
 #load the LEDStrip class
 led = LEDStrip(driver, threadedUpdate = True)
 #load channel test animation
 anim = ColorWipe(led)
-#anim.start()
+anim.start()
 try:
+    #run the animation
+    anim.rayanim(255,0,0,255,20,3.0)
+    time.sleep(3)
     anim.rayanim(0,255,0,150,5,1.5)
     time.sleep(1.5)
     anim.rayanim(0,0,255,75,15,0.7)
