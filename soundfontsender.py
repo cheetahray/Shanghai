@@ -56,7 +56,7 @@ def raymr(tid):
                     if istsl != 1:
                         sock.sendto("ms", (UDP_IP, UDP_PORT))
                         print ("ms")
-                        time.sleep(0.1)
+                        time.sleep(0.2)
                         sock.sendto("ml", (UDP_IP, UDP_PORT))
                         print ("ml")
                         istsl = 1
@@ -64,7 +64,7 @@ def raymr(tid):
                     if istsl != 2:
                         sock.sendto("ms", (UDP_IP, UDP_PORT))
                         print ("ms")
-                        time.sleep(0.1)
+                        time.sleep(0.2)
                         sock.sendto("mh", (UDP_IP, UDP_PORT))
                         print ("mh")
                         istsl = 2
@@ -105,7 +105,6 @@ def rayudp():
                     raymr(x)
                 sock.sendto("m" + str(howmanypitch/2) + "v126", (UDP_IP, UDP_PORT))
                 print("m" + str(howmanypitch/2) + "v126")
-                sock.sendto("m10v126", (UDP_IP, UDP_PORT))
             else:
                 return False 
         else:
@@ -127,7 +126,7 @@ def raypitch():
             if rayint <= 83:
 
                 rayloud = analyse.loudness(samps)
-                rayampval = rayloud + 127 #rayampval = raymap(rayloud, -127, 0, 0, 127)
+                rayampval = rayloud + 100 #rayampval = raymap(rayloud, -127, 0, 0, 127)
                 #print (rayfeq, rayampval)
                 return rayint, rayampval
 
