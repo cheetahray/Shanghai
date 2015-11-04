@@ -7,6 +7,7 @@ import socket
 import serial
 import ledstrip
 import math
+import RPi.GPIO as GPIO
 
 def raymap(value, istart, istop, ostart, ostop):
     return ostart + (ostop - ostart) * ((value - istart) / (istop - istart));
@@ -172,19 +173,15 @@ def raylist(mylist):
     if mylist[0] == '144':
         if mylist[2] == '0':
             mylist[2] = 0
-            #fl.noteoff(chnl, int(mylist[1]))
+            fl.noteoff(chnl, int(mylist[1]))
         else:
             #sock.sendto("as", (UDP_IP, UDP_PORT))
             noteint = int(mylist[1])
             #fl.noteon(chnl, noteint, int(mylist[2]))
             nowm = noteint - rayshift
             sock.sendto("m" + str(nowm) + "v126", (UDP_IP, UDP_PORT))
-            try:
-                anim.rayanim(255,255,255,255,nowm,math.fabs(nowm-lastm)*0.1)
-                #anim.run(threaded = True, joinThread = False)
-            except KeyboardInterrupt:
-                led.all_off()
-                led.update()
+            anim.rayanim(255,255,255,255,nowm,math.fabs(nowm-lastm)*0.1)
+            #anim.run(threaded = True, joinThread = False)
             #time.sleep(0.2)
             lastm = nowm
             #sock.sendto("av" + mylist[2], (UDP_IP, UDP_PORT))
@@ -207,6 +204,31 @@ sock = socket.socket(socket.AF_INET, socket.SOCK_DGRAM) # UDP
 UDP_PORT = 5005
 UDP_IP = "192.168.12.178"
 
+port = serial.Serial("/dev/ttyAMA0", baudrate=115200)
+
+GPIO.setmode(GPIO.BOARD)
+GPIO.setup(31, GPIO.OUT)
+GPIO.setup(32, GPIO.OUT)
+GPIO.setup(33, GPIO.OUT)
+GPIO.setup(35, GPIO.OUT)
+GPIO.setup(37, GPIO.OUT)
+GPIO.setup(38, GPIO.OUT)
+GPIO.setup(40, GPIO.OUT)
+p31 = GPIO.PWM(31, 50)
+p32 = GPIO.PWM(32, 50)
+p33 = GPIO.PWM(33, 50)
+p35 = GPIO.PWM(35, 50)
+p37 = GPIO.PWM(37, 50)
+p38 = GPIO.PWM(38, 50)
+p40 = GPIO.PWM(40, 50)
+p31.start(0)
+p32.start(100)
+p33.start(0)
+p35.start(0)
+p37.start(0)
+p38.start(0)
+p40.start(0)
+
 rayshift = 42
 lastm = 0
 #fl = fluidsynth.Synth()
@@ -214,8 +236,6 @@ lastm = 0
 chnl = 0
 #sfid = fl.sfload("/home/pi/Shanghai/FluidR3_GM.sf2")
 #fl.program_select(chnl, sfid, 0, 27)
-
-port = serial.Serial("/dev/ttyAMA0", baudrate=115200)
 
 pa = pyaudio.PyAudio()
 strm = pa.open(
@@ -226,41 +246,51 @@ strm = pa.open(
     input = True
     )
 
-#rayudp()
+try:
+    #rayudp()
 
-#while True:
-#    rcv = readlineCR(port)
-#    mylist = rcv.split(" ")
-#    print(mylist)
-#    raylist(mylist)
+    #while True:
+    #    rcv = readlineCR(port)
+    #    mylist = rcv.split(" ")
+    #    print(mylist)
+    #    raylist(mylist)
 
-pa.terminate()
+    pa.terminate()
 
-pa = pyaudio.PyAudio()
-strm = pa.open(
-    format = pyaudio.paInt16,
-    channels = 1,
-    rate = 44100,
-    input_device_index = 0,
-    input = True,
-    output_device_index = 0,
-    output = True,
-    stream_callback=callback
-    )
+    pa = pyaudio.PyAudio()
+    strm = pa.open(
+        format = pyaudio.paInt16,
+        channels = 1,
+        rate = 44100,
+        input_device_index = 0,
+        input = True,
+        output_device_index = 0,
+        output = True,
+        stream_callback=callback
+        )
 
-#sock.sendto("m0v126", (UDP_IP, UDP_PORT))
-#time.sleep(5)
-#sock.sendto("m18v126", (UDP_IP, UDP_PORT))
-#time.sleep(5)
+    #sock.sendto("m0v126", (UDP_IP, UDP_PORT))
+    #time.sleep(5)
+    #sock.sendto("m18v126", (UDP_IP, UDP_PORT))
+    #time.sleep(5)
 
-strm.start_stream()
-while strm.is_active():
-    rcv = readlineCR(port)
-    mylist = rcv.split(" ")
-    print(mylist)
-    raylist(mylist)
-    #time.sleep(0.1)
-strm.stop_stream()
-strm.close()    
-    
-#fl.delete()
+    strm.start_stream()
+    while strm.is_active():
+        rcv = readlineCR(port)
+        mylist = rcv.split(" ")
+        print(mylist)
+        raylist(mylist)
+        #time.sleep(0.1)
+
+except KeyboardInterrupt:
+    p31.stop()
+    p33.stop()
+    p35.stop()
+    p37.stop()
+    led.all_off()
+    led.update()
+    strm.stop_stream()
+    strm.close()    
+    #fl.delete()
+    pa.terminate()
+    GPIO.cleanup()
