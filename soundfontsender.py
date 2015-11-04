@@ -259,14 +259,9 @@ try:
         #time.sleep(0.1)
 
 except KeyboardInterrupt:
-    p31.stop()
-    p33.stop()
-    p35.stop()
-    p37.stop()
     led.all_off()
     led.update()
     strm.stop_stream()
     strm.close()    
     #fl.delete()
     pa.terminate()
-    GPIO.cleanup()
