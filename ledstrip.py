@@ -6,6 +6,7 @@ import bibliopixel.colors as colors
 import math
 from bibliopixel.animation import *
 from threading import Thread
+import RPi.GPIO as GPIO
 
 class ColorWipe(BaseStripAnim, Thread):
     """Fill the dots progressively along the strip."""
@@ -60,5 +61,27 @@ class ColorWipe(BaseStripAnim, Thread):
                         BaseStripAnim.stopThread(self)
                 self.__interrupt = False
             else:
-                time.sleep(0.1)            
+                time.sleep(0.01)            
 
+GPIO.setmode(GPIO.BOARD)
+GPIO.setup(31, GPIO.OUT)
+GPIO.setup(32, GPIO.OUT)
+GPIO.setup(33, GPIO.OUT)
+GPIO.setup(35, GPIO.OUT)
+GPIO.setup(37, GPIO.OUT)
+GPIO.setup(38, GPIO.OUT)
+GPIO.setup(40, GPIO.OUT)
+p31 = GPIO.PWM(31, 50)
+p32 = GPIO.PWM(32, 50)
+p33 = GPIO.PWM(33, 50)
+p35 = GPIO.PWM(35, 50)
+p37 = GPIO.PWM(37, 50)
+p38 = GPIO.PWM(38, 50)
+p40 = GPIO.PWM(40, 50)
+p31.start(0)
+p32.start(100)
+p33.start(0)
+p35.start(0)
+p37.start(0)
+p38.start(0)
+p40.start(0)

@@ -7,7 +7,6 @@ import socket
 import serial
 import ledstrip
 import math
-import RPi.GPIO as GPIO
 
 def raymap(value, istart, istop, ostart, ostop):
     return ostart + (ostop - ostart) * ((value - istart) / (istop - istart));
@@ -204,31 +203,6 @@ sock = socket.socket(socket.AF_INET, socket.SOCK_DGRAM) # UDP
 UDP_PORT = 5005
 UDP_IP = "192.168.12.178"
 
-port = serial.Serial("/dev/ttyAMA0", baudrate=115200)
-
-GPIO.setmode(GPIO.BOARD)
-GPIO.setup(31, GPIO.OUT)
-GPIO.setup(32, GPIO.OUT)
-GPIO.setup(33, GPIO.OUT)
-GPIO.setup(35, GPIO.OUT)
-GPIO.setup(37, GPIO.OUT)
-GPIO.setup(38, GPIO.OUT)
-GPIO.setup(40, GPIO.OUT)
-p31 = GPIO.PWM(31, 50)
-p32 = GPIO.PWM(32, 50)
-p33 = GPIO.PWM(33, 50)
-p35 = GPIO.PWM(35, 50)
-p37 = GPIO.PWM(37, 50)
-p38 = GPIO.PWM(38, 50)
-p40 = GPIO.PWM(40, 50)
-p31.start(0)
-p32.start(100)
-p33.start(0)
-p35.start(0)
-p37.start(0)
-p38.start(0)
-p40.start(0)
-
 rayshift = 42
 lastm = 0
 #fl = fluidsynth.Synth()
@@ -236,6 +210,8 @@ lastm = 0
 chnl = 0
 #sfid = fl.sfload("/home/pi/Shanghai/FluidR3_GM.sf2")
 #fl.program_select(chnl, sfid, 0, 27)
+
+port = serial.Serial("/dev/ttyAMA0", baudrate=115200)
 
 pa = pyaudio.PyAudio()
 strm = pa.open(
