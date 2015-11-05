@@ -2,9 +2,6 @@
 # Open Pixel Control protocol for Pimoroni Unicorn Hat
 # License: MIT
 #import unicornhat as unicorn
-import sys;sys.path.append(r'eclipse/plugins/org.python.pydev_4.4.0.201510052309/pysrc')
-import pydevd;pydevd.settrace()
-
 from twisted.internet import protocol, endpoints
 from twisted.internet.protocol import DatagramProtocol
 from twisted.internet import reactor
