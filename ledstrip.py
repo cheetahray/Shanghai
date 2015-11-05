@@ -5,8 +5,7 @@ from bibliopixel.led import *
 import bibliopixel.colors as colors
 import math
 from bibliopixel.animation import *
-from threading import Thread
-import RPi.GPIO as GPIO
+from threading import *
 
 class ColorWipe(BaseStripAnim, Thread):
     """Fill the dots progressively along the strip."""
@@ -15,41 +14,14 @@ class ColorWipe(BaseStripAnim, Thread):
     __animpos = 0
     __interrupt = False
     __width = 2
-    __p31 = None
-    __p32 = None
-    __p33 = None
-    __p35 = None
-    __p37 = None
-    __p38 = None
-    __p40 = None
-
+    __cv = None
+    
     def __init__(self, led, start=0, end=-1, width=2):
         super(ColorWipe, self).__init__(led, start, end)
         self.__width = width
         Thread.__init__(self)
         self._led.all_off()
-        GPIO.setmode(GPIO.BOARD)
-        GPIO.setup(31, GPIO.OUT)
-        GPIO.setup(32, GPIO.OUT)
-        GPIO.setup(33, GPIO.OUT)
-        GPIO.setup(35, GPIO.OUT)
-        GPIO.setup(37, GPIO.OUT)
-        GPIO.setup(38, GPIO.OUT)
-        GPIO.setup(40, GPIO.OUT)
-        self.__p31 = GPIO.PWM(31, 50)
-        self.__p32 = GPIO.PWM(32, 50)
-        self.__p33 = GPIO.PWM(33, 50)
-        self.__p35 = GPIO.PWM(35, 50)
-        self.__p37 = GPIO.PWM(37, 50)
-        self.__p38 = GPIO.PWM(38, 50)
-        self.__p40 = GPIO.PWM(40, 50)
-        self.__p31.start(0)
-        self.__p32.start(100)
-        self.__p33.start(0)
-        self.__p35.start(0)
-        self.__p37.start(0)
-        self.__p38.start(0)
-        self.__p40.start(0)
+        self.__cv = Condition()
         Thread.start(self)
 
     def step(self, amt = 1):
@@ -63,6 +35,7 @@ class ColorWipe(BaseStripAnim, Thread):
         for i in range(self.__lastpos):
             self._led.set(i, self._color)
         self.__interrupt = True
+        self.__cv.notify()
 
     def run(self):
         while True:
@@ -90,5 +63,5 @@ class ColorWipe(BaseStripAnim, Thread):
                         BaseStripAnim.stopThread(self)
                 self.__interrupt = False
             else:
-                time.sleep(0.01)            
+                self.__cv.wait() #time.sleep(0.01)            
 

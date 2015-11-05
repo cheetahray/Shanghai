@@ -11,6 +11,38 @@ from twisted.internet import reactor
 
 class ArtNet(DatagramProtocol):
 
+    __p31 = None
+    __p32 = None
+    __p33 = None
+    __p35 = None
+    __p37 = None
+    __p38 = None
+    __p40 = None
+
+    def __init__(self)
+        GPIO.setmode(GPIO.BOARD)
+        GPIO.setup(31, GPIO.OUT)
+        GPIO.setup(32, GPIO.OUT)
+        GPIO.setup(33, GPIO.OUT)
+        GPIO.setup(35, GPIO.OUT)
+        GPIO.setup(37, GPIO.OUT)
+        GPIO.setup(38, GPIO.OUT)
+        GPIO.setup(40, GPIO.OUT)
+        self.__p31 = GPIO.PWM(31, 50)
+        self.__p32 = GPIO.PWM(32, 50)
+        self.__p33 = GPIO.PWM(33, 50)
+        self.__p35 = GPIO.PWM(35, 50)
+        self.__p37 = GPIO.PWM(37, 50)
+        self.__p38 = GPIO.PWM(38, 50)
+        self.__p40 = GPIO.PWM(40, 50)
+        self.__p31.start(0)
+        self.__p32.start(100)
+        self.__p33.start(0)
+        self.__p35.start(0)
+        self.__p37.start(0)
+        self.__p38.start(0)
+        self.__p40.start(0)
+        
     def datagramReceived(self, data, (host, port)):
         if ((len(data) > 18) and (data[0:8] == "Art-Net\x00")):
             rawbytes = map(ord, data)
@@ -41,6 +73,3 @@ class ArtNet(DatagramProtocol):
                         x = 0
                         y += 1
                 #unicorn.show()
-
-reactor.listenUDP(6454, ArtNet())
-reactor.run()

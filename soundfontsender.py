@@ -7,6 +7,7 @@ import socket
 import serial
 import ledstrip
 import math
+import artnet-server
 
 def raymap(value, istart, istop, ostart, ostop):
     return ostart + (ostop - ostart) * ((value - istart) / (istop - istart));
@@ -202,6 +203,8 @@ anim = ledstrip.ColorWipe(led)
 sock = socket.socket(socket.AF_INET, socket.SOCK_DGRAM) # UDP
 UDP_PORT = 5005
 UDP_IP = "192.168.12.178"
+reactor.listenUDP(6454, ArtNet())
+reactor.run()
 
 rayshift = 42
 lastm = 0
