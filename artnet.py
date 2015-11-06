@@ -22,6 +22,9 @@ class ArtNet(DatagramProtocol):
     __rr = None
     __ww = None
 
+    def __del__(self):
+        GPIO.cleanup()
+
     def __init__(self,rr,ww):
         GPIO.setmode(GPIO.BOARD)
         GPIO.setup(31, GPIO.OUT)

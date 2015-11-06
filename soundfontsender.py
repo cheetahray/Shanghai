@@ -205,6 +205,7 @@ anim = ledstrip.ColorWipe(led)
 sock = socket.socket(socket.AF_INET, socket.SOCK_DGRAM) # UDP
 UDP_PORT = 5005
 UDP_IP = "192.168.12.178"
+gpioartnet = None
 
 rayshift = 42
 lastm = 0
@@ -251,6 +252,7 @@ try:
 
     rr,ww=os.pipe()
     rr,ww=os.fdopen(rr,'r',0), os.fdopen(ww,'w',0)
+    gpioartnet = ArtNet(rr,ww)
     pid = os.fork()
 
     while True:
@@ -265,10 +267,12 @@ try:
             else:
                 print data.strip()
         else:           # Child
-            reactor.listenUDP(6454, ArtNet(rr,ww) )
+            reactor.listenUDP(6454, gpioartnet)
             reactor.run()
 
 except KeyboardInterrupt:
+    #reactor.stop()
+    gpioartnet = None
     led.all_off()
     led.update()
     strm.stop_stream()
