@@ -4,7 +4,8 @@
 #import unicornhat as unicorn
 from twisted.internet import protocol, endpoints
 from twisted.internet.protocol import DatagramProtocol
-from twisted.internet import reactor
+import RPi.GPIO as GPIO
+import os
 
 # Adjust the LED brightness as needed.
 #unicorn.brightness(0.5)
@@ -18,30 +19,34 @@ class ArtNet(DatagramProtocol):
     __p37 = None
     __p38 = None
     __p40 = None
+    __rr = None
+    __ww = None
 
-    def __init__(self)
+    def __init__(self,rr,ww):
         GPIO.setmode(GPIO.BOARD)
         GPIO.setup(31, GPIO.OUT)
-        GPIO.setup(32, GPIO.OUT)
+        #GPIO.setup(32, GPIO.OUT)
         GPIO.setup(33, GPIO.OUT)
         GPIO.setup(35, GPIO.OUT)
         GPIO.setup(37, GPIO.OUT)
         GPIO.setup(38, GPIO.OUT)
         GPIO.setup(40, GPIO.OUT)
         self.__p31 = GPIO.PWM(31, 50)
-        self.__p32 = GPIO.PWM(32, 50)
+        #self.__p32 = GPIO.PWM(32, 50)
         self.__p33 = GPIO.PWM(33, 50)
         self.__p35 = GPIO.PWM(35, 50)
         self.__p37 = GPIO.PWM(37, 50)
         self.__p38 = GPIO.PWM(38, 50)
         self.__p40 = GPIO.PWM(40, 50)
         self.__p31.start(0)
-        self.__p32.start(100)
+        #self.__p32.start(100)
         self.__p33.start(0)
         self.__p35.start(0)
         self.__p37.start(0)
         self.__p38.start(0)
         self.__p40.start(0)
+        self.__rr = rr
+        self.__ww = ww
         
     def datagramReceived(self, data, (host, port)):
         if ((len(data) > 18) and (data[0:8] == "Art-Net\x00")):
@@ -60,6 +65,7 @@ class ArtNet(DatagramProtocol):
                 idx = 18
                 x = 0
                 y = 0
+                self.__rr.close()
                 while ((idx < (rgb_length+18)) and (y < 8)):
                     r = rawbytes[idx]
                     idx += 1
@@ -67,9 +73,12 @@ class ArtNet(DatagramProtocol):
                     idx += 1
                     b = rawbytes[idx]
                     idx += 1
-                    print ("{0}, {1}, {2}, {3}, {4}".format(x, y, r, g, b) )  #unicorn.set_pixel(x, y, r, g, b)
+                    #print ("{0}, {1}, {2}, {3}, {4}".format(x, y, r, g, b) )  #unicorn.set_pixel(x, y, r, g, b)
+                    print >> self.__ww , "{0}, {1}, {2}, {3}, {4}".format(x, y, r, g, b)
+                    self.__ww.flush()
                     x += 1
                     if (x > 7):
                         x = 0
                         y += 1
                 #unicorn.show()
+

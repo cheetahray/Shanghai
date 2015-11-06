@@ -7,7 +7,9 @@ import socket
 import serial
 import ledstrip
 import math
-import artnet-server
+from artnet import ArtNet 
+from twisted.internet import reactor
+import os, sys
 
 def raymap(value, istart, istop, ostart, ostop):
     return ostart + (ostop - ostart) * ((value - istart) / (istop - istart));
@@ -203,8 +205,6 @@ anim = ledstrip.ColorWipe(led)
 sock = socket.socket(socket.AF_INET, socket.SOCK_DGRAM) # UDP
 UDP_PORT = 5005
 UDP_IP = "192.168.12.178"
-reactor.listenUDP(6454, ArtNet())
-reactor.run()
 
 rayshift = 42
 lastm = 0
@@ -214,7 +214,7 @@ chnl = 0
 #sfid = fl.sfload("/home/pi/Shanghai/FluidR3_GM.sf2")
 #fl.program_select(chnl, sfid, 0, 27)
 
-port = serial.Serial("/dev/ttyAMA0", baudrate=115200)
+port = serial.Serial("/dev/ttyAMA0", baudrate=115200, timeout = 0.05)
 
 pa = pyaudio.PyAudio()
 strm = pa.open(
@@ -228,11 +228,10 @@ strm = pa.open(
 try:
     #rayudp()
 
-    #while True:
-    #    rcv = readlineCR(port)
-    #    mylist = rcv.split(" ")
-    #    print(mylist)
-    #    raylist(mylist)
+    #sock.sendto("m0v126", (UDP_IP, UDP_PORT))
+    #time.sleep(5)
+    #sock.sendto("m18v126", (UDP_IP, UDP_PORT))
+    #time.sleep(5) 
 
     pa.terminate()
 
@@ -248,18 +247,26 @@ try:
         stream_callback=callback
         )
 
-    #sock.sendto("m0v126", (UDP_IP, UDP_PORT))
-    #time.sleep(5)
-    #sock.sendto("m18v126", (UDP_IP, UDP_PORT))
-    #time.sleep(5)
-
     strm.start_stream()
-    while strm.is_active():
-        rcv = readlineCR(port)
-        mylist = rcv.split(" ")
-        print(mylist)
-        raylist(mylist)
-        #time.sleep(0.1)
+
+    rr,ww=os.pipe()
+    rr,ww=os.fdopen(rr,'r',0), os.fdopen(ww,'w',0)
+    pid = os.fork()
+
+    while True:
+        if pid != 0:          # Parent
+            ww.close()
+            data=rr.readline()
+            if not data:
+                rcv = readlineCR(port)
+                mylist = rcv.split(" ")
+                print(mylist)
+                raylist(mylist)
+            else:
+                print data.strip()
+        else:           # Child
+            reactor.listenUDP(6454, ArtNet(rr,ww) )
+            reactor.run()
 
 except KeyboardInterrupt:
     led.all_off()

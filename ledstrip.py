@@ -35,7 +35,9 @@ class ColorWipe(BaseStripAnim, Thread):
         for i in range(self.__lastpos):
             self._led.set(i, self._color)
         self.__interrupt = True
+        self.__cv.acquire()
         self.__cv.notify()
+        self.__cv.release()
 
     def run(self):
         while True:
@@ -46,6 +48,11 @@ class ColorWipe(BaseStripAnim, Thread):
                     self.__lastpos = i
                     if self.__interrupt == True:
                         break
+                    elif 0 == self.__sleeptime:
+                        if i == self.__animpos:
+                            BaseStripAnim.run(self, threaded = True, joinThread = False)
+                            time.sleep(0.05)
+                            BaseStripAnim.stopThread(self)
                     else:
                         BaseStripAnim.run(self, threaded = True, joinThread = False)
                         time.sleep(self.__sleeptime)
@@ -57,11 +64,18 @@ class ColorWipe(BaseStripAnim, Thread):
                     self.__lastpos = i
                     if self.__interrupt == True:
                         break
+                    elif 0 == self.__sleeptime:
+                        if i == self.__animpos:
+                            BaseStripAnim.run(self, threaded = True, joinThread = False)
+                            time.sleep(0.05)
+                            BaseStripAnim.stopThread(self)
                     else:
                         BaseStripAnim.run(self, threaded = True, joinThread = False)
                         time.sleep(self.__sleeptime)
                         BaseStripAnim.stopThread(self)
                 self.__interrupt = False
             else:
+                self.__cv.acquire()
                 self.__cv.wait() #time.sleep(0.01)            
+                self.__cv.release()
 
