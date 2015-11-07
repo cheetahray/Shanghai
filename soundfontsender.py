@@ -53,6 +53,8 @@ def raymr(tid):
                     istsl = 0
                     time.sleep(0.5)
                     sock.sendto("mr" + str(tid-rayshift), (UDP_IP, UDP_PORT))
+                    data, addr = sock.recvfrom(1024)
+                    tp.append(int(data))
                     time.sleep(0.5)
             else:
                 if tid < rndrayint:
@@ -77,6 +79,8 @@ def raymr(tid):
                     istsl = 0
                     time.sleep(0.5)
                     sock.sendto("mr" + str(tid-rayshift), (UDP_IP, UDP_PORT))
+                    data, addr = sock.recvfrom(1024)
+                    tp.append(int(data))
                     time.sleep(0.5)
         if aacnt == 100:
             aacnt = 0
@@ -87,7 +91,7 @@ def raymr(tid):
 def rayudp():
     global sock
     global UDP_PORT
-    global UDP_IP
+    global UDP_I
     global rayshift
     sock.bind(("", UDP_PORT))
     data = ''
@@ -182,6 +186,7 @@ def raylist(mylist):
             #fl.noteon(chnl, noteint, int(mylist[2]))
             nowm = noteint - rayshift
             sock.sendto("m" + str(nowm) + "v126", (UDP_IP, UDP_PORT))
+            nowm = raymap (tp[ nowm ], tp[0], tp[len(tp)-1], 0, 20)
             anim.rayanim(255,255,255,255,nowm,math.fabs(nowm-lastm)*0.1)
             #anim.run(threaded = True, joinThread = False)
             #time.sleep(0.2)
@@ -225,6 +230,8 @@ strm = pa.open(
     input_device_index = 0,
     input = True
     )
+
+tp=[]
 
 try:
     #rayudp()
