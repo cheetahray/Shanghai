@@ -93,6 +93,17 @@ def rayudp():
     global UDP_PORT
     global UDP_I
     global rayshift
+    global pa
+    global strm
+
+    strm = pa.open(
+        format = pyaudio.paInt16,
+        channels = 1,
+        rate = 44100,
+        input_device_index = 0,
+        input = True
+    )
+
     sock.bind(("", UDP_PORT))
     data = ''
     howmanypitch = 18
@@ -119,6 +130,11 @@ def rayudp():
     else:
         print (data)
         return False
+    
+    strm.stop_stream()
+    strm.close()    
+    pa.terminate()
+
     return True
     
 def raypitch():
@@ -145,25 +161,6 @@ def raypitch():
             raise
     return 0,0
 
-def rayslide(begin,end,velocity, raysleep):
-    global fl
-    interpo = 1
-    if begin > end:
-        interpo = -1
-    for y in range (begin, end, interpo ):
-        fl.pitch_bend(chnl,0)
-        fl.noteon(chnl, y, velocity) 
-        fl.noteoff(chnl,y-1)
-        if 1 == interpo:
-            for z in range (0, 2048, 1):
-                fl.pitch_bend(chnl,z) 
-                #time.sleep(raysleep)
-        else:
-            for z in range (0, -2048, -1):
-                fl.pitch_bend(chnl,z)
-                #time.sleep(raysleep)
-    fl.noteoff(chnl,end-1)
-
 def readlineCR(port):
     rv = ""
     while True:
@@ -176,27 +173,63 @@ def raylist(mylist):
     global fl
     global rayshift
     global lastm
+    global isout
+    global issoundfont
+    global chnl
+    global pa
+    global strm
+
     if mylist[0] == '144':
         if mylist[2] == '0':
-            mylist[2] = 0
-            fl.noteoff(chnl, int(mylist[1]))
+            if True == issoundfont:
+                fl.noteoff(chnl, int(mylist[1]))
         else:
             #sock.sendto("as", (UDP_IP, UDP_PORT))
             noteint = int(mylist[1])
-            #fl.noteon(chnl, noteint, int(mylist[2]))
+            if True == issoundfont:
+                fl.noteon(chnl, noteint, int(mylist[2]))
             nowm = noteint - rayshift
             sock.sendto("m" + str(nowm) + "v126", (UDP_IP, UDP_PORT))
             nowm = raymap (tp[ nowm ], tp[0], tp[len(tp)-1], 0, 20)
-            anim.rayanim(255,255,255,255,nowm,math.fabs(nowm-lastm)*0.1)
-            #anim.run(threaded = True, joinThread = False)
+            if False == isout:    
+                anim.rayanim(255,255,255,255,nowm,math.fabs(nowm-lastm)*0.1)
             #time.sleep(0.2)
             lastm = nowm
             #sock.sendto("av" + mylist[2], (UDP_IP, UDP_PORT))
             sock.sendto("aa", (UDP_IP, UDP_PORT))
-            #anim.stopThread()
     elif mylist[0] == '224':
-        bendint = int(mylist[2])
-        #fl.pitch_bend( chnl,raymap(bendint, 0, 127, -8192, 8192))
+        if True == issoundfont:
+            fl.pitch_bend( chnl,raymap(int(mylist[2]), 0, 127, -8192, 8192))
+    elif mylist[0] == '225':
+        isout = int(mylist[1])
+    elif mylist[0] == '249':
+        if '1' == mylist[1]:
+            if False == issoundfont:
+                strm.stop_stream()
+                strm.close()    
+                pa.terminate()
+        
+                fl = fluidsynth.Synth()
+                fl.start('alsa')
+                sfid = fl.sfload("/home/pi/Shanghai/FluidR3_GM.sf2")
+            fl.program_select(chnl, sfid, 0, int(mylist[2]) )
+            issoundfont = True
+        elif '0' == mylist[1]:
+            if True == issoundfont:    
+                fl.delete()
+                pa = pyaudio.PyAudio()
+                strm = pa.open(
+                    format = pyaudio.paInt16,
+                    channels = 1,
+                    rate = 44100,
+                    input_device_index = 0,
+                    input = True,
+                    output_device_index = 0,
+                    output = True,
+                    stream_callback=callback
+                )
+                strm.start_stream()
+            issoundfont = False
 
 #causes frame timing information to be output
 ledstrip.log.setLogLevel(ledstrip.log.CRITICAL)
@@ -214,24 +247,14 @@ gpioartnet = None
 
 rayshift = 42
 lastm = 0
-#fl = fluidsynth.Synth()
-#fl.start('alsa')
-chnl = 0
-#sfid = fl.sfload("/home/pi/Shanghai/FluidR3_GM.sf2")
-#fl.program_select(chnl, sfid, 0, 27)
-
-port = serial.Serial("/dev/ttyAMA0", baudrate=115200, timeout = 0.01)
-
-pa = pyaudio.PyAudio()
-strm = pa.open(
-    format = pyaudio.paInt16,
-    channels = 1,
-    rate = 44100,
-    input_device_index = 0,
-    input = True
-    )
-
 tp=[]
+isout = False
+issoundfont = False
+chnl = 0
+strm = None
+pa = pyaudio.PyAudio()
+fl = None
+port = serial.Serial("/dev/ttyAMA0", baudrate=115200, timeout = 0.01)
 
 try:
     #rayudp()
@@ -241,21 +264,24 @@ try:
     #sock.sendto("m18v126", (UDP_IP, UDP_PORT))
     #time.sleep(5) 
 
-    pa.terminate()
-
-    pa = pyaudio.PyAudio()
-    strm = pa.open(
-        format = pyaudio.paInt16,
-        channels = 1,
-        rate = 44100,
-        input_device_index = 0,
-        input = True,
-        output_device_index = 0,
-        output = True,
-        stream_callback=callback
+    if True == issoundfont:
+        fl = fluidsynth.Synth()
+        fl.start('alsa')
+        sfid = fl.sfload("/home/pi/Shanghai/FluidR3_GM.sf2")
+        fl.program_select(chnl, sfid, 0, int(mylist[2]) )
+    else:    
+        pa = pyaudio.PyAudio()
+        strm = pa.open(
+            format = pyaudio.paInt16,
+            channels = 1,
+            rate = 44100,
+            input_device_index = 0,
+            input = True,
+            output_device_index = 0,
+            output = True,
+            stream_callback=callback
         )
-
-    strm.start_stream()
+        strm.start_stream()
 
     rr,ww=os.pipe()
     rr,ww=os.fdopen(rr,'r',0), os.fdopen(ww,'w',0)
@@ -274,7 +300,8 @@ try:
             else:
                 mylist = data.strip().split(" ")
                 print(mylist)
-                anim.drawone(mylist[0],mylist[1],mylist[2],mylist[3],mylist[4])
+                if True == isout:
+                    anim.drawone(mylist[0],mylist[1],mylist[2],mylist[3],mylist[4])
         else:           # Child
             reactor.listenUDP(6454, gpioartnet)
             reactor.run()
@@ -286,5 +313,4 @@ except KeyboardInterrupt:
     led.update()
     strm.stop_stream()
     strm.close()    
-    #fl.delete()
     pa.terminate()
