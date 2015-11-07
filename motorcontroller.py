@@ -3,17 +3,20 @@
 #Current Project: noisekitchen.tw
 #------------------------------------------------------------------------
 #------------------------------------------------------------------------
-import stepper_class
+import motor_lib
 import socket
 import os
 #------------------------------------------------------------------------
-tp=[]
+#tp=[]
 
-stepper_class.io1.wiringPiSetupGpio()
-motor1 = stepper_class.stepperdriver(12800,19,26)
-motor2 = stepper_class.stepperdriver(12800,20,21)
+motor_lib.io1.wiringPiSetupGpio()
+motor1 = motor_lib.stepperdriver(6400,20,16)#picker_motor
+motor2 = motor_lib.stepperdriver(6400,24,23)#volacity_motor
+motor3 = motor_lib.pwmMotorDriver(17,27,22)#string_turning_motor
+motor4 = motor_lib.tstepdriver()#slider_motor
 
-UDP_IP = "192.168.11.78"
+
+UDP_IP = "192.168.12.78"
 UDP_PORT = 5005
 sock = socket.socket(socket.AF_INET, # Internet
                      socket.SOCK_DGRAM) # UDP
@@ -27,16 +30,23 @@ while False == iftsh or False == iftph or False == iftvh:
     data, addr = sock.recvfrom(1024)
     if data == "tsh":
         print("String back home") #tsh change here
-        sock.sendto(data + "e", (UDP_IP, UDP_PORT))
-        iftsh = True
-        if data == "tph":
-            print("picker back home") #tph change here
+        srs = motor4.t_zero(640)
+        if srs == True: #tshe change here
             sock.sendto(data + "e", (UDP_IP, UDP_PORT))
-            iftph = True 
-            if data == "tvh":
-                print("velocity back home") #tvh change here
-                sock.sendto(data + "e", (UDP_IP, UDP_PORT))
-                iftvh = True
+            iftsh = True
+    elif data == "tph":
+        print("picker back home") #tph change here
+        motor2.rotate(-1, 3, 60, 0, 0)
+        prs = motor1.gh(1,10,0.014,21)
+        if prs == True: #tphe change here
+            sock.sendto(data + "e", (UDP_IP, UDP_PORT))
+            iftph = True
+    elif data == "tvh":
+        print("velocity back home") #tvh change here
+        vrs = motor2.gh(1,60,2.45,25)
+        if vrs ==True: #tvhe change here
+            sock.sendto(data + "e", (UDP_IP, UDP_PORT))
+            iftvh = True
 
 pickspeed = 250
 pickvelocity = 127
@@ -47,79 +57,58 @@ while True:
     #print (data)
     if data[0] == 't':
         if data[1:] == "sl":
-            child_pid = os.fork()
-            if child_pid == 0:
-                print("turn string loose") #tsl change here
-                os._exit(0)
-        elif data[1:] == "st": 
-            child_pid = os.fork()
-            if child_pid == 0:
-                print("turn string tight") #tst change here
-                os._exit(0)
+            #child_pid = os.fork()
+            #if child_pid == 0:
+            print("turn string loose") #tsl change here
+            motor3.rotate(1,40)
+            #    os._exit(0)
+        elif data[1:] == "st":
+            #child_pid = os.fork()
+            #if child_pid == 0:
+            print("turn string tight") #tst change here
+            motor3.rotate(-1,40)
+            #    os._exit(0)
         elif data[1:] == "ss":
-            child_pid = os.fork()
-            if child_pid == 0:
-                print("stop turn string") #tss change here
-                os._exit(0)
+            #child_pid = os.fork()
+            #if child_pid == 0:
+            print("stop turn string") #tss change here
+            motor3.stop()
+            #    os._exit(0)
     elif data[0] == 'a':
         if data[1] == 'v':
             pickvelocity = int(data[2:])
-        elif data[1] == 'c':
-            ifpickclock = True
-            pickspeed = int(data[2:])
-        elif data[1] == 'w':
-            ifpickclock = False
-            pickspeed = int(data[2:])
-        child_pid = os.fork()
-        if child_pid == 0:
-            print("use picker speed = {0}, picker velocity = {1}, is picker clockwise? {2}".format(pickspeed,pickvelocity,ifpickclock)) #av127, ac127, aw127 change here
-            os._exit(0)
+        elif data[1] == 'a':
+            motor1.picker_action(200)
+        elif data[1] == 's':
+            motor1.picker_stopsound()
     elif data[0] == 'm':
         if data[1] == 'r':
-            tpindex = int(data[2:]) 
-            child_pid = os.fork()
-            if child_pid == 0:
-                tp.append("Remember pitch {0} position".format( tpindex ) ) #mr1 change here
-                print( tp[ len(tp)-1 ] ) #mr1 change here
-                os._exit(0)
+            tpindex = int(data[2:])
+            print "record pitch address" + str(tpindex)
+            rrs = motor4.mr(tpindex)
+            sock.sendto(str(rrs), (UDP_IP, UDP_PORT)) #tp.append(rrs)
         elif data[1] == 'h':
-            child_pid = os.fork()
-            if child_pid == 0:
-                print("left hand move high") #mh change here
-                os._exit(0)
+            #child_pid = os.fork()
+            #if child_pid == 0:
+            print("left hand move high") #mh change here
+            motor4.mh()
+             #   os._exit(0)
         elif data[1] == 'l':
-            child_pid = os.fork()
-            if child_pid == 0:
-                print("left hand move low") #ml change here
-                os._exit(0)
+            #child_pid = os.fork()
+            #if child_pid == 0:
+            print("left hand move low") #ml change here
+            motor4.ml()
+             #   os._exit(0)
         elif data[1] == 's':
-            child_pid = os.fork()
-            if child_pid == 0:
-                print("left hand stop move") #ms change here
-                os._exit(0)
+            #child_pid = os.fork()
+            #if child_pid == 0:
+            print("left hand stop move") #ms change here
+            motor4.ms()
+             #   os._exit(0)
         else:
-            vindex = data.index('v') 
-            motorspeed = int(data[vindex+1:]) 
-            child_pid = os.fork()
-            if child_pid == 0:
-                print("Use {0} motor speed to get pitch {1} position from tp[ int(data[1:vindex]) - 1 ]".format( motorspeed, int(data[1:vindex]) ) ) #m1v127 change here
-                os._exit(0)
-
-#motor1.gh(-1,20,0.1,6)
-#motor2.gh(1,2,0.1,16)
-
-#motor1.moveto(tp[1],300,20,20)
-#stepper_class.io1.delayMicroseconds(500000)
-#motor1.moveto(tp[3],300,20,20)
-#stepper_class.io1.delayMicroseconds(500000)
-#motor1.moveto(tp[5],300,20,20)
-#stepper_class.io1.delayMicroseconds(500000)
-#motor1.moveto(tp[2],300,20,20)
-#stepper_class.io1.delayMicroseconds(500000)
-#motor1.moveto(tp[4],300,20,20)
-#stepper_class.io1.delayMicroseconds(500000)
-#motor1.moveto(tp[6],200,30,30)
-#stepper_class.io1.delayMicroseconds(500000)
-#motor1.moveto(tp[0],300,20,20)
-#stepper_class.io1.delayMicroseconds(500000)
-#motor1.moveto(0,300,20,20)
+            vindex = data.index('v')
+            motorspeed = int(float(data[vindex+1:]) / 127.0 * 64000)
+            #child_pid = os.fork()
+            #if child_pid == 0:
+            print("Use {0} motor speed to get pitch {1} position".format( motorspeed, int(data[1:vindex]) ) ) #m1v127 change here
+            #    os._exit(0)
