@@ -77,7 +77,7 @@ class ArtNet(DatagramProtocol):
                     b = rawbytes[idx]
                     idx += 1
                     #print ("{0}, {1}, {2}, {3}, {4}".format(x, y, r, g, b) )  #unicorn.set_pixel(x, y, r, g, b)
-                    print >> self.__ww , "{0}, {1}, {2}, {3}, {4}".format(x, y, r, g, b)
+                    print >> self.__ww , "{0} {1} {2} {3} {4}".format(x, y, r, g, b)
                     self.__ww.flush()
                     x += 1
                     if (x > 7):

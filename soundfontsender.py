@@ -220,7 +220,7 @@ chnl = 0
 #sfid = fl.sfload("/home/pi/Shanghai/FluidR3_GM.sf2")
 #fl.program_select(chnl, sfid, 0, 27)
 
-port = serial.Serial("/dev/ttyAMA0", baudrate=115200, timeout = 0.05)
+port = serial.Serial("/dev/ttyAMA0", baudrate=115200, timeout = 0.01)
 
 pa = pyaudio.PyAudio()
 strm = pa.open(
@@ -272,7 +272,9 @@ try:
                 print(mylist)
                 raylist(mylist)
             else:
-                print data.strip()
+                mylist = data.strip().split(" ")
+                print(mylist)
+                anim.drawone(mylist[0],mylist[1],mylist[2],mylist[3],mylist[4])
         else:           # Child
             reactor.listenUDP(6454, gpioartnet)
             reactor.run()

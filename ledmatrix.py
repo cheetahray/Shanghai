@@ -5,7 +5,7 @@ from bibliopixel.led import *
 import bibliopixel.colors as colors
 import math
 from bibliopixel.animation import *
-from threading import Thread
+from threading import *
 
 class ColorWipe(BaseMatrixAnim, Thread):
     """Fill the dots progressively along the strip."""
@@ -14,17 +14,24 @@ class ColorWipe(BaseMatrixAnim, Thread):
     __animpos = 0
     __interrupt = False
     __width = 2
+    __cv = None
+    __isartnet = False
 
     def __init__(self, led, start=0, end=-1, width=2):
         super(ColorWipe, self).__init__(led, start, end)
         self.__width = width
         Thread.__init__(self)
         self._led.all_off()
+        self.__cv = Condition()
         Thread.start(self)
 
     def step(self, amt = 1):
         amt = 2
 
+    def drawone(self,x,y,r,g,b):
+        self.__led.setRGB(x,y,b,r,g)
+        self.__isartnet = True
+        
     def rayanim(self,r,g,b,bright,animpos,animtime):
         self._bright = bright 
         self._color = colors.color_scale((b,r,g), self._bright)
@@ -33,6 +40,10 @@ class ColorWipe(BaseMatrixAnim, Thread):
         for i in range(self.__lastpos):
             self._led.drawRect(0,0,self.__width,i+1, self._color) #self._led.set(i, self._color)
         self.__interrupt = True
+        self.__isartnet = False
+        self.__cv.acquire()
+        self.__cv.notify()
+        self.__cv.release()
 
     def run(self):
         while True:
@@ -40,25 +51,33 @@ class ColorWipe(BaseMatrixAnim, Thread):
             if diff > 0 :
                 for i in range(self.__lastpos, self.__animpos-1, -1):
                     self._led.drawRect(0,i,self.__width,i+1, (0,0,0) ) #self._led.setOff(i) 
-                    BaseMatrixAnim.run(self, threaded = True, joinThread = False)
                     self.__lastpos = i
                     if self.__interrupt == True:
                         break
                     else:
+                        BaseMatrixAnim.run(self, threaded = True, joinThread = False)
                         time.sleep(self.__sleeptime)
+                        BaseMatrixAnim.stopThread(self)
                 self.__interrupt = False    
             elif diff < 0:
                 for i in range(self.__lastpos, self.__animpos+1, 1):
                     self._led.drawRect(0,i,self.__width,i+1, self._color)  #self._led.set(i, self._color) 
-                    BaseMatrixAnim.run(self, threaded = True, joinThread = False)
                     self.__lastpos = i
                     if self.__interrupt == True:
                         break
                     else:
+                        BaseMatrixAnim.run(self, threaded = True, joinThread = False)
                         time.sleep(self.__sleeptime)
+                        BaseMatrixAnim.stopThread(self)
                 self.__interrupt = False
+            elif True == self.__isartnet:
+                BaseMatrixAnim.run(self, threaded = True, joinThread = False)
+                time.sleep(0.05)
+                BaseMatrixAnim.stopThread(self)
             else:
-                time.sleep(0.05)            
+                self.__cv.acquire()
+                self.__cv.wait() #time.sleep(0.01)            
+                self.__cv.release()      
 
 coords = [
     [9,10],
