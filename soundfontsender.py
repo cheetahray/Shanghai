@@ -121,6 +121,8 @@ def rayudp():
             if data == 'tshe':
                 for x in range(rayshift, rayshift+howmanypitch+1):
                     raymr(x)
+                for x in range(0, howmanypitch+1):    
+                    tp[x] = raymap (tp[ x ], tp[0], tp[len(tp)-1], 0, 20)
                 sock.sendto("m" + str(howmanypitch/2) + "v126", (UDP_IP, UDP_PORT))
                 print("m" + str(howmanypitch/2) + "v126")
             else:
@@ -190,7 +192,7 @@ def raylist(mylist):
                 fl.noteon(chnl, noteint, int(mylist[2]))
             nowm = noteint - rayshift
             sock.sendto("m" + str(nowm) + "v126", (UDP_IP, UDP_PORT))
-            nowm = raymap (tp[ nowm ], tp[0], tp[len(tp)-1], 0, 20)
+            nowm = tp[ nowm ]
             if False == isout:    
                 anim.rayanim(255,255,255,255,nowm,math.fabs(nowm-lastm)*0.1)
             #time.sleep(0.2)
