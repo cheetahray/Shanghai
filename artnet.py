@@ -30,7 +30,7 @@ class ArtNet(Thread):
     def __init__(self):
         self.__sock = socket.socket(socket.AF_INET, socket.SOCK_DGRAM) # UDP
         self.__sock.bind(("", self.__UDP_PORT))
-        self.__sock.settimeout(0.04)
+        self.__sock.settimeout(0.04)    #fps = 25
         Thread.__init__(self)
         GPIO.setmode(GPIO.BOARD)
         GPIO.setup(31, GPIO.OUT)

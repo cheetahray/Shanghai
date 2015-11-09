@@ -56,6 +56,8 @@ class ColorWipe(BaseStripAnim, Thread):
             self._led.set(i, self._color)
         self.__isartnet = False
         self.__interrupt = True
+        BaseStripAnim.stopThread(self)
+        BaseStripAnim.run(self, sleep = self.__sleeptime, threaded = True, joinThread = False)
         self.__cv.acquire()
         self.__cv.notify()
         self.__cv.release()
@@ -68,27 +70,25 @@ class ColorWipe(BaseStripAnim, Thread):
                     self._led.setOff(i) 
                     self.__lastpos = i
                     if self.__interrupt == True:
-                        BaseStripAnim.stopThread(self)
-                        BaseStripAnim.run(self, sleep = self.__sleeptime, threaded = True, joinThread = False)
                         break
                     else:
                         #BaseStripAnim.run(self, sleep = self.__sleeptime, threaded = True, joinThread = False)
                         time.sleep(self.__sleeptime)
                         #BaseStripAnim.stopThread(self)
                 self.__interrupt = False    
+                BaseStripAnim.stopThread(self)
             elif diff < 0:
                 for i in range(self.__lastpos, self.__animpos+1, 1):
                     self._led.set(i, self._color) 
                     self.__lastpos = i
                     if self.__interrupt == True:
-                        BaseStripAnim.stopThread(self)
-                        BaseStripAnim.run(self, sleep = self.__sleeptime, threaded = True, joinThread = False)
                         break
                     else:
                         #BaseStripAnim.run(self, sleep = self.__sleeptime, threaded = True, joinThread = False)
                         time.sleep(self.__sleeptime)
                         #BaseStripAnim.stopThread(self)
                 self.__interrupt = False
+                BaseStripAnim.stopThread(self)
             #elif True == self.__isartnet:
                 #BaseStripAnim.run(self, sleep = 0.04, threaded = True, joinThread = False)
                 #time.sleep(0.04)
