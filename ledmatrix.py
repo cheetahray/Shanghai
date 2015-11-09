@@ -29,8 +29,23 @@ class ColorWipe(BaseMatrixAnim, Thread):
         amt = 2
 
     def drawone(self,x,y,r,g,b):
+        r += 30
+        g += 30
+        b += 30
+        if(r > 255):
+           r = 255 
+        if(g > 255):
+           g = 255 
+        if(b > 255):
+           b = 255 
         self.__led.setRGB(x,y,b,r,g)
-        self.__isartnet = True
+        if False == self.__isartnet:
+            #self.__cv.acquire()
+            #self.__cv.notify()
+            #self.__cv.release()
+            BaseStripAnim.stopThread(self)
+            BaseStripAnim.run(self, fps = 25, threaded = True, joinThread = False)
+            self.__isartnet = True
         
     def rayanim(self,r,g,b,bright,animpos,animtime):
         self._bright = bright 
@@ -39,8 +54,8 @@ class ColorWipe(BaseMatrixAnim, Thread):
         self.__animpos = animpos
         for i in range(self.__lastpos):
             self._led.drawRect(0,0,self.__width,i+1, self._color) #self._led.set(i, self._color)
-        self.__interrupt = True
         self.__isartnet = False
+        self.__interrupt = True
         self.__cv.acquire()
         self.__cv.notify()
         self.__cv.release()
@@ -53,6 +68,8 @@ class ColorWipe(BaseMatrixAnim, Thread):
                     self._led.drawRect(0,i,self.__width,i+1, (0,0,0) ) #self._led.setOff(i) 
                     self.__lastpos = i
                     if self.__interrupt == True:
+                        BaseMatrixAnim.stopThread(self)
+                        BaseMatrixAnim.run(self, sleep = self.__sleeptime, threaded = True, joinThread = False)
                         break
                     else:
                         BaseMatrixAnim.run(self, threaded = True, joinThread = False)
@@ -64,16 +81,18 @@ class ColorWipe(BaseMatrixAnim, Thread):
                     self._led.drawRect(0,i,self.__width,i+1, self._color)  #self._led.set(i, self._color) 
                     self.__lastpos = i
                     if self.__interrupt == True:
+                        BaseMatrixAnim.stopThread(self)
+                        BaseMatrixAnim.run(self, sleep = self.__sleeptime, threaded = True, joinThread = False)
                         break
                     else:
                         BaseMatrixAnim.run(self, threaded = True, joinThread = False)
                         time.sleep(self.__sleeptime)
                         BaseMatrixAnim.stopThread(self)
                 self.__interrupt = False
-            elif True == self.__isartnet:
-                BaseMatrixAnim.run(self, threaded = True, joinThread = False)
-                time.sleep(0.05)
-                BaseMatrixAnim.stopThread(self)
+            #elif True == self.__isartnet:
+                #BaseMatrixAnim.run(self, threaded = True, joinThread = False)
+                #time.sleep(0.05)
+                #BaseMatrixAnim.stopThread(self)
             else:
                 self.__cv.acquire()
                 self.__cv.wait() #time.sleep(0.01)            

@@ -6,6 +6,7 @@ from twisted.internet import protocol, endpoints
 from twisted.internet.protocol import DatagramProtocol
 import RPi.GPIO as GPIO
 import os
+import time
 
 # Adjust the LED brightness as needed.
 #unicorn.brightness(0.5)
@@ -88,5 +89,6 @@ class ArtNet(DatagramProtocol):
                     if (x >= 1):
                         x = 0
                         y += 1
+                time.sleep(0.001)
                 #unicorn.show()
 
