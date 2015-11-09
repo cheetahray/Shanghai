@@ -69,18 +69,23 @@ class ArtNet(DatagramProtocol):
                 x = 0
                 y = 0
                 self.__rr.close()
-                while ((idx < (rgb_length+18)) and (y < 8)):
+                while ((idx < (rgb_length+18)) and (y < 21)):
                     r = rawbytes[idx]
                     idx += 1
                     g = rawbytes[idx]
                     idx += 1
                     b = rawbytes[idx]
                     idx += 1
-                    #print ("{0}, {1}, {2}, {3}, {4}".format(x, y, r, g, b) )  #unicorn.set_pixel(x, y, r, g, b)
-                    print >> self.__ww , "{0} {1} {2} {3} {4}".format(x, y, r, g, b)
-                    self.__ww.flush()
+                    #unicorn.set_pixel(x, y, r, g, b)
+                    if 0 == x and 0 == y:
+                        self.__p31.ChangeDutyCycle(r/2.55)
+                        self.__p33.ChangeDutyCycle(g/2.55)
+                        self.__p35.ChangeDutyCycle(b/2.55)
+                    else:
+                        print >> self.__ww , "{0} {1} {2} {3} {4}".format(x, y-1, r, g, b)
+                        self.__ww.flush()
                     x += 1
-                    if (x > 7):
+                    if (x >= 1):
                         x = 0
                         y += 1
                 #unicorn.show()

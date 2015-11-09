@@ -55,6 +55,7 @@ def raymr(tid):
                     sock.sendto("mr" + str(tid-rayshift), (UDP_IP, UDP_PORT))
                     data, addr = sock.recvfrom(1024)
                     tp.append(int(data))
+                    print(int(data))
                     time.sleep(0.5)
             else:
                 if tid < rndrayint:
@@ -121,8 +122,11 @@ def rayudp():
             if data == 'tshe':
                 for x in range(rayshift, rayshift+howmanypitch+1):
                     raymr(x)
+                headd = tp[0]
+                taill = tp[len(tp)-1]
                 for x in range(0, howmanypitch+1):    
-                    tp[x] = raymap (tp[ x ], tp[0], tp[len(tp)-1], 0, 20)
+                    tp[x] = raymap (tp[x], headd, taill, 0, 20)
+                print(tp)
                 sock.sendto("m" + str(howmanypitch/2) + "v126", (UDP_IP, UDP_PORT))
                 print("m" + str(howmanypitch/2) + "v126")
             else:
@@ -175,7 +179,7 @@ def raylist(mylist):
     global fl
     global rayshift
     global lastm
-    global isout
+    global islightout
     global issoundfont
     global chnl
     global pa
@@ -193,7 +197,7 @@ def raylist(mylist):
             nowm = noteint - rayshift
             sock.sendto("m" + str(nowm) + "v126", (UDP_IP, UDP_PORT))
             nowm = tp[ nowm ]
-            if False == isout:    
+            if False == islightout:    
                 anim.rayanim(255,255,255,255,nowm,math.fabs(nowm-lastm)*0.1)
             #time.sleep(0.2)
             lastm = nowm
@@ -203,7 +207,7 @@ def raylist(mylist):
         if True == issoundfont:
             fl.pitch_bend( chnl,raymap(int(mylist[2]), 0, 127, -8192, 8192))
     elif mylist[0] == '225':
-        isout = int(mylist[1])
+        islightout = int(mylist[1])
     elif mylist[0] == '249':
         if '1' == mylist[1]:
             if False == issoundfont:
@@ -250,7 +254,7 @@ gpioartnet = None
 rayshift = 42
 lastm = 0
 tp=[]
-isout = False
+islightout = True
 issoundfont = False
 chnl = 0
 strm = None
@@ -301,9 +305,9 @@ try:
                 raylist(mylist)
             else:
                 mylist = data.strip().split(" ")
-                print(mylist)
-                if True == isout:
-                    anim.drawone(mylist[0],mylist[1],mylist[2],mylist[3],mylist[4])
+                #print(mylist)
+                if True == islightout:
+                    anim.drawone(int(mylist[0]),int(mylist[1]),int(mylist[2]),int(mylist[3]),int(mylist[4]))
         else:           # Child
             reactor.listenUDP(6454, gpioartnet)
             reactor.run()
