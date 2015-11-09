@@ -8,8 +8,6 @@ import serial
 import ledstrip
 import math
 from artnet import ArtNet 
-from twisted.internet import reactor
-import os, sys
 
 def raymap(value, istart, istop, ostart, ostop):
     return ostart + (ostop - ostart) * ((value - istart) / (istop - istart));
@@ -105,7 +103,6 @@ def rayudp():
         input = True
     )
 
-    sock.bind(("", UDP_PORT))
     data = ''
     howmanypitch = 18
     sock.sendto("tph", (UDP_IP, UDP_PORT) )
@@ -249,7 +246,8 @@ anim = ledstrip.ColorWipe(led)
 sock = socket.socket(socket.AF_INET, socket.SOCK_DGRAM) # UDP
 UDP_PORT = 5005
 UDP_IP = "192.168.12.178"
-gpioartnet = None
+sock.bind(("0.0.0.0", UDP_PORT))
+gpioartnet = ArtNet()
 
 rayshift = 42
 lastm = 0
@@ -289,31 +287,18 @@ try:
         )
         strm.start_stream()
 
-    rr,ww=os.pipe()
-    rr,ww=os.fdopen(rr,'r',0), os.fdopen(ww,'w',0)
-    gpioartnet = ArtNet(rr,ww)
-    pid = os.fork()
-
     while True:
-        if pid != 0:          # Parent
-            ww.close()
-            data=rr.readline()
-            if not data:
-                rcv = readlineCR(port)
-                mylist = rcv.split(" ")
-                print(mylist)
-                raylist(mylist)
-            else:
-                mylist = data.strip().split(" ")
-                #print(mylist)
-                if True == islightout:
-                    anim.drawone(int(mylist[0]),int(mylist[1]),int(mylist[2]),int(mylist[3]),int(mylist[4]))
-        else:           # Child
-            reactor.listenUDP(6454, gpioartnet)
-            reactor.run()
+        rcv = readlineCR(port)
+        if rcv != '':
+            mylist = rcv.split(" ")
+            print(mylist)
+            raylist(mylist)
+        if True == islightout:
+            data, addr = sock.recvfrom(1024)
+            mylist = data.split(" ") 
+            anim.drawone(int(mylist[0]),int(mylist[1]),int(mylist[2]),int(mylist[3]),int(mylist[4]))
 
 except KeyboardInterrupt:
-    #reactor.stop()
     gpioartnet = None
     led.all_off()
     led.update()
