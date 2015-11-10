@@ -17,6 +17,10 @@ class ColorWipe(BaseMatrixAnim, Thread):
     __cv = None
     __isartnet = False
 
+    def __del__(self):
+        self._led.all_off()
+        self._led.update()
+    
     def __init__(self, led, start=0, end=-1, width=2):
         super(ColorWipe, self).__init__(led, start, end)
         self.__width = width

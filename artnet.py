@@ -5,6 +5,7 @@ import RPi.GPIO as GPIO
 import socket
 import time
 import commands
+import ledstrip
 
 UDP_PORT = 6454
 
@@ -36,6 +37,16 @@ p35.start(0)
 p37.start(0)
 p38.start(0)
 p40.start(0)
+
+#causes frame timing information to be output
+ledstrip.log.setLogLevel(ledstrip.log.CRITICAL)
+#set number of pixels & LED type here
+driver = ledstrip.DriverLPD8806(num = 20)
+#load the LEDStrip class
+led = ledstrip.LEDStrip(driver, threadedUpdate = True)
+#load channel test animation
+anim = ledstrip.ColorWipe(led)
+
 try:        
     while True:
         data, addr = sock.recvfrom(1024)   
@@ -68,12 +79,17 @@ try:
                             p33.ChangeDutyCycle(int(g/2.55))
                             p35.ChangeDutyCycle(int(b/2.55))
                         else:
-                            sock.sendto( "{0} {1} {2} {3} {4}".format(x, nowy-1, r, g, b), ('127.0.0.1', 5005) ) 
+                            anim.drawone(x, nowy-1, r, g, b)
+                            #sock.sendto( "{0} {1} {2} {3} {4}".format(x, nowy-1, r, g, b), ('127.0.0.1', 5005) ) 
                             #print "{0} {1} {2} {3} {4}".format(x, nowy-1, r, g, b)
                     x += 1
                     if (x >= 66):
                         x = 0
                         #y += 1
+        elif ((len(data) > 8) and (data[0:8] == "Not-Art\x00")):
+            mylist = data[8:].split(" ")
+            anim.rayanim(255,255,255,255,int(mylist[0]),int(mylist[1]))
+            
 except:      
     p31.stop()
     #p32.stop()

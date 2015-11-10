@@ -5,9 +5,7 @@ import time
 import fluidsynth
 import socket
 import serial
-import ledstrip
 import math
-#from artnet import ArtNet 
 
 def raymap(value, istart, istop, ostart, ostop):
     return ostart + (ostop - ostart) * ((value - istart) / (istop - istart));
@@ -195,7 +193,7 @@ def raylist(mylist):
             sock.sendto("m" + str(nowm) + "v126", (UDP_IP, UDP_PORT))
             nowm = tp[ nowm ]
             if False == islightout:    
-                anim.rayanim(255,255,255,255,nowm,math.fabs(nowm-lastm)*0.1)
+                sock.sendto("Not-Art\x00{0} {1}".format(nowm,math.fabs(nowm-lastm)*0.1), ("127.0.0.1", 6454)) #anim.rayanim(255,255,255,255,nowm,math.fabs(nowm-lastm)*0.1)
             #time.sleep(0.2)
             lastm = nowm
             #sock.sendto("av" + mylist[2], (UDP_IP, UDP_PORT))
@@ -234,28 +232,10 @@ def raylist(mylist):
                 strm.start_stream()
             issoundfont = False
 
-def handler():
-    #gpioartnet = None
-    led.all_off()
-    led.update()
-    strm.stop_stream()
-    strm.close()
-    pa.terminate()
-
-#causes frame timing information to be output
-ledstrip.log.setLogLevel(ledstrip.log.CRITICAL)
-#set number of pixels & LED type here
-driver = ledstrip.DriverLPD8806(num = 20)
-#load the LEDStrip class
-led = ledstrip.LEDStrip(driver, threadedUpdate = True)
-#load channel test animation
-anim = ledstrip.ColorWipe(led)
-
 sock = socket.socket(socket.AF_INET, socket.SOCK_DGRAM) # UDP
 UDP_PORT = 5005
 UDP_IP = "192.168.12.178"
 sock.bind(("0.0.0.0", UDP_PORT))
-#gpioartnet = ArtNet()
 
 rayshift = 42
 lastm = 0
@@ -266,7 +246,7 @@ chnl = 0
 strm = None
 pa = pyaudio.PyAudio()
 fl = None
-port = serial.Serial("/dev/ttyAMA0", baudrate=115200, timeout = 0.001)
+port = serial.Serial("/dev/ttyAMA0", baudrate=115200)#, timeout = 0.01)
 
 #rayudp()
 
@@ -294,20 +274,13 @@ else:
     )
     strm.start_stream()
 
-sock.settimeout(0.001) 
-
 while True:
     rcv = readlineCR(port)
     if rcv != '':
         mylist = rcv.split(" ")
         print(mylist)
         raylist(mylist)
-    if True == islightout:
-        try:
-            data, addr = sock.recvfrom(1024)
-            mylist = data.split(" ") 
-            anim.drawone(int(mylist[0]),int(mylist[1]),int(mylist[2]),int(mylist[3]),int(mylist[4]))
-        except socket.timeout:
-            pass
-
-handler()
+    
+strm.stop_stream()
+strm.close()
+pa.terminate()
