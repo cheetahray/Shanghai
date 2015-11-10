@@ -5,6 +5,7 @@ import RPi.GPIO as GPIO
 import socket
 from threading import *
 import time
+import commands
 
 class ArtNet(Thread):
 
@@ -17,6 +18,7 @@ class ArtNet(Thread):
     __p40 = None
     __sock = None
     __UDP_PORT = 6454
+    __whoami = 0
 
     def __del__(self):
         self.__p31.stop()
@@ -33,6 +35,11 @@ class ArtNet(Thread):
         self.__sock.bind(("", self.__UDP_PORT))
         #self.__sock.settimeout(0.04)    #fps = 25
         Thread.__init__(self)
+        ips = commands.getoutput("/sbin/ifconfig | grep -iA2 \"wlan0\" | grep -i \"inet\" | grep -iv \"inet6\" | " +
+                         "awk {'print $2'} | sed -ne 's/addr\://p'")
+        #print ips
+        mylist = ips.split(".")
+        self.__whoami = int(mylist[3])
         GPIO.setmode(GPIO.BOARD)
         GPIO.setup(31, GPIO.OUT)
         #GPIO.setup(32, GPIO.OUT)
@@ -70,30 +77,32 @@ class ArtNet(Thread):
                         physical = rawbytes[13]
                         sub_net = (rawbytes[14] & 0xF0) >> 4
                         universe = rawbytes[14] & 0x0F
+                        nowy = (sub_net << 4) + universe
                         net = rawbytes[15]
                         rgb_length = (rawbytes[16] << 8) + rawbytes[17]
-                        #print "seq %d phy %d sub_net %d uni %d net %d len %d" % \
-                        #(sequence, physical, sub_net, universe, net, rgb_length)
+                        #print "seq %d phy %d sub_net %d uni %d net %d len %d" % (sequence, physical, sub_net, universe, net, rgb_length)
                         idx = 18
                         x = 0
-                        y = 0
-                        while ((idx < (rgb_length+18)) and (y < 21)):
+                        #y = 0
+                        while ((idx < (rgb_length+18)) ): #and ( y < 21 )):
                             r = rawbytes[idx]
                             idx += 1
                             g = rawbytes[idx]
                             idx += 1
                             b = rawbytes[idx]
                             idx += 1
-                            if 0 == x and 0 == y:
-                                self.__p31.ChangeDutyCycle(int(r/2.55))
-                                self.__p33.ChangeDutyCycle(int(g/2.55))
-                                self.__p35.ChangeDutyCycle(int(b/2.55))
-                            else:
-                                self.__sock.sendto( "{0} {1} {2} {3} {4}".format(x, y-1, r, g, b), ('127.0.0.1', 5005) ) #print >> self.__ww , "{0} {1} {2} {3} {4}".format(x, y-1, r, g, b)
+                            if ( x == self.__whoami - 78 ):
+                                if 0 == nowy:
+                                    self.__p31.ChangeDutyCycle(int(r/2.55))
+                                    self.__p33.ChangeDutyCycle(int(g/2.55))
+                                    self.__p35.ChangeDutyCycle(int(b/2.55))
+                                else:
+                                    self.__sock.sendto( "{0} {1} {2} {3} {4}".format(x, nowy-1, r, g, b), ('127.0.0.1', 5005) ) 
+                                    #print "{0} {1} {2} {3} {4}".format(x, nowy-1, r, g, b)
                             x += 1
-                            if (x >= 1):
+                            if (x >= 66):
                                 x = 0
-                                y += 1
+                                #y += 1
                 time.sleep(0.01)   
             except socket.timeout:
                 pass
