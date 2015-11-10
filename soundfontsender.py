@@ -7,7 +7,7 @@ import socket
 import serial
 import ledstrip
 import math
-from artnet import ArtNet 
+#from artnet import ArtNet 
 
 def raymap(value, istart, istop, ostart, ostop):
     return ostart + (ostop - ostart) * ((value - istart) / (istop - istart));
@@ -235,7 +235,7 @@ def raylist(mylist):
             issoundfont = False
 
 def handler():
-    gpioartnet = None
+    #gpioartnet = None
     led.all_off()
     led.update()
     strm.stop_stream()
@@ -255,7 +255,7 @@ sock = socket.socket(socket.AF_INET, socket.SOCK_DGRAM) # UDP
 UDP_PORT = 5005
 UDP_IP = "192.168.12.178"
 sock.bind(("0.0.0.0", UDP_PORT))
-gpioartnet = ArtNet()
+#gpioartnet = ArtNet()
 
 rayshift = 42
 lastm = 0
@@ -266,7 +266,7 @@ chnl = 0
 strm = None
 pa = pyaudio.PyAudio()
 fl = None
-port = serial.Serial("/dev/ttyAMA0", baudrate=115200, timeout = 0.01)
+port = serial.Serial("/dev/ttyAMA0", baudrate=115200, timeout = 0.001)
 
 #rayudp()
 
@@ -294,7 +294,7 @@ else:
     )
     strm.start_stream()
 
-sock.settimeout(0.01) 
+sock.settimeout(0.001) 
 
 while True:
     rcv = readlineCR(port)

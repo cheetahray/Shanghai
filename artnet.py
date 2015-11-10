@@ -9,7 +9,7 @@ import commands
 UDP_PORT = 6454
 
 sock = socket.socket(socket.AF_INET, socket.SOCK_DGRAM) # UDP
-sock.bind(("", self.__UDP_PORT))
+sock.bind(("", UDP_PORT))
 ips = commands.getoutput("/sbin/ifconfig | grep -iA2 \"wlan0\" | grep -i \"inet\" | grep -iv \"inet6\" | " +
                          "awk {'print $2'} | sed -ne 's/addr\://p'")
 mylist = ips.split(".")
@@ -22,23 +22,23 @@ GPIO.setup(35, GPIO.OUT)
 GPIO.setup(37, GPIO.OUT)
 GPIO.setup(38, GPIO.OUT)
 GPIO.setup(40, GPIO.OUT)
-self.__p31 = GPIO.PWM(31, 1000)
-#self.__p32 = GPIO.PWM(32, 1000)
-self.__p33 = GPIO.PWM(33, 1000)
-self.__p35 = GPIO.PWM(35, 1000)
-self.__p37 = GPIO.PWM(37, 1000)
-self.__p38 = GPIO.PWM(38, 1000)
-self.__p40 = GPIO.PWM(40, 1000)
-self.__p31.start(0)
+p31 = GPIO.PWM(31, 1000)
+#p32 = GPIO.PWM(32, 1000)
+p33 = GPIO.PWM(33, 1000)
+p35 = GPIO.PWM(35, 1000)
+p37 = GPIO.PWM(37, 1000)
+p38 = GPIO.PWM(38, 1000)
+p40 = GPIO.PWM(40, 1000)
+p31.start(0)
 #self.__p32.start(100)
-self.__p33.start(0)
-self.__p35.start(0)
-self.__p37.start(0)
-self.__p38.start(0)
-self.__p40.start(0)
+p33.start(0)
+p35.start(0)
+p37.start(0)
+p38.start(0)
+p40.start(0)
 try:        
     while True:
-        data, addr = self.__sock.recvfrom(1024)   
+        data, addr = sock.recvfrom(1024)   
         if ((len(data) > 18) and (data[0:8] == "Art-Net\x00")):
             rawbytes = map(ord, data)
             opcode = rawbytes[8] + (rawbytes[9] << 8)
@@ -62,24 +62,24 @@ try:
                     idx += 1
                     b = rawbytes[idx]
                     idx += 1
-                    if ( x == self.__whoami - 78 ):
+                    if ( x == whoami - 78 ):
                         if 0 == nowy:
-                            self.__p31.ChangeDutyCycle(int(r/2.55))
-                            self.__p33.ChangeDutyCycle(int(g/2.55))
-                            self.__p35.ChangeDutyCycle(int(b/2.55))
+                            p31.ChangeDutyCycle(int(r/2.55))
+                            p33.ChangeDutyCycle(int(g/2.55))
+                            p35.ChangeDutyCycle(int(b/2.55))
                         else:
-                            self.__sock.sendto( "{0} {1} {2} {3} {4}".format(x, nowy-1, r, g, b), ('127.0.0.1', 5005) ) 
+                            sock.sendto( "{0} {1} {2} {3} {4}".format(x, nowy-1, r, g, b), ('127.0.0.1', 5005) ) 
                             #print "{0} {1} {2} {3} {4}".format(x, nowy-1, r, g, b)
                     x += 1
                     if (x >= 66):
                         x = 0
                         #y += 1
 except:      
-    self.__p31.stop()
-    #self.__p32.stop()
-    self.__p33.stop()
-    self.__p35.stop()
-    self.__p37.stop()
-    self.__p38.stop()
-    self.__p40.stop()
+    p31.stop()
+    #p32.stop()
+    p33.stop()
+    p35.stop()
+    p37.stop()
+    p38.stop()
+    p40.stop()
     GPIO.cleanup()
