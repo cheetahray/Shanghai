@@ -234,6 +234,14 @@ def raylist(mylist):
                 strm.start_stream()
             issoundfont = False
 
+def handler():
+    gpioartnet = None
+    led.all_off()
+    led.update()
+    strm.stop_stream()
+    strm.close()
+    pa.terminate()
+
 #causes frame timing information to be output
 ledstrip.log.setLogLevel(ledstrip.log.CRITICAL)
 #set number of pixels & LED type here
@@ -260,48 +268,46 @@ pa = pyaudio.PyAudio()
 fl = None
 port = serial.Serial("/dev/ttyAMA0", baudrate=115200, timeout = 0.01)
 
-try:
-    #rayudp()
+#rayudp()
 
-    #sock.sendto("m0v126", (UDP_IP, UDP_PORT))
-    #time.sleep(5)
-    #sock.sendto("m18v126", (UDP_IP, UDP_PORT))
-    #time.sleep(5) 
+#sock.sendto("m0v126", (UDP_IP, UDP_PORT))
+#time.sleep(5)
+#sock.sendto("m18v126", (UDP_IP, UDP_PORT))
+#time.sleep(5) 
 
-    if True == issoundfont:
-        fl = fluidsynth.Synth()
-        fl.start('alsa')
-        sfid = fl.sfload("/home/pi/Shanghai/FluidR3_GM.sf2")
-        fl.program_select(chnl, sfid, 0, int(mylist[2]) )
-    else:    
-        pa = pyaudio.PyAudio()
-        strm = pa.open(
-            format = pyaudio.paInt16,
-            channels = 1,
-            rate = 44100,
-            input_device_index = 0,
-            input = True,
-            output_device_index = 0,
-            output = True,
-            stream_callback=callback
-        )
-        strm.start_stream()
+if True == issoundfont:
+    fl = fluidsynth.Synth()
+    fl.start('alsa')
+    sfid = fl.sfload("/home/pi/Shanghai/FluidR3_GM.sf2")
+    fl.program_select(chnl, sfid, 0, int(mylist[2]) )
+else:    
+    pa = pyaudio.PyAudio()
+    strm = pa.open(
+        format = pyaudio.paInt16,
+        channels = 1,
+        rate = 44100,
+        input_device_index = 0,
+        input = True,
+        output_device_index = 0,
+        output = True,
+        stream_callback=callback
+    )
+    strm.start_stream()
 
-    while True:
-        rcv = readlineCR(port)
-        if rcv != '':
-            mylist = rcv.split(" ")
-            print(mylist)
-            raylist(mylist)
-        if True == islightout:
+sock.settimeout(0.01) 
+
+while True:
+    rcv = readlineCR(port)
+    if rcv != '':
+        mylist = rcv.split(" ")
+        print(mylist)
+        raylist(mylist)
+    if True == islightout:
+        try:
             data, addr = sock.recvfrom(1024)
             mylist = data.split(" ") 
             anim.drawone(int(mylist[0]),int(mylist[1]),int(mylist[2]),int(mylist[3]),int(mylist[4]))
+        except socket.timeout:
+            pass
 
-except KeyboardInterrupt:
-    gpioartnet = None
-    led.all_off()
-    led.update()
-    strm.stop_stream()
-    strm.close()    
-    pa.terminate()
+handler()

@@ -4,6 +4,7 @@
 import RPi.GPIO as GPIO
 import socket
 from threading import *
+import time
 
 class ArtNet(Thread):
 
@@ -30,7 +31,7 @@ class ArtNet(Thread):
     def __init__(self):
         self.__sock = socket.socket(socket.AF_INET, socket.SOCK_DGRAM) # UDP
         self.__sock.bind(("", self.__UDP_PORT))
-        self.__sock.settimeout(0.04)    #fps = 25
+        #self.__sock.settimeout(0.04)    #fps = 25
         Thread.__init__(self)
         GPIO.setmode(GPIO.BOARD)
         GPIO.setup(31, GPIO.OUT)
@@ -40,13 +41,13 @@ class ArtNet(Thread):
         GPIO.setup(37, GPIO.OUT)
         GPIO.setup(38, GPIO.OUT)
         GPIO.setup(40, GPIO.OUT)
-        self.__p31 = GPIO.PWM(31, 500)
-        #self.__p32 = GPIO.PWM(32, 500)
-        self.__p33 = GPIO.PWM(33, 500)
-        self.__p35 = GPIO.PWM(35, 500)
-        self.__p37 = GPIO.PWM(37, 500)
-        self.__p38 = GPIO.PWM(38, 500)
-        self.__p40 = GPIO.PWM(40, 500)
+        self.__p31 = GPIO.PWM(31, 1000)
+        #self.__p32 = GPIO.PWM(32, 1000)
+        self.__p33 = GPIO.PWM(33, 1000)
+        self.__p35 = GPIO.PWM(35, 1000)
+        self.__p37 = GPIO.PWM(37, 1000)
+        self.__p38 = GPIO.PWM(38, 1000)
+        self.__p40 = GPIO.PWM(40, 1000)
         self.__p31.start(0)
         #self.__p32.start(100)
         self.__p33.start(0)
@@ -93,5 +94,6 @@ class ArtNet(Thread):
                             if (x >= 1):
                                 x = 0
                                 y += 1
+                time.sleep(0.01)   
             except socket.timeout:
                 pass
