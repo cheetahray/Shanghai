@@ -60,8 +60,6 @@ class ColorWipe(BaseStripAnim, Thread):
             self._led.set(i, self._color)
         self.__isartnet = False
         self.__interrupt = True
-        BaseStripAnim.stopThread(self)
-        BaseStripAnim.run(self, sleep = self.__sleeptime, threaded = True, joinThread = False)
         self.__cv.acquire()
         self.__cv.notify()
         self.__cv.release()
@@ -76,9 +74,9 @@ class ColorWipe(BaseStripAnim, Thread):
                     if self.__interrupt == True:
                         break
                     else:
-                        #BaseStripAnim.run(self, sleep = self.__sleeptime, threaded = True, joinThread = False)
+                        BaseStripAnim.run(self, threaded = True, joinThread = False)
                         time.sleep(self.__sleeptime)
-                        #BaseStripAnim.stopThread(self)
+                        BaseStripAnim.stopThread(self)
                 self.__interrupt = False    
                 BaseStripAnim.stopThread(self)
             elif diff < 0:
@@ -88,9 +86,9 @@ class ColorWipe(BaseStripAnim, Thread):
                     if self.__interrupt == True:
                         break
                     else:
-                        #BaseStripAnim.run(self, sleep = self.__sleeptime, threaded = True, joinThread = False)
+                        BaseStripAnim.run(self, threaded = True, joinThread = False)
                         time.sleep(self.__sleeptime)
-                        #BaseStripAnim.stopThread(self)
+                        BaseStripAnim.stopThread(self)
                 self.__interrupt = False
                 BaseStripAnim.stopThread(self)
             #elif True == self.__isartnet:

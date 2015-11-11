@@ -60,8 +60,6 @@ class ColorWipe(BaseMatrixAnim, Thread):
             self._led.drawRect(0,0,self.__width,i+1, self._color) #self._led.set(i, self._color)
         self.__isartnet = False
         self.__interrupt = True
-        BaseMatrixAnim.stopThread(self)
-        BaseMatrixAnim.run(self, sleep = self.__sleeptime, threaded = True, joinThread = False)
         self.__cv.acquire()
         self.__cv.notify()
         self.__cv.release()
@@ -76,9 +74,9 @@ class ColorWipe(BaseMatrixAnim, Thread):
                     if self.__interrupt == True:
                         break
                     else:
-                        #BaseMatrixAnim.run(self, threaded = True, joinThread = False)
+                        BaseMatrixAnim.run(self, threaded = True, joinThread = False)
                         time.sleep(self.__sleeptime)
-                        #BaseMatrixAnim.stopThread(self)
+                        BaseMatrixAnim.stopThread(self)
                 self.__interrupt = False    
                 BaseMatrixAnim.stopThread(self)
             elif diff < 0:
@@ -88,9 +86,9 @@ class ColorWipe(BaseMatrixAnim, Thread):
                     if self.__interrupt == True:
                         break
                     else:
-                        #BaseMatrixAnim.run(self, threaded = True, joinThread = False)
+                        BaseMatrixAnim.run(self, threaded = True, joinThread = False)
                         time.sleep(self.__sleeptime)
-                        #BaseMatrixAnim.stopThread(self)
+                        BaseMatrixAnim.stopThread(self)
                 self.__interrupt = False
                 BaseMatrixAnim.stopThread(self)
             #elif True == self.__isartnet:
