@@ -9,6 +9,10 @@ import ledstrip
 from threading import *
 import sys
 
+def func():
+    global p32
+    p32.ChangeDutyCycle(100)
+
 UDP_PORT = 6454
 
 sock = socket.socket(socket.AF_INET, socket.SOCK_DGRAM) # UDP
@@ -19,21 +23,21 @@ mylist = ips.split(".")
 whoami = int(mylist[3])
 GPIO.setmode(GPIO.BOARD)
 GPIO.setup(31, GPIO.OUT)
-#GPIO.setup(32, GPIO.OUT)
+GPIO.setup(32, GPIO.OUT)
 GPIO.setup(33, GPIO.OUT)
 GPIO.setup(35, GPIO.OUT)
 GPIO.setup(37, GPIO.OUT)
 GPIO.setup(38, GPIO.OUT)
 GPIO.setup(40, GPIO.OUT)
 p31 = GPIO.PWM(31, 1000)
-#p32 = GPIO.PWM(32, 1000)
+p32 = GPIO.PWM(32, 1000)
 p33 = GPIO.PWM(33, 1000)
 p35 = GPIO.PWM(35, 1000)
 p37 = GPIO.PWM(37, 1000)
 p38 = GPIO.PWM(38, 1000)
 p40 = GPIO.PWM(40, 1000)
 p31.start(0)
-#self.__p32.start(100)
+p32.start(100)
 p33.start(0)
 p35.start(0)
 p37.start(0)
@@ -48,6 +52,8 @@ driver = ledstrip.DriverLPD8806(num = 20)
 led = ledstrip.LEDStrip(driver, threadedUpdate = True)
 #load channel test animation
 anim = ledstrip.ColorWipe(led)
+
+timer = None  
 
 try:        
     while True:
@@ -88,13 +94,18 @@ try:
                     if (x >= 66):
                         x = 0
                         #y += 1
-        elif ((len(data) > 8) and (data[0:8] == "Not-Art\x00")):
-            mylist = data[8:].split(" ")
-            anim.rayanim(255,255,255,255,int(mylist[0]),int(mylist[1]))
+        elif ( len(data) >= 6  and (data[0:6] == "picker") ):
+            if len(data) != 6: 
+                mylist = data[6:].split(" ")
+                #print(mylist)
+                anim.rayanim(255,255,255,255,int(mylist[0]),float(mylist[1]))
+            p32.ChangeDutyCycle(0)
+            timer = Timer(0.1, func)
+            timer.start()
             
 except (KeyboardInterrupt):
     p31.stop()
-    #p32.stop()
+    p32.stop()
     p33.stop()
     p35.stop()
     p37.stop()

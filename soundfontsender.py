@@ -6,6 +6,7 @@ import fluidsynth
 import socket
 import serial
 import math
+import threading
 
 def raymap(value, istart, istop, ostart, ostop):
     return ostart + (ostop - ostart) * ((value - istart) / (istop - istart));
@@ -30,7 +31,7 @@ def raymr(tid):
         if rayampval > 0 :
             rndrayint = round(rayint,1)
             if lastrayint != rndrayint:
-                print(str(tid) + ":"+ str(rndrayint))
+                #print(str(tid) + ":"+ str(rndrayint))
                 lastrayint = rndrayint
             if rayshift == tid:
                 if tid < rndrayint:
@@ -51,7 +52,7 @@ def raymr(tid):
                     sock.sendto("mr" + str(tid-rayshift), (UDP_IP, UDP_PORT))
                     data, addr = sock.recvfrom(1024)
                     tp.append(int(data))
-                    print(int(data))
+                    print(data)
                     time.sleep(0.5)
             else:
                 if tid < rndrayint:
@@ -78,6 +79,7 @@ def raymr(tid):
                     sock.sendto("mr" + str(tid-rayshift), (UDP_IP, UDP_PORT))
                     data, addr = sock.recvfrom(1024)
                     tp.append(int(data))
+                    print(data)
                     time.sleep(0.5)
         if aacnt == 100:
             aacnt = 0
@@ -120,10 +122,9 @@ def rayudp():
                 headd = tp[0]
                 taill = tp[len(tp)-1]
                 for x in range(0, howmanypitch+1):    
-                    tp[x] = raymap (tp[x], headd, taill, 0, 20)
-                print(tp)
-                sock.sendto("m" + str(howmanypitch/2) + "v126", (UDP_IP, UDP_PORT))
-                print("m" + str(howmanypitch/2) + "v126")
+                    tp[x] = tp[x] / 2550
+                sock.sendto("m1v126", (UDP_IP, UDP_PORT))
+                #print("m" + str(howmanypitch/2) + "v126")
             else:
                 return False 
         else:
@@ -170,16 +171,27 @@ def readlineCR(port):
             return rv
         rv += ch
 
+def func():
+    global islightout
+    global sock
+    #sock.sendto("av" + mylist[2], (UDP_IP, UDP_PORT))
+    sock.sendto("aa", (UDP_IP, UDP_PORT))
+    picker = "picker"
+    if False == islightout:
+        picker += "{0} {1}".format(nowm,math.fabs(nowm-lastm)*0.1)
+    sock.sendto(picker, ("127.0.0.1", 6454))
+    lastm = nowm
+
 def raylist(mylist):
     global fl
     global rayshift
     global lastm
-    global islightout
+    global nowm
     global issoundfont
     global chnl
     global pa
     global strm
-
+    global timer
     if mylist[0] == '144':
         if mylist[2] == '0':
             if True == issoundfont:
@@ -192,12 +204,11 @@ def raylist(mylist):
             nowm = noteint - rayshift
             sock.sendto("m" + str(nowm) + "v126", (UDP_IP, UDP_PORT))
             nowm = tp[ nowm ]
-            if False == islightout:    
-                sock.sendto("Not-Art\x00{0} {1}".format(nowm,math.fabs(nowm-lastm)*0.1), ("127.0.0.1", 6454)) #anim.rayanim(255,255,255,255,nowm,math.fabs(nowm-lastm)*0.1)
-            #time.sleep(0.2)
-            lastm = nowm
-            #sock.sendto("av" + mylist[2], (UDP_IP, UDP_PORT))
-            sock.sendto("aa", (UDP_IP, UDP_PORT))
+            if True == issoundfont:
+                timer = threading.Timer(0.2, func )
+            else:
+                timer = threading.Timer(0.01, func )
+            timer.start()
     elif mylist[0] == '224':
         if True == issoundfont:
             fl.pitch_bend( chnl,raymap(int(mylist[2]), 0, 127, -8192, 8192))
@@ -237,11 +248,13 @@ UDP_PORT = 5005
 UDP_IP = "192.168.12.178"
 sock.bind(("0.0.0.0", UDP_PORT))
 
+timer = None
 rayshift = 42
 lastm = 0
+nowm = 0
 tp=[]
 islightout = True
-issoundfont = False
+issoundfont = True
 chnl = 0
 strm = None
 pa = pyaudio.PyAudio()
@@ -250,16 +263,14 @@ port = serial.Serial("/dev/ttyAMA0", baudrate=115200, timeout=0.01)
 
 #rayudp()
 
-#sock.sendto("m0v126", (UDP_IP, UDP_PORT))
-#time.sleep(5)
-#sock.sendto("m18v126", (UDP_IP, UDP_PORT))
-#time.sleep(5) 
+for xx in range(19):
+    tp.append(xx)
 
 if True == issoundfont:
     fl = fluidsynth.Synth()
     fl.start('alsa')
     sfid = fl.sfload("/home/pi/Shanghai/FluidR3_GM.sf2")
-    fl.program_select(chnl, sfid, 0, int(mylist[2]) )
+    fl.program_select(chnl, sfid, 0, 27)
 else:    
     pa = pyaudio.PyAudio()
     strm = pa.open(
@@ -274,11 +285,13 @@ else:
     )
     strm.start_stream()
 try:
+    port.flushInput()
+    port.flushOutput()
     while True:
         rcv = readlineCR(port)
         if rcv != '':
             mylist = rcv.split(" ")
-            print(mylist)
+            #print(mylist)
             raylist(mylist)
 except KeyboardInterrupt:    
     strm.stop_stream()
