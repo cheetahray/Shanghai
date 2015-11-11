@@ -6,6 +6,8 @@ import socket
 import time
 import commands
 import ledstrip
+from threading import *
+import sys
 
 UDP_PORT = 6454
 
@@ -90,7 +92,7 @@ try:
             mylist = data[8:].split(" ")
             anim.rayanim(255,255,255,255,int(mylist[0]),int(mylist[1]))
             
-except:      
+except (KeyboardInterrupt):
     p31.stop()
     #p32.stop()
     p33.stop()
@@ -99,3 +101,4 @@ except:
     p38.stop()
     p40.stop()
     GPIO.cleanup()
+    sock.close()

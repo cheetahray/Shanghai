@@ -246,7 +246,7 @@ chnl = 0
 strm = None
 pa = pyaudio.PyAudio()
 fl = None
-port = serial.Serial("/dev/ttyAMA0", baudrate=115200)#, timeout = 0.01)
+port = serial.Serial("/dev/ttyAMA0", baudrate=115200, timeout=0.01)
 
 #rayudp()
 
@@ -273,14 +273,15 @@ else:
         stream_callback=callback
     )
     strm.start_stream()
-
-while True:
-    rcv = readlineCR(port)
-    if rcv != '':
-        mylist = rcv.split(" ")
-        print(mylist)
-        raylist(mylist)
-    
-strm.stop_stream()
-strm.close()
-pa.terminate()
+try:
+    while True:
+        rcv = readlineCR(port)
+        if rcv != '':
+            mylist = rcv.split(" ")
+            print(mylist)
+            raylist(mylist)
+except KeyboardInterrupt:    
+    strm.stop_stream()
+    strm.close()
+    pa.terminate()
+    sock.close()
