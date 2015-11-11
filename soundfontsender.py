@@ -117,14 +117,14 @@ def rayudp():
             print ("tsh")
             data, addr = sock.recvfrom(1024) # buffer size is 1024 bytes
             if data == 'tshe':
-                for x in range(rayshift, rayshift+howmanypitch+1):
-                    raymr(x)
-                headd = tp[0]
-                taill = tp[len(tp)-1]
-                for x in range(0, howmanypitch+1):    
-                    tp[x] = tp[x] / 2550
-                sock.sendto("m1v126", (UDP_IP, UDP_PORT))
-                #print("m" + str(howmanypitch/2) + "v126")
+                if 1 == startmode:
+                    for x in range(rayshift, rayshift+howmanypitch+1):
+                        raymr(x)
+                    headd = tp[0]
+                    taill = tp[len(tp)-1]
+                    for x in range(0, howmanypitch+1):    
+                        tp[x] = tp[x] / 2550
+                    sock.sendto("m1v126", (UDP_IP, UDP_PORT))
             else:
                 return False 
         else:
@@ -248,6 +248,7 @@ UDP_PORT = 5005
 UDP_IP = "192.168.12.178"
 sock.bind(("0.0.0.0", UDP_PORT))
 
+startmode = 3
 timer = None
 rayshift = 42
 lastm = 0
@@ -261,10 +262,11 @@ pa = pyaudio.PyAudio()
 fl = None
 port = serial.Serial("/dev/ttyAMA0", baudrate=115200, timeout=0.01)
 
-#rayudp()
-
-for xx in range(19):
-    tp.append(xx)
+if startmode < 3:
+    rayudp()
+if 1 != startmode:
+    for xx in range(19):
+        tp.append(xx)
 
 if True == issoundfont:
     fl = fluidsynth.Synth()
