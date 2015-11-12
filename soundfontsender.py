@@ -163,6 +163,18 @@ def raypitch():
             raise
     return 0,0
 
+def rayslide(direction):
+    thetwo = 0
+    if 1 == direction:
+        thetwo = 2
+    elif -1 == direction:
+        thetwo = -2
+    sock.sendto("as", (UDP_IP, UDP_PORT))
+    sock.sendto("m" + str(nowm-thetwo) + "v126", (UDP_IP, UDP_PORT))
+    sock.sendto("aa", (UDP_IP, UDP_PORT))
+    sock.sendto("m" + str(nowm+thetwo) + "v126", (UDP_IP, UDP_PORT))
+    nowm += thetwo
+
 def readlineCR(port):
     rv = ""
     while True:
@@ -212,6 +224,21 @@ def raylist(mylist):
     elif mylist[0] == '224':
         if True == issoundfont:
             fl.pitch_bend( chnl,raymap(int(mylist[2]), 0, 127, -8192, 8192))
+        if True == isslide0 and '1' == mylist[2]:
+            rayslide(1)
+        if True == isslide127 and '126' == mylist[2]:
+            rayslide(-1)
+        if '0' == mylist[2]:
+            isslide0 = True
+        else 
+            isslide0 = False
+            isslide127 = False
+        if '127' == mylist[2]:
+            isslide127 = True
+        else
+            isslide127 = False
+            isslide0 = False
+                
     elif mylist[0] == '225':
         islightout = int(mylist[1])
     elif mylist[0] == '249':
@@ -248,6 +275,8 @@ UDP_PORT = 5005
 UDP_IP = "192.168.12.178"
 sock.bind(("0.0.0.0", UDP_PORT))
 
+isslide0 = False
+isslide127 = False
 startmode = 3
 timer = None
 rayshift = 42
