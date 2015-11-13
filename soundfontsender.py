@@ -199,6 +199,8 @@ def raylist(mylist):
     global pa
     global strm
     global timer
+    global isslide0
+    global isslide127
     if mylist[0] == '144':
         if mylist[2] == '0':
             if True == issoundfont:
@@ -233,7 +235,6 @@ def raylist(mylist):
         else
             isslide127 = False
             isslide0 = False
-                
     elif mylist[0] == '225':
         islightout = int(mylist[1])
     elif mylist[0] == '249':
