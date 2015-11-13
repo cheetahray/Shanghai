@@ -5,7 +5,7 @@ import RPi.GPIO as GPIO
 import socket
 import time
 import commands
-import ledstrip as rayled
+import ledmatrix as rayled
 from threading import *
 import sys
 
@@ -56,13 +56,13 @@ coords = [
 ]
 
 #causes frame timing information to be output
-log.setLogLevel(log.CRITICAL)
+rayled.log.setLogLevel(rayled.log.CRITICAL)
 #set number of pixels & LED type here
-driver = DriverLPD8806( num = len(coords[0]) * len(coords) )
+driver = rayled.DriverLPD8806( num = len(coords[0]) * len(coords) )
 #load the LEDStrip class
-led = LEDMatrix(driver, width = len(coords[0]), height = len(coords), coordMap = coords, threadedUpdate = True)
+led = rayled.LEDMatrix(driver, width = len(coords[0]), height = len(coords), coordMap = coords, threadedUpdate = True)
 #load channel test animation
-anim = ColorWipe(led, width = len(coords[0]))
+anim = rayled.ColorWipe(led, width = len(coords[0]))
 
 anim.rayanim(255,255,255,255,10,20)
 
