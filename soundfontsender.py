@@ -123,7 +123,7 @@ def rayudp():
                     headd = tp[0]
                     taill = tp[len(tp)-1]
                     for x in range(0, howmanypitch+1):    
-                        tp[x] = tp[x] / tp[len(tp)-1] * 60
+                        tp[x] = int( float(tp[x]) / float(tp[len(tp)-1]) * 60.0 )
                     print(tp)
                     sock.sendto("m1v126", (UDP_IP, UDP_PORT))
             else:
@@ -182,6 +182,8 @@ def readlineCR(port):
 def func():
     global islightout
     global sock
+    global lastm
+    global nowm
     #sock.sendto("av" + mylist[2], (UDP_IP, UDP_PORT))
     sock.sendto("aa", (UDP_IP, UDP_PORT))
     picker = "picker"
@@ -193,8 +195,6 @@ def func():
 def raylist(mylist):
     global fl
     global rayshift
-    global lastm
-    global nowm
     global issoundfont
     global chnl
     global pa
@@ -228,12 +228,12 @@ def raylist(mylist):
             rayslide(-2)
         if '0' == mylist[2]:
             isslide0 = True
-        else 
+        else: 
             isslide0 = False
             isslide127 = False
         if '127' == mylist[2]:
             isslide127 = True
-        else
+        else:
             isslide127 = False
             isslide0 = False
     elif mylist[0] == '225':
@@ -274,13 +274,13 @@ sock.bind(("0.0.0.0", UDP_PORT))
 
 isslide0 = False
 isslide127 = False
-startmode = 1
+startmode = 3
 timer = None
 rayshift = 42
 lastm = 0
 nowm = 0
-tp=[]
-islightout = True
+tp=[]#0, 4, 9, 11, 19, 23, 25, 30, 34, 37, 41, 42, 46, 48, 51, 53, 56, 57, 60]
+islightout = False
 issoundfont = True
 chnl = 0
 strm = None
@@ -290,9 +290,8 @@ port = serial.Serial("/dev/ttyAMA0", baudrate=115200, timeout=0.01)
 
 if startmode < 3:
     rayudp()
-if 1 != startmode:
-    for xx in range(19):
-        tp.append(xx)
+for ii in range(20):
+    tp.append(ii)
 
 if True == issoundfont:
     fl = fluidsynth.Synth()

@@ -5,7 +5,7 @@ import RPi.GPIO as GPIO
 import socket
 import time
 import commands
-import ledmatrix
+import ledstrip as rayled
 from threading import *
 import sys
 
@@ -44,22 +44,36 @@ p37.start(0)
 p38.start(0)
 p40.start(0)
 
+#coords = [
+#[64,59],[65,58],[66,57],[67,56],[68,55],[69,54],[70,53],[71,52],[72,51],[73,50],[74,49],[75,48],[76,47],[77,46],[78,45],[79,44],
+#[80,43],[81,42],[82,41],[83,40],[84,39],[85,38],[86,37],[87,36],[88,35],[89,34],[90,33],[91,32],[92,31],[93,30],[94,29],[95,28],
+#[96,27],[97,26],[98,25],[99,24],[100,23],[101,22],[102,21],[103,20],[104,19],[105,18],[106,17],[107,16],[108,15],[109,14],
+#[110,13],[111,12],[112,11],[113,10],[114,9],[115,8],[116,7],[117,6],[118,5],[119,4],[120,3],[121,2],[122,1],[123,0],[60,61],[62,63]
+#]
+
 coords = [
-[65,59],[66,58],[67,57],[68,56],[69,55],[70,54],[71,53],[72,52],[73,51],[74,50],[75,49],[76,48],[77,47],[78,46],[79,45],[80,44],
-[81,43],[82,42],[83,41],[84,40],[85,39],[86,38],[87,37],[88,36],[89,35],[90,34],[91,33],[92,32],[93,31],[94,30],[95,29],[96,28],
-[97,27],[98,26],[99,25],[100,24],[101,23],[102,22],[103,21],[104,20],[105,19],[106,18],[107,17],[108,16],[109,15],[110,14],
-[111,13],[112,12],[113,11],[114,10],[115,9],[116,8],[117,7],[118,6],[119,5],[120,4],[121,3],[122,2],[123,1],[124,0]
+[10,9],
+[11,8],
+[12,7],
+[13,6],
+[14,5],
+[15,4],
+[16,3],
+[17,2],
+[18,1],
+[19,0]
 ]
 
 #causes frame timing information to be output
-ledmatrix.log.setLogLevel(ledmatrix.log.CRITICAL)
+rayled.log.setLogLevel(rayled.log.CRITICAL)
 #set number of pixels & LED type here
-driver = DriverLPD8806( num = len(coords[0]) * len(coords) ) #driver = ledstrip.DriverLPD8806(num = 20)
+driver = rayled.DriverLPD8806(num = 20)
+#driver = rayled.DriverLPD8806( num = len(coords[0]) * len(coords) )
 #load the LEDStrip class
-#led = ledstrip.LEDStrip(driver, threadedUpdate = True)
-led = ledmatrix.LEDMatrix(driver, width = len(coords[0]), height = len(coords), coordMap = coords, threadedUpdate = True)
+led = rayled.LEDStrip(driver, threadedUpdate = True)
+#led = rayled.LEDMatrix(driver, width = len(coords[0]), height = len(coords), coordMap = coords, threadedUpdate = True)
 #load channel test animation
-anim = ledmatrix.ColorWipe(led, width = len(coords[0]))
+anim = rayled.ColorWipe(led) #, width = len(coords[0]))
 
 timer = None  
 
