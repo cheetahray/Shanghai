@@ -101,13 +101,12 @@ class ColorWipe(BaseStripAnim, Thread):
                 self.__cv.release()
 
 #causes frame timing information to be output
-log.setLogLevel(log.CRITICAL)
+#log.setLogLevel(log.CRITICAL)
 #set number of pixels & LED type here
-driver = DriverLPD8806(num = 20)
+#driver = DriverLPD8806(num = 20)
 #load the LEDStrip class
-led = LEDStrip(driver, threadedUpdate = True)
+#led = LEDStrip(driver, threadedUpdate = True)
 #load channel test animation
-anim = ColorWipe(led) #, width = len(coords[0]))
+#anim = ColorWipe(led) #, width = len(coords[0]))
 
-anim.rayanim(255,255,255,255,20,20)
-time.sleep(20)
+#anim.rayanim(255,255,255,255,20,20)
