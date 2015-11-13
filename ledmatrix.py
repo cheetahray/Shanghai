@@ -107,10 +107,8 @@ class ColorWipe(BaseMatrixAnim, Thread):
 #causes frame timing information to be output
 #log.setLogLevel(log.CRITICAL)
 #set number of pixels & LED type here
-#driver = DriverLPD8806(num = 20)
 #driver = DriverLPD8806( num = len(coords[0]) * len(coords) )
 #load the LEDStrip class
-#led = LEDStrip(driver, threadedUpdate = True)
 #led = LEDMatrix(driver, width = len(coords[0]), height = len(coords), coordMap = coords, threadedUpdate = True)
 #load channel test animation
 #anim = ColorWipe(led, width = len(coords[0]))

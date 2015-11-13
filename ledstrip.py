@@ -107,6 +107,6 @@ class ColorWipe(BaseStripAnim, Thread):
 #load the LEDStrip class
 #led = LEDStrip(driver, threadedUpdate = True)
 #load channel test animation
-#anim = ColorWipe(led) #, width = len(coords[0]))
+#anim = ColorWipe(led) 
 
 #anim.rayanim(255,255,255,255,20,20)

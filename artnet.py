@@ -56,15 +56,15 @@ coords = [
 ]
 
 #causes frame timing information to be output
-rayled.log.setLogLevel(rayled.log.CRITICAL)
+log.setLogLevel(log.CRITICAL)
 #set number of pixels & LED type here
-driver = rayled.DriverLPD8806(num = 20)
-#driver = rayled.DriverLPD8806( num = len(coords[0]) * len(coords) )
+driver = DriverLPD8806( num = len(coords[0]) * len(coords) )
 #load the LEDStrip class
-led = rayled.LEDStrip(driver, threadedUpdate = True)
-#led = rayled.LEDMatrix(driver, width = len(coords[0]), height = len(coords), coordMap = coords, threadedUpdate = True)
+led = LEDMatrix(driver, width = len(coords[0]), height = len(coords), coordMap = coords, threadedUpdate = True)
 #load channel test animation
-anim = rayled.ColorWipe(led) #, width = len(coords[0]))
+anim = ColorWipe(led, width = len(coords[0]))
+
+anim.rayanim(255,255,255,255,10,20)
 
 timer = None  
 
