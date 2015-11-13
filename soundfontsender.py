@@ -163,12 +163,7 @@ def raypitch():
             raise
     return 0,0
 
-def rayslide(direction):
-    thetwo = 0
-    if 1 == direction:
-        thetwo = 2
-    elif -1 == direction:
-        thetwo = -2
+def rayslide(thetwo):
     sock.sendto("as", (UDP_IP, UDP_PORT))
     sock.sendto("m" + str(nowm-thetwo) + "v126", (UDP_IP, UDP_PORT))
     sock.sendto("aa", (UDP_IP, UDP_PORT))
@@ -225,9 +220,9 @@ def raylist(mylist):
         if True == issoundfont:
             fl.pitch_bend( chnl,raymap(int(mylist[2]), 0, 127, -8192, 8192))
         if True == isslide0 and '1' == mylist[2]:
-            rayslide(1)
+            rayslide(2)
         if True == isslide127 and '126' == mylist[2]:
-            rayslide(-1)
+            rayslide(-2)
         if '0' == mylist[2]:
             isslide0 = True
         else 
