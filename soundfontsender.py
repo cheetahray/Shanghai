@@ -290,8 +290,9 @@ port = serial.Serial("/dev/ttyAMA0", baudrate=115200, timeout=0.01)
 
 if startmode < 3:
     rayudp()
-for ii in range(20):
-    tp.append(ii)
+if 1 != startmode:
+    for xx in range(19):
+        tp.append(xx)
 
 if True == issoundfont:
     fl = fluidsynth.Synth()
