@@ -69,7 +69,7 @@ class ColorWipe(BaseMatrixAnim, Thread):
             diff = self.__lastpos - self.__animpos
             if diff > 0 :
                 for i in range(self.__lastpos, self.__animpos-1, -1):
-                    self._led.drawRect(0,i,self.__width,i+1, (0,0,0) ) #self._led.setOff(i) 
+                    self._led.drawRect(0,i,self.__width,-1, (0,0,0) ) #self._led.setOff(i) 
                     self.__lastpos = i
                     if self.__interrupt == True:
                         break
@@ -81,7 +81,7 @@ class ColorWipe(BaseMatrixAnim, Thread):
                 BaseMatrixAnim.stopThread(self)
             elif diff < 0:
                 for i in range(self.__lastpos, self.__animpos+1, 1):
-                    self._led.drawRect(0,i,self.__width,i+1, self._color)  #self._led.set(i, self._color) 
+                    self._led.drawRect(0,i,self.__width,1, self._color)  #self._led.set(i, self._color) 
                     self.__lastpos = i
                     if self.__interrupt == True:
                         break

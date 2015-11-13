@@ -195,6 +195,7 @@ def func():
 def raylist(mylist):
     global fl
     global rayshift
+    global nowm
     global issoundfont
     global chnl
     global pa
@@ -202,6 +203,7 @@ def raylist(mylist):
     global timer
     global isslide0
     global isslide127
+    global tp
     if mylist[0] == '144':
         if mylist[2] == '0':
             if True == issoundfont:
@@ -279,7 +281,7 @@ timer = None
 rayshift = 42
 lastm = 0
 nowm = 0
-tp=[]#0, 4, 9, 11, 19, 23, 25, 30, 34, 37, 41, 42, 46, 48, 51, 53, 56, 57, 60]
+tp=[0, 4, 9, 11, 19, 23, 25, 30, 34, 37, 41, 42, 46, 48, 51, 53, 56, 57, 60]
 islightout = False
 issoundfont = True
 chnl = 0
@@ -290,9 +292,9 @@ port = serial.Serial("/dev/ttyAMA0", baudrate=115200, timeout=0.01)
 
 if startmode < 3:
     rayudp()
-if 1 != startmode:
-    for xx in range(19):
-        tp.append(xx)
+#if 1 != startmode:
+#    for xx in range(19):
+#        tp.append(xx)
 
 if True == issoundfont:
     fl = fluidsynth.Synth()
