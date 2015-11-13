@@ -123,7 +123,8 @@ def rayudp():
                     headd = tp[0]
                     taill = tp[len(tp)-1]
                     for x in range(0, howmanypitch+1):    
-                        tp[x] = tp[x] / 2550
+                        tp[x] = tp[x] / tp[len(tp)-1] * 60
+                    print(tp)
                     sock.sendto("m1v126", (UDP_IP, UDP_PORT))
             else:
                 return False 
@@ -273,7 +274,7 @@ sock.bind(("0.0.0.0", UDP_PORT))
 
 isslide0 = False
 isslide127 = False
-startmode = 3
+startmode = 1
 timer = None
 rayshift = 42
 lastm = 0

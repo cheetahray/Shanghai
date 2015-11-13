@@ -99,38 +99,3 @@ class ColorWipe(BaseMatrixAnim, Thread):
                 self.__cv.acquire()
                 self.__cv.wait() #time.sleep(0.01)            
                 self.__cv.release()      
-
-coords = [
-    [9,10],
-    [8,11],
-    [7,12],
-    [6,13],
-    [5,14],
-    [4,15],
-    [3,16],
-    [2,17],
-    [1,18],
-    [0,19]
-]
-
-#causes frame timing information to be output
-bibliopixel.log.setLogLevel(bibliopixel.log.CRITICAL)
-#set number of pixels & LED type here
-driver = DriverLPD8806(num = len(coords[0]) * len(coords) )
-#load the LEDStrip class
-#led = LEDStrip(driver, threadedUpdate = True)
-led = LEDMatrix(driver, width = len(coords[0]), height = len(coords), coordMap = coords, threadedUpdate = True)
-
-#load channel test animation
-anim = ColorWipe(led, width = len(coords[0]) )
-
-try:
-    #run the animation
-    anim.rayanim(255,0,0,255,10,0.8)
-    time.sleep(0.8)
-    anim.rayanim(255,255,255,40,0,3.0)
-except KeyboardInterrupt:
-    #Ctrl+C will exit the animation and turn the LEDs offs
-    led.all_off()
-    led.update()
-

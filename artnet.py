@@ -5,7 +5,7 @@ import RPi.GPIO as GPIO
 import socket
 import time
 import commands
-import ledstrip
+import ledmatrix
 from threading import *
 import sys
 
@@ -44,14 +44,22 @@ p37.start(0)
 p38.start(0)
 p40.start(0)
 
+coords = [
+[65,59],[66,58],[67,57],[68,56],[69,55],[70,54],[71,53],[72,52],[73,51],[74,50],[75,49],[76,48],[77,47],[78,46],[79,45],[80,44],
+[81,43],[82,42],[83,41],[84,40],[85,39],[86,38],[87,37],[88,36],[89,35],[90,34],[91,33],[92,32],[93,31],[94,30],[95,29],[96,28],
+[97,27],[98,26],[99,25],[100,24],[101,23],[102,22],[103,21],[104,20],[105,19],[106,18],[107,17],[108,16],[109,15],[110,14],
+[111,13],[112,12],[113,11],[114,10],[115,9],[116,8],[117,7],[118,6],[119,5],[120,4],[121,3],[122,2],[123,1],[124,0]
+]
+
 #causes frame timing information to be output
-ledstrip.log.setLogLevel(ledstrip.log.CRITICAL)
+ledmatrix.log.setLogLevel(ledmatrix.log.CRITICAL)
 #set number of pixels & LED type here
-driver = ledstrip.DriverLPD8806(num = 20)
+driver = DriverLPD8806( num = len(coords[0]) * len(coords) ) #driver = ledstrip.DriverLPD8806(num = 20)
 #load the LEDStrip class
-led = ledstrip.LEDStrip(driver, threadedUpdate = True)
+#led = ledstrip.LEDStrip(driver, threadedUpdate = True)
+led = ledmatrix.LEDMatrix(driver, width = len(coords[0]), height = len(coords), coordMap = coords, threadedUpdate = True)
 #load channel test animation
-anim = ledstrip.ColorWipe(led)
+anim = ledmatrix.ColorWipe(led, width = len(coords[0]))
 
 timer = None  
 
