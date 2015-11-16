@@ -11,7 +11,11 @@ import sys
 
 def func():
     global p32
+    global p38
+    global p40
     p32.ChangeDutyCycle(100)
+    p38.ChangeDutyCycle(0)
+    p40.ChangeDutyCycle(100)
 
 UDP_PORT = 6454
 
@@ -29,13 +33,13 @@ GPIO.setup(35, GPIO.OUT)
 GPIO.setup(37, GPIO.OUT)
 GPIO.setup(38, GPIO.OUT)
 GPIO.setup(40, GPIO.OUT)
-p31 = GPIO.PWM(31, 5000)
-p32 = GPIO.PWM(32, 5000)
-p33 = GPIO.PWM(33, 5000)
-p35 = GPIO.PWM(35, 5000)
-p37 = GPIO.PWM(37, 5000)
-p38 = GPIO.PWM(38, 5000)
-p40 = GPIO.PWM(40, 5000)
+p31 = GPIO.PWM(31, 1000)
+p32 = GPIO.PWM(32, 1000)
+p33 = GPIO.PWM(33, 1000)
+p35 = GPIO.PWM(35, 1000)
+p37 = GPIO.PWM(37, 1000)
+p38 = GPIO.PWM(38, 1000)
+p40 = GPIO.PWM(40, 1000)
 p31.start(0)
 p32.start(100)
 p33.start(0)
@@ -69,17 +73,27 @@ timer = None
 try:        
     while True:
         data, addr = sock.recvfrom(1024)   
-        if ((len(data) > 18) and (data[0:8] == "Art-Net\x00")):
+        if ( len(data) >= 6  and (data[0:6] == "picker") ):
+            if len(data) != 6:
+                mylist = data[6:].split(" ")
+                #print(mylist)
+                anim.rayanim(255,255,255,127,int(mylist[0]),float(mylist[1]))
+            p32.ChangeDutyCycle(0)
+            p38.ChangeDutyCycle(100)
+            p40.ChangeDutyCycle(0)
+            timer = Timer(0.1, func)
+            timer.start()
+        elif ((len(data) > 18) and (data[0:8] == "Art-Net\x00")):
             rawbytes = map(ord, data)
             opcode = rawbytes[8] + (rawbytes[9] << 8)
             protocolVersion = (rawbytes[10] << 8) + rawbytes[11]
             if ((opcode == 0x5000) and (protocolVersion >= 14)):
-                sequence = rawbytes[12]
-                physical = rawbytes[13]
+                #sequence = rawbytes[12]
+                #physical = rawbytes[13]
                 sub_net = (rawbytes[14] & 0xF0) >> 4
                 universe = rawbytes[14] & 0x0F
                 nowy = (sub_net << 4) + universe
-                net = rawbytes[15]
+                #net = rawbytes[15]
                 rgb_length = (rawbytes[16] << 8) + rawbytes[17]
                 #print "seq %d phy %d sub_net %d uni %d net %d len %d" % (sequence, physical, sub_net, universe, net, rgb_length)
                 idx = 18
@@ -92,7 +106,7 @@ try:
                     idx += 1
                     b = rawbytes[idx]
                     idx += 1
-                    if ( x == whoami - 78 ):
+                    if ( x == whoami - 78 ) or ( x == whoami - 77 ):
                         if 0 == nowy:
                             p31.ChangeDutyCycle(int(r/2.55))
                             p33.ChangeDutyCycle(int(g/2.55))
@@ -105,14 +119,6 @@ try:
                     if (x >= 66):
                         x = 0
                         #y += 1
-        elif ( len(data) >= 6  and (data[0:6] == "picker") ):
-            if len(data) != 6: 
-                mylist = data[6:].split(" ")
-                #print(mylist)
-                anim.rayanim(255,255,255,255,int(mylist[0]),float(mylist[1]))
-            p32.ChangeDutyCycle(0)
-            timer = Timer(0.1, func)
-            timer.start()
             
 except (KeyboardInterrupt):
     p31.stop()

@@ -51,7 +51,7 @@ def raymr(tid):
                     time.sleep(0.5)
                     sock.sendto("mr" + str(tid-rayshift), (UDP_IP, UDP_PORT))
                     data, addr = sock.recvfrom(1024)
-                    tp.append(int(data))
+                    tp0.append(int(data))
                     print(data)
                     time.sleep(0.5)
             else:
@@ -78,7 +78,7 @@ def raymr(tid):
                     time.sleep(0.5)
                     sock.sendto("mr" + str(tid-rayshift), (UDP_IP, UDP_PORT))
                     data, addr = sock.recvfrom(1024)
-                    tp.append(int(data))
+                    tp0.append(int(data))
                     print(data)
                     time.sleep(0.5)
         if aacnt == 100:
@@ -120,12 +120,12 @@ def rayudp():
                 if 1 == startmode:
                     for x in range(rayshift, rayshift+howmanypitch+1):
                         raymr(x)
-                    headd = tp[0]
-                    taill = tp[len(tp)-1]
+                    #headd = tp0[0]
+                    taill = tp0[len(tp0)-1]
                     for x in range(0, howmanypitch+1):    
-                        tp[x] = int( float(tp[x]) / float(tp[len(tp)-1]) * 60.0 )
+                        tp[x] =  int( float(tp0[x]) / float(taill) * 60.0 ) 
                     print(tp)
-                    sock.sendto("m1v126", (UDP_IP, UDP_PORT))
+                    sock.sendto("mt1", (UDP_IP, UDP_PORT))
             else:
                 return False 
         else:
@@ -165,11 +165,19 @@ def raypitch():
     return 0,0
 
 def rayslide(thetwo):
-    sock.sendto("as", (UDP_IP, UDP_PORT))
-    sock.sendto("m" + str(nowm-thetwo) + "v126", (UDP_IP, UDP_PORT))
-    sock.sendto("aa", (UDP_IP, UDP_PORT))
-    sock.sendto("m" + str(nowm+thetwo) + "v126", (UDP_IP, UDP_PORT))
-    nowm += thetwo
+    bendbool = False
+    if thetwo > 0:
+        bendbool = (nowm-thetwo >= 0) and (nowm+thetwo <= len(tp0)-1)
+    elif thetwo < 0:
+        bendbool = (nowm-thetwo <= len(tp0)-1) and (nowm+thetwo >= 0)
+    if True == bendbool:
+        sock.sendto("as", (UDP_IP, UDP_PORT))
+        bend1 = nowm-thetwo
+        sock.sendto("mt" + str(bend1) , (UDP_IP, UDP_PORT))
+        sock.sendto("aa", (UDP_IP, UDP_PORT))
+        bend2 = nowm+thetwo
+        sock.sendto("m" + str(bend2) + "v" + math.fabs(tp0[bend1]-tp0[bend2]), (UDP_IP, UDP_PORT))
+        nowm += thetwo
 
 def readlineCR(port):
     rv = ""
@@ -180,22 +188,15 @@ def readlineCR(port):
         rv += ch
 
 def func():
-    global islightout
-    global sock
-    global lastm
-    global nowm
     #sock.sendto("av" + mylist[2], (UDP_IP, UDP_PORT))
     sock.sendto("aa", (UDP_IP, UDP_PORT))
-    picker = "picker"
-    if False == islightout:
-        picker += "{0} {1}".format(nowm,math.fabs(nowm-lastm)*0.1)
-    sock.sendto(picker, ("127.0.0.1", 6454))
-    lastm = nowm
 
 def raylist(mylist):
     global fl
     global rayshift
+    global lastm
     global nowm
+    global islightout
     global issoundfont
     global chnl
     global pa
@@ -214,8 +215,12 @@ def raylist(mylist):
             if True == issoundfont:
                 fl.noteon(chnl, noteint, int(mylist[2]))
             nowm = noteint - rayshift
-            sock.sendto("m" + str(nowm) + "v126", (UDP_IP, UDP_PORT))
-            nowm = tp[ nowm ]
+            sock.sendto("mt" + str(nowm) , (UDP_IP, UDP_PORT))
+            picker = "picker"
+            if False == islightout:
+                picker += "{0} {1}".format(tp[nowm],math.fabs(tp[nowm]-tp[lastm])*0.02)
+            sock.sendto(picker, ("127.0.0.1", 6454))
+            lastm = nowm
             if True == issoundfont:
                 timer = threading.Timer(0.2, func )
             else:
@@ -281,9 +286,10 @@ timer = None
 rayshift = 42
 lastm = 0
 nowm = 0
+tp0=[]
 tp=[0, 4, 9, 11, 19, 23, 25, 30, 34, 37, 41, 42, 46, 48, 51, 53, 56, 57, 60]
-islightout = False
-issoundfont = True
+islightout = True
+issoundfont = False
 chnl = 0
 strm = None
 pa = pyaudio.PyAudio()
@@ -292,9 +298,6 @@ port = serial.Serial("/dev/ttyAMA0", baudrate=115200, timeout=0.01)
 
 if startmode < 3:
     rayudp()
-#if 1 != startmode:
-#    for xx in range(19):
-#        tp.append(xx)
 
 if True == issoundfont:
     fl = fluidsynth.Synth()

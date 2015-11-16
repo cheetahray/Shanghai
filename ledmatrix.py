@@ -42,13 +42,13 @@ class ColorWipe(BaseMatrixAnim, Thread):
            g = 255 
         if(b > 255):
            b = 255 
-        self.__led.setRGB(x,y,b,r,g)
+        self._led.setRGB(x,y,b,r,g)
         if False == self.__isartnet:
             #self.__cv.acquire()
             #self.__cv.notify()
             #self.__cv.release()
-            BaseStripAnim.stopThread(self)
-            BaseStripAnim.run(self, fps = 25, threaded = True, joinThread = False)
+            BaseMatrixAnim.stopThread(self)
+            BaseMatrixAnim.run(self, fps = 25, threaded = True, joinThread = False)
             self.__isartnet = True
         
     def rayanim(self,r,g,b,bright,animpos,animtime):
