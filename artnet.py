@@ -14,8 +14,8 @@ def func():
     global p38
     global p40
     p32.ChangeDutyCycle(100)
-    p38.ChangeDutyCycle(0)
-    p40.ChangeDutyCycle(100)
+    p38.ChangeDutyCycle(100)
+    p40.ChangeDutyCycle(0)
 
 UDP_PORT = 6454
 
@@ -79,8 +79,8 @@ try:
                 #print(mylist)
                 anim.rayanim(255,255,255,127,int(mylist[0]),float(mylist[1]))
             p32.ChangeDutyCycle(0)
-            p38.ChangeDutyCycle(100)
-            p40.ChangeDutyCycle(0)
+            p38.ChangeDutyCycle(0)
+            p40.ChangeDutyCycle(100)
             timer = Timer(0.1, func)
             timer.start()
         elif ((len(data) > 18) and (data[0:8] == "Art-Net\x00")):
