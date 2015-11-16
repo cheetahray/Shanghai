@@ -62,7 +62,7 @@ while True:
             print("turn string loose") #tsl change here
             motor3.rotate(1,40)
             #    os._exit(0)
-        elif data[1:] == "st":
+        elif data[1:] == "st": 
             #child_pid = os.fork()
             #if child_pid == 0:
             print("turn string tight") #tst change here
@@ -78,7 +78,7 @@ while True:
         if data[1] == 'v':
             pickvelocity = int(data[2:])
         elif data[1] == 'a':
-            motor1.picker_action(200)
+            motor1.picker_action(190)
         elif data[1] == 's':
             motor1.picker_stopsound()
     elif data[0] == 'm':
@@ -86,7 +86,7 @@ while True:
             tpindex = int(data[2:])
             print "record pitch address" + str(tpindex)
             rrs = motor4.mr(tpindex)
-            sock.sendto(str(rrs), (UDP_IP, UDP_PORT)) #tp.append(rrs)
+            sock.sendto(str(rrs), (UDP_IP, UDP_PORT)) #tp.append(rrs) 
         elif data[1] == 'h':
             #child_pid = os.fork()
             #if child_pid == 0:
@@ -104,11 +104,17 @@ while True:
             #if child_pid == 0:
             print("left hand stop move") #ms change here
             motor4.ms()
+        elif data[1] == 't':
+            table_addr = repr(int(data[2:]))
+            print "motor move to " + table_addr
+            motor4.mv(table_addr)
              #   os._exit(0)
         else:
-            vindex = data.index('v')
-            motorspeed = int(float(data[vindex+1:]) / 127.0 * 64000)
+            vindex = data.index('v') 
+            motorspeed = int(data[vindex+1:]) 
             #child_pid = os.fork()
             #if child_pid == 0:
             print("Use {0} motor speed to get pitch {1} position".format( motorspeed, int(data[1:vindex]) ) ) #m1v127 change here
+            motor4.mt(int(data[1:vindex]), motorspeed)
             #    os._exit(0)
+
