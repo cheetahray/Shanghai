@@ -219,8 +219,8 @@ def raylist(mylist):
             picker = "picker"
             if False == islightout:
                 picker += "{0} {1}".format(tp[nowm],math.fabs(tp[nowm]-tp[lastm])*0.02)
-            sock.sendto(picker, lighttuple)
-            print(picker)
+            clientsock.send(picker)
+            #print(picker)
             lastm = nowm
             if True == issoundfont:
                 timer = threading.Timer(0.2, func )
@@ -247,9 +247,9 @@ def raylist(mylist):
     elif mylist[0] == '225':
         islightout = int(mylist[1])
         if '1' == islightout: 
-            sock.sendto("out", lighttuple)
+            clientsock.send("out")
         elif '0' == islightout:
-            sock.sendto("in", lighttuple)
+            clientsock.send("in")
     elif mylist[0] == '249':
         if '1' == mylist[1]:
             if False == issoundfont:
@@ -282,8 +282,9 @@ def raylist(mylist):
 sock = socket.socket(socket.AF_INET, socket.SOCK_DGRAM) # UDP
 UDP_PORT = 5005
 UDP_IP = "192.168.12.178"
-lighttuple = ("127.0.0.1",9999)
 sock.bind(("0.0.0.0", UDP_PORT))
+clientsock = socket.socket(socket.AF_INET, socket.SOCK_STREAM)
+clientsock.connect(("127.0.0.1", 9999))
 
 isslide0 = False
 isslide127 = False
