@@ -30,7 +30,7 @@ class ColorWipe(BaseStripAnim, Thread):
         Thread.start(self)
 
     def step(self, amt = 1):
-        amt = 2
+        pass
 
     def drawone(self,x,y,r,g,b):
         r += 30

@@ -282,7 +282,7 @@ def raylist(mylist):
 sock = socket.socket(socket.AF_INET, socket.SOCK_DGRAM) # UDP
 UDP_PORT = 5005
 UDP_IP = "192.168.12.178"
-lighttuple = ("127.0.0.1",6454)
+lighttuple = ("127.0.0.1",9999)
 sock.bind(("0.0.0.0", UDP_PORT))
 
 isslide0 = False
