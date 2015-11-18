@@ -16,7 +16,7 @@ def handler(clientsocket, clientaddr):
         data = clientsocket.recv(1024)
         if ( len(data) >= 6  and (data[0:6] == "picker") ):
             #print ("Boom")
-            if True == islightout:
+            if True == islightout and len(data) != 6:
                 mylist = data[6:].split(" ")
                 #print(mylist)
                 anim.rayanim(255,255,255,127,int(mylist[0]),float(mylist[1]))
