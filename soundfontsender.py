@@ -51,7 +51,7 @@ def raymr(tid):
                     time.sleep(0.5)
                     sock.sendto("mr" + str(tid-rayshift), (UDP_IP, UDP_PORT))
                     data, addr = sock.recvfrom(1024)
-                    tp0.append(int(data))
+                    tp0[tid-rayshift] = int(data)
                     print(data)
                     time.sleep(0.5)
             else:
@@ -78,7 +78,7 @@ def raymr(tid):
                     time.sleep(0.5)
                     sock.sendto("mr" + str(tid-rayshift), (UDP_IP, UDP_PORT))
                     data, addr = sock.recvfrom(1024)
-                    tp0.append(int(data))
+                    tp0[tid-rayshift] = int(data)
                     print(data)
                     time.sleep(0.5)
         if aacnt == 100:
@@ -219,7 +219,8 @@ def raylist(mylist):
             picker = "picker"
             if False == islightout:
                 picker += "{0} {1}".format(tp[nowm],math.fabs(tp[nowm]-tp[lastm])*0.02)
-            sock.sendto(picker, ("127.0.0.1", 6454))
+            sock.sendto(picker, lighttuple)
+            print(picker)
             lastm = nowm
             if True == issoundfont:
                 timer = threading.Timer(0.2, func )
@@ -245,6 +246,10 @@ def raylist(mylist):
             isslide0 = False
     elif mylist[0] == '225':
         islightout = int(mylist[1])
+        if '1' == islightout: 
+            sock.sendto("out", lighttuple)
+        elif '0' == islightout:
+            sock.sendto("in", lighttuple)
     elif mylist[0] == '249':
         if '1' == mylist[1]:
             if False == issoundfont:
@@ -277,6 +282,7 @@ def raylist(mylist):
 sock = socket.socket(socket.AF_INET, socket.SOCK_DGRAM) # UDP
 UDP_PORT = 5005
 UDP_IP = "192.168.12.178"
+lighttuple = ("127.0.0.1",6454)
 sock.bind(("0.0.0.0", UDP_PORT))
 
 isslide0 = False
@@ -286,7 +292,7 @@ timer = None
 rayshift = 42
 lastm = 0
 nowm = 0
-tp0=[]
+tp0 = [0, 5444, 9412, 10844, 17075, 21280, 23834, 26727, 30225, 32542, 35096, 37297, 40087, 41698, 43721, 49281, 50831]
 tp=[0, 4, 9, 11, 19, 23, 25, 30, 34, 37, 41, 42, 46, 48, 51, 53, 56, 57, 60]
 islightout = True
 issoundfont = False

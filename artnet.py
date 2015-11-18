@@ -8,19 +8,48 @@ import commands
 import ledmatrix as rayled
 from threading import *
 import sys
+import SocketServer
 
-def func():
-    global p32
-    global p38
-    global p40
-    p32.ChangeDutyCycle(100)
-    p38.ChangeDutyCycle(100)
-    p40.ChangeDutyCycle(0)
+class ThreadedTCPServer(SocketServer.ThreadingMixIn, SocketServer.TCPServer):
+    pass
 
-UDP_PORT = 6454
+class ThreadedUCPRequestHandler(SocketServer.BaseRequestHandler):
+    
+    anim = None
+    p32 = None
+    p38 = None
+    p40 = None
+    timer = None
 
+    def __init__(self, anim, p32, p38, p40):
+        SocketServer.BaseRequestHandler.__init__(self)
+        self.anim = anim
+        self.p32 = p32
+        self.p38 = p38
+        self.p40 = p40
+
+    def handle(self):
+        self.data = self.request.recv(1024).strip()
+        if len(self.data) >= 6  and (self.data[0:6] == "picker") :
+            print ("OK Boom!!")
+            if len(self.data) != 6:
+                mylist = self.data[6:].split(" ")
+                #print(mylist)
+                self.anim.rayanim(255,255,255,127,int(mylist[0]),float(mylist[1]))
+            self.p32.ChangeDutyCycle(0)
+            self.p38.ChangeDutyCycle(0)
+            self.p40.ChangeDutyCycle(100)
+            self.timer = Timer(0.1, func)
+            self.timer.start()
+
+    def func():
+        self.p32.ChangeDutyCycle(100)
+        self.p38.ChangeDutyCycle(100)
+        self.p40.ChangeDutyCycle(0)
+
+islightout = True
 sock = socket.socket(socket.AF_INET, socket.SOCK_DGRAM) # UDP
-sock.bind(("", UDP_PORT))
+sock.bind(("0.0.0.0", 6454))
 ips = commands.getoutput("/sbin/ifconfig | grep -iA2 \"wlan0\" | grep -i \"inet\" | grep -iv \"inet6\" | " +
                          "awk {'print $2'} | sed -ne 's/addr\://p'")
 mylist = ips.split(".")
@@ -68,22 +97,15 @@ led = rayled.LEDMatrix(driver, width = len(coords[0]), height = len(coords), coo
 #load channel test animation
 anim = rayled.ColorWipe(led, width = len(coords[0]))
 
-timer = None  
+server_A = ThreadedTCPServer(("0.0.0.0", 9999), ThreadedTCPRequestHandler(anim,p32,p38,p40))
+server_A_thread = threading.Thread(target=server_A.serve_forever)
+server_A_thread.setDaemon(True)
+server_A_thread.start()
 
-try:        
+try:
     while True:
         data, addr = sock.recvfrom(1024)   
-        if ( len(data) >= 6  and (data[0:6] == "picker") ):
-            if len(data) != 6:
-                mylist = data[6:].split(" ")
-                #print(mylist)
-                anim.rayanim(255,255,255,127,int(mylist[0]),float(mylist[1]))
-            p32.ChangeDutyCycle(0)
-            p38.ChangeDutyCycle(0)
-            p40.ChangeDutyCycle(100)
-            timer = Timer(0.1, func)
-            timer.start()
-        elif ((len(data) > 18) and (data[0:8] == "Art-Net\x00")):
+        if True == islightout and ((len(data) > 18) and (data[0:8] == "Art-Net\x00")):
             rawbytes = map(ord, data)
             opcode = rawbytes[8] + (rawbytes[9] << 8)
             protocolVersion = (rawbytes[10] << 8) + rawbytes[11]
@@ -119,6 +141,10 @@ try:
                     if (x >= 66):
                         x = 0
                         #y += 1
+        elif len(data) >= 3  and (data[0:3] == "out"):
+            islightout = True
+        elif len(data) >= 2  and (data[0:2] == "in"):
+            islightout = False        
             
 except (KeyboardInterrupt):
     p31.stop()
