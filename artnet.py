@@ -41,10 +41,6 @@ def func():
 islightout = True
 sock = socket.socket(socket.AF_INET, socket.SOCK_DGRAM) # UDP
 sock.bind(("0.0.0.0", 6454))
-sparksock = socket.socket(socket.AF_INET, socket.SOCK_STREAM)
-sparksock.bind(("0.0.0.0",9999))
-sparksock.listen(2)
-clientsocket, clientaddr = sparksock.accept()
 ips = commands.getoutput("/sbin/ifconfig | grep -iA2 \"wlan0\" | grep -i \"inet\" | grep -iv \"inet6\" | " +
                          "awk {'print $2'} | sed -ne 's/addr\://p'")
 mylist = ips.split(".")
@@ -93,9 +89,13 @@ led = rayled.LEDMatrix(driver, width = len(coords[0]), height = len(coords), coo
 anim = rayled.ColorWipe(led, width = len(coords[0]))
 
 timer = None  
-thread.start_new_thread(handler, (clientsocket, clientaddr))
+sparksock = socket.socket(socket.AF_INET, socket.SOCK_STREAM)
 
 try:        
+    sparksock.bind(("0.0.0.0",9999))
+    sparksock.listen(2)
+    clientsocket, clientaddr = sparksock.accept()
+    thread.start_new_thread(handler, (clientsocket, clientaddr))
     while True:
         data, addr = sock.recvfrom(1024)   
         if True == islightout and ((len(data) > 18) and (data[0:8] == "Art-Net\x00")):
@@ -136,6 +136,9 @@ try:
                         #y += 1
             
 except (KeyboardInterrupt):
+    sock.close()
+    sparksock.shutdown(2)
+    sparksock.close()
     p31.stop()
     p32.stop()
     p33.stop()
@@ -144,5 +147,3 @@ except (KeyboardInterrupt):
     p38.stop()
     p40.stop()
     GPIO.cleanup()
-    sock.close()
-    sparksock.close()

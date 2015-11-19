@@ -188,13 +188,21 @@ def readlineCR(port):
         rv += ch
 
 def func():
+    global lastm
+    global nowm
+    global islightout
     #sock.sendto("av" + mylist[2], (UDP_IP, UDP_PORT))
     sock.sendto("aa", (UDP_IP, UDP_PORT))
+    picker = "picker"
+    if False == islightout:
+        picker += "{0} {1}".format(tp[nowm],math.fabs(tp[nowm]-tp[lastm])*0.02)
+    clientsock.send(picker)
+    #print(picker)
+    lastm = nowm
 
 def raylist(mylist):
     global fl
     global rayshift
-    global lastm
     global nowm
     global islightout
     global issoundfont
@@ -216,16 +224,10 @@ def raylist(mylist):
                 fl.noteon(chnl, noteint, int(mylist[2]))
             nowm = noteint - rayshift
             sock.sendto("mt" + str(nowm) , (UDP_IP, UDP_PORT))
-            picker = "picker"
-            if False == islightout:
-                picker += "{0} {1}".format(tp[nowm],math.fabs(tp[nowm]-tp[lastm])*0.02)
-            clientsock.send(picker)
-            #print(picker)
-            lastm = nowm
             if True == issoundfont:
-                timer = threading.Timer(0.2, func )
+                timer = threading.Timer(0.3, func )
             else:
-                timer = threading.Timer(0.01, func )
+                timer = threading.Timer(0.3, func )
             timer.start()
     elif mylist[0] == '224':
         if True == issoundfont:
@@ -274,6 +276,7 @@ def raylist(mylist):
                     input = True,
                     output_device_index = 0,
                     output = True,
+                    frames_per_buffer=1024,
                     stream_callback=callback
                 )
                 strm.start_stream()
@@ -321,6 +324,7 @@ else:
         input = True,
         output_device_index = 0,
         output = True,
+        frames_per_buffer=1024,
         stream_callback=callback
     )
     strm.start_stream()
