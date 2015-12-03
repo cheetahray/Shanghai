@@ -284,14 +284,14 @@ def raylist(mylist):
 
 sock = socket.socket(socket.AF_INET, socket.SOCK_DGRAM) # UDP
 UDP_PORT = 5005
-UDP_IP = "192.168.12.178"
+UDP_IP = "192.168.11.178"
 sock.bind(("0.0.0.0", UDP_PORT))
 clientsock = socket.socket(socket.AF_INET, socket.SOCK_STREAM)
 clientsock.connect(("127.0.0.1", 9999))
 
 isslide0 = False
 isslide127 = False
-startmode = 3
+startmode = 2
 timer = None
 rayshift = 42
 lastm = 0

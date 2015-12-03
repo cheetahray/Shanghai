@@ -20,7 +20,7 @@ def handler(clientsocket, clientaddr):
                 mylist = data[6:].split(" ")
                 #print(mylist)
                 anim.rayanim(255,255,255,127,int(mylist[0]),float(mylist[1]))
-            p32.ChangeDutyCycle(0)
+            GPIO.output(32, False) #p32.ChangeDutyCycle(0)
             p38.ChangeDutyCycle(0)
             p40.ChangeDutyCycle(100)
             timer = Timer(0.1, func)
@@ -31,10 +31,10 @@ def handler(clientsocket, clientaddr):
             islightout = False    
 
 def func():
-    global p32
+    #global p32
     global p38
     global p40
-    p32.ChangeDutyCycle(100)
+    GPIO.output(32, True) #p32.ChangeDutyCycle(100)
     p38.ChangeDutyCycle(100)
     p40.ChangeDutyCycle(0)
 
@@ -53,15 +53,15 @@ GPIO.setup(35, GPIO.OUT)
 GPIO.setup(37, GPIO.OUT)
 GPIO.setup(38, GPIO.OUT)
 GPIO.setup(40, GPIO.OUT)
-p31 = GPIO.PWM(31, 1000)
-p32 = GPIO.PWM(32, 1000)
-p33 = GPIO.PWM(33, 1000)
-p35 = GPIO.PWM(35, 1000)
-p37 = GPIO.PWM(37, 1000)
-p38 = GPIO.PWM(38, 1000)
-p40 = GPIO.PWM(40, 1000)
+p31 = GPIO.PWM(31, 200)
+#p32 = GPIO.PWM(32, 1000)
+p33 = GPIO.PWM(33, 200)
+p35 = GPIO.PWM(35, 200)
+p37 = GPIO.PWM(37, 200)
+p38 = GPIO.PWM(38, 200)
+p40 = GPIO.PWM(40, 200)
 p31.start(0)
-p32.start(100)
+#p32.start(100)
 p33.start(0)
 p35.start(0)
 p37.start(0)
@@ -82,7 +82,7 @@ coords = [
 #causes frame timing information to be output
 rayled.log.setLogLevel(rayled.log.CRITICAL)
 #set number of pixels & LED type here
-driver = rayled.DriverLPD8806( num = len(coords[0]) * len(coords) )
+driver = rayled.DriverLPD8806( num = len(coords[0]) * len(coords) , SPISpeed = 4)
 #load the LEDStrip class
 led = rayled.LEDMatrix(driver, width = len(coords[0]), height = len(coords), coordMap = coords, threadedUpdate = True)
 #load channel test animation
@@ -140,7 +140,7 @@ except (KeyboardInterrupt):
     sparksock.shutdown(2)
     sparksock.close()
     p31.stop()
-    p32.stop()
+    #p32.stop()
     p33.stop()
     p35.stop()
     p37.stop()
