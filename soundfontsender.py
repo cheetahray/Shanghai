@@ -123,7 +123,7 @@ def rayudp():
                     #headd = tp0[0]
                     taill = tp0[len(tp0)-1]
                     for x in range(0, howmanypitch+1):    
-                        tp[x] =  int( float(tp0[x]) / float(taill) * 60.0 ) 
+                        tp[x] =  int( float(tp0[x]) / float(taill) * 40.0 ) 
                     print(tp)
                     sock.sendto("mt1", (UDP_IP, UDP_PORT))
             else:
@@ -291,7 +291,7 @@ clientsock.connect(("127.0.0.1", 9999))
 
 isslide0 = False
 isslide127 = False
-startmode = 2
+startmode = 1
 timer = None
 rayshift = 42
 lastm = 0
