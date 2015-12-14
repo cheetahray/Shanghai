@@ -41,7 +41,7 @@ def func():
 islightout = True
 sock = socket.socket(socket.AF_INET, socket.SOCK_DGRAM) # UDP
 sock.bind(("0.0.0.0", 6454))
-ips = commands.getoutput("/sbin/ifconfig | grep -iA2 \"wlan0\" | grep -i \"inet\" | grep -iv \"inet6\" | " +
+ips = commands.getoutput("/sbin/ifconfig | grep -iA2 \"eth0\" | grep -i \"inet\" | grep -iv \"inet6\" | " +
                          "awk {'print $2'} | sed -ne 's/addr\://p'")
 mylist = ips.split(".")
 whoami = int(mylist[3])
@@ -121,7 +121,7 @@ try:
                     idx += 1
                     b = rawbytes[idx]
                     idx += 1
-                    if ( x == whoami - 78 ) or ( x == whoami - 77 ):
+                    if ( x == whoami - 179 ) or ( x == whoami - 178 ):
                         if 0 == nowy:
                             p31.ChangeDutyCycle(int(r/2.55))
                             p33.ChangeDutyCycle(int(g/2.55))
