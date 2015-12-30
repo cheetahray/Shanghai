@@ -12,22 +12,22 @@ def Threadfun1(string1, string2, string3, string4, string5, string6, *args):
     s5 = socket.socket(socket.AF_INET, socket.SOCK_DGRAM)
     s6 = socket.socket(socket.AF_INET, socket.SOCK_DGRAM)
     while(True):
-        if len(sb1) > 13:
+        if len(sb1) > 14:
             s1.sendto(sb1, (string1 ,6454) )
             sb1 = "artnet"
-        if len(sb2) > 13:
+        if len(sb2) > 14:
             s2.sendto(sb2, (string2, 6454) )
             sb2 = "artnet"
-        if len(sb3) > 13:
+        if len(sb3) > 14:
             s3.sendto(sb3, (string3, 6454) )
             sb3 = "artnet"
-        if len(sb4) > 13:
+        if len(sb4) > 14:
             s4.sendto(sb4, (string4, 6454) )
             sb4 = "artnet"
-        if len(sb5) > 13:
+        if len(sb5) > 14:
             s5.sendto(sb5, (string5, 6454) )
             sb5 = "artnet"
-        if len(sb6) > 13:
+        if len(sb6) > 14:
             s6.sendto(sb6, (string6, 6454) )
             sb6 = "artnet"
         time.sleep(sleeptime)
@@ -42,22 +42,22 @@ def Threadfun2(string1, string2, string3, string4, string5, string6, *args):
     s5 = socket.socket(socket.AF_INET, socket.SOCK_DGRAM)
     s6 = socket.socket(socket.AF_INET, socket.SOCK_DGRAM)
     while(True):
-        if len(sb7) > 13:
+        if len(sb7) > 14:
             s1.sendto(sb7, (string1 ,6454) )
             sb7 = "artnet"
-        if len(sb8) > 13:
+        if len(sb8) > 14:
             s2.sendto(sb8, (string2, 6454) )
             sb8 = "artnet"
-        if len(sb9) > 13:
+        if len(sb9) > 14:
             s3.sendto(sb9, (string3, 6454) )
             sb9 = "artnet"
-        if len(sb10) > 13:
+        if len(sb10) > 14:
             s4.sendto(sb10, (string4, 6454) )
             sb10 = "artnet"
-        if len(sb11) > 13:
+        if len(sb11) > 14:
             s5.sendto(sb11, (string5, 6454) )
             sb11 = "artnet"
-        if len(sb12) > 13:
+        if len(sb12) > 14:
             s6.sendto(sb12, (string6, 6454) )
             sb12 = "artnet"
         time.sleep(sleeptime)
@@ -72,22 +72,22 @@ def Threadfun3(string1, string2, string3, string4, string5, string6, *args):
     s5 = socket.socket(socket.AF_INET, socket.SOCK_DGRAM)
     s6 = socket.socket(socket.AF_INET, socket.SOCK_DGRAM)
     while(True):
-        if len(sb13) > 13:
+        if len(sb13) > 14:
             s1.sendto(sb13, (string1 ,6454) )
             sb13 = "artnet"
-        if len(sb14) > 13:
+        if len(sb14) > 14:
             s2.sendto(sb14, (string2, 6454) )
             sb14 = "artnet"
-        if len(sb15) > 13:
+        if len(sb15) > 14:
             s3.sendto(sb15, (string3, 6454) )
             sb15 = "artnet"
-        if len(sb16) > 13:
+        if len(sb16) > 14:
             s4.sendto(sb16, (string4, 6454) )
             sb16 = "artnet"
-        if len(sb17) > 13:
+        if len(sb17) > 14:
             s5.sendto(sb17, (string5, 6454) )
             sb17 = "artnet"
-        if len(sb18) > 13:
+        if len(sb18) > 14:
             s6.sendto(sb18, (string6, 6454) )
             sb18 = "artnet"
         time.sleep(sleeptime)
@@ -102,22 +102,22 @@ def Threadfun4(string1, string2, string3, string4, string5, string6, *args):
     s5 = socket.socket(socket.AF_INET, socket.SOCK_DGRAM)
     s6 = socket.socket(socket.AF_INET, socket.SOCK_DGRAM)
     while(True):
-        if len(sb19) > 13:
+        if len(sb19) > 14:
             s1.sendto(sb19, (string1 ,6454) )
             sb19 = "artnet"
-        if len(sb20) > 13:
+        if len(sb20) > 14:
             s2.sendto(sb20, (string2, 6454) )
             sb20 = "artnet"
-        if len(sb21) > 13:
+        if len(sb21) > 14:
             s3.sendto(sb21, (string3, 6454) )
             sb21 = "artnet"
-        if len(sb22) > 13:
+        if len(sb22) > 14:
             s4.sendto(sb22, (string4, 6454) )
             sb22 = "artnet"
-        if len(sb23) > 13:
+        if len(sb23) > 14:
             s5.sendto(sb23, (string5, 6454) )
             sb23 = "artnet"
-        if len(sb24) > 13:
+        if len(sb24) > 14:
             s6.sendto(sb24, (string6, 6454) )
             sb24 = "artnet"
         time.sleep(sleeptime)
@@ -132,22 +132,22 @@ def Threadfun5(string1, string2, string3, string4, string5, string6, *args):
     s5 = socket.socket(socket.AF_INET, socket.SOCK_DGRAM)
     s6 = socket.socket(socket.AF_INET, socket.SOCK_DGRAM)
     while(True):
-        if len(sb25) > 13:
+        if len(sb25) > 14:
             s1.sendto(sb25, (string1 ,6454) )
             sb25 = "artnet"
-        if len(sb26) > 13:
+        if len(sb26) > 14:
             s2.sendto(sb26, (string2, 6454) )
             sb26 = "artnet"
-        if len(sb27) > 13:
+        if len(sb27) > 14:
             s3.sendto(sb27, (string3, 6454) )
             sb27 = "artnet"
-        if len(sb28) > 13:
+        if len(sb28) > 14:
             s4.sendto(sb28, (string4, 6454) )
             sb28 = "artnet"
-        if len(sb29) > 13:
+        if len(sb29) > 14:
             s5.sendto(sb29, (string5, 6454) )
             sb29 = "artnet"
-        if len(sb30) > 13:
+        if len(sb30) > 14:
             s6.sendto(sb30, (string6, 6454) )
             sb30 = "artnet"
         time.sleep(sleeptime)
@@ -162,22 +162,22 @@ def Threadfun6(string1, string2, string3, string4, string5, string6, *args):
     s5 = socket.socket(socket.AF_INET, socket.SOCK_DGRAM)
     s6 = socket.socket(socket.AF_INET, socket.SOCK_DGRAM)
     while(True):
-        if len(sb31) > 13:
+        if len(sb31) > 14:
             s1.sendto(sb31, (string1 ,6454) )
             sb31 = "artnet"
-        if len(sb32) > 13:
+        if len(sb32) > 14:
             s2.sendto(sb32, (string2, 6454) )
             sb32 = "artnet"
-        if len(sb33) > 13:
+        if len(sb33) > 14:
             s3.sendto(sb33, (string3, 6454) )
             sb33 = "artnet"
-        if len(sb34) > 13:
+        if len(sb34) > 14:
             s4.sendto(sb34, (string4, 6454) )
             sb34 = "artnet"
-        if len(sb35) > 13:
+        if len(sb35) > 14:
             s5.sendto(sb35, (string5, 6454) )
             sb35 = "artnet"
-        if len(sb36) > 13:
+        if len(sb36) > 14:
             s6.sendto(sb36, (string6, 6454) )
             sb36 = "artnet"
         time.sleep(sleeptime)
@@ -192,22 +192,22 @@ def Threadfun7(string1, string2, string3, string4, string5, string6, *args):
     s5 = socket.socket(socket.AF_INET, socket.SOCK_DGRAM)
     s6 = socket.socket(socket.AF_INET, socket.SOCK_DGRAM)
     while(True):
-        if len(sb37) > 13:
+        if len(sb37) > 14:
             s1.sendto(sb37, (string1 ,6454) )
             sb37 = "artnet"
-        if len(sb38) > 13:
+        if len(sb38) > 14:
             s2.sendto(sb38, (string2, 6454) )
             sb38 = "artnet"
-        if len(sb39) > 13:
+        if len(sb39) > 14:
             s3.sendto(sb39, (string3, 6454) )
             sb39 = "artnet"
-        if len(sb40) > 13:
+        if len(sb40) > 14:
             s4.sendto(sb40, (string4, 6454) )
             sb40 = "artnet"
-        if len(sb41) > 13:
+        if len(sb41) > 14:
             s5.sendto(sb41, (string5, 6454) )
             sb41 = "artnet"
-        if len(sb42) > 13:
+        if len(sb42) > 14:
             s6.sendto(sb42, (string6, 6454) )
             sb42 = "artnet"
         time.sleep(sleeptime)
@@ -222,22 +222,22 @@ def Threadfun8(string1, string2, string3, string4, string5, string6, *args):
     s5 = socket.socket(socket.AF_INET, socket.SOCK_DGRAM)
     s6 = socket.socket(socket.AF_INET, socket.SOCK_DGRAM)
     while(True):
-        if len(sb43) > 13:
+        if len(sb43) > 14:
             s1.sendto(sb43, (string1 ,6454) )
             sb43 = "artnet"
-        if len(sb44) > 13:
+        if len(sb44) > 14:
             s2.sendto(sb44, (string2, 6454) )
             sb44 = "artnet"
-        if len(sb45) > 13:
+        if len(sb45) > 14:
             s3.sendto(sb45, (string3, 6454) )
             sb45 = "artnet"
-        if len(sb46) > 13:
+        if len(sb46) > 14:
             s4.sendto(sb46, (string4, 6454) )
             sb46 = "artnet"
-        if len(sb47) > 13:
+        if len(sb47) > 14:
             s5.sendto(sb47, (string5, 6454) )
             sb47 = "artnet"
-        if len(sb48) > 13:
+        if len(sb48) > 14:
             s6.sendto(sb48, (string6, 6454) )
             sb48 = "artnet"
         time.sleep(sleeptime)
@@ -252,22 +252,22 @@ def Threadfun9(string1, string2, string3, string4, string5, string6, *args):
     s5 = socket.socket(socket.AF_INET, socket.SOCK_DGRAM)
     s6 = socket.socket(socket.AF_INET, socket.SOCK_DGRAM)
     while(True):
-        if len(sb49) > 13:
+        if len(sb49) > 14:
             s1.sendto(sb49, (string1 ,6454) )
             sb49 = "artnet"
-        if len(sb50) > 13:
+        if len(sb50) > 14:
             s2.sendto(sb50, (string2, 6454) )
             sb50 = "artnet"
-        if len(sb51) > 13:
+        if len(sb51) > 14:
             s3.sendto(sb51, (string3, 6454) )
             sb51 = "artnet"
-        if len(sb52) > 13:
+        if len(sb52) > 14:
             s4.sendto(sb52, (string4, 6454) )
             sb52 = "artnet"
-        if len(sb53) > 13:
+        if len(sb53) > 14:
             s5.sendto(sb53, (string5, 6454) )
             sb53 = "artnet"
-        if len(sb54) > 13:
+        if len(sb54) > 14:
             s6.sendto(sb54, (string6, 6454) )
             sb54 = "artnet"
         time.sleep(sleeptime)
@@ -282,22 +282,22 @@ def Threadfun10(string1, string2, string3, string4, string5, string6, *args):
     s5 = socket.socket(socket.AF_INET, socket.SOCK_DGRAM)
     s6 = socket.socket(socket.AF_INET, socket.SOCK_DGRAM)
     while(True):
-        if len(sb55) > 13:
+        if len(sb55) > 14:
             s1.sendto(sb55, (string1 ,6454) )
             sb55 = "artnet"
-        if len(sb56) > 13:
+        if len(sb56) > 14:
             s2.sendto(sb56, (string2, 6454) )
             sb56 = "artnet"
-        if len(sb57) > 13:
+        if len(sb57) > 14:
             s3.sendto(sb57, (string3, 6454) )
             sb57 = "artnet"
-        if len(sb58) > 13:
+        if len(sb58) > 14:
             s4.sendto(sb58, (string4, 6454) )
             sb58 = "artnet"
-        if len(sb59) > 13:
+        if len(sb59) > 14:
             s5.sendto(sb59, (string5, 6454) )
             sb59 = "artnet"
-        if len(sb60) > 13:
+        if len(sb60) > 14:
             s6.sendto(sb60, (string6, 6454) )
             sb60 = "artnet"
         time.sleep(sleeptime)
@@ -312,22 +312,22 @@ def Threadfun11(string1, string2, string3, string4, string5, string6, *args):
     s5 = socket.socket(socket.AF_INET, socket.SOCK_DGRAM)
     s6 = socket.socket(socket.AF_INET, socket.SOCK_DGRAM)
     while(True):
-        if len(sb61) > 13:
+        if len(sb61) > 14:
             s1.sendto(sb61, (string1 ,6454) )
             sb61 = "artnet"
-        if len(sb62) > 13:
+        if len(sb62) > 14:
             s2.sendto(sb62, (string2, 6454) )
             sb62 = "artnet"
-        if len(sb63) > 13:
+        if len(sb63) > 14:
             s3.sendto(sb63, (string3, 6454) )
             sb63 = "artnet"
-        if len(sb64) > 13:
+        if len(sb64) > 14:
             s4.sendto(sb64, (string4, 6454) )
             sb64 = "artnet"
-        if len(sb65) > 13:
+        if len(sb65) > 14:
             s5.sendto(sb65, (string5, 6454) )
             sb65 = "artnet"
-        if len(sb66) > 13:
+        if len(sb66) > 14:
             s6.sendto(sb66, (string6, 6454) )
             sb66 = "artnet"
         time.sleep(sleeptime)
