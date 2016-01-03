@@ -11,6 +11,12 @@ def Threadfun1(string1, string2, string3, string4, string5, string6, *args):
     s4 = socket.socket(socket.AF_INET, socket.SOCK_DGRAM)
     s5 = socket.socket(socket.AF_INET, socket.SOCK_DGRAM)
     s6 = socket.socket(socket.AF_INET, socket.SOCK_DGRAM)
+    s1tuple = (string1 ,6454)
+    s2tuple = (string2 ,6454)
+    s3tuple = (string3 ,6454)
+    s4tuple = (string4 ,6454)
+    s5tuple = (string5 ,6454)
+    s6tuple = (string6 ,6454)
     while(True):
         end1 = len(sb1)
         end2 = len(sb2)
@@ -18,23 +24,23 @@ def Threadfun1(string1, string2, string3, string4, string5, string6, *args):
         end4 = len(sb4)
         end5 = len(sb5)
         end6 = len(sb6)
-        if end1 > 6 and sb1.count(" ", 6, end1):
-            s1.sendto(sb1, (string1 ,6454) )
+        if end1 > 6 and sb1.count(" ", 6, end1) == 3:
+            s1.sendto(sb1, s1tuple)
             sb1 = "artnet"
-        if end2 > 6 and sb2.count(" ", 6, end2):
-            s2.sendto(sb2, (string2, 6454) )
+        if end2 > 6 and sb2.count(" ", 6, end2) == 3:
+            s2.sendto(sb2, s2tuple)
             sb2 = "artnet"
-        if end3 > 6 and sb3.count(" ", 6, end3):
-            s3.sendto(sb3, (string3, 6454) )
+        if end3 > 6 and sb3.count(" ", 6, end3) == 3:
+            s3.sendto(sb3, s3tuple)
             sb3 = "artnet"
-        if end4 > 6 and sb4.count(" ", 6, end4):
-            s4.sendto(sb4, (string4, 6454) )
+        if end4 > 6 and sb4.count(" ", 6, end4) == 3:
+            s4.sendto(sb4, s4tuple)
             sb4 = "artnet"
-        if end5 > 6 and sb5.count(" ", 6, end5):
-            s5.sendto(sb5, (string5, 6454) )
+        if end5 > 6 and sb5.count(" ", 6, end5) == 3:
+            s5.sendto(sb5, s5tuple)
             sb5 = "artnet"
-        if end6 > 6 and sb6.count(" ", 6, end6):
-            s6.sendto(sb6, (string6, 6454) )
+        if end6 > 6 and sb6.count(" ", 6, end6) == 3:
+            s6.sendto(sb6, s6tuple)
             sb6 = "artnet"
         time.sleep(sleeptime)
 
@@ -47,6 +53,12 @@ def Threadfun2(string1, string2, string3, string4, string5, string6, *args):
     s4 = socket.socket(socket.AF_INET, socket.SOCK_DGRAM)
     s5 = socket.socket(socket.AF_INET, socket.SOCK_DGRAM)
     s6 = socket.socket(socket.AF_INET, socket.SOCK_DGRAM)
+    s1tuple = (string1 ,6454)
+    s2tuple = (string2 ,6454)
+    s3tuple = (string3 ,6454)
+    s4tuple = (string4 ,6454)
+    s5tuple = (string5 ,6454)
+    s6tuple = (string6 ,6454)
     while(True):
         end1 = len(sb7)
         end2 = len(sb8)
@@ -54,23 +66,23 @@ def Threadfun2(string1, string2, string3, string4, string5, string6, *args):
         end4 = len(sb10)
         end5 = len(sb11)
         end6 = len(sb12)
-        if end1 > 6 and sb7.count(" ", 6, end1):
-            s1.sendto(sb7, (string1 ,6454) )
+        if end1 > 6 and sb7.count(" ", 6, end1) == 3:
+            s1.sendto(sb7, s1tuple)
             sb7 = "artnet"
-        if end2 > 6 and sb8.count(" ", 6, end2):
-            s2.sendto(sb8, (string2, 6454) )
+        if end2 > 6 and sb8.count(" ", 6, end2) == 3:
+            s2.sendto(sb8, s2tuple)
             sb8 = "artnet"
-        if end3 > 6 and sb9.count(" ", 6, end3):
-            s3.sendto(sb9, (string3, 6454) )
+        if end3 > 6 and sb9.count(" ", 6, end3) == 3:
+            s3.sendto(sb9, s3tuple)
             sb9 = "artnet"
-        if end4 > 6 and sb10.count(" ", 6, end4):
-            s4.sendto(sb10, (string4, 6454) )
+        if end4 > 6 and sb10.count(" ", 6, end4) == 3:
+            s4.sendto(sb10, s4tuple)
             sb10 = "artnet"
-        if end5 > 6 and sb11.count(" ", 6, end5):
-            s5.sendto(sb11, (string5, 6454) )
+        if end5 > 6 and sb11.count(" ", 6, end5) == 3:
+            s5.sendto(sb11, s5tuple)
             sb11 = "artnet"
-        if end6 > 6 and sb12.count(" ", 6, end6):
-            s6.sendto(sb12, (string6, 6454) )
+        if end6 > 6 and sb12.count(" ", 6, end6) == 3:
+            s6.sendto(sb12, s6tuple)
             sb12 = "artnet"
         time.sleep(sleeptime)
 
@@ -83,6 +95,12 @@ def Threadfun3(string1, string2, string3, string4, string5, string6, *args):
     s4 = socket.socket(socket.AF_INET, socket.SOCK_DGRAM)
     s5 = socket.socket(socket.AF_INET, socket.SOCK_DGRAM)
     s6 = socket.socket(socket.AF_INET, socket.SOCK_DGRAM)
+    s1tuple = (string1 ,6454)
+    s2tuple = (string2 ,6454)
+    s3tuple = (string3 ,6454)
+    s4tuple = (string4 ,6454)
+    s5tuple = (string5 ,6454)
+    s6tuple = (string6 ,6454)
     while(True):
         end1 = len(sb13)
         end2 = len(sb14)
@@ -90,23 +108,23 @@ def Threadfun3(string1, string2, string3, string4, string5, string6, *args):
         end4 = len(sb16)
         end5 = len(sb17)
         end6 = len(sb18)
-        if end1 > 6 and sb13.count(" ", 6, end1):
-            s1.sendto(sb13, (string1 ,6454) )
+        if end1 > 6 and sb13.count(" ", 6, end1) == 3:
+            s1.sendto(sb13, s1tuple)
             sb13 = "artnet"
-        if end2 > 6 and sb14.count(" ", 6, end2):
-            s2.sendto(sb14, (string2, 6454) )
+        if end2 > 6 and sb14.count(" ", 6, end2) == 3:
+            s2.sendto(sb14, s2tuple)
             sb14 = "artnet"
-        if end3 > 6 and sb15.count(" ", 6, end3):
-            s3.sendto(sb15, (string3, 6454) )
+        if end3 > 6 and sb15.count(" ", 6, end3) == 3:
+            s3.sendto(sb15, s3tuple)
             sb15 = "artnet"
-        if end4 > 6 and sb16.count(" ", 6, end4):
-            s4.sendto(sb16, (string4, 6454) )
+        if end4 > 6 and sb16.count(" ", 6, end4) == 3:
+            s4.sendto(sb16, s4tuple)
             sb16 = "artnet"
-        if end5 > 6 and sb17.count(" ", 6, end5):
-            s5.sendto(sb17, (string5, 6454) )
+        if end5 > 6 and sb17.count(" ", 6, end5) == 3:
+            s5.sendto(sb17, s5tuple)
             sb17 = "artnet"
-        if end6 > 6 and sb18.count(" ", 6, end6):
-            s6.sendto(sb18, (string6, 6454) )
+        if end6 > 6 and sb18.count(" ", 6, end6) == 3:
+            s6.sendto(sb18, s6tuple)
             sb18 = "artnet"
         time.sleep(sleeptime)
 
@@ -119,6 +137,12 @@ def Threadfun4(string1, string2, string3, string4, string5, string6, *args):
     s4 = socket.socket(socket.AF_INET, socket.SOCK_DGRAM)
     s5 = socket.socket(socket.AF_INET, socket.SOCK_DGRAM)
     s6 = socket.socket(socket.AF_INET, socket.SOCK_DGRAM)
+    s1tuple = (string1 ,6454)
+    s2tuple = (string2 ,6454)
+    s3tuple = (string3 ,6454)
+    s4tuple = (string4 ,6454)
+    s5tuple = (string5 ,6454)
+    s6tuple = (string6 ,6454)
     while(True):
         end1 = len(sb19)
         end2 = len(sb20)
@@ -126,23 +150,23 @@ def Threadfun4(string1, string2, string3, string4, string5, string6, *args):
         end4 = len(sb22)
         end5 = len(sb23)
         end6 = len(sb24)
-        if end1 > 6 and sb19.count(" ", 6, end1):
-            s1.sendto(sb19, (string1 ,6454) )
+        if end1 > 6 and sb19.count(" ", 6, end1) == 3:
+            s1.sendto(sb19, s1tuple)
             sb19 = "artnet"
-        if end2 > 6 and sb20.count(" ", 6, end2):
-            s2.sendto(sb20, (string2, 6454) )
+        if end2 > 6 and sb20.count(" ", 6, end2) == 3:
+            s2.sendto(sb20, s2tuple)
             sb20 = "artnet"
-        if end3 > 6 and sb21.count(" ", 6, end3):
-            s3.sendto(sb21, (string3, 6454) )
+        if end3 > 6 and sb21.count(" ", 6, end3) == 3:
+            s3.sendto(sb21, s3tuple)
             sb21 = "artnet"
-        if end4 > 6 and sb22.count(" ", 6, end4):
-            s4.sendto(sb22, (string4, 6454) )
+        if end4 > 6 and sb22.count(" ", 6, end4) == 3:
+            s4.sendto(sb22, s4tuple)
             sb22 = "artnet"
-        if end5 > 6 and sb23.count(" ", 6, end5):
-            s5.sendto(sb23, (string5, 6454) )
+        if end5 > 6 and sb23.count(" ", 6, end5) == 3:
+            s5.sendto(sb23, s5tuple)
             sb23 = "artnet"
-        if end6 > 6 and sb24.count(" ", 6, end6):
-            s6.sendto(sb24, (string6, 6454) )
+        if end6 > 6 and sb24.count(" ", 6, end6) == 3:
+            s6.sendto(sb24, s6tuple)
             sb24 = "artnet"
         time.sleep(sleeptime)
 
@@ -155,6 +179,12 @@ def Threadfun5(string1, string2, string3, string4, string5, string6, *args):
     s4 = socket.socket(socket.AF_INET, socket.SOCK_DGRAM)
     s5 = socket.socket(socket.AF_INET, socket.SOCK_DGRAM)
     s6 = socket.socket(socket.AF_INET, socket.SOCK_DGRAM)
+    s1tuple = (string1 ,6454)
+    s2tuple = (string2 ,6454)
+    s3tuple = (string3 ,6454)
+    s4tuple = (string4 ,6454)
+    s5tuple = (string5 ,6454)
+    s6tuple = (string6 ,6454)
     while(True):
         end1 = len(sb25)
         end2 = len(sb26)
@@ -162,23 +192,23 @@ def Threadfun5(string1, string2, string3, string4, string5, string6, *args):
         end4 = len(sb28)
         end5 = len(sb29)
         end6 = len(sb30)
-        if end1 > 6 and sb25.count(" ", 6, end1):
-            s1.sendto(sb25, (string1 ,6454) )
+        if end1 > 6 and sb25.count(" ", 6, end1) == 3:
+            s1.sendto(sb25, s1tuple)
             sb25 = "artnet"
-        if end2 > 6 and sb26.count(" ", 6, end2):
-            s2.sendto(sb26, (string2, 6454) )
+        if end2 > 6 and sb26.count(" ", 6, end2) == 3:
+            s2.sendto(sb26, s2tuple)
             sb26 = "artnet"
-        if end3 > 6 and sb27.count(" ", 6, end3):
-            s3.sendto(sb27, (string3, 6454) )
+        if end3 > 6 and sb27.count(" ", 6, end3) == 3:
+            s3.sendto(sb27, s3tuple)
             sb27 = "artnet"
-        if end4 > 6 and sb28.count(" ", 6, end4):
-            s4.sendto(sb28, (string4, 6454) )
+        if end4 > 6 and sb28.count(" ", 6, end4) == 3:
+            s4.sendto(sb28, s4tuple)
             sb28 = "artnet"
-        if end5 > 6 and sb29.count(" ", 6, end5):
-            s5.sendto(sb29, (string5, 6454) )
+        if end5 > 6 and sb29.count(" ", 6, end5) == 3:
+            s5.sendto(sb29, s5tuple)
             sb29 = "artnet"
-        if end6 > 6 and sb30.count(" ", 6, end6):
-            s6.sendto(sb30, (string6, 6454) )
+        if end6 > 6 and sb30.count(" ", 6, end6) == 3:
+            s6.sendto(sb30, s6tuple)
             sb30 = "artnet"
         time.sleep(sleeptime)
 
@@ -191,6 +221,12 @@ def Threadfun6(string1, string2, string3, string4, string5, string6, *args):
     s4 = socket.socket(socket.AF_INET, socket.SOCK_DGRAM)
     s5 = socket.socket(socket.AF_INET, socket.SOCK_DGRAM)
     s6 = socket.socket(socket.AF_INET, socket.SOCK_DGRAM)
+    s1tuple = (string1 ,6454)
+    s2tuple = (string2 ,6454)
+    s3tuple = (string3 ,6454)
+    s4tuple = (string4 ,6454)
+    s5tuple = (string5 ,6454)
+    s6tuple = (string6 ,6454)
     while(True):
         end1 = len(sb31)
         end2 = len(sb32)
@@ -198,23 +234,23 @@ def Threadfun6(string1, string2, string3, string4, string5, string6, *args):
         end4 = len(sb34)
         end5 = len(sb35)
         end6 = len(sb36)
-        if end1 > 6 and sb31.count(" ", 6, end1):
-            s1.sendto(sb31, (string1 ,6454) )
+        if end1 > 6 and sb31.count(" ", 6, end1) == 3:
+            s1.sendto(sb31, s1tuple)
             sb31 = "artnet"
-        if end2 > 6 and sb32.count(" ", 6, end2):
-            s2.sendto(sb32, (string2, 6454) )
+        if end2 > 6 and sb32.count(" ", 6, end2) == 3:
+            s2.sendto(sb32, s2tuple)
             sb32 = "artnet"
-        if end3 > 6 and sb33.count(" ", 6, end3):
-            s3.sendto(sb33, (string3, 6454) )
+        if end3 > 6 and sb33.count(" ", 6, end3) == 3:
+            s3.sendto(sb33, s3tuple)
             sb33 = "artnet"
-        if end4 > 6 and sb34.count(" ", 6, end4):
-            s4.sendto(sb34, (string4, 6454) )
+        if end4 > 6 and sb34.count(" ", 6, end4) == 3:
+            s4.sendto(sb34, s4tuple)
             sb34 = "artnet"
-        if end5 > 6 and sb35.count(" ", 6, end5):
-            s5.sendto(sb35, (string5, 6454) )
+        if end5 > 6 and sb35.count(" ", 6, end5) == 3:
+            s5.sendto(sb35, s5tuple)
             sb35 = "artnet"
-        if end6 > 6 and sb36.count(" ", 6, end6):
-            s6.sendto(sb36, (string6, 6454) )
+        if end6 > 6 and sb36.count(" ", 6, end6) == 3:
+            s6.sendto(sb36, s6tuple)
             sb36 = "artnet"
         time.sleep(sleeptime)
 
@@ -227,6 +263,12 @@ def Threadfun7(string1, string2, string3, string4, string5, string6, *args):
     s4 = socket.socket(socket.AF_INET, socket.SOCK_DGRAM)
     s5 = socket.socket(socket.AF_INET, socket.SOCK_DGRAM)
     s6 = socket.socket(socket.AF_INET, socket.SOCK_DGRAM)
+    s1tuple = (string1 ,6454)
+    s2tuple = (string2 ,6454)
+    s3tuple = (string3 ,6454)
+    s4tuple = (string4 ,6454)
+    s5tuple = (string5 ,6454)
+    s6tuple = (string6 ,6454)
     while(True):
         end1 = len(sb37)
         end2 = len(sb38)
@@ -234,23 +276,23 @@ def Threadfun7(string1, string2, string3, string4, string5, string6, *args):
         end4 = len(sb40)
         end5 = len(sb41)
         end6 = len(sb42)
-        if end1 > 6 and sb37.count(" ", 6, end1):
-            s1.sendto(sb37, (string1 ,6454) )
+        if end1 > 6 and sb37.count(" ", 6, end1) == 3:
+            s1.sendto(sb37, s1tuple)
             sb37 = "artnet"
-        if end2 > 6 and sb38.count(" ", 6, end2):
-            s2.sendto(sb38, (string2, 6454) )
+        if end2 > 6 and sb38.count(" ", 6, end2) == 3:
+            s2.sendto(sb38, s2tuple)
             sb38 = "artnet"
-        if end3 > 6 and sb39.count(" ", 6, end3):
-            s3.sendto(sb39, (string3, 6454) )
+        if end3 > 6 and sb39.count(" ", 6, end3) == 3:
+            s3.sendto(sb39, s3tuple)
             sb39 = "artnet"
-        if end4 > 6 and sb40.count(" ", 6, end4):
-            s4.sendto(sb40, (string4, 6454) )
+        if end4 > 6 and sb40.count(" ", 6, end4) == 3:
+            s4.sendto(sb40, s4tuple)
             sb40 = "artnet"
-        if end5 > 6 and sb41.count(" ", 6, end5):
-            s5.sendto(sb41, (string5, 6454) )
+        if end5 > 6 and sb41.count(" ", 6, end5) == 3:
+            s5.sendto(sb41, s5tuple)
             sb41 = "artnet"
-        if end6 > 6 and sb42.count(" ", 6, end6):
-            s6.sendto(sb42, (string6, 6454) )
+        if end6 > 6 and sb42.count(" ", 6, end6) == 3:
+            s6.sendto(sb42, s6tuple)
             sb42 = "artnet"
         time.sleep(sleeptime)
 
@@ -263,6 +305,12 @@ def Threadfun8(string1, string2, string3, string4, string5, string6, *args):
     s4 = socket.socket(socket.AF_INET, socket.SOCK_DGRAM)
     s5 = socket.socket(socket.AF_INET, socket.SOCK_DGRAM)
     s6 = socket.socket(socket.AF_INET, socket.SOCK_DGRAM)
+    s1tuple = (string1 ,6454)
+    s2tuple = (string2 ,6454)
+    s3tuple = (string3 ,6454)
+    s4tuple = (string4 ,6454)
+    s5tuple = (string5 ,6454)
+    s6tuple = (string6 ,6454)
     while(True):
         end1 = len(sb43)
         end2 = len(sb44)
@@ -270,23 +318,23 @@ def Threadfun8(string1, string2, string3, string4, string5, string6, *args):
         end4 = len(sb46)
         end5 = len(sb47)
         end6 = len(sb48)
-        if end1 > 6 and sb43.count(" ", 6, end1):
-            s1.sendto(sb43, (string1 ,6454) )
+        if end1 > 6 and sb43.count(" ", 6, end1) == 3:
+            s1.sendto(sb43, s1tuple)
             sb43 = "artnet"
-        if end2 > 6 and sb44.count(" ", 6, end2):
-            s2.sendto(sb44, (string2, 6454) )
+        if end2 > 6 and sb44.count(" ", 6, end2) == 3:
+            s2.sendto(sb44, s2tuple)
             sb44 = "artnet"
-        if end3 > 6 and sb45.count(" ", 6, end3):
-            s3.sendto(sb45, (string3, 6454) )
+        if end3 > 6 and sb45.count(" ", 6, end3) == 3:
+            s3.sendto(sb45, s3tuple)
             sb45 = "artnet"
-        if end4 > 6 and sb46.count(" ", 6, end4):
-            s4.sendto(sb46, (string4, 6454) )
+        if end4 > 6 and sb46.count(" ", 6, end4) == 3:
+            s4.sendto(sb46, s4tuple)
             sb46 = "artnet"
-        if end5 > 6 and sb47.count(" ", 6, end5):
-            s5.sendto(sb47, (string5, 6454) )
+        if end5 > 6 and sb47.count(" ", 6, end5) == 3:
+            s5.sendto(sb47, s5tuple)
             sb47 = "artnet"
-        if end6 > 6 and sb48.count(" ", 6, end6):
-            s6.sendto(sb48, (string6, 6454) )
+        if end6 > 6 and sb48.count(" ", 6, end6) == 3:
+            s6.sendto(sb48, s6tuple)
             sb48 = "artnet"
         time.sleep(sleeptime)
 
@@ -299,6 +347,12 @@ def Threadfun9(string1, string2, string3, string4, string5, string6, *args):
     s4 = socket.socket(socket.AF_INET, socket.SOCK_DGRAM)
     s5 = socket.socket(socket.AF_INET, socket.SOCK_DGRAM)
     s6 = socket.socket(socket.AF_INET, socket.SOCK_DGRAM)
+    s1tuple = (string1 ,6454)
+    s2tuple = (string2 ,6454)
+    s3tuple = (string3 ,6454)
+    s4tuple = (string4 ,6454)
+    s5tuple = (string5 ,6454)
+    s6tuple = (string6 ,6454)
     while(True):
         end1 = len(sb49)
         end2 = len(sb50)
@@ -306,23 +360,23 @@ def Threadfun9(string1, string2, string3, string4, string5, string6, *args):
         end4 = len(sb52)
         end5 = len(sb53)
         end6 = len(sb54)
-        if end1 > 6 and sb49.count(" ", 6, end1):
-            s1.sendto(sb49, (string1 ,6454) )
+        if end1 > 6 and sb49.count(" ", 6, end1) == 3:
+            s1.sendto(sb49, s1tuple)
             sb49 = "artnet"
-        if end2 > 6 and sb50.count(" ", 6, end2):
-            s2.sendto(sb50, (string2, 6454) )
+        if end2 > 6 and sb50.count(" ", 6, end2) == 3:
+            s2.sendto(sb50, s2tuple)
             sb50 = "artnet"
-        if end3 > 6 and sb51.count(" ", 6, end3):
-            s3.sendto(sb51, (string3, 6454) )
+        if end3 > 6 and sb51.count(" ", 6, end3) == 3:
+            s3.sendto(sb51, s3tuple)
             sb51 = "artnet"
-        if end4 > 6 and sb52.count(" ", 6, end4):
-            s4.sendto(sb52, (string4, 6454) )
+        if end4 > 6 and sb52.count(" ", 6, end4) == 3:
+            s4.sendto(sb52, s4tuple)
             sb52 = "artnet"
-        if end5 > 6 and sb53.count(" ", 6, end5):
-            s5.sendto(sb53, (string5, 6454) )
+        if end5 > 6 and sb53.count(" ", 6, end5) == 3:
+            s5.sendto(sb53, s5tuple)
             sb53 = "artnet"
-        if end6 > 6 and sb54.count(" ", 6, end6):
-            s6.sendto(sb54, (string6, 6454) )
+        if end6 > 6 and sb54.count(" ", 6, end6) == 3:
+            s6.sendto(sb54, s6tuple)
             sb54 = "artnet"
         time.sleep(sleeptime)
 
@@ -335,6 +389,12 @@ def Threadfun10(string1, string2, string3, string4, string5, string6, *args):
     s4 = socket.socket(socket.AF_INET, socket.SOCK_DGRAM)
     s5 = socket.socket(socket.AF_INET, socket.SOCK_DGRAM)
     s6 = socket.socket(socket.AF_INET, socket.SOCK_DGRAM)
+    s1tuple = (string1 ,6454)
+    s2tuple = (string2 ,6454)
+    s3tuple = (string3 ,6454)
+    s4tuple = (string4 ,6454)
+    s5tuple = (string5 ,6454)
+    s6tuple = (string6 ,6454)
     while(True):
         end1 = len(sb55)
         end2 = len(sb56)
@@ -342,23 +402,23 @@ def Threadfun10(string1, string2, string3, string4, string5, string6, *args):
         end4 = len(sb58)
         end5 = len(sb59)
         end6 = len(sb60)
-        if end1 > 6 and sb55.count(" ", 6, end1):
-            s1.sendto(sb55, (string1 ,6454) )
+        if end1 > 6 and sb55.count(" ", 6, end1) == 3:
+            s1.sendto(sb55, s1tuple)
             sb55 = "artnet"
-        if end2 > 6 and sb56.count(" ", 6, end2):
-            s2.sendto(sb56, (string2, 6454) )
+        if end2 > 6 and sb56.count(" ", 6, end2) == 3:
+            s2.sendto(sb56, s2tuple)
             sb56 = "artnet"
-        if end3 > 6 and sb57.count(" ", 6, end3):
-            s3.sendto(sb57, (string3, 6454) )
+        if end3 > 6 and sb57.count(" ", 6, end3) == 3:
+            s3.sendto(sb57, s3tuple)
             sb57 = "artnet"
-        if end4 > 6 and sb58.count(" ", 6, end4):
-            s4.sendto(sb58, (string4, 6454) )
+        if end4 > 6 and sb58.count(" ", 6, end4) == 3:
+            s4.sendto(sb58, s4tuple)
             sb58 = "artnet"
-        if end5 > 6 and sb59.count(" ", 6, end5):
-            s5.sendto(sb59, (string5, 6454) )
+        if end5 > 6 and sb59.count(" ", 6, end5) == 3:
+            s5.sendto(sb59, s5tuple)
             sb59 = "artnet"
-        if end6 > 6 and sb60.count(" ", 6, end6):
-            s6.sendto(sb60, (string6, 6454) )
+        if end6 > 6 and sb60.count(" ", 6, end6) == 3:
+            s6.sendto(sb60, s6tuple)
             sb60 = "artnet"
         time.sleep(sleeptime)
 
@@ -371,6 +431,12 @@ def Threadfun11(string1, string2, string3, string4, string5, string6, *args):
     s4 = socket.socket(socket.AF_INET, socket.SOCK_DGRAM)
     s5 = socket.socket(socket.AF_INET, socket.SOCK_DGRAM)
     s6 = socket.socket(socket.AF_INET, socket.SOCK_DGRAM)
+    s1tuple = (string1 ,6454)
+    s2tuple = (string2 ,6454)
+    s3tuple = (string3 ,6454)
+    s4tuple = (string4 ,6454)
+    s5tuple = (string5 ,6454)
+    s6tuple = (string6 ,6454)
     while(True):
         end1 = len(sb61)
         end2 = len(sb62)
@@ -378,23 +444,23 @@ def Threadfun11(string1, string2, string3, string4, string5, string6, *args):
         end4 = len(sb64)
         end5 = len(sb65)
         end6 = len(sb66)
-        if end1 > 6 and sb61.count(" ", 6, end1):
-            s1.sendto(sb61, (string1 ,6454) )
+        if end1 > 6 and sb61.count(" ", 6, end1) == 3:
+            s1.sendto(sb61, s1tuple)
             sb61 = "artnet"
-        if end2 > 6 and sb62.count(" ", 6, end2):
-            s2.sendto(sb62, (string2, 6454) )
+        if end2 > 6 and sb62.count(" ", 6, end2) == 3:
+            s2.sendto(sb62, s2tuple)
             sb62 = "artnet"
-        if end3 > 6 and sb63.count(" ", 6, end3):
-            s3.sendto(sb63, (string3, 6454) )
+        if end3 > 6 and sb63.count(" ", 6, end3) == 3:
+            s3.sendto(sb63, s3tuple)
             sb63 = "artnet"
-        if end4 > 6 and sb64.count(" ", 6, end4):
-            s4.sendto(sb64, (string4, 6454) )
+        if end4 > 6 and sb64.count(" ", 6, end4) == 3:
+            s4.sendto(sb64, s4tuple)
             sb64 = "artnet"
-        if end5 > 6 and sb65.count(" ", 6, end5):
-            s5.sendto(sb65, (string5, 6454) )
+        if end5 > 6 and sb65.count(" ", 6, end5) == 3:
+            s5.sendto(sb65, s5tuple)
             sb65 = "artnet"
-        if end6 > 6 and sb66.count(" ", 6, end6):
-            s6.sendto(sb66, (string6, 6454) )
+        if end6 > 6 and sb66.count(" ", 6, end6) == 3:
+            s6.sendto(sb66, s6tuple)
             sb66 = "artnet"
         time.sleep(sleeptime)
 
