@@ -72,151 +72,171 @@ def play_midi():
         if 'note_on' == message.type :
             if 0 == message.velocity:
                 if message.channel == 3:
-                    if diction[3].has_key(message.note):
-                        port.write("144 " + str(message.note) + " 0 " + str(diction[3][message.note]) + "\r")
-                        del diction[3][message.note]
+                    if pickidx[3].has_key(message.note):
+                        port.write("144 " + str(message.note) + " 0 " + str(pickidx[3][message.note]) + "\r")
+                        del pickidx[3][message.note]
                 elif message.channel == 2:
-                    if diction[2].has_key(message.note):
-                        port.write("144 " + str(message.note) + " 0 " + str(diction[2][message.note]) + "\r")
-                        del diction[2][message.note]
+                    if pickidx[2].has_key(message.note):
+                        port.write("144 " + str(message.note) + " 0 " + str(pickidx[2][message.note]) + "\r")
+                        del pickidx[2][message.note]
                 elif message.channel == 1:
-                    if diction[1].has_key(message.note):
-                        port.write("144 " + str(message.note) + " 0 " + str(diction[1][message.note]) + "\r")
-                        del diction[1][message.note]
+                    if pickidx[1].has_key(message.note):
+                        port.write("144 " + str(message.note) + " 0 " + str(pickidx[1][message.note]) + "\r")
+                        del pickidx[1][message.note]
                 elif message.channel == 0:
-                    if diction[0].has_key(message.note):
-                        port.write("144 " + str(message.note) + " 0 " + str(diction[0][message.note]) + "\r")
-                        del diction[0][message.note]
+                    if pickidx[0].has_key(message.note):
+                        port.write("144 " + str(message.note) + " 0 " + str(pickidx[0][message.note]) + "\r")
+                        del pickidx[0][message.note]
                 elif message.channel == 11:
-                    if diction[7].has_key(message.note):
-                        port.write("144 " + str(message.note) + " 0 " + str(diction[7][message.note]) + "\r")
-                        del diction[7][message.note]
-                    if diction[11].has_key(message.note):
-                        port.write("144 " + str(message.note) + " 0 " + str(diction[11][message.note]) + "\r")
-                        del diction[11][message.note]
+                    if pickidx[7].has_key(message.note):
+                        port.write("144 " + str(message.note) + " 0 " + str(pickidx[7][message.note]) + "\r")
+                        del pickidx[7][message.note]
+                    if pickidx[11].has_key(message.note):
+                        port.write("144 " + str(message.note) + " 0 " + str(pickidx[11][message.note]) + "\r")
+                        del pickidx[11][message.note]
                 elif message.channel == 10:
-                    if diction[6].has_key(message.note):
-                        port.write("144 " + str(message.note) + " 0 " + str(diction[6][message.note]) + "\r")
-                        del diction[6][message.note]
-                    if diction[10].has_key(message.note):
-                        port.write("144 " + str(message.note) + " 0 " + str(diction[10][message.note]) + "\r")
-                        del diction[10][message.note]
+                    if pickidx[6].has_key(message.note):
+                        port.write("144 " + str(message.note) + " 0 " + str(pickidx[6][message.note]) + "\r")
+                        del pickidx[6][message.note]
+                    if pickidx[10].has_key(message.note):
+                        port.write("144 " + str(message.note) + " 0 " + str(pickidx[10][message.note]) + "\r")
+                        del pickidx[10][message.note]
                 elif message.channel == 9:
-                    if diction[5].has_key(message.note):
-                        port.write("144 " + str(message.note) + " 0 " + str(diction[5][message.note]) + "\r")
-                        del diction[5][message.note]
-                    if diction[9].has_key(message.note):
-                        port.write("144 " + str(message.note) + " 0 " + str(diction[9][message.note]) + "\r")
-                        del diction[9][message.note]
+                    if pickidx[5].has_key(message.note):
+                        port.write("144 " + str(message.note) + " 0 " + str(pickidx[5][message.note]) + "\r")
+                        del pickidx[5][message.note]
+                    if pickidx[9].has_key(message.note):
+                        port.write("144 " + str(message.note) + " 0 " + str(pickidx[9][message.note]) + "\r")
+                        del pickidx[9][message.note]
                 elif message.channel == 8:
-                    if diction[4].has_key(message.note):
-                        port.write("144 " + str(message.note) + " 0 " + str(diction[4][message.note]) + "\r")
-                        del diction[4][message.note]
-                    if diction[8].has_key(message.note):
-                        port.write("144 " + str(message.note) + " 0 " + str(diction[8][message.note]) + "\r")
-                        del diction[8][message.note]
+                    if pickidx[4].has_key(message.note):
+                        port.write("144 " + str(message.note) + " 0 " + str(pickidx[4][message.note]) + "\r")
+                        del pickidx[4][message.note]
+                    if pickidx[8].has_key(message.note):
+                        port.write("144 " + str(message.note) + " 0 " + str(pickidx[8][message.note]) + "\r")
+                        del pickidx[8][message.note]
             else:
-                if message.channel == 3:
+                if message.channel == 7:
+                    boidx = checkbound(3,boidx)
+                    port.write("224 " + str(message.note) + " " + str(message.velocity) + " " + str(boidx) + "\r")
+                    slideidx[3][message.note] = boidx
+                    boidx += 1
+                elif message.channel == 6:
+                    toidx = checkbound(2,toidx)
+                    port.write("224 " + str(message.note) + " " + str(message.velocity) + " " + str(toidx) + "\r")
+                    slideidx[2][message.note] = toidx
+                    toidx += 1
+                elif message.channel == 5:
+                    aoidx = checkbound(1,aoidx)
+                    port.write("224 " + str(message.note) + " " + str(message.velocity) + " " + str(aoidx) + "\r")
+                    slideidx[1][message.note] = aoidx
+                    aoidx += 1
+                elif message.channel == 4:
+                    soidx = checkbound(0,soidx)
+                    port.write("224 " + str(message.note) + " " + str(message.velocity) + " " + str(soidx) + "\r")
+                    slideidx[0][message.note] = soidx
+                    soidx += 1
+                elif message.channel == 3:
                     boidx = checkbound(3,boidx)
                     port.write("144 " + str(message.note) + " " + str(message.velocity) + " " + str(boidx) + "\r")
-                    diction[3][message.note] = boidx
+                    pickidx[3][message.note] = boidx
                     boidx += 1
                 elif message.channel == 2:
                     toidx = checkbound(2,toidx)
                     port.write("144 " + str(message.note) + " " + str(message.velocity) + " " + str(toidx) + "\r")
-                    diction[2][message.note] = toidx
+                    pickidx[2][message.note] = toidx
                     toidx += 1
                 elif message.channel == 1:
                     aoidx = checkbound(1,aoidx)
                     port.write("144 " + str(message.note) + " " + str(message.velocity) + " " + str(aoidx) + "\r")
-                    diction[1][message.note] = aoidx
+                    pickidx[1][message.note] = aoidx
                     aoidx += 1
                 elif message.channel == 0:
                     soidx = checkbound(0,soidx)
                     port.write("144 " + str(message.note) + " " + str(message.velocity) + " " + str(soidx) + "\r")
-                    diction[0][message.note] = soidx
+                    pickidx[0][message.note] = soidx
                     soidx += 1
                 elif message.channel == 11:
                     boidx = checkbound(3,boidx)
                     port.write("144 " + str(message.note) + " " + str(message.velocity) + " " + str(boidx) + "\r")
-                    diction[7][message.note] = boidx
+                    pickidx[7][message.note] = boidx
                     boidx += 1
                     boidx = checkbound(3,boidx)
                     port.write("144 " + str(message.note) + " " + str(message.velocity) + " " + str(boidx) + "\r")
-                    diction[11][message.note] = boidx
+                    pickidx[11][message.note] = boidx
                     boidx += 1
                 elif message.channel == 10:
                     toidx = checkbound(2,toidx)
                     port.write("144 " + str(message.note) + " " + str(message.velocity) + " " + str(toidx) + "\r")
-                    diction[6][message.note] = toidx
+                    pickidx[6][message.note] = toidx
                     toidx += 1
                     toidx = checkbound(2,toidx)
                     port.write("144 " + str(message.note) + " " + str(message.velocity) + " " + str(toidx) + "\r")
-                    diction[10][message.note] = toidx
+                    pickidx[10][message.note] = toidx
                     toidx += 1
                 elif message.channel == 9:
                     aoidx = checkbound(1,aoidx)
                     port.write("144 " + str(message.note) + " " + str(message.velocity) + " " + str(aoidx) + "\r")
-                    diction[5][message.note] = aoidx
+                    pickidx[5][message.note] = aoidx
                     aoidx += 1
                     aoidx = checkbound(1,aoidx)
                     port.write("144 " + str(message.note) + " " + str(message.velocity) + " " + str(aoidx) + "\r")
-                    diction[9][message.note] = aoidx
+                    pickidx[9][message.note] = aoidx
                     aoidx += 1
                 elif message.channel == 8:
                     soidx = checkbound(0,soidx)
                     port.write("144 " + str(message.note) + " " + str(message.velocity) + " " + str(soidx) + "\r")
-                    diction[4][message.note] = soidx
+                    pickidx[4][message.note] = soidx
                     soidx += 1
                     soidx = checkbound(0,soidx)
                     port.write("144 " + str(message.note) + " " + str(message.velocity) + " " + str(soidx) + "\r")
-                    diction[8][message.note] = soidx
+                    pickidx[8][message.note] = soidx
                     soidx += 1
         elif 'note_off' == message.type :
             if message.channel == 3:
-                if diction[3].has_key(message.note):
-                    port.write("128 " + str(message.note) + " " + str(message.velocity) + " " + str(diction[3][message.note]) + "\r")
-                    del diction[3][message.note]
+                if pickidx[3].has_key(message.note):
+                    port.write("128 " + str(message.note) + " " + str(message.velocity) + " " + str(pickidx[3][message.note]) + "\r")
+                    del pickidx[3][message.note]
             elif message.channel == 2:
-                if diction[2].has_key(message.note):
-                    port.write("128 " + str(message.note) + " " + str(message.velocity) + " " + str(diction[2][message.note]) + "\r")
-                    del diction[2][message.note]
+                if pickidx[2].has_key(message.note):
+                    port.write("128 " + str(message.note) + " " + str(message.velocity) + " " + str(pickidx[2][message.note]) + "\r")
+                    del pickidx[2][message.note]
             elif message.channel == 1:
-                if diction[1].has_key(message.note):
-                    port.write("128 " + str(message.note) + " " + str(message.velocity) + " " + str(diction[1][message.note]) + "\r")
-                    del diction[1][message.note]
+                if pickidx[1].has_key(message.note):
+                    port.write("128 " + str(message.note) + " " + str(message.velocity) + " " + str(pickidx[1][message.note]) + "\r")
+                    del pickidx[1][message.note]
             elif message.channel == 0:
-                if diction[0].has_key(message.note):
-                    port.write("128 " + str(message.note) + " " + str(message.velocity) + " " + str(diction[0][message.note]) + "\r")
-                    del diction[0][message.note]
+                if pickidx[0].has_key(message.note):
+                    port.write("128 " + str(message.note) + " " + str(message.velocity) + " " + str(pickidx[0][message.note]) + "\r")
+                    del pickidx[0][message.note]
             elif message.channel == 11:
-                if diction[7].has_key(message.note):
-                    port.write("128 " + str(message.note) + " " + str(message.velocity) + " " + str(diction[7][message.note]) + "\r")
-                    del diction[7][message.note]
-                if diction[11].has_key(message.note):
-                    port.write("128 " + str(message.note) + " " + str(message.velocity) + " " + str(diction[11][message.note]) + "\r")
-                    del diction[11][message.note]
+                if pickidx[7].has_key(message.note):
+                    port.write("128 " + str(message.note) + " " + str(message.velocity) + " " + str(pickidx[7][message.note]) + "\r")
+                    del pickidx[7][message.note]
+                if pickidx[11].has_key(message.note):
+                    port.write("128 " + str(message.note) + " " + str(message.velocity) + " " + str(pickidx[11][message.note]) + "\r")
+                    del pickidx[11][message.note]
             elif message.channel == 10:
-                if diction[6].has_key(message.note):
-                    port.write("128 " + str(message.note) + " " + str(message.velocity) + " " + str(diction[6][message.note]) + "\r")
-                    del diction[6][message.note]
-                if diction[10].has_key(message.note):
-                    port.write("128 " + str(message.note) + " " + str(message.velocity) + " " + str(diction[10][message.note]) + "\r")
-                    del diction[10][message.note]
+                if pickidx[6].has_key(message.note):
+                    port.write("128 " + str(message.note) + " " + str(message.velocity) + " " + str(pickidx[6][message.note]) + "\r")
+                    del pickidx[6][message.note]
+                if pickidx[10].has_key(message.note):
+                    port.write("128 " + str(message.note) + " " + str(message.velocity) + " " + str(pickidx[10][message.note]) + "\r")
+                    del pickidx[10][message.note]
             elif message.channel == 9:
-                if diction[5].has_key(message.note):
-                    port.write("128 " + str(message.note) + " " + str(message.velocity) + " " + str(diction[5][message.note]) + "\r")
-                    del diction[5][message.note]
-                if diction[9].has_key(message.note):
-                    port.write("128 " + str(message.note) + " " + str(message.velocity) + " " + str(diction[9][message.note]) + "\r")
-                    del diction[9][message.note]
+                if pickidx[5].has_key(message.note):
+                    port.write("128 " + str(message.note) + " " + str(message.velocity) + " " + str(pickidx[5][message.note]) + "\r")
+                    del pickidx[5][message.note]
+                if pickidx[9].has_key(message.note):
+                    port.write("128 " + str(message.note) + " " + str(message.velocity) + " " + str(pickidx[9][message.note]) + "\r")
+                    del pickidx[9][message.note]
             elif message.channel == 8:
-                if diction[4].has_key(message.note):
-                    port.write("128 " + str(message.note) + " " + str(message.velocity) + " " + str(diction[4][message.note]) + "\r")
-                    del diction[4][message.note]
-                if diction[8].has_key(message.note):
-                    port.write("128 " + str(message.note) + " " + str(message.velocity) + " " + str(diction[8][message.note]) + "\r")
-                    del diction[8][message.note]
+                if pickidx[4].has_key(message.note):
+                    port.write("128 " + str(message.note) + " " + str(message.velocity) + " " + str(pickidx[4][message.note]) + "\r")
+                    del pickidx[4][message.note]
+                if pickidx[8].has_key(message.note):
+                    port.write("128 " + str(message.note) + " " + str(message.velocity) + " " + str(pickidx[8][message.note]) + "\r")
+                    del pickidx[8][message.note]
                     
     port.flush()
     
@@ -228,7 +248,8 @@ soidx = 1
 aoidx = 1
 toidx = 1
 boidx = 1
-diction = [{},{},{},{},{},{},{},{},{},{},{},{}]
+pickidx = [{},{},{},{},{},{},{},{},{},{},{},{}]
+slideidx = [{},{},{},{},{},{},{},{},{},{},{},{}]
     
 port = serial.Serial("\\\\.\\COM32", baudrate=115200)
 try:
