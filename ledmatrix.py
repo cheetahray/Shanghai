@@ -27,10 +27,15 @@ class ColorWipe(BaseMatrixAnim, Thread):
         Thread.__init__(self)
         self._led.all_off()
         self.__cv = Condition()
+        self._led.setMasterBrightness(255)
         Thread.start(self)
 
     def step(self, amt = 1):
         pass
+	
+    def cleargb(self):
+        self._led.all_off()
+        self._led.update()
 
     def drawone(self,x,y,r,g,b):
         r += 30
