@@ -1351,7 +1351,7 @@ thread.start_new_thread(Threadfun11, ("192.168.12." + str(i), "192.168.12." + st
 # simulate a "game engine"
 while run:
     # do the game stuff:
-    time.sleep(sleeptime)
+    time.sleep(0.06)
     # call user script
     each_frame()
 
