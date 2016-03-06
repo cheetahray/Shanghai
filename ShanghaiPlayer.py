@@ -254,12 +254,6 @@ def play_midi():
                     del pickidx[8][message.note]
     
     for i in range(1,67):
-        port.sendto("253 " + str(i) + " 0" , ("192.168.12." + str(i), 5005))
-        time.sleep(0.01)
-    for i in range(1,67):
-        port.sendto("225 1", ("192.168.12." + str(i), 5005) )
-        time.sleep(0.01)
-    for i in range(1,67):
         if 1 == ST[i]:
             port.sendto("144 57 1", ("192.168.12." + str(i), 5005))
         if 1 == AT[i]:
@@ -277,7 +271,14 @@ def play_midi():
             port.sendto("144 38 0", ("192.168.12." + str(i), 5005))
         if 1 == BT[i]:
             port.sendto("144 28 0", ("192.168.12." + str(i), 5005))
-	#time.sleep(10)
+    for i in range(1,67):
+        port.sendto("253 " + str(i) + " 0" , ("192.168.12." + str(i), 5005))
+        time.sleep(0.01)
+    for i in range(1,67):
+        port.sendto("225 1", ("192.168.12." + str(i), 5005) )
+        time.sleep(0.01)
+    
+    #time.sleep(10)
     #for i in range(1,67):
         #port.sendto("Home", ("192.168.12." + str(i), 5005))        
     #port.flush()

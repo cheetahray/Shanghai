@@ -7,6 +7,36 @@ import thread
 import time
 import socket
 
+def checkbound(whattype, oidx):
+    global ST,AT,TT,BT
+    if 67 == oidx:
+        oidx = 1
+    if 3 == whattype:
+        while 0 == BT[oidx]:
+            if 66 == oidx:
+                oidx = 1
+            else:
+                oidx += 1
+    elif 2 == whattype:
+        while 0 == TT[oidx]:
+            if 66 == oidx:
+                oidx = 1
+            else:
+                oidx += 1
+    elif 1 == whattype:
+        while 0 == AT[oidx]:
+            if 66 == oidx:
+                oidx = 1
+            else:
+                oidx += 1
+    elif 0 == whattype:
+        while 0 == ST[oidx]:
+            if 66 == oidx:
+                oidx = 1
+            else:
+                oidx += 1
+    return oidx                
+
 def Threadfun1(string1, string2, string3, string4, string5, string6, *args):
     global sleeptime
     global sb1,sb2,sb3,sb4,sb5,sb6
@@ -476,677 +506,58 @@ def handle_timeout(self):
     self.timed_out = True
 
 def user_callback(path, tags, args, source):
-    global sb1
-    global sb2
-    global sb3
-    global sb4
-    global sb5
-    global sb6
-    global sb7
-    global sb8
-    global sb9
-    global sb10
-    global sb11
-    global sb12
-    global sb13
-    global sb14
-    global sb15
-    global sb16
-    global sb17
-    global sb18
-    global sb19
-    global sb20
-    global sb21
-    global sb22
-    global sb23
-    global sb24
-    global sb25
-    global sb26
-    global sb27
-    global sb28
-    global sb29
-    global sb30
-    global sb31
-    global sb32
-    global sb33
-    global sb34
-    global sb35
-    global sb36
-    global sb37
-    global sb38
-    global sb39
-    global sb40
-    global sb41
-    global sb42
-    global sb43
-    global sb44
-    global sb45
-    global sb46
-    global sb47
-    global sb48
-    global sb49
-    global sb50
-    global sb51
-    global sb52
-    global sb53
-    global sb54
-    global sb55
-    global sb56
-    global sb57
-    global sb58
-    global sb59
-    global sb60
-    global sb61
-    global sb62
-    global sb63
-    global sb64
-    global sb65
-    global sb66
     # which user will be determined by path:
     # we just throw away all slashes and join together what's left
-    # user = ''.join(path.split("/"))
-    user = path.split("/")
+    user = ''.join(path.split("/"))
+    # user = path.split("/")
     # tags will contain 'fff'
     # args is a OSCMessage with data
     # source is where the message came from (in case you need to reply)
-    x = int(user[2])
-    if x == 1:
-        sb1 += str(args[1])
-        sb1 += " "
-        sb1 += str(args[2])
-        sb1 += " "
-        sb1 += str(args[3])
-        sb1 += " "
-        sb1 += str(args[0])
-        sb1 += " "
-    elif x == 2:
-        sb2 += str(args[1])
-        sb2 += " "
-        sb2 += str(args[2])
-        sb2 += " "
-        sb2 += str(args[3])
-        sb2 += " "
-        sb2 += str(args[0])
-        sb2 += " "
-    elif x == 3:
-        sb3 += str(args[1])
-        sb3 += " "
-        sb3 += str(args[2])
-        sb3 += " "
-        sb3 += str(args[3])
-        sb3 += " "
-        sb3 += str(args[0])
-        sb3 += " "
-    elif x == 4:
-        sb4 += str(args[1])
-        sb4 += " "
-        sb4 += str(args[2])
-        sb4 += " "
-        sb4 += str(args[3])
-        sb4 += " "
-        sb4 += str(args[0])
-        sb4 += " "
-    elif x == 5:
-        sb5 += str(args[1])
-        sb5 += " "
-        sb5 += str(args[2])
-        sb5 += " "
-        sb5 += str(args[3])
-        sb5 += " "
-        sb5 += str(args[0])
-        sb5 += " "
-    elif x == 6:
-        sb6 += str(args[1])
-        sb6 += " "
-        sb6 += str(args[2])
-        sb6 += " "
-        sb6 += str(args[3])
-        sb6 += " "
-        sb6 += str(args[0])
-        sb6 += " "
-    elif x == 7:
-        sb7 += str(args[1])
-        sb7 += " "
-        sb7 += str(args[2])
-        sb7 += " "
-        sb7 += str(args[3])
-        sb7 += " "
-        sb7 += str(args[0])
-        sb7 += " "
-    elif x == 8:
-        sb8 += str(args[1])
-        sb8 += " "
-        sb8 += str(args[2])
-        sb8 += " "
-        sb8 += str(args[3])
-        sb8 += " "
-        sb8 += str(args[0])
-        sb8 += " "
-    elif x == 9:
-        sb9 += str(args[1])
-        sb9 += " "
-        sb9 += str(args[2])
-        sb9 += " "
-        sb9 += str(args[3])
-        sb9 += " "
-        sb9 += str(args[0])
-        sb9 += " "
-    elif x == 10:
-        sb10 += str(args[1])
-        sb10 += " "
-        sb10 += str(args[2])
-        sb10 += " "
-        sb10 += str(args[3])
-        sb10 += " "
-        sb10 += str(args[0])
-        sb10 += " "
-    elif x == 11:
-        sb11 += str(args[1])
-        sb11 += " "
-        sb11 += str(args[2])
-        sb11 += " "
-        sb11 += str(args[3])
-        sb11 += " "
-        sb11 += str(args[0])
-        sb11 += " "
-    elif x == 12:
-        sb12 += str(args[1])
-        sb12 += " "
-        sb12 += str(args[2])
-        sb12 += " "
-        sb12 += str(args[3])
-        sb12 += " "
-        sb12 += str(args[0])
-        sb12 += " "
-    elif x == 13:
-        sb13 += str(args[1])
-        sb13 += " "
-        sb13 += str(args[2])
-        sb13 += " "
-        sb13 += str(args[3])
-        sb13 += " "
-        sb13 += str(args[0])
-        sb13 += " "
-    elif x == 14:
-        sb14 += str(args[1])
-        sb14 += " "
-        sb14 += str(args[2])
-        sb14 += " "
-        sb14 += str(args[3])
-        sb14 += " "
-        sb14 += str(args[0])
-        sb14 += " "
-    elif x == 15:
-        sb15 += str(args[1])
-        sb15 += " "
-        sb15 += str(args[2])
-        sb15 += " "
-        sb15 += str(args[3])
-        sb15 += " "
-        sb15 += str(args[0])
-        sb15 += " "
-    elif x == 16:
-        sb16 += str(args[1])
-        sb16 += " "
-        sb16 += str(args[2])
-        sb16 += " "
-        sb16 += str(args[3])
-        sb16 += " "
-        sb16 += str(args[0])
-        sb16 += " "
-    elif x == 17:
-        sb17 += str(args[1])
-        sb17 += " "
-        sb17 += str(args[2])
-        sb17 += " "
-        sb17 += str(args[3])
-        sb17 += " "
-        sb17 += str(args[0])
-        sb17 += " "
-    elif x == 18:
-        sb18 += str(args[1])
-        sb18 += " "
-        sb18 += str(args[2])
-        sb18 += " "
-        sb18 += str(args[3])
-        sb18 += " "
-        sb18 += str(args[0])
-        sb18 += " "
-    elif x == 19:
-        sb19 += str(args[1])
-        sb19 += " "
-        sb19 += str(args[2])
-        sb19 += " "
-        sb19 += str(args[3])
-        sb19 += " "
-        sb19 += str(args[0])
-        sb19 += " "
-    elif x == 20:
-        sb20 += str(args[1])
-        sb20 += " "
-        sb20 += str(args[2])
-        sb20 += " "
-        sb20 += str(args[3])
-        sb20 += " "
-        sb20 += str(args[0])
-        sb20 += " "
-    elif x == 21:
-        sb21 += str(args[1])
-        sb21 += " "
-        sb21 += str(args[2])
-        sb21 += " "
-        sb21 += str(args[3])
-        sb21 += " "
-        sb21 += str(args[0])
-        sb21 += " "
-    elif x == 22:
-        sb22 += str(args[1])
-        sb22 += " "
-        sb22 += str(args[2])
-        sb22 += " "
-        sb22 += str(args[3])
-        sb22 += " "
-        sb22 += str(args[0])
-        sb22 += " "
-    elif x == 23:
-        sb23 += str(args[1])
-        sb23 += " "
-        sb23 += str(args[2])
-        sb23 += " "
-        sb23 += str(args[3])
-        sb23 += " "
-        sb23 += str(args[0])
-        sb23 += " "
-    elif x == 24:
-        sb24 += str(args[1])
-        sb24 += " "
-        sb24 += str(args[2])
-        sb24 += " "
-        sb24 += str(args[3])
-        sb24 += " "
-        sb24 += str(args[0])
-        sb24 += " "
-    elif x == 25:
-        sb25 += str(args[1])
-        sb25 += " "
-        sb25 += str(args[2])
-        sb25 += " "
-        sb25 += str(args[3])
-        sb25 += " "
-        sb25 += str(args[0])
-        sb25 += " "
-    elif x == 26:
-        sb26 += str(args[1])
-        sb26 += " "
-        sb26 += str(args[2])
-        sb26 += " "
-        sb26 += str(args[3])
-        sb26 += " "
-        sb26 += str(args[0])
-        sb26 += " "
-    elif x == 27:
-        sb27 += str(args[1])
-        sb27 += " "
-        sb27 += str(args[2])
-        sb27 += " "
-        sb27 += str(args[3])
-        sb27 += " "
-        sb27 += str(args[0])
-        sb27 += " "
-    elif x == 28:
-        sb28 += str(args[1])
-        sb28 += " "
-        sb28 += str(args[2])
-        sb28 += " "
-        sb28 += str(args[3])
-        sb28 += " "
-        sb28 += str(args[0])
-        sb28 += " "
-    elif x == 29:
-        sb29 += str(args[1])
-        sb29 += " "
-        sb29 += str(args[2])
-        sb29 += " "
-        sb29 += str(args[3])
-        sb29 += " "
-        sb29 += str(args[0])
-        sb29 += " "
-    elif x == 30:
-        sb30 += str(args[1])
-        sb30 += " "
-        sb30 += str(args[2])
-        sb30 += " "
-        sb30 += str(args[3])
-        sb30 += " "
-        sb30 += str(args[0])
-        sb30 += " "
-    elif x == 31:
-        sb31 += str(args[1])
-        sb31 += " "
-        sb31 += str(args[2])
-        sb31 += " "
-        sb31 += str(args[3])
-        sb31 += " "
-        sb31 += str(args[0])
-        sb31 += " "
-    elif x == 32:
-        sb32 += str(args[1])
-        sb32 += " "
-        sb32 += str(args[2])
-        sb32 += " "
-        sb32 += str(args[3])
-        sb32 += " "
-        sb32 += str(args[0])
-        sb32 += " "
-    elif x == 33:
-        sb33 += str(args[1])
-        sb33 += " "
-        sb33 += str(args[2])
-        sb33 += " "
-        sb33 += str(args[3])
-        sb33 += " "
-        sb33 += str(args[0])
-        sb33 += " "
-    elif x == 34:
-        sb34 += str(args[1])
-        sb34 += " "
-        sb34 += str(args[2])
-        sb34 += " "
-        sb34 += str(args[3])
-        sb34 += " "
-        sb34 += str(args[0])
-        sb34 += " "
-    elif x == 35:
-        sb35 += str(args[1])
-        sb35 += " "
-        sb35 += str(args[2])
-        sb35 += " "
-        sb35 += str(args[3])
-        sb35 += " "
-        sb35 += str(args[0])
-        sb35 += " "
-    elif x == 36:
-        sb36 += str(args[1])
-        sb36 += " "
-        sb36 += str(args[2])
-        sb36 += " "
-        sb36 += str(args[3])
-        sb36 += " "
-        sb36 += str(args[0])
-        sb36 += " "
-    elif x == 37:
-        sb37 += str(args[1])
-        sb37 += " "
-        sb37 += str(args[2])
-        sb37 += " "
-        sb37 += str(args[3])
-        sb37 += " "
-        sb37 += str(args[0])
-        sb37 += " "
-    elif x == 38:
-        sb38 += str(args[1])
-        sb38 += " "
-        sb38 += str(args[2])
-        sb38 += " "
-        sb38 += str(args[3])
-        sb38 += " "
-        sb38 += str(args[0])
-        sb38 += " "
-    elif x == 39:
-        sb39 += str(args[1])
-        sb39 += " "
-        sb39 += str(args[2])
-        sb39 += " "
-        sb39 += str(args[3])
-        sb39 += " "
-        sb39 += str(args[0])
-        sb39 += " "
-    elif x == 40:
-        sb40 += str(args[1])
-        sb40 += " "
-        sb40 += str(args[2])
-        sb40 += " "
-        sb40 += str(args[3])
-        sb40 += " "
-        sb40 += str(args[0])
-        sb40 += " "
-    elif x == 41:
-        sb41 += str(args[1])
-        sb41 += " "
-        sb41 += str(args[2])
-        sb41 += " "
-        sb41 += str(args[3])
-        sb41 += " "
-        sb41 += str(args[0])
-        sb41 += " "
-    elif x == 42:
-        sb42 += str(args[1])
-        sb42 += " "
-        sb42 += str(args[2])
-        sb42 += " "
-        sb42 += str(args[3])
-        sb42 += " "
-        sb42 += str(args[0])
-        sb42 += " "
-    elif x == 43:
-        sb43 += str(args[1])
-        sb43 += " "
-        sb43 += str(args[2])
-        sb43 += " "
-        sb43 += str(args[3])
-        sb43 += " "
-        sb43 += str(args[0])
-        sb43 += " "
-    elif x == 44:
-        sb44 += str(args[1])
-        sb44 += " "
-        sb44 += str(args[2])
-        sb44 += " "
-        sb44 += str(args[3])
-        sb44 += " "
-        sb44 += str(args[0])
-        sb44 += " "
-    elif x == 45:
-        sb45 += str(args[1])
-        sb45 += " "
-        sb45 += str(args[2])
-        sb45 += " "
-        sb45 += str(args[3])
-        sb45 += " "
-        sb45 += str(args[0])
-        sb45 += " "
-    elif x == 46:
-        sb46 += str(args[1])
-        sb46 += " "
-        sb46 += str(args[2])
-        sb46 += " "
-        sb46 += str(args[3])
-        sb46 += " "
-        sb46 += str(args[0])
-        sb46 += " "
-    elif x == 47:
-        sb47 += str(args[1])
-        sb47 += " "
-        sb47 += str(args[2])
-        sb47 += " "
-        sb47 += str(args[3])
-        sb47 += " "
-        sb47 += str(args[0])
-        sb47 += " "
-    elif x == 48:
-        sb48 += str(args[1])
-        sb48 += " "
-        sb48 += str(args[2])
-        sb48 += " "
-        sb48 += str(args[3])
-        sb48 += " "
-        sb48 += str(args[0])
-        sb48 += " "
-    elif x == 49:
-        sb49 += str(args[1])
-        sb49 += " "
-        sb49 += str(args[2])
-        sb49 += " "
-        sb49 += str(args[3])
-        sb49 += " "
-        sb49 += str(args[0])
-        sb49 += " "
-    elif x == 50:
-        sb50 += str(args[1])
-        sb50 += " "
-        sb50 += str(args[2])
-        sb50 += " "
-        sb50 += str(args[3])
-        sb50 += " "
-        sb50 += str(args[0])
-        sb50 += " "
-    elif x == 51:
-        sb51 += str(args[1])
-        sb51 += " "
-        sb51 += str(args[2])
-        sb51 += " "
-        sb51 += str(args[3])
-        sb51 += " "
-        sb51 += str(args[0])
-        sb51 += " "
-    elif x == 52:
-        sb52 += str(args[1])
-        sb52 += " "
-        sb52 += str(args[2])
-        sb52 += " "
-        sb52 += str(args[3])
-        sb52 += " "
-        sb52 += str(args[0])
-        sb52 += " "
-    elif x == 53:
-        sb53 += str(args[1])
-        sb53 += " "
-        sb53 += str(args[2])
-        sb53 += " "
-        sb53 += str(args[3])
-        sb53 += " "
-        sb53 += str(args[0])
-        sb53 += " "
-    elif x == 54:
-        sb54 += str(args[1])
-        sb54 += " "
-        sb54 += str(args[2])
-        sb54 += " "
-        sb54 += str(args[3])
-        sb54 += " "
-        sb54 += str(args[0])
-        sb54 += " "
-    elif x == 55:
-        sb55 += str(args[1])
-        sb55 += " "
-        sb55 += str(args[2])
-        sb55 += " "
-        sb55 += str(args[3])
-        sb55 += " "
-        sb55 += str(args[0])
-        sb55 += " "
-    elif x == 56:
-        sb56 += str(args[1])
-        sb56 += " "
-        sb56 += str(args[2])
-        sb56 += " "
-        sb56 += str(args[3])
-        sb56 += " "
-        sb56 += str(args[0])
-        sb56 += " "
-    elif x == 57:
-        sb57 += str(args[1])
-        sb57 += " "
-        sb57 += str(args[2])
-        sb57 += " "
-        sb57 += str(args[3])
-        sb57 += " "
-        sb57 += str(args[0])
-        sb57 += " "
-    elif x == 58:
-        sb58 += str(args[1])
-        sb58 += " "
-        sb58 += str(args[2])
-        sb58 += " "
-        sb58 += str(args[3])
-        sb58 += " "
-        sb58 += str(args[0])
-        sb58 += " "
-    elif x == 59:
-        sb59 += str(args[1])
-        sb59 += " "
-        sb59 += str(args[2])
-        sb59 += " "
-        sb59 += str(args[3])
-        sb59 += " "
-        sb59 += str(args[0])
-        sb59 += " "
-    elif x == 60:
-        sb60 += str(args[1])
-        sb60 += " "
-        sb60 += str(args[2])
-        sb60 += " "
-        sb60 += str(args[3])
-        sb60 += " "
-        sb60 += str(args[0])
-        sb60 += " "
-    elif x == 61:
-        sb61 += str(args[1])
-        sb61 += " "
-        sb61 += str(args[2])
-        sb61 += " "
-        sb61 += str(args[3])
-        sb61 += " "
-        sb61 += str(args[0])
-        sb61 += " "
-    elif x == 62:
-        sb62 += str(args[1])
-        sb62 += " "
-        sb62 += str(args[2])
-        sb62 += " "
-        sb62 += str(args[3])
-        sb62 += " "
-        sb62 += str(args[0])
-        sb62 += " "
-    elif x == 63:
-        sb63 += str(args[1])
-        sb63 += " "
-        sb63 += str(args[2])
-        sb63 += " "
-        sb63 += str(args[3])
-        sb63 += " "
-        sb63 += str(args[0])
-        sb63 += " "
-    elif x == 64:
-        sb64 += str(args[1])
-        sb64 += " "
-        sb64 += str(args[2])
-        sb64 += " "
-        sb64 += str(args[3])
-        sb64 += " "
-        sb64 += str(args[0])
-        sb64 += " "
-    elif x == 65:
-        sb65 += str(args[1])
-        sb65 += " "
-        sb65 += str(args[2])
-        sb65 += " "
-        sb65 += str(args[3])
-        sb65 += " "
-        sb65 += str(args[0])
-        sb65 += " "
-    elif x == 66:
-        sb66 += str(args[1])
-        sb66 += " "
-        sb66 += str(args[2])
-        sb66 += " "
-        sb66 += str(args[3])
-        sb66 += " "
-        sb66 += str(args[0])
-        sb66 += " "
-                
-    #print (user[2],args[0],args[1],args[2],args[3]) 
-
+    if 'm' == user:
+        #print (user[2],args[0],args[1],args[2],args[3]) 
+        if args[2] == 0:
+            if args[0] == 147:
+                if pickidx[3].has_key(args[1]):
+                    port.sendto("144 " + str(args[1]) + " 0 " + str(pickidx[3][args[1]]), ("192.168.12." + str(pickidx[3][args[1]]), 5005) )
+                    del pickidx[3][args[1]]
+            elif args[0] == 146:
+                if pickidx[2].has_key(args[1]):
+                    port.sendto("144 " + str(args[1]) + " 0 " + str(pickidx[2][args[1]]), ("192.168.12." + str(pickidx[2][args[1]]), 5005) )
+                    del pickidx[2][args[1]]
+            elif args[0] == 145:
+                if pickidx[1].has_key(args[1]):
+                    port.sendto("144 " + str(args[1]) + " 0 " + str(pickidx[1][args[1]]), ("192.168.12." + str(pickidx[1][args[1]]), 5005) )
+                    del pickidx[1][args[1]]
+            elif args[0] == 144:
+                if pickidx[0].has_key(args[1]):
+                    port.sendto("144 " + str(args[1]) + " 0 " + str(pickidx[0][args[1]]), ("192.168.12." + str(pickidx[0][args[1]]), 5005) )
+                    del pickidx[0][args[1]]
+        else:
+            if args[0] == 147:
+                boidx = checkbound(3,boidx)
+                port.sendto("144 " + str(args[1]) + " " + str(args[2]) + " " + str(boidx) , ("192.168.12." + str(boidx), 5005) )
+                pickidx[3][args[1]] = boidx
+                boidx += 1
+            elif args[0] == 146:
+                toidx = checkbound(2,toidx)
+                port.sendto("144 " + str(args[1]) + " " + str(args[2]) + " " + str(toidx) , ("192.168.12." + str(toidx), 5005))
+                pickidx[2][args[1]] = toidx
+                toidx += 1
+            elif args[0] == 145:
+                aoidx = checkbound(1,aoidx)
+                port.sendto("144 " + str(args[1]) + " " + str(args[2]) + " " + str(aoidx) , ("192.168.12." + str(aoidx), 5005))
+                pickidx[1][args[1]] = aoidx
+                aoidx += 1
+            elif args[0] == 144:
+                soidx = checkbound(0,soidx)
+                port.sendto("144 " + str(args[1]) + " " + str(args[2]) + " " + str(soidx) , ("192.168.12." + str(soidx), 5005))
+                pickidx[0][args[1]] = soidx
+                soidx += 1
+                        
+        
+    elif 's' == user:
+        pass
+    
 def quit_callback(path, tags, args, source):
     # don't do this at home (or it'll quit blender)
     global run
@@ -1161,76 +572,12 @@ def each_frame():
         server.handle_request()
 
 server = OSCServer( ("0.0.0.0", 6666) )
-server.timeout = 0
+server.timeout = 0.001
 run = True
 server.handle_timeout = types.MethodType(handle_timeout, server)
 
-server.addMsgHandler( "/AS/1", user_callback )
-server.addMsgHandler( "/AS/2", user_callback )
-server.addMsgHandler( "/AS/3", user_callback )
-server.addMsgHandler( "/AS/4", user_callback )
-server.addMsgHandler( "/AS/5", user_callback )
-server.addMsgHandler( "/AS/6", user_callback )
-server.addMsgHandler( "/AS/7", user_callback )
-server.addMsgHandler( "/AS/8", user_callback )
-server.addMsgHandler( "/AS/9", user_callback )
-server.addMsgHandler( "/AS/10", user_callback )
-server.addMsgHandler( "/AS/11", user_callback )
-server.addMsgHandler( "/AS/12", user_callback )
-server.addMsgHandler( "/AS/13", user_callback )
-server.addMsgHandler( "/AS/14", user_callback )
-server.addMsgHandler( "/AS/15", user_callback )
-server.addMsgHandler( "/AS/16", user_callback )
-server.addMsgHandler( "/AS/17", user_callback )
-server.addMsgHandler( "/AS/18", user_callback )
-server.addMsgHandler( "/AS/19", user_callback )
-server.addMsgHandler( "/AS/20", user_callback )
-server.addMsgHandler( "/AS/21", user_callback )
-server.addMsgHandler( "/AS/22", user_callback )
-server.addMsgHandler( "/AS/23", user_callback )
-server.addMsgHandler( "/AS/24", user_callback )
-server.addMsgHandler( "/AS/25", user_callback )
-server.addMsgHandler( "/AS/26", user_callback )
-server.addMsgHandler( "/AS/27", user_callback )
-server.addMsgHandler( "/AS/28", user_callback )
-server.addMsgHandler( "/AS/29", user_callback )
-server.addMsgHandler( "/AS/30", user_callback )
-server.addMsgHandler( "/AS/31", user_callback )
-server.addMsgHandler( "/AS/32", user_callback )
-server.addMsgHandler( "/AS/33", user_callback )
-server.addMsgHandler( "/AS/34", user_callback )
-server.addMsgHandler( "/AS/35", user_callback )
-server.addMsgHandler( "/AS/36", user_callback )
-server.addMsgHandler( "/AS/37", user_callback )
-server.addMsgHandler( "/AS/38", user_callback )
-server.addMsgHandler( "/AS/39", user_callback )
-server.addMsgHandler( "/AS/40", user_callback )
-server.addMsgHandler( "/AS/41", user_callback )
-server.addMsgHandler( "/AS/42", user_callback )
-server.addMsgHandler( "/AS/43", user_callback )
-server.addMsgHandler( "/AS/44", user_callback )
-server.addMsgHandler( "/AS/45", user_callback )
-server.addMsgHandler( "/AS/46", user_callback )
-server.addMsgHandler( "/AS/47", user_callback )
-server.addMsgHandler( "/AS/48", user_callback )
-server.addMsgHandler( "/AS/49", user_callback )
-server.addMsgHandler( "/AS/50", user_callback )
-server.addMsgHandler( "/AS/51", user_callback )
-server.addMsgHandler( "/AS/52", user_callback )
-server.addMsgHandler( "/AS/53", user_callback )
-server.addMsgHandler( "/AS/54", user_callback )
-server.addMsgHandler( "/AS/55", user_callback )
-server.addMsgHandler( "/AS/56", user_callback )
-server.addMsgHandler( "/AS/57", user_callback )
-server.addMsgHandler( "/AS/58", user_callback )
-server.addMsgHandler( "/AS/59", user_callback )
-server.addMsgHandler( "/AS/60", user_callback )
-server.addMsgHandler( "/AS/61", user_callback )
-server.addMsgHandler( "/AS/62", user_callback )
-server.addMsgHandler( "/AS/63", user_callback )
-server.addMsgHandler( "/AS/64", user_callback )
-server.addMsgHandler( "/AS/65", user_callback )
-server.addMsgHandler( "/AS/66", user_callback )
+server.addMsgHandler( "/m", user_callback )
+server.addMsgHandler( "/s", user_callback )
 #server.addMsgHandler( "/quit", quit_callback )
 
 data = ""
@@ -1348,11 +695,662 @@ thread.start_new_thread(Threadfun11, ("192.168.12." + str(i), "192.168.12." + st
                                      "192.168.12." + str(i+3), "192.168.12." + str(i+4), "192.168.12." + str(i+5)
                                          ) )
 
+sock = socket.socket(socket.AF_INET, socket.SOCK_DGRAM) # UDP
+sock.bind(("0.0.0.0", 6454))
+sock.settimeout(0.001)
+
+     #0  1  2  3  4  5  6  7  8  9 10 11 12 13 14 15 16 17 18 19 20 21 22 23 24 25 26 27 28 29 30 31 32 33 34 35 36 37 38 39 40 41 42 43 44 45 46 47 48 49 50 51 52 53 54 55 56 57 58 59 60 61 62 63 64 65 66
+ST = [0, 1, 1, 1, 1, 1, 1, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0 ,0 ,0 ,0, 0, 0, 0, 0, 1, 1, 1, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 1, 1, 1, 1, 1, 1]
+AT = [0, 0, 0, 0, 0, 0, 0, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 0, 0, 0, 0, 0, 0, 0, 0 ,0 ,0 ,0, 0, 1, 1, 1, 0, 0, 0, 1, 1, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 0, 0, 0, 0, 0, 0]
+TT = [0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 1, 1, 1, 1, 1, 1, 0, 0 ,0 ,0 ,0, 1, 0, 0, 0, 0, 0, 0, 0, 0, 1, 1, 0, 0, 0, 0, 1, 1, 1, 1, 1, 1, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0]
+BT = [0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 1 ,1 ,1 ,1 ,1, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 1, 1, 1, 1, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0]
+soidx = 1
+aoidx = 1
+toidx = 1
+boidx = 1
+pickidx = [{},{},{},{},{},{},{},{},{},{},{},{}]
+slideidx = [{},{},{},{},{},{},{},{},{},{},{},{}]
+
+port = socket.socket(socket.AF_INET, socket.SOCK_DGRAM)      
+
 # simulate a "game engine"
 while run:
-    # do the game stuff:
-    time.sleep(0.06)
-    # call user script
+    try:
+        data, addr = sock.recvfrom(1024)
+        if ((len(data) > 18) and (data[0:8] == "Art-Net\x00")):
+            rawbytes = map(ord, data)
+            opcode = rawbytes[8] + (rawbytes[9] << 8)
+            protocolVersion = (rawbytes[10] << 8) + rawbytes[11]
+            if ((opcode == 0x5000) and (protocolVersion >= 14)):
+                sequence = rawbytes[12]
+                physical = rawbytes[13]
+                sub_net = (rawbytes[14] & 0xF0) >> 4
+                universe = rawbytes[14] & 0x0F
+                net = rawbytes[15]
+                rgb_length = (rawbytes[16] << 8) + rawbytes[17]
+                #print "seq %d phy %d sub_net %d uni %d net %d len %d" % \
+                #(sequence, physical, sub_net, universe, net, rgb_length)
+                print "sub_net %d uni %d" % (sub_net, universe)
+                idx = 18
+                nowx = universe * 4
+                if sub_net == 1:
+                    nowx = 64
+                x = nowx + 1 # 1..66
+                y = 0 #0..40
+                while ((idx < (rgb_length+18)) and (x - nowx < 4)):
+                    r = rawbytes[idx]
+                    idx += 1
+                    g = rawbytes[idx]
+                    idx += 1
+                    b = rawbytes[idx]
+                    idx += 1
+                    
+                    #print ("{0}, {1}, {2}, {3}, {4}".format(x, y, r, g, b) )  #unicorn.set_pixel(x, y, r, g, b)
+                    if x == 1:
+                        sb1 += str(r)
+                        sb1 += " "
+                        sb1 += str(g)
+                        sb1 += " "
+                        sb1 += str(b)
+                        sb1 += " "
+                        sb1 += str(y)
+                        sb1 += " "
+                    elif x == 2:
+                        sb2 += str(r)
+                        sb2 += " "
+                        sb2 += str(g)
+                        sb2 += " "
+                        sb2 += str(b)
+                        sb2 += " "
+                        sb2 += str(y)
+                        sb2 += " "
+                    elif x == 3:
+                        sb3 += str(r)
+                        sb3 += " "
+                        sb3 += str(g)
+                        sb3 += " "
+                        sb3 += str(b)
+                        sb3 += " "
+                        sb3 += str(y)
+                        sb3 += " "
+                    elif x == 4:
+                        sb4 += str(r)
+                        sb4 += " "
+                        sb4 += str(g)
+                        sb4 += " "
+                        sb4 += str(b)
+                        sb4 += " "
+                        sb4 += str(y)
+                        sb4 += " "
+                    elif x == 5:
+                        sb5 += str(r)
+                        sb5 += " "
+                        sb5 += str(g)
+                        sb5 += " "
+                        sb5 += str(b)
+                        sb5 += " "
+                        sb5 += str(y)
+                        sb5 += " "
+                    elif x == 6:
+                        sb6 += str(r)
+                        sb6 += " "
+                        sb6 += str(g)
+                        sb6 += " "
+                        sb6 += str(b)
+                        sb6 += " "
+                        sb6 += str(y)
+                        sb6 += " "
+                    elif x == 7:
+                        sb7 += str(r)
+                        sb7 += " "
+                        sb7 += str(g)
+                        sb7 += " "
+                        sb7 += str(b)
+                        sb7 += " "
+                        sb7 += str(y)
+                        sb7 += " "
+                    elif x == 8:
+                        sb8 += str(r)
+                        sb8 += " "
+                        sb8 += str(g)
+                        sb8 += " "
+                        sb8 += str(b)
+                        sb8 += " "
+                        sb8 += str(y)
+                        sb8 += " "
+                    elif x == 9:
+                        sb9 += str(r)
+                        sb9 += " "
+                        sb9 += str(g)
+                        sb9 += " "
+                        sb9 += str(b)
+                        sb9 += " "
+                        sb9 += str(y)
+                        sb9 += " "
+                    elif x == 10:
+                        sb10 += str(r)
+                        sb10 += " "
+                        sb10 += str(g)
+                        sb10 += " "
+                        sb10 += str(b)
+                        sb10 += " "
+                        sb10 += str(y)
+                        sb10 += " "
+                    elif x == 11:
+                        sb11 += str(r)
+                        sb11 += " "
+                        sb11 += str(g)
+                        sb11 += " "
+                        sb11 += str(b)
+                        sb11 += " "
+                        sb11 += str(y)
+                        sb11 += " "
+                    elif x == 12:
+                        sb12 += str(r)
+                        sb12 += " "
+                        sb12 += str(g)
+                        sb12 += " "
+                        sb12 += str(b)
+                        sb12 += " "
+                        sb12 += str(y)
+                        sb12 += " "
+                    elif x == 13:
+                        sb13 += str(r)
+                        sb13 += " "
+                        sb13 += str(g)
+                        sb13 += " "
+                        sb13 += str(b)
+                        sb13 += " "
+                        sb13 += str(y)
+                        sb13 += " "
+                    elif x == 14:
+                        sb14 += str(r)
+                        sb14 += " "
+                        sb14 += str(g)
+                        sb14 += " "
+                        sb14 += str(b)
+                        sb14 += " "
+                        sb14 += str(y)
+                        sb14 += " "
+                    elif x == 15:
+                        sb15 += str(r)
+                        sb15 += " "
+                        sb15 += str(g)
+                        sb15 += " "
+                        sb15 += str(b)
+                        sb15 += " "
+                        sb15 += str(y)
+                        sb15 += " "
+                    elif x == 16:
+                        sb16 += str(r)
+                        sb16 += " "
+                        sb16 += str(g)
+                        sb16 += " "
+                        sb16 += str(b)
+                        sb16 += " "
+                        sb16 += str(y)
+                        sb16 += " "
+                    elif x == 17:
+                        sb17 += str(r)
+                        sb17 += " "
+                        sb17 += str(g)
+                        sb17 += " "
+                        sb17 += str(b)
+                        sb17 += " "
+                        sb17 += str(y)
+                        sb17 += " "
+                    elif x == 18:
+                        sb18 += str(r)
+                        sb18 += " "
+                        sb18 += str(g)
+                        sb18 += " "
+                        sb18 += str(b)
+                        sb18 += " "
+                        sb18 += str(y)
+                        sb18 += " "
+                    elif x == 19:
+                        sb19 += str(r)
+                        sb19 += " "
+                        sb19 += str(g)
+                        sb19 += " "
+                        sb19 += str(b)
+                        sb19 += " "
+                        sb19 += str(y)
+                        sb19 += " "
+                    elif x == 20:
+                        sb20 += str(r)
+                        sb20 += " "
+                        sb20 += str(g)
+                        sb20 += " "
+                        sb20 += str(b)
+                        sb20 += " "
+                        sb20 += str(y)
+                        sb20 += " "
+                    elif x == 21:
+                        sb21 += str(r)
+                        sb21 += " "
+                        sb21 += str(g)
+                        sb21 += " "
+                        sb21 += str(b)
+                        sb21 += " "
+                        sb21 += str(y)
+                        sb21 += " "
+                    elif x == 22:
+                        sb22 += str(r)
+                        sb22 += " "
+                        sb22 += str(g)
+                        sb22 += " "
+                        sb22 += str(b)
+                        sb22 += " "
+                        sb22 += str(y)
+                        sb22 += " "
+                    elif x == 23:
+                        sb23 += str(r)
+                        sb23 += " "
+                        sb23 += str(g)
+                        sb23 += " "
+                        sb23 += str(b)
+                        sb23 += " "
+                        sb23 += str(y)
+                        sb23 += " "
+                    elif x == 24:
+                        sb24 += str(r)
+                        sb24 += " "
+                        sb24 += str(g)
+                        sb24 += " "
+                        sb24 += str(b)
+                        sb24 += " "
+                        sb24 += str(y)
+                        sb24 += " "
+                    elif x == 25:
+                        sb25 += str(r)
+                        sb25 += " "
+                        sb25 += str(g)
+                        sb25 += " "
+                        sb25 += str(b)
+                        sb25 += " "
+                        sb25 += str(y)
+                        sb25 += " "
+                    elif x == 26:
+                        sb26 += str(r)
+                        sb26 += " "
+                        sb26 += str(g)
+                        sb26 += " "
+                        sb26 += str(b)
+                        sb26 += " "
+                        sb26 += str(y)
+                        sb26 += " "
+                    elif x == 27:
+                        sb27 += str(r)
+                        sb27 += " "
+                        sb27 += str(g)
+                        sb27 += " "
+                        sb27 += str(b)
+                        sb27 += " "
+                        sb27 += str(y)
+                        sb27 += " "
+                    elif x == 28:
+                        sb28 += str(r)
+                        sb28 += " "
+                        sb28 += str(g)
+                        sb28 += " "
+                        sb28 += str(b)
+                        sb28 += " "
+                        sb28 += str(y)
+                        sb28 += " "
+                    elif x == 29:
+                        sb29 += str(r)
+                        sb29 += " "
+                        sb29 += str(g)
+                        sb29 += " "
+                        sb29 += str(b)
+                        sb29 += " "
+                        sb29 += str(y)
+                        sb29 += " "
+                    elif x == 30:
+                        sb30 += str(r)
+                        sb30 += " "
+                        sb30 += str(g)
+                        sb30 += " "
+                        sb30 += str(b)
+                        sb30 += " "
+                        sb30 += str(y)
+                        sb30 += " "
+                    elif x == 31:
+                        sb31 += str(r)
+                        sb31 += " "
+                        sb31 += str(g)
+                        sb31 += " "
+                        sb31 += str(b)
+                        sb31 += " "
+                        sb31 += str(y)
+                        sb31 += " "
+                    elif x == 32:
+                        sb32 += str(r)
+                        sb32 += " "
+                        sb32 += str(g)
+                        sb32 += " "
+                        sb32 += str(b)
+                        sb32 += " "
+                        sb32 += str(y)
+                        sb32 += " "
+                    elif x == 33:
+                        sb33 += str(r)
+                        sb33 += " "
+                        sb33 += str(g)
+                        sb33 += " "
+                        sb33 += str(b)
+                        sb33 += " "
+                        sb33 += str(y)
+                        sb33 += " "
+                    elif x == 34:
+                        sb34 += str(r)
+                        sb34 += " "
+                        sb34 += str(g)
+                        sb34 += " "
+                        sb34 += str(b)
+                        sb34 += " "
+                        sb34 += str(y)
+                        sb34 += " "
+                    elif x == 35:
+                        sb35 += str(r)
+                        sb35 += " "
+                        sb35 += str(g)
+                        sb35 += " "
+                        sb35 += str(b)
+                        sb35 += " "
+                        sb35 += str(y)
+                        sb35 += " "
+                    elif x == 36:
+                        sb36 += str(r)
+                        sb36 += " "
+                        sb36 += str(g)
+                        sb36 += " "
+                        sb36 += str(b)
+                        sb36 += " "
+                        sb36 += str(y)
+                        sb36 += " "
+                    elif x == 37:
+                        sb37 += str(r)
+                        sb37 += " "
+                        sb37 += str(g)
+                        sb37 += " "
+                        sb37 += str(b)
+                        sb37 += " "
+                        sb37 += str(y)
+                        sb37 += " "
+                    elif x == 38:
+                        sb38 += str(r)
+                        sb38 += " "
+                        sb38 += str(g)
+                        sb38 += " "
+                        sb38 += str(b)
+                        sb38 += " "
+                        sb38 += str(y)
+                        sb38 += " "
+                    elif x == 39:
+                        sb39 += str(r)
+                        sb39 += " "
+                        sb39 += str(g)
+                        sb39 += " "
+                        sb39 += str(b)
+                        sb39 += " "
+                        sb39 += str(y)
+                        sb39 += " "
+                    elif x == 40:
+                        sb40 += str(r)
+                        sb40 += " "
+                        sb40 += str(g)
+                        sb40 += " "
+                        sb40 += str(b)
+                        sb40 += " "
+                        sb40 += str(y)
+                        sb40 += " "
+                    elif x == 41:
+                        sb41 += str(r)
+                        sb41 += " "
+                        sb41 += str(g)
+                        sb41 += " "
+                        sb41 += str(b)
+                        sb41 += " "
+                        sb41 += str(y)
+                        sb41 += " "
+                    elif x == 42:
+                        sb42 += str(r)
+                        sb42 += " "
+                        sb42 += str(g)
+                        sb42 += " "
+                        sb42 += str(b)
+                        sb42 += " "
+                        sb42 += str(y)
+                        sb42 += " "
+                    elif x == 43:
+                        sb43 += str(r)
+                        sb43 += " "
+                        sb43 += str(g)
+                        sb43 += " "
+                        sb43 += str(b)
+                        sb43 += " "
+                        sb43 += str(y)
+                        sb43 += " "
+                    elif x == 44:
+                        sb44 += str(r)
+                        sb44 += " "
+                        sb44 += str(g)
+                        sb44 += " "
+                        sb44 += str(b)
+                        sb44 += " "
+                        sb44 += str(y)
+                        sb44 += " "
+                    elif x == 45:
+                        sb45 += str(r)
+                        sb45 += " "
+                        sb45 += str(g)
+                        sb45 += " "
+                        sb45 += str(b)
+                        sb45 += " "
+                        sb45 += str(y)
+                        sb45 += " "
+                    elif x == 46:
+                        sb46 += str(r)
+                        sb46 += " "
+                        sb46 += str(g)
+                        sb46 += " "
+                        sb46 += str(b)
+                        sb46 += " "
+                        sb46 += str(y)
+                        sb46 += " "
+                    elif x == 47:
+                        sb47 += str(r)
+                        sb47 += " "
+                        sb47 += str(g)
+                        sb47 += " "
+                        sb47 += str(b)
+                        sb47 += " "
+                        sb47 += str(y)
+                        sb47 += " "
+                    elif x == 48:
+                        sb48 += str(r)
+                        sb48 += " "
+                        sb48 += str(g)
+                        sb48 += " "
+                        sb48 += str(b)
+                        sb48 += " "
+                        sb48 += str(y)
+                        sb48 += " "
+                    elif x == 49:
+                        sb49 += str(r)
+                        sb49 += " "
+                        sb49 += str(g)
+                        sb49 += " "
+                        sb49 += str(b)
+                        sb49 += " "
+                        sb49 += str(y)
+                        sb49 += " "
+                    elif x == 50:
+                        sb50 += str(r)
+                        sb50 += " "
+                        sb50 += str(g)
+                        sb50 += " "
+                        sb50 += str(b)
+                        sb50 += " "
+                        sb50 += str(y)
+                        sb50 += " "
+                    elif x == 51:
+                        sb51 += str(r)
+                        sb51 += " "
+                        sb51 += str(g)
+                        sb51 += " "
+                        sb51 += str(b)
+                        sb51 += " "
+                        sb51 += str(y)
+                        sb51 += " "
+                    elif x == 52:
+                        sb52 += str(r)
+                        sb52 += " "
+                        sb52 += str(g)
+                        sb52 += " "
+                        sb52 += str(b)
+                        sb52 += " "
+                        sb52 += str(y)
+                        sb52 += " "
+                    elif x == 53:
+                        sb53 += str(r)
+                        sb53 += " "
+                        sb53 += str(g)
+                        sb53 += " "
+                        sb53 += str(b)
+                        sb53 += " "
+                        sb53 += str(y)
+                        sb53 += " "
+                    elif x == 54:
+                        sb54 += str(r)
+                        sb54 += " "
+                        sb54 += str(g)
+                        sb54 += " "
+                        sb54 += str(b)
+                        sb54 += " "
+                        sb54 += str(y)
+                        sb54 += " "
+                    elif x == 55:
+                        sb55 += str(r)
+                        sb55 += " "
+                        sb55 += str(g)
+                        sb55 += " "
+                        sb55 += str(b)
+                        sb55 += " "
+                        sb55 += str(y)
+                        sb55 += " "
+                    elif x == 56:
+                        sb56 += str(r)
+                        sb56 += " "
+                        sb56 += str(g)
+                        sb56 += " "
+                        sb56 += str(b)
+                        sb56 += " "
+                        sb56 += str(y)
+                        sb56 += " "
+                    elif x == 57:
+                        sb57 += str(r)
+                        sb57 += " "
+                        sb57 += str(g)
+                        sb57 += " "
+                        sb57 += str(b)
+                        sb57 += " "
+                        sb57 += str(y)
+                        sb57 += " "
+                    elif x == 58:
+                        sb58 += str(r)
+                        sb58 += " "
+                        sb58 += str(g)
+                        sb58 += " "
+                        sb58 += str(b)
+                        sb58 += " "
+                        sb58 += str(y)
+                        sb58 += " "
+                    elif x == 59:
+                        sb59 += str(r)
+                        sb59 += " "
+                        sb59 += str(g)
+                        sb59 += " "
+                        sb59 += str(b)
+                        sb59 += " "
+                        sb59 += str(y)
+                        sb59 += " "
+                    elif x == 60:
+                        sb60 += str(r)
+                        sb60 += " "
+                        sb60 += str(g)
+                        sb60 += " "
+                        sb60 += str(b)
+                        sb60 += " "
+                        sb60 += str(y)
+                        sb60 += " "
+                    elif x == 61:
+                        sb61 += str(r)
+                        sb61 += " "
+                        sb61 += str(g)
+                        sb61 += " "
+                        sb61 += str(b)
+                        sb61 += " "
+                        sb61 += str(y)
+                        sb61 += " "
+                    elif x == 62:
+                        sb62 += str(r)
+                        sb62 += " "
+                        sb62 += str(g)
+                        sb62 += " "
+                        sb62 += str(b)
+                        sb62 += " "
+                        sb62 += str(y)
+                        sb62 += " "
+                    elif x == 63:
+                        sb63 += str(r)
+                        sb63 += " "
+                        sb63 += str(g)
+                        sb63 += " "
+                        sb63 += str(b)
+                        sb63 += " "
+                        sb63 += str(y)
+                        sb63 += " "
+                    elif x == 64:
+                        sb64 += str(r)
+                        sb64 += " "
+                        sb64 += str(g)
+                        sb64 += " "
+                        sb64 += str(b)
+                        sb64 += " "
+                        sb64 += str(y)
+                        sb64 += " "
+                    elif x == 65:
+                        sb65 += str(r)
+                        sb65 += " "
+                        sb65 += str(g)
+                        sb65 += " "
+                        sb65 += str(b)
+                        sb65 += " "
+                        sb65 += str(y)
+                        sb65 += " "
+                    elif x == 66:
+                        sb66 += str(r)
+                        sb66 += " "
+                        sb66 += str(g)
+                        sb66 += " "
+                        sb66 += str(b)
+                        sb66 += " "
+                        sb66 += str(y)
+                        sb66 += " "
+                    
+                    y += 1
+                    if (y >= 41):
+                        y = 0
+                        x += 1
+    except socket.timeout:
+        pass                    
+    except ValueError:
+        pass    
+    except IndexError:
+        pass
     each_frame()
 
 server.close()
