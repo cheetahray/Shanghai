@@ -69,9 +69,12 @@ def play_midi():
     #worksheet = workbook.add_worksheet()
     #f = []
     boundary = 0
+    #port.flush()
+    
     for i in range(1,67):
         port.sendto("253 " + str(i) + " 100", ("192.168.12." + str(i), 5005) )
         time.sleep(0.01)
+    for i in range(1,67):
         port.sendto("225 0", ("192.168.12." + str(i), 5005) )
         time.sleep(0.01)
         #f.append(0)
@@ -254,6 +257,12 @@ def play_midi():
                     del pickidx[8][message.note]
     
     for i in range(1,67):
+        port.sendto("253 " + str(i) + " 0" , ("192.168.12." + str(i), 5005))
+        time.sleep(0.01)
+    for i in range(1,67):
+        port.sendto("225 1", ("192.168.12." + str(i), 5005) )
+        time.sleep(0.01)
+    for i in range(1,67):
         if 1 == ST[i]:
             port.sendto("144 57 1", ("192.168.12." + str(i), 5005))
         if 1 == AT[i]:
@@ -271,17 +280,9 @@ def play_midi():
             port.sendto("144 38 0", ("192.168.12." + str(i), 5005))
         if 1 == BT[i]:
             port.sendto("144 28 0", ("192.168.12." + str(i), 5005))
-    for i in range(1,67):
-        port.sendto("253 " + str(i) + " 0" , ("192.168.12." + str(i), 5005))
-        time.sleep(0.01)
-    for i in range(1,67):
-        port.sendto("225 1", ("192.168.12." + str(i), 5005) )
-        time.sleep(0.01)
-    
     #time.sleep(10)
     #for i in range(1,67):
         #port.sendto("Home", ("192.168.12." + str(i), 5005))        
-    #port.flush()
     
      #0  1  2  3  4  5  6  7  8  9 10 11 12 13 14 15 16 17 18 19 20 21 22 23 24 25 26 27 28 29 30 31 32 33 34 35 36 37 38 39 40 41 42 43 44 45 46 47 48 49 50 51 52 53 54 55 56 57 58 59 60 61 62 63 64 65 66
 ST = [0, 1, 1, 1, 1, 1, 1, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0 ,0 ,0 ,0, 0, 0, 0, 0, 1, 1, 1, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 1, 1, 1, 1, 1, 1]
@@ -399,7 +400,7 @@ try:
         port.sendto("225 1", ("192.168.12." + whoami, 5005) )
         #port.flush()
     elif False:
-	    port.sendto("Home", ("192.168.12." + whoami, 5005))
+        port.sendto("Home", ("192.168.12." + whoami, 5005))
 
 except KeyboardInterrupt:
     print "Cleaning up the GPIO" 
