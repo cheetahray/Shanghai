@@ -601,18 +601,242 @@ while True:
                 if x == 1:
                     r = rawbytes[idx]
                     idx += 1
-                    sb25 += str(r)
-                    sb25 += " "
+                    sb1 += str(r)
+                    sb1 += " "
                     g = rawbytes[idx]
                     idx += 1
-                    sb25 += str(g)
-                    sb25 += " "
+                    sb1 += str(g)
+                    sb1 += " "
                     b = rawbytes[idx]
                     idx += 1
-                    sb25 += str(b)
-                    sb25 += " "
-                    sb25 += str(y)
+                    sb1 += str(b)
+                    sb1 += " "
+                    sb1 += str(y)
                 elif x == 2:
+                    r = rawbytes[idx]
+                    idx += 1
+                    sb2 += str(r)
+                    sb2 += " "
+                    g = rawbytes[idx]
+                    idx += 1
+                    sb2 += str(g)
+                    sb2 += " "
+                    b = rawbytes[idx]
+                    idx += 1
+                    sb2 += str(b)
+                    sb2 += " "
+                    sb2 += str(y)
+                elif x == 3:
+                    r = rawbytes[idx]
+                    idx += 1
+                    sb3 += str(r)
+                    sb3 += " "
+                    g = rawbytes[idx]
+                    idx += 1
+                    sb3 += str(g)
+                    sb3 += " "
+                    b = rawbytes[idx]
+                    idx += 1
+                    sb3 += str(b)
+                    sb3 += " "
+                    sb3 += str(y)
+                elif x == 4:
+                    r = rawbytes[idx]
+                    idx += 1
+                    sb4 += str(r)
+                    sb4 += " "
+                    g = rawbytes[idx]
+                    idx += 1
+                    sb4 += str(g)
+                    sb4 += " "
+                    b = rawbytes[idx]
+                    idx += 1
+                    sb4 += str(b)
+                    sb4 += " "
+                    sb4 += str(y)
+                elif x == 5:
+                    r = rawbytes[idx]
+                    idx += 1
+                    sb5 += str(r)
+                    sb5 += " "
+                    g = rawbytes[idx]
+                    idx += 1
+                    sb5 += str(g)
+                    sb5 += " "
+                    b = rawbytes[idx]
+                    idx += 1
+                    sb5 += str(b)
+                    sb5 += " "
+                    sb5 += str(y)
+                elif x == 6:
+                    r = rawbytes[idx]
+                    idx += 1
+                    sb6 += str(r)
+                    sb6 += " "
+                    g = rawbytes[idx]
+                    idx += 1
+                    sb6 += str(g)
+                    sb6 += " "
+                    b = rawbytes[idx]
+                    idx += 1
+                    sb6 += str(b)
+                    sb6 += " "
+                    sb6 += str(y)
+                elif x == 7:
+                    r = rawbytes[idx]
+                    idx += 1
+                    sb7 += str(r)
+                    sb7 += " "
+                    g = rawbytes[idx]
+                    idx += 1
+                    sb7 += str(g)
+                    sb7 += " "
+                    b = rawbytes[idx]
+                    idx += 1
+                    sb7 += str(b)
+                    sb7 += " "
+                    sb7 += str(y)
+                elif x == 8:
+                    r = rawbytes[idx]
+                    idx += 1
+                    sb8 += str(r)
+                    sb8 += " "
+                    g = rawbytes[idx]
+                    idx += 1
+                    sb8 += str(g)
+                    sb8 += " "
+                    b = rawbytes[idx]
+                    idx += 1
+                    sb8 += str(b)
+                    sb8 += " "
+                    sb8 += str(y)
+                elif x == 9:
+                    r = rawbytes[idx]
+                    idx += 1
+                    sb9 += str(r)
+                    sb9 += " "
+                    g = rawbytes[idx]
+                    idx += 1
+                    sb9 += str(g)
+                    sb9 += " "
+                    b = rawbytes[idx]
+                    idx += 1
+                    sb9 += str(b)
+                    sb9 += " "
+                    sb9 += str(y)
+                elif x == 10:
+                    r = rawbytes[idx]
+                    idx += 1
+                    sb10 += str(r)
+                    sb10 += " "
+                    g = rawbytes[idx]
+                    idx += 1
+                    sb10 += str(g)
+                    sb10 += " "
+                    b = rawbytes[idx]
+                    idx += 1
+                    sb10 += str(b)
+                    sb10 += " "
+                    sb10 += str(y)
+                elif x == 11:
+                    r = rawbytes[idx]
+                    idx += 1
+                    sb11 += str(r)
+                    sb11 += " "
+                    g = rawbytes[idx]
+                    idx += 1
+                    sb11 += str(g)
+                    sb11 += " "
+                    b = rawbytes[idx]
+                    idx += 1
+                    sb11 += str(b)
+                    sb11 += " "
+                    sb11 += str(y)
+                elif x == 12:
+                    r = rawbytes[idx]
+                    idx += 1
+                    sb12 += str(r)
+                    sb12 += " "
+                    g = rawbytes[idx]
+                    idx += 1
+                    sb12 += str(g)
+                    sb12 += " "
+                    b = rawbytes[idx]
+                    idx += 1
+                    sb12 += str(b)
+                    sb12 += " "
+                    sb12 += str(y)
+                elif x == 13:
+                    r = rawbytes[idx]
+                    idx += 1
+                    sb13 += str(r)
+                    sb13 += " "
+                    g = rawbytes[idx]
+                    idx += 1
+                    sb13 += str(g)
+                    sb13 += " "
+                    b = rawbytes[idx]
+                    idx += 1
+                    sb13 += str(b)
+                    sb13 += " "
+                    sb13 += str(y)
+                elif x == 14:
+                    r = rawbytes[idx]
+                    idx += 1
+                    sb14 += str(r)
+                    sb14 += " "
+                    g = rawbytes[idx]
+                    idx += 1
+                    sb14 += str(g)
+                    sb14 += " "
+                    b = rawbytes[idx]
+                    idx += 1
+                    sb14 += str(b)
+                    sb14 += " "
+                    sb14 += str(y)
+                elif x == 15:
+                    r = rawbytes[idx]
+                    idx += 1
+                    sb15 += str(r)
+                    sb15 += " "
+                    g = rawbytes[idx]
+                    idx += 1
+                    sb15 += str(g)
+                    sb15 += " "
+                    b = rawbytes[idx]
+                    idx += 1
+                    sb15 += str(b)
+                    sb15 += " "
+                    sb15 += str(y)
+                elif x == 16:
+                    r = rawbytes[idx]
+                    idx += 1
+                    sb16 += str(r)
+                    sb16 += " "
+                    g = rawbytes[idx]
+                    idx += 1
+                    sb16 += str(g)
+                    sb16 += " "
+                    b = rawbytes[idx]
+                    idx += 1
+                    sb16 += str(b)
+                    sb16 += " "
+                    sb16 += str(y)
+                elif x == 17:
+                    r = rawbytes[idx]
+                    idx += 1
+                    sb17 += str(r)
+                    sb17 += " "
+                    g = rawbytes[idx]
+                    idx += 1
+                    sb17 += str(g)
+                    sb17 += " "
+                    b = rawbytes[idx]
+                    idx += 1
+                    sb17 += str(b)
+                    sb17 += " "
+                    sb17 += str(y)
+                elif x == 18:
                     r = rawbytes[idx]
                     idx += 1
                     sb18 += str(r)
@@ -626,231 +850,7 @@ while True:
                     sb18 += str(b)
                     sb18 += " "
                     sb18 += str(y)
-                elif x == 3:
-                    r = rawbytes[idx]
-                    idx += 1
-                    sb22 += str(r)
-                    sb22 += " "
-                    g = rawbytes[idx]
-                    idx += 1
-                    sb22 += str(g)
-                    sb22 += " "
-                    b = rawbytes[idx]
-                    idx += 1
-                    sb22 += str(b)
-                    sb22 += " "
-                    sb22 += str(y)
-                elif x == 4:
-                    r = rawbytes[idx]
-                    idx += 1
-                    sb62 += str(r)
-                    sb62 += " "
-                    g = rawbytes[idx]
-                    idx += 1
-                    sb62 += str(g)
-                    sb62 += " "
-                    b = rawbytes[idx]
-                    idx += 1
-                    sb62 += str(b)
-                    sb62 += " "
-                    sb62 += str(y)
-                elif x == 5:
-                    r = rawbytes[idx]
-                    idx += 1
-                    sb29 += str(r)
-                    sb29 += " "
-                    g = rawbytes[idx]
-                    idx += 1
-                    sb29 += str(g)
-                    sb29 += " "
-                    b = rawbytes[idx]
-                    idx += 1
-                    sb29 += str(b)
-                    sb29 += " "
-                    sb29 += str(y)
-                elif x == 6:
-                    r = rawbytes[idx]
-                    idx += 1
-                    sb30 += str(r)
-                    sb30 += " "
-                    g = rawbytes[idx]
-                    idx += 1
-                    sb30 += str(g)
-                    sb30 += " "
-                    b = rawbytes[idx]
-                    idx += 1
-                    sb30 += str(b)
-                    sb30 += " "
-                    sb30 += str(y)
-                elif x == 7:
-                    r = rawbytes[idx]
-                    idx += 1
-                    sb31 += str(r)
-                    sb31 += " "
-                    g = rawbytes[idx]
-                    idx += 1
-                    sb31 += str(g)
-                    sb31 += " "
-                    b = rawbytes[idx]
-                    idx += 1
-                    sb31 += str(b)
-                    sb31 += " "
-                    sb31 += str(y)
-                elif x == 8:
-                    r = rawbytes[idx]
-                    idx += 1
-                    sb32 += str(r)
-                    sb32 += " "
-                    g = rawbytes[idx]
-                    idx += 1
-                    sb32 += str(g)
-                    sb32 += " "
-                    b = rawbytes[idx]
-                    idx += 1
-                    sb32 += str(b)
-                    sb32 += " "
-                    sb32 += str(y)
-                elif x == 9:
-                    r = rawbytes[idx]
-                    idx += 1
-                    sb33 += str(r)
-                    sb33 += " "
-                    g = rawbytes[idx]
-                    idx += 1
-                    sb33 += str(g)
-                    sb33 += " "
-                    b = rawbytes[idx]
-                    idx += 1
-                    sb33 += str(b)
-                    sb33 += " "
-                    sb33 += str(y)
-                elif x == 10:
-                    r = rawbytes[idx]
-                    idx += 1
-                    sb34 += str(r)
-                    sb34 += " "
-                    g = rawbytes[idx]
-                    idx += 1
-                    sb34 += str(g)
-                    sb34 += " "
-                    b = rawbytes[idx]
-                    idx += 1
-                    sb34 += str(b)
-                    sb34 += " "
-                    sb34 += str(y)
-                elif x == 11:
-                    r = rawbytes[idx]
-                    idx += 1
-                    sb35 += str(r)
-                    sb35 += " "
-                    g = rawbytes[idx]
-                    idx += 1
-                    sb35 += str(g)
-                    sb35 += " "
-                    b = rawbytes[idx]
-                    idx += 1
-                    sb35 += str(b)
-                    sb35 += " "
-                    sb35 += str(y)
-                elif x == 12:
-                    r = rawbytes[idx]
-                    idx += 1
-                    sb36 += str(r)
-                    sb36 += " "
-                    g = rawbytes[idx]
-                    idx += 1
-                    sb36 += str(g)
-                    sb36 += " "
-                    b = rawbytes[idx]
-                    idx += 1
-                    sb36 += str(b)
-                    sb36 += " "
-                    sb36 += str(y)
-                elif x == 13:
-                    r = rawbytes[idx]
-                    idx += 1
-                    sb37 += str(r)
-                    sb37 += " "
-                    g = rawbytes[idx]
-                    idx += 1
-                    sb37 += str(g)
-                    sb37 += " "
-                    b = rawbytes[idx]
-                    idx += 1
-                    sb37 += str(b)
-                    sb37 += " "
-                    sb37 += str(y)
-                elif x == 14:
-                    r = rawbytes[idx]
-                    idx += 1
-                    sb38 += str(r)
-                    sb38 += " "
-                    g = rawbytes[idx]
-                    idx += 1
-                    sb38 += str(g)
-                    sb38 += " "
-                    b = rawbytes[idx]
-                    idx += 1
-                    sb38 += str(b)
-                    sb38 += " "
-                    sb38 += str(y)
-                elif x == 15:
-                    r = rawbytes[idx]
-                    idx += 1
-                    sb39 += str(r)
-                    sb39 += " "
-                    g = rawbytes[idx]
-                    idx += 1
-                    sb39 += str(g)
-                    sb39 += " "
-                    b = rawbytes[idx]
-                    idx += 1
-                    sb39 += str(b)
-                    sb39 += " "
-                    sb39 += str(y)
-                elif x == 16:
-                    r = rawbytes[idx]
-                    idx += 1
-                    sb49 += str(r)
-                    sb49 += " "
-                    g = rawbytes[idx]
-                    idx += 1
-                    sb49 += str(g)
-                    sb49 += " "
-                    b = rawbytes[idx]
-                    idx += 1
-                    sb49 += str(b)
-                    sb49 += " "
-                    sb49 += str(y)
-                elif x == 17:
-                    r = rawbytes[idx]
-                    idx += 1
-                    sb51 += str(r)
-                    sb51 += " "
-                    g = rawbytes[idx]
-                    idx += 1
-                    sb51 += str(g)
-                    sb51 += " "
-                    b = rawbytes[idx]
-                    idx += 1
-                    sb51 += str(b)
-                    sb51 += " "
-                    sb51 += str(y)
-                elif x == 18:
-                    r = rawbytes[idx]
-                    idx += 1
-                    sb52 += str(r)
-                    sb52 += " "
-                    g = rawbytes[idx]
-                    idx += 1
-                    sb52 += str(g)
-                    sb52 += " "
-                    b = rawbytes[idx]
-                    idx += 1
-                    sb52 += str(b)
-                    sb52 += " "
-                    sb52 += str(y)
-                elif False:#x == 19:
+                elif x == 19:
                     r = rawbytes[idx]
                     idx += 1
                     sb19 += str(r)
@@ -864,7 +864,7 @@ while True:
                     sb19 += str(b)
                     sb19 += " "
                     sb19 += str(y)
-                elif False:#x == 20:
+                elif x == 20:
                     r = rawbytes[idx]
                     idx += 1
                     sb20 += str(r)
@@ -878,7 +878,7 @@ while True:
                     sb20 += str(b)
                     sb20 += " "
                     sb20 += str(y)
-                elif False:#x == 21:
+                elif x == 21:
                     r = rawbytes[idx]
                     idx += 1
                     sb21 += str(r)
@@ -892,7 +892,7 @@ while True:
                     sb21 += str(b)
                     sb21 += " "
                     sb21 += str(y)
-                elif False:#x == 22:
+                elif x == 22:
                     r = rawbytes[idx]
                     idx += 1
                     sb22 += str(r)
@@ -906,7 +906,7 @@ while True:
                     sb22 += str(b)
                     sb22 += " "
                     sb22 += str(y)
-                elif False:#x == 23:
+                elif x == 23:
                     r = rawbytes[idx]
                     idx += 1
                     sb23 += str(r)
@@ -920,7 +920,7 @@ while True:
                     sb23 += str(b)
                     sb23 += " "
                     sb23 += str(y)
-                elif False:#x == 24:
+                elif x == 24:
                     r = rawbytes[idx]
                     idx += 1
                     sb24 += str(r)
@@ -934,7 +934,7 @@ while True:
                     sb24 += str(b)
                     sb24 += " "
                     sb24 += str(y)
-                elif False:#x == 25:
+                elif x == 25:
                     r = rawbytes[idx]
                     idx += 1
                     sb25 += str(r)
@@ -948,7 +948,7 @@ while True:
                     sb25 += str(b)
                     sb25 += " "
                     sb25 += str(y)
-                elif False:#x == 26:
+                elif x == 26:
                     r = rawbytes[idx]
                     idx += 1
                     sb26 += str(r)
@@ -962,7 +962,7 @@ while True:
                     sb26 += str(b)
                     sb26 += " "
                     sb26 += str(y)
-                elif False:#x == 27:
+                elif x == 27:
                     r = rawbytes[idx]
                     idx += 1
                     sb27 += str(r)
@@ -976,7 +976,7 @@ while True:
                     sb27 += str(b)
                     sb27 += " "
                     sb27 += str(y)
-                elif False:#x == 28:
+                elif x == 28:
                     r = rawbytes[idx]
                     idx += 1
                     sb28 += str(r)
@@ -990,7 +990,7 @@ while True:
                     sb28 += str(b)
                     sb28 += " "
                     sb28 += str(y)
-                elif False:#x == 29:
+                elif x == 29:
                     r = rawbytes[idx]
                     idx += 1
                     sb29 += str(r)
@@ -1004,7 +1004,7 @@ while True:
                     sb29 += str(b)
                     sb29 += " "
                     sb29 += str(y)
-                elif False:#x == 30:
+                elif x == 30:
                     r = rawbytes[idx]
                     idx += 1
                     sb30 += str(r)
@@ -1018,7 +1018,7 @@ while True:
                     sb30 += str(b)
                     sb30 += " "
                     sb30 += str(y)
-                elif False:#x == 31:
+                elif x == 31:
                     r = rawbytes[idx]
                     idx += 1
                     sb31 += str(r)
@@ -1032,7 +1032,7 @@ while True:
                     sb31 += str(b)
                     sb31 += " "
                     sb31 += str(y)
-                elif False:#x == 32:
+                elif x == 32:
                     r = rawbytes[idx]
                     idx += 1
                     sb32 += str(r)
@@ -1046,7 +1046,7 @@ while True:
                     sb32 += str(b)
                     sb32 += " "
                     sb32 += str(y)
-                elif False:#x == 33:
+                elif x == 33:
                     r = rawbytes[idx]
                     idx += 1
                     sb33 += str(r)
@@ -1060,7 +1060,7 @@ while True:
                     sb33 += str(b)
                     sb33 += " "
                     sb33 += str(y)
-                elif False:#x == 34:
+                elif x == 34:
                     r = rawbytes[idx]
                     idx += 1
                     sb34 += str(r)
@@ -1074,7 +1074,7 @@ while True:
                     sb34 += str(b)
                     sb34 += " "
                     sb34 += str(y)
-                elif False:#x == 35:
+                elif x == 35:
                     r = rawbytes[idx]
                     idx += 1
                     sb35 += str(r)
@@ -1088,7 +1088,7 @@ while True:
                     sb35 += str(b)
                     sb35 += " "
                     sb35 += str(y)
-                elif False:#x == 36:
+                elif x == 36:
                     r = rawbytes[idx]
                     idx += 1
                     sb36 += str(r)
@@ -1102,7 +1102,7 @@ while True:
                     sb36 += str(b)
                     sb36 += " "
                     sb36 += str(y)
-                elif False:#x == 37:
+                elif x == 37:
                     r = rawbytes[idx]
                     idx += 1
                     sb37 += str(r)
@@ -1116,7 +1116,7 @@ while True:
                     sb37 += str(b)
                     sb37 += " "
                     sb37 += str(y)
-                elif False:#x == 38:
+                elif x == 38:
                     r = rawbytes[idx]
                     idx += 1
                     sb38 += str(r)
@@ -1130,7 +1130,7 @@ while True:
                     sb38 += str(b)
                     sb38 += " "
                     sb38 += str(y)
-                elif False:#x == 39:
+                elif x == 39:
                     r = rawbytes[idx]
                     idx += 1
                     sb39 += str(r)
@@ -1144,7 +1144,7 @@ while True:
                     sb39 += str(b)
                     sb39 += " "
                     sb39 += str(y)
-                elif False:#x == 40:
+                elif x == 40:
                     r = rawbytes[idx]
                     idx += 1
                     sb40 += str(r)
@@ -1158,7 +1158,7 @@ while True:
                     sb40 += str(b)
                     sb40 += " "
                     sb40 += str(y)
-                elif False:#x == 41:
+                elif x == 41:
                     r = rawbytes[idx]
                     idx += 1
                     sb41 += str(r)
@@ -1172,7 +1172,7 @@ while True:
                     sb41 += str(b)
                     sb41 += " "
                     sb41 += str(y)
-                elif False:#x == 42:
+                elif x == 42:
                     r = rawbytes[idx]
                     idx += 1
                     sb42 += str(r)
@@ -1186,7 +1186,7 @@ while True:
                     sb42 += str(b)
                     sb42 += " "
                     sb42 += str(y)
-                elif False:#x == 43:
+                elif x == 43:
                     r = rawbytes[idx]
                     idx += 1
                     sb43 += str(r)
@@ -1200,7 +1200,7 @@ while True:
                     sb43 += str(b)
                     sb43 += " "
                     sb43 += str(y)
-                elif False:#x == 44:
+                elif x == 44:
                     r = rawbytes[idx]
                     idx += 1
                     sb44 += str(r)
@@ -1214,7 +1214,7 @@ while True:
                     sb44 += str(b)
                     sb44 += " "
                     sb44 += str(y)
-                elif False:#x == 45:
+                elif x == 45:
                     r = rawbytes[idx]
                     idx += 1
                     sb45 += str(r)
@@ -1228,7 +1228,7 @@ while True:
                     sb45 += str(b)
                     sb45 += " "
                     sb45 += str(y)
-                elif False:#x == 46:
+                elif x == 46:
                     r = rawbytes[idx]
                     idx += 1
                     sb46 += str(r)
@@ -1242,7 +1242,7 @@ while True:
                     sb46 += str(b)
                     sb46 += " "
                     sb46 += str(y)
-                elif False:#x == 47:
+                elif x == 47:
                     r = rawbytes[idx]
                     idx += 1
                     sb47 += str(r)
@@ -1256,7 +1256,7 @@ while True:
                     sb47 += str(b)
                     sb47 += " "
                     sb47 += str(y)
-                elif False:#x == 48:
+                elif x == 48:
                     r = rawbytes[idx]
                     idx += 1
                     sb48 += str(r)
@@ -1270,7 +1270,7 @@ while True:
                     sb48 += str(b)
                     sb48 += " "
                     sb48 += str(y)
-                elif False:#x == 49:
+                elif x == 49:
                     r = rawbytes[idx]
                     idx += 1
                     sb49 += str(r)
@@ -1284,7 +1284,7 @@ while True:
                     sb49 += str(b)
                     sb49 += " "
                     sb49 += str(y)
-                elif False:#x == 50:
+                elif x == 50:
                     r = rawbytes[idx]
                     idx += 1
                     sb50 += str(r)
@@ -1298,7 +1298,7 @@ while True:
                     sb50 += str(b)
                     sb50 += " "
                     sb50 += str(y)
-                elif False:#x == 51:
+                elif x == 51:
                     r = rawbytes[idx]
                     idx += 1
                     sb51 += str(r)
@@ -1312,7 +1312,7 @@ while True:
                     sb51 += str(b)
                     sb51 += " "
                     sb51 += str(y)
-                elif False:#x == 52:
+                elif x == 52:
                     r = rawbytes[idx]
                     idx += 1
                     sb52 += str(r)
@@ -1326,7 +1326,7 @@ while True:
                     sb52 += str(b)
                     sb52 += " "
                     sb52 += str(y)
-                elif False:#x == 53:
+                elif x == 53:
                     r = rawbytes[idx]
                     idx += 1
                     sb53 += str(r)
@@ -1340,7 +1340,7 @@ while True:
                     sb53 += str(b)
                     sb53 += " "
                     sb53 += str(y)
-                elif False:#x == 54:
+                elif x == 54:
                     r = rawbytes[idx]
                     idx += 1
                     sb54 += str(r)
@@ -1354,7 +1354,7 @@ while True:
                     sb54 += str(b)
                     sb54 += " "
                     sb54 += str(y)
-                elif False:#x == 55:
+                elif x == 55:
                     r = rawbytes[idx]
                     idx += 1
                     sb55 += str(r)
@@ -1368,7 +1368,7 @@ while True:
                     sb55 += str(b)
                     sb55 += " "
                     sb55 += str(y)
-                elif False:#x == 56:
+                elif x == 56:
                     r = rawbytes[idx]
                     idx += 1
                     sb56 += str(r)
@@ -1382,7 +1382,7 @@ while True:
                     sb56 += str(b)
                     sb56 += " "
                     sb56 += str(y)
-                elif False:#x == 57:
+                elif x == 57:
                     r = rawbytes[idx]
                     idx += 1
                     sb57 += str(r)
@@ -1396,7 +1396,7 @@ while True:
                     sb57 += str(b)
                     sb57 += " "
                     sb57 += str(y)
-                elif False:#x == 58:
+                elif x == 58:
                     r = rawbytes[idx]
                     idx += 1
                     sb58 += str(r)
@@ -1410,7 +1410,7 @@ while True:
                     sb58 += str(b)
                     sb58 += " "
                     sb58 += str(y)
-                elif False:#x == 59:
+                elif x == 59:
                     r = rawbytes[idx]
                     idx += 1
                     sb59 += str(r)
@@ -1424,7 +1424,7 @@ while True:
                     sb59 += str(b)
                     sb59 += " "
                     sb59 += str(y)
-                elif False:#x == 60:
+                elif x == 60:
                     r = rawbytes[idx]
                     idx += 1
                     sb60 += str(r)
@@ -1438,7 +1438,7 @@ while True:
                     sb60 += str(b)
                     sb60 += " "
                     sb60 += str(y)
-                elif False:#x == 61:
+                elif x == 61:
                     r = rawbytes[idx]
                     idx += 1
                     sb61 += str(r)
@@ -1452,7 +1452,7 @@ while True:
                     sb61 += str(b)
                     sb61 += " "
                     sb61 += str(y)
-                elif False:#x == 62:
+                elif x == 62:
                     r = rawbytes[idx]
                     idx += 1
                     sb62 += str(r)
@@ -1466,7 +1466,7 @@ while True:
                     sb62 += str(b)
                     sb62 += " "
                     sb62 += str(y)
-                elif False:#x == 63:
+                elif x == 63:
                     r = rawbytes[idx]
                     idx += 1
                     sb63 += str(r)
@@ -1480,7 +1480,7 @@ while True:
                     sb63 += str(b)
                     sb63 += " "
                     sb63 += str(y)
-                elif False:#x == 64:
+                elif x == 64:
                     r = rawbytes[idx]
                     idx += 1
                     sb64 += str(r)
@@ -1494,7 +1494,7 @@ while True:
                     sb64 += str(b)
                     sb64 += " "
                     sb64 += str(y)
-                elif False:#x == 65:
+                elif x == 65:
                     r = rawbytes[idx]
                     idx += 1
                     sb65 += str(r)
@@ -1508,7 +1508,7 @@ while True:
                     sb65 += str(b)
                     sb65 += " "
                     sb65 += str(y)
-                elif False:#x == 66:
+                elif x == 66:
                     r = rawbytes[idx]
                     idx += 1
                     sb66 += str(r)
