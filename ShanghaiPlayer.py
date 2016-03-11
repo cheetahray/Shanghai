@@ -16,6 +16,7 @@ from mido import MidiFile
 #import serial
 import socket
 
+mid = None
 debug = False        #Boolean for on/off our debug print 
 isplay = False      #Boolean to judge whether the midi is playing
 
@@ -71,11 +72,12 @@ def play_midi(mid):
     #port.flush()
     
     for i in range(1,67):
-        port.sendto("253 " + str(i) + " 100", ("192.168.12." + str(i), 5005) )
-        time.sleep(0.01)
+        port.sendto("249 3", ("192.168.12." + str(i), 5005) )
+        time.sleep(0.02)
+    time.sleep(5)
     for i in range(1,67):
         port.sendto("225 0", ("192.168.12." + str(i), 5005) )
-        time.sleep(0.01)
+        time.sleep(0.02)
         #f.append(0)
         #worksheet.write(i, 0, 0)
     for message in mid.play():  #Next note from midi in this moment
@@ -256,11 +258,8 @@ def play_midi(mid):
                     del pickidx[8][message.note]
     
     for i in range(1,67):
-        port.sendto("253 " + str(i) + " 0" , ("192.168.12." + str(i), 5005))
-        time.sleep(0.01)
-    for i in range(1,67):
         port.sendto("225 1", ("192.168.12." + str(i), 5005) )
-        time.sleep(0.01)
+        time.sleep(0.02)
     for i in range(1,67):
         if 1 == ST[i]:
             port.sendto("144 57 1", ("192.168.12." + str(i), 5005))
@@ -279,6 +278,9 @@ def play_midi(mid):
             port.sendto("144 38 0", ("192.168.12." + str(i), 5005))
         if 1 == BT[i]:
             port.sendto("144 28 0", ("192.168.12." + str(i), 5005))
+    for i in range(1,67):
+        port.sendto("249 2" , ("192.168.12." + str(i), 5005))
+        time.sleep(0.02)
     #time.sleep(10)
     #for i in range(1,67):
         #port.sendto("Home", ("192.168.12." + str(i), 5005))        
@@ -308,9 +310,8 @@ try:
         #args = parser.parse_args()
         while True:
             now = time.localtime()
-            #print now
+            print now
             if now.tm_min % 30 == 0:
-                mid = None
                 if now.tm_hour >= 10 and now.tm_hour < 13 :
                     mid = MidiFile('C:\\Users\\MyUser\\Desktop\\Share\\morning.mid')
                 elif now.tm_hour >= 13 and now.tm_hour < 17 :
@@ -319,11 +320,11 @@ try:
                     mid = MidiFile('C:\\Users\\MyUser\\Desktop\\Share\\night.mid')
                 if mid is not None:
                     play_midi(mid)
-		                #midi_suite = unittest.TestSuite()   #Add play midi test function
-		                #all_suite = unittest.TestSuite()
-		                #midi_suite.addTest(Tests("test_0", mid))
-		                #all_suite.addTest(midi_suite)
-		                #unittest.TextTestRunner(verbosity=1).run(all_suite)
+                    #midi_suite = unittest.TestSuite()   #Add play midi test function
+                    #all_suite = unittest.TestSuite()
+                    #midi_suite.addTest(Tests("test_0", mid))
+                    #all_suite.addTest(midi_suite)
+                    #unittest.TextTestRunner(verbosity=1).run(all_suite)
             else:
                 time.sleep(5)
     elif False:
