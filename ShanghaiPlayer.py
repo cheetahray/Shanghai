@@ -21,8 +21,8 @@ isplay = False      #Boolean to judge whether the midi is playing
 
 
 class Tests(unittest.TestCase):
-    def test_0(self, mid):   #Test play midi file
-        play_midi(mid);
+    def test_0(self):   #Test play midi file
+        pass #play_midi(mid);
 
 def raymap(value, istart, istop, ostart, ostop):
     #wierd = ostart + (ostop - ostart) * (value - istart) / (istop - istart); 
@@ -318,11 +318,12 @@ try:
                 elif now.tm_hour >= 17 and now.tm_hour < 22 :
                     mid = MidiFile('C:\\Users\\MyUser\\Desktop\\Share\\night.mid')
                 if mid is not None:
-		                midi_suite = unittest.TestSuite()   #Add play midi test function
-		                all_suite = unittest.TestSuite()
-		                midi_suite.addTest(Tests("test_0", mid))
-		                all_suite.addTest(midi_suite)
-		                unittest.TextTestRunner(verbosity=1).run(all_suite)
+                    play_midi(mid)
+		                #midi_suite = unittest.TestSuite()   #Add play midi test function
+		                #all_suite = unittest.TestSuite()
+		                #midi_suite.addTest(Tests("test_0", mid))
+		                #all_suite.addTest(midi_suite)
+		                #unittest.TextTestRunner(verbosity=1).run(all_suite)
             else:
                 time.sleep(5)
     elif False:
