@@ -23,7 +23,7 @@ isplay = False      #Boolean to judge whether the midi is playing
 
 class Tests(unittest.TestCase):
     def test_0(self):   #Test play midi file
-        pass #play_midi(mid);
+        play_midi();
 
 def raymap(value, istart, istop, ostart, ostop):
     #wierd = ostart + (ostop - ostart) * (value - istart) / (istop - istart); 
@@ -60,7 +60,7 @@ def checkbound(whattype, oidx):
                 oidx += 1
     return oidx                
         
-def play_midi(mid):
+def play_midi():
     global isplay
     global myshift
     global port
@@ -70,13 +70,14 @@ def play_midi(mid):
     #f = []
     boundary = 0
     #port.flush()
-    
+        
     for i in range(1,67):
         port.sendto("249 3", ("192.168.12." + str(i), 5005) )
-        time.sleep(0.02)
-    time.sleep(5)
-    for i in range(1,67):
+        time.sleep(0.01)
+    time.sleep(4)
+    for i in range(34,67):
         port.sendto("225 0", ("192.168.12." + str(i), 5005) )
+        port.sendto("225 0", ("192.168.12." + str(67-i), 5005) )
         time.sleep(0.02)
         #f.append(0)
         #worksheet.write(i, 0, 0)
@@ -256,9 +257,10 @@ def play_midi(mid):
                 if pickidx[8].has_key(message.note):
                     port.sendto("128 " + str(message.note) + " " + str(message.velocity) + " " + str(pickidx[8][message.note]) , ("192.168.12." + str(pickidx[8][message.note]), 5005) )
                     del pickidx[8][message.note]
-    
-    for i in range(1,67):
+    time.sleep(2.5);
+    for i in range(66,33,-1):
         port.sendto("225 1", ("192.168.12." + str(i), 5005) )
+        port.sendto("225 1", ("192.168.12." + str(67-i), 5005) )
         time.sleep(0.02)
     for i in range(1,67):
         if 1 == ST[i]:
@@ -269,7 +271,9 @@ def play_midi(mid):
             port.sendto("144 38 1", ("192.168.12." + str(i), 5005))
         if 1 == BT[i]:
             port.sendto("144 28 1", ("192.168.12." + str(i), 5005))
-        time.sleep(0.1)
+        time.sleep(0.02)
+    time.sleep(2.5);
+    for i in range(1,67):
         if 1 == ST[i]:
             port.sendto("144 57 0", ("192.168.12." + str(i), 5005))
         if 1 == AT[i]:
@@ -278,9 +282,12 @@ def play_midi(mid):
             port.sendto("144 38 0", ("192.168.12." + str(i), 5005))
         if 1 == BT[i]:
             port.sendto("144 28 0", ("192.168.12." + str(i), 5005))
+        time.sleep(0.02)
+    time.sleep(2.5);
     for i in range(1,67):
         port.sendto("249 2" , ("192.168.12." + str(i), 5005))
-        time.sleep(0.02)
+        time.sleep(0.01)
+    
     #time.sleep(10)
     #for i in range(1,67):
         #port.sendto("Home", ("192.168.12." + str(i), 5005))        
@@ -302,31 +309,19 @@ try:
     #port.flushInput()
     #port.flushOutput()
 
-    whoami = "58"
+    whoami = "65"
     #Register the door bell button GPIO input call back function
     if '__main__' == __name__ :
-        #parser = argparse.ArgumentParser()
-        #parser.add_argument("--song", default="newyear", help="Midi file")
-        #args = parser.parse_args()
-        while True:
-            now = time.localtime()
-            print now
-            if now.tm_min % 30 == 0:
-                if now.tm_hour >= 10 and now.tm_hour < 13 :
-                    mid = MidiFile('C:\\Users\\MyUser\\Desktop\\Share\\morning.mid')
-                elif now.tm_hour >= 13 and now.tm_hour < 17 :
-                    mid = MidiFile('C:\\Users\\MyUser\\Desktop\\Share\\afterNoon.mid')
-                elif now.tm_hour >= 17 and now.tm_hour < 22 :
-                    mid = MidiFile('C:\\Users\\MyUser\\Desktop\\Share\\night.mid')
-                if mid is not None:
-                    play_midi(mid)
-                    #midi_suite = unittest.TestSuite()   #Add play midi test function
-                    #all_suite = unittest.TestSuite()
-                    #midi_suite.addTest(Tests("test_0", mid))
-                    #all_suite.addTest(midi_suite)
-                    #unittest.TextTestRunner(verbosity=1).run(all_suite)
-            else:
-                time.sleep(5)
+        parser = argparse.ArgumentParser()
+        parser.add_argument("--song",
+                             default="newyear", help="Midi file")
+        args = parser.parse_args()
+        mid = MidiFile('C:\\Users\\MyUser\\Desktop\\Share\\' + args.song + '.mid')
+        midi_suite = unittest.TestSuite()   #Add play midi test function
+        all_suite = unittest.TestSuite()
+        midi_suite.addTest(Tests("test_0"))
+        all_suite.addTest(midi_suite)
+        unittest.TextTestRunner(verbosity=1).run(all_suite)
     elif False:
         for i in range(1,67):
             if 1 == ST[i]:
@@ -342,14 +337,14 @@ try:
         time.sleep(0.01)
         port.sendto("225 0", ("192.168.12." + whoami, 5005) )
         time.sleep(0.01)
-        whattype = 'A'
+        whattype = 'S'
         multi = False
         if whattype == 'B':
             if multi:
                 for jj in range(1,2):
                     for ii in range(28,48):
                         port.sendto("144 " + str(ii) + " 127 " + whoami, ("192.168.12." + whoami, 5005))
-                        time.sleep(2)
+                        time.sleep(3)
                         port.sendto("128 " + str(ii) + " 127 " + whoami, ("192.168.12." + whoami, 5005))
                         time.sleep(0.3)
             
@@ -357,7 +352,7 @@ try:
                     
                 if True:
                     port.sendto("144 28 127 " + whoami, ("192.168.12." + whoami, 5005))
-                    time.sleep(2)
+                    time.sleep(3)
                     port.sendto("128 28 127 " + whoami, ("192.168.12." + whoami, 5005))
                     time.sleep(0.3)
         elif whattype == 'S':
@@ -385,38 +380,28 @@ try:
                         port.sendto("128 " + str(ii) + " 127 " + whoami, ("192.168.12." + whoami, 5005))
                         time.sleep(0.3)
             
-            for jj in range(5):
+            for jj in range(1):
                     
                 if True:
                     port.sendto("144 48 127 " + whoami, ("192.168.12." + whoami, 5005))
-                    time.sleep(2)
+                    time.sleep(3)
                     port.sendto("128 48 127 " + whoami, ("192.168.12." + whoami, 5005))
-                    time.sleep(0.3)
-                if True:
-                    port.sendto("144 67 127 " + whoami, ("192.168.12." + whoami, 5005))
-                    time.sleep(2)
-                    port.sendto("128 67 127 " + whoami, ("192.168.12." + whoami, 5005))
                     time.sleep(0.3)
         elif whattype == 'T':
             if multi:
                 for jj in range(1,2):
                     for ii in range(38,58):
                         port.sendto("144 " + str(ii) + " 127 " + whoami, ("192.168.12." + whoami, 5005))
-                        time.sleep(2)
+                        time.sleep(3)
                         port.sendto("128 " + str(ii) + " 127 " + whoami, ("192.168.12." + whoami, 5005))
                         time.sleep(0.3)
             
-            for jj in range(5):
+            for jj in range(1):
                     
                 if True:
                     port.sendto("144 38 127 " + whoami, ("192.168.12." + whoami, 5005))
-                    time.sleep(2)
+                    time.sleep(3)
                     port.sendto("128 38 127 " + whoami, ("192.168.12." + whoami, 5005))
-                    time.sleep(0.3)
-                if True:
-                    port.sendto("144 57 127 " + whoami, ("192.168.12." + whoami, 5005))
-                    time.sleep(2)
-                    port.sendto("128 57 127 " + whoami, ("192.168.12." + whoami, 5005))
                     time.sleep(0.3)
             
         time.sleep(1)
@@ -424,8 +409,6 @@ try:
         #port.flush()
     elif False:
         port.sendto("Home", ("192.168.12." + whoami, 5005))
-    else:
-        port.sendto("249 2", ("192.168.12.14", 5005))
 
 except KeyboardInterrupt:
     print "Cleaning up the GPIO" 

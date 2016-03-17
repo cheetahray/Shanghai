@@ -584,7 +584,7 @@ thread.start_new_thread(Threadfun11, ("192.168.12." + str(i), "192.168.12." + st
                                          ) )
 
 while True:  
-    data, addr = s.recvfrom(8192)  
+    data, addr = s.recvfrom(16384)  
     if ((len(data) > 20) and (data[0:8] == "Art-Net\x00")):
         rawbytes = map(ord, data)
         opcode = rawbytes[8] + (rawbytes[9] << 8)
