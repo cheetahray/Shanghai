@@ -115,7 +115,7 @@ def user_callback(path, tags, args, source):
                 if pickidx[1].has_key(args[1]):
                     port.sendto("128 " + str(args[1]) + " 0 " + str(pickidx[1][args[1]]), ("192.168.12." + str(pickidx[1][args[1]]), 5005) )
                     del pickidx[1][args[1]]
-            elif args[0] == 140:
+            elif args[0] == 128:
                 if pickidx[0].has_key(args[1]):
                     port.sendto("128 " + str(args[1]) + " 0 " + str(pickidx[0][args[1]]), ("192.168.12." + str(pickidx[0][args[1]]), 5005) )
                     del pickidx[0][args[1]]
@@ -305,7 +305,7 @@ for i in range(1,67):
     port.sendto("225 2", ("192.168.12." + str(i), 5005) )
     time.sleep(0.01)
 
-thread.start_new_thread(each_frame)
+thread.start_new_thread(each_frame,())
     
 # simulate a "game engine"
 while run:
