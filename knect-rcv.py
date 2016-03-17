@@ -103,7 +103,51 @@ def user_callback(path, tags, args, source):
                     port.sendto("144 " + str(args[1]) + " 0 " + str(pickidx[8][args[1]]), ("192.168.12." + str(pickidx[8][args[1]]), 5005) )
                     del pickidx[8][args[1]]
         else:
-            if args[0] == 147:
+            if args[0] == 131:
+                if pickidx[3].has_key(args[1]):
+                    port.sendto("128 " + str(args[1]) + " 0 " + str(pickidx[3][args[1]]), ("192.168.12." + str(pickidx[3][args[1]]), 5005) )
+                    del pickidx[3][args[1]]
+            elif args[0] == 130:
+                if pickidx[2].has_key(args[1]):
+                    port.sendto("128 " + str(args[1]) + " 0 " + str(pickidx[2][args[1]]), ("192.168.12." + str(pickidx[2][args[1]]), 5005) )
+                    del pickidx[2][args[1]]
+            elif args[0] == 129:
+                if pickidx[1].has_key(args[1]):
+                    port.sendto("128 " + str(args[1]) + " 0 " + str(pickidx[1][args[1]]), ("192.168.12." + str(pickidx[1][args[1]]), 5005) )
+                    del pickidx[1][args[1]]
+            elif args[0] == 140:
+                if pickidx[0].has_key(args[1]):
+                    port.sendto("128 " + str(args[1]) + " 0 " + str(pickidx[0][args[1]]), ("192.168.12." + str(pickidx[0][args[1]]), 5005) )
+                    del pickidx[0][args[1]]
+            elif args[0] == 139:
+                if pickidx[7].has_key(args[1]):
+                    port.sendto("128 " + str(args[1]) + " 0 " + str(pickidx[7][args[1]]), ("192.168.12." + str(pickidx[7][args[1]]), 5005) )
+                    del pickidx[7][args[1]]
+                if pickidx[11].has_key(args[1]):
+                    port.sendto("128 " + str(args[1]) + " 0 " + str(pickidx[11][args[1]]), ("192.168.12." + str(pickidx[11][args[1]]), 5005) )
+                    del pickidx[11][args[1]]
+            elif args[0] == 138:
+                if pickidx[6].has_key(args[1]):
+                    port.sendto("128 " + str(args[1]) + " 0 " + str(pickidx[6][args[1]]), ("192.168.12." + str(pickidx[6][args[1]]), 5005) )
+                    del pickidx[6][args[1]]
+                if pickidx[10].has_key(args[1]):
+                    port.sendto("128 " + str(args[1]) + " 0 " + str(pickidx[10][args[1]]), ("192.168.12." + str(pickidx[10][args[1]]), 5005) )
+                    del pickidx[10][args[1]]
+            elif args[0] == 137:
+                if pickidx[5].has_key(args[1]):
+                    port.sendto("128 " + str(args[1]) + " 0 " + str(pickidx[5][args[1]]), ("192.168.12." + str(pickidx[5][args[1]]), 5005) )
+                    del pickidx[5][args[1]]
+                if pickidx[9].has_key(args[1]):
+                    port.sendto("128 " + str(args[1]) + " 0 " + str(pickidx[9][args[1]]), ("192.168.12." + str(pickidx[9][args[1]]), 5005) )
+                    del pickidx[9][args[1]]
+            elif args[0] == 136:
+                if pickidx[4].has_key(args[1]):
+                    port.sendto("128 " + str(args[1]) + " 0 " + str(pickidx[4][args[1]]), ("192.168.12." + str(pickidx[4][args[1]]), 5005) )
+                    del pickidx[4][args[1]]
+                if pickidx[8].has_key(args[1]):
+                    port.sendto("128 " + str(args[1]) + " 0 " + str(pickidx[8][args[1]]), ("192.168.12." + str(pickidx[8][args[1]]), 5005) )
+                    del pickidx[8][args[1]]
+            elif args[0] == 147:
                 boidx = checkbound(3,boidx)
                 port.sendto("144 " + str(args[1]) + " " + str(args[2]) + " " + str(boidx) , ("192.168.12." + str(boidx), 5005) )
                 pickidx[3][args[1]] = boidx
@@ -209,12 +253,14 @@ def quit_callback(path, tags, args, source):
     run = False
 
 # user script that's called by the game engine every frame
-def each_frame():
-    # clear timed_out flag
-    server.timed_out = False
-    # handle all pending requests then return
-    while not server.timed_out:
-        server.handle_request()
+def each_frame(*args):
+    while True:
+        # clear timed_out flag
+        server.timed_out = False
+        # handle all pending requests then return
+        if not server.timed_out:
+            server.handle_request()
+        time.sleep(0.001)
 
 server = OSCServer( ("0.0.0.0", 6666) )
 server.timeout = 0.001
@@ -258,6 +304,8 @@ for i in range(1,67):
 for i in range(1,67):
     port.sendto("225 2", ("192.168.12." + str(i), 5005) )
     time.sleep(0.01)
+
+thread.start_new_thread(each_frame)
     
 # simulate a "game engine"
 while run:
@@ -317,6 +365,6 @@ while run:
         pass    
     except IndexError:
         pass
-    each_frame()
+    #each_frame()
 
 server.close()
