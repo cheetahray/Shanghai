@@ -163,7 +163,7 @@ def user_callback(path, tags, args, source):
         if args[0] == 0:
             change14(False)
         elif args[0] == 1:
-            change14(True)	
+            change14(True)
     elif 's' == user:
         if args[2] == 0:
             port.sendto("224 " + str(args[1]) + " 0 " + str(args[0]), ("192.168.12." + str(args[0]), 5005) )
@@ -173,8 +173,8 @@ def user_callback(path, tags, args, source):
 def change14(isslider):
     global port
     
-    if True == isslider
-        for ii range(27,41):
+    if True == isslider:
+        for ii in range(27,41):
             ST[ii] = 0
             AT[ii] = 0
             TT[ii] = 0
@@ -197,7 +197,7 @@ def change14(isslider):
         BT[28]=1
         BT[40]=1
 
-    for ii range(27,41):
+    for ii in range(27,41):
         port.sendto("249 1" , ("192.168.12." + str(ii), 5005))
         time.sleep(0.01)
        
@@ -253,7 +253,7 @@ slideidx = [{},{},{},{},{},{},{},{},{},{},{},{}]
 port = socket.socket(socket.AF_INET, socket.SOCK_DGRAM)      
 
 for i in range(1,67):
-    port.sendto("253 " + str(i) + " 100", ("192.168.12." + str(i), 5005) )
+    port.sendto("249 3", ("192.168.12." + str(i), 5005) )
     time.sleep(0.01)
 for i in range(1,67):
     port.sendto("225 2", ("192.168.12." + str(i), 5005) )
@@ -281,41 +281,34 @@ while run:
                 x = 1 # 1..66
                 y = 0 #0..40
                 while ((idx < (rgb_length+18)) and (x <= 66)):
-                    r = rawbytes[idx]
-                    idx += 1
-                    g = rawbytes[idx]
-                    idx += 1
-                    b = rawbytes[idx]
-                    idx += 1
                     
                     #print ("{0}, {1}, {2}, {3}, {4}".format(x, y, r, g, b) )  #unicorn.set_pixel(x, y, r, g, b)
                     if 0 == universe:
-                        for ii in range(1,198,3):
-                            sb66 = "RGBW"
-                            sb66 += str(r)
-                            sb66 += " "
-                            sb66 += str(g)
-                            sb66 += " "
-                            sb66 += str(b)
-                            s1.sendto(sb66, (("192.168.12." + str(x) ,6454))   
+                        r = rawbytes[idx]
+                        idx += 1
+                        g = rawbytes[idx]
+                        idx += 1
+                        b = rawbytes[idx]
+                        idx += 1
+                        sb66 = "RGBW"
+                        sb66 += str(r)
+                        sb66 += " "
+                        sb66 += str(g)
+                        sb66 += " "
+                        sb66 += str(b)
+                        s1.sendto(sb66, ("192.168.12." + str(x) ,6454))
                     elif 1 == universe:
-                        for ii in range(1,198,3):
-                            sb66 = "COLD"
-                            sb66 += str(r)
-                            sb66 += " "
-                            sb66 += str(g)
-                            sb66 += " "
-                            sb66 += str(b)
-                            s1.sendto(sb66, (("192.168.12." + str(x) ,6454))   
+                        r = rawbytes[idx]
+                        idx += 1
+                        sb66 = "COLD"
+                        sb66 += str(r)
+                        s1.sendto(sb66, ("192.168.12." + str(x) ,6454))   
                     elif 2 == universe:
-                        for ii in range(1,198,3):
-                            sb66 = "WARM"
-                            sb66 += str(r)
-                            sb66 += " "
-                            sb66 += str(g)
-                            sb66 += " "
-                            sb66 += str(b)
-                            s1.sendto(sb66, (("192.168.12." + str(x) ,6454))   
+                        r = rawbytes[idx]
+                        idx += 1
+                        sb66 = "WARM"
+                        sb66 += str(r)
+                        s1.sendto(sb66, ("192.168.12." + str(x) ,6454))   
                          
                     x += 1    
     except socket.timeout:
