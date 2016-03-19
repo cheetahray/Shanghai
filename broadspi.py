@@ -31,6 +31,7 @@ def Threadfun1(string1, string2, string3, string4, string5, string6, *args):
         end5 = len(sb5)
         end6 = len(sb6)
         if end1 > 6:
+            print sb1
             s1.sendto(sb1, s1tuple)
             sb1 = "artnet"
         if end2 > 6:
@@ -1132,11 +1133,11 @@ def average_video(filepath, outpath, start=None, end=None, sample_every=1):
     #final_img.save(os.path.join(outpath, 'average.png'))
 
 
-address = ('0.0.0.0', 6454)  
-s = socket.socket(socket.AF_INET, socket.SOCK_DGRAM)  
-s.bind(address)  
+#address = ('0.0.0.0', 6454)  
+#s = socket.socket(socket.AF_INET, socket.SOCK_DGRAM)  
+#s.bind(address)  
 
-data = ""
+#data = ""
 sleeptime = 0.001
 
 sb1="artnet"
@@ -1261,11 +1262,11 @@ parser.add_argument("-s", type=int, required=False,
                         help="Start time for image processing, in seconds")
 parser.add_argument("-e", type=int, required=False,
                         help="End time for image processing, in seconds")
-parser.add_argument("-f", type=int, default=1,
+parser.add_argument("-f", type=int, default=24,
                         help="Sample every f frames (default 24)")
 args = parser.parse_args()
     
 while True:  
     average_video(args.i, args.o, args.s, args.e, args.f)
        
-s.close()  
+#s.close()  
