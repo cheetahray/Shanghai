@@ -1,6 +1,12 @@
 import socket  
 import thread
 import time
+import os
+from argparse import ArgumentParser
+from moviepy.editor import VideoFileClip
+import numpy as np
+from PIL import Image
+from tqdm import tqdm
 
 def Threadfun1(string1, string2, string3, string4, string5, string6, *args):
     global sleeptime
@@ -464,6 +470,602 @@ def Threadfun11(string1, string2, string3, string4, string5, string6, *args):
             sb66 = "artnet"
         time.sleep(sleeptime)
 
+def frange(x, y, inc):
+    while x < y:
+        yield x
+        x += inc
+
+
+def average_video(filepath, outpath, start=None, end=None, sample_every=1):
+    """Calculate average of video frames"""
+
+    # Load video
+    vid = VideoFileClip(filepath, audio=False).resize(width=66)
+    width = vid.w
+    height = vid.h
+
+    if start is None and end is None:
+        frame_generator = vid.iter_frames(progress_bar=True, dtype=np.uint8)
+    else:
+        if start is None:
+            start = 0
+        if end is None:
+            end = vid.duration
+        # compute time increment for sampling by frames
+        sample_inc = sample_every / vid.fps
+        frame_generator = tqdm(vid.get_frame(f) for f in frange(start, end, sample_inc))
+
+    # create starting matrix of zeros
+    sum_fs = np.zeros(shape=(height, width, 3), dtype=int)
+    ma_sum_fs = np.zeros(shape=(height, width, 3), dtype=int)
+    prev_f = np.zeros(shape=(height, width, 3), dtype=int)
+    sum_delta_fs = np.zeros(shape=(height, width, 3), dtype=int)
+
+    n_frames = 0
+    for f in frame_generator:
+        #delta = f - prev_f
+        #sum_delta_fs += delta
+        #sum_fs += f
+
+        #ma_sum_fs += f
+        #if divmod(n_frames, 100)[1] == 0 and n_frames > 0:
+        #    ma_f = ma_sum_fs / 100
+        #    Image.fromarray(ma_f.astype(np.uint8))\
+        #        .save(os.path.join(outpath, 'movavg_{}.png'.format(n_frames)))
+        #    ma_sum_fs = np.zeros(shape=(height, width, 3), dtype=int)
+
+        #n_frames += 1
+        #prev_f = f
+        
+        #print len(f[0])
+        for x in range(1,len(f[0])+1):
+            for y in range(0,len(f)):
+                if y < 41:
+                    r = f[y][x-1][0]
+                    g = f[y][x-1][1]
+                    b = f[y][x-1][2]
+                    if x == 1:
+                        sb1 += str(r)
+                        sb1 += " "
+                        sb1 += str(g)
+                        sb1 += " "
+                        sb1 += str(b)
+                        sb1 += " "
+                        sb1 += str(y)
+                    elif x == 2:
+                        sb2 += str(r)
+                        sb2 += " "
+                        sb2 += str(g)
+                        sb2 += " "
+                        sb2 += str(b)
+                        sb2 += " "
+                        sb2 += str(y)
+                    elif x == 3:
+                        sb3 += str(r)
+                        sb3 += " "
+                        sb3 += str(g)
+                        sb3 += " "
+                        sb3 += str(b)
+                        sb3 += " "
+                        sb3 += str(y)
+                    elif x == 4:
+                        sb4 += str(r)
+                        sb4 += " "
+                        sb4 += str(g)
+                        sb4 += " "
+                        sb4 += str(b)
+                        sb4 += " "
+                        sb4 += str(y)
+                    elif x == 5:
+                        sb5 += str(r)
+                        sb5 += " "
+                        sb5 += str(g)
+                        sb5 += " "
+                        sb5 += str(b)
+                        sb5 += " "
+                        sb5 += str(y)
+                    elif x == 6:
+                        sb6 += str(r)
+                        sb6 += " "
+                        sb6 += str(g)
+                        sb6 += " "
+                        sb6 += str(b)
+                        sb6 += " "
+                        sb6 += str(y)
+                    elif x == 7:
+                        sb7 += str(r)
+                        sb7 += " "
+                        sb7 += str(g)
+                        sb7 += " "
+                        sb7 += str(b)
+                        sb7 += " "
+                        sb7 += str(y)
+                    elif x == 8:
+                        sb8 += str(r)
+                        sb8 += " "
+                        sb8 += str(g)
+                        sb8 += " "
+                        sb8 += str(b)
+                        sb8 += " "
+                        sb8 += str(y)
+                    elif x == 9:
+                        sb9 += str(r)
+                        sb9 += " "
+                        sb9 += str(g)
+                        sb9 += " "
+                        sb9 += str(b)
+                        sb9 += " "
+                        sb9 += str(y)
+                    elif x == 10:
+                        sb10 += str(r)
+                        sb10 += " "
+                        sb10 += str(g)
+                        sb10 += " "
+                        sb10 += str(b)
+                        sb10 += " "
+                        sb10 += str(y)
+                    elif x == 11:
+                        sb11 += str(r)
+                        sb11 += " "
+                        sb11 += str(g)
+                        sb11 += " "
+                        sb11 += str(b)
+                        sb11 += " "
+                        sb11 += str(y)
+                    elif x == 12:
+                        sb12 += str(r)
+                        sb12 += " "
+                        sb12 += str(g)
+                        sb12 += " "
+                        sb12 += str(b)
+                        sb12 += " "
+                        sb12 += str(y)
+                    elif x == 13:
+                        sb13 += str(r)
+                        sb13 += " "
+                        sb13 += str(g)
+                        sb13 += " "
+                        sb13 += str(b)
+                        sb13 += " "
+                        sb13 += str(y)
+                    elif x == 14:
+                        sb14 += str(r)
+                        sb14 += " "
+                        sb14 += str(g)
+                        sb14 += " "
+                        sb14 += str(b)
+                        sb14 += " "
+                        sb14 += str(y)
+                    elif x == 15:
+                        sb15 += str(r)
+                        sb15 += " "
+                        sb15 += str(g)
+                        sb15 += " "
+                        sb15 += str(b)
+                        sb15 += " "
+                        sb15 += str(y)
+                    elif x == 16:
+                        sb16 += str(r)
+                        sb16 += " "
+                        sb16 += str(g)
+                        sb16 += " "
+                        sb16 += str(b)
+                        sb16 += " "
+                        sb16 += str(y)
+                    elif x == 17:
+                        sb17 += str(r)
+                        sb17 += " "
+                        sb17 += str(g)
+                        sb17 += " "
+                        sb17 += str(b)
+                        sb17 += " "
+                        sb17 += str(y)
+                    elif x == 18:
+                        sb18 += str(r)
+                        sb18 += " "
+                        sb18 += str(g)
+                        sb18 += " "
+                        sb18 += str(b)
+                        sb18 += " "
+                        sb18 += str(y)
+                    elif x == 19:
+                        sb19 += str(r)
+                        sb19 += " "
+                        sb19 += str(g)
+                        sb19 += " "
+                        sb19 += str(b)
+                        sb19 += " "
+                        sb19 += str(y)
+                    elif x == 20:
+                        sb20 += str(r)
+                        sb20 += " "
+                        sb20 += str(g)
+                        sb20 += " "
+                        sb20 += str(b)
+                        sb20 += " "
+                        sb20 += str(y)
+                    elif x == 21:
+                        sb21 += str(r)
+                        sb21 += " "
+                        sb21 += str(g)
+                        sb21 += " "
+                        sb21 += str(b)
+                        sb21 += " "
+                        sb21 += str(y)
+                    elif x == 22:
+                        sb22 += str(r)
+                        sb22 += " "
+                        sb22 += str(g)
+                        sb22 += " "
+                        sb22 += str(b)
+                        sb22 += " "
+                        sb22 += str(y)
+                    elif x == 23:
+                        sb23 += str(r)
+                        sb23 += " "
+                        sb23 += str(g)
+                        sb23 += " "
+                        sb23 += str(b)
+                        sb23 += " "
+                        sb23 += str(y)
+                    elif x == 24:
+                        sb24 += str(r)
+                        sb24 += " "
+                        sb24 += str(g)
+                        sb24 += " "
+                        sb24 += str(b)
+                        sb24 += " "
+                        sb24 += str(y)
+                    elif x == 25:
+                        sb25 += str(r)
+                        sb25 += " "
+                        sb25 += str(g)
+                        sb25 += " "
+                        sb25 += str(b)
+                        sb25 += " "
+                        sb25 += str(y)
+                    elif x == 26:
+                        sb26 += str(r)
+                        sb26 += " "
+                        sb26 += str(g)
+                        sb26 += " "
+                        sb26 += str(b)
+                        sb26 += " "
+                        sb26 += str(y)
+                    elif x == 27:
+                        sb27 += str(r)
+                        sb27 += " "
+                        sb27 += str(g)
+                        sb27 += " "
+                        sb27 += str(b)
+                        sb27 += " "
+                        sb27 += str(y)
+                    elif x == 28:
+                        sb28 += str(r)
+                        sb28 += " "
+                        sb28 += str(g)
+                        sb28 += " "
+                        sb28 += str(b)
+                        sb28 += " "
+                        sb28 += str(y)
+                    elif x == 29:
+                        sb29 += str(r)
+                        sb29 += " "
+                        sb29 += str(g)
+                        sb29 += " "
+                        sb29 += str(b)
+                        sb29 += " "
+                        sb29 += str(y)
+                    elif x == 30:
+                        sb30 += str(r)
+                        sb30 += " "
+                        sb30 += str(g)
+                        sb30 += " "
+                        sb30 += str(b)
+                        sb30 += " "
+                        sb30 += str(y)
+                    elif x == 31:
+                        sb31 += str(r)
+                        sb31 += " "
+                        sb31 += str(g)
+                        sb31 += " "
+                        sb31 += str(b)
+                        sb31 += " "
+                        sb31 += str(y)
+                    elif x == 32:
+                        sb32 += str(r)
+                        sb32 += " "
+                        sb32 += str(g)
+                        sb32 += " "
+                        sb32 += str(b)
+                        sb32 += " "
+                        sb32 += str(y)
+                    elif x == 33:
+                        sb33 += str(r)
+                        sb33 += " "
+                        sb33 += str(g)
+                        sb33 += " "
+                        sb33 += str(b)
+                        sb33 += " "
+                        sb33 += str(y)
+                    elif x == 34:
+                        sb34 += str(r)
+                        sb34 += " "
+                        sb34 += str(g)
+                        sb34 += " "
+                        sb34 += str(b)
+                        sb34 += " "
+                        sb34 += str(y)
+                    elif x == 35:
+                        sb35 += str(r)
+                        sb35 += " "
+                        sb35 += str(g)
+                        sb35 += " "
+                        sb35 += str(b)
+                        sb35 += " "
+                        sb35 += str(y)
+                    elif x == 36:
+                        sb36 += str(r)
+                        sb36 += " "
+                        sb36 += str(g)
+                        sb36 += " "
+                        sb36 += str(b)
+                        sb36 += " "
+                        sb36 += str(y)
+                    elif x == 37:
+                        sb37 += str(r)
+                        sb37 += " "
+                        sb37 += str(g)
+                        sb37 += " "
+                        sb37 += str(b)
+                        sb37 += " "
+                        sb37 += str(y)
+                    elif x == 38:
+                        sb38 += str(r)
+                        sb38 += " "
+                        sb38 += str(g)
+                        sb38 += " "
+                        sb38 += str(b)
+                        sb38 += " "
+                        sb38 += str(y)
+                    elif x == 39:
+                        sb39 += str(r)
+                        sb39 += " "
+                        sb39 += str(g)
+                        sb39 += " "
+                        sb39 += str(b)
+                        sb39 += " "
+                        sb39 += str(y)
+                    elif x == 40:
+                        sb40 += str(r)
+                        sb40 += " "
+                        sb40 += str(g)
+                        sb40 += " "
+                        sb40 += str(b)
+                        sb40 += " "
+                        sb40 += str(y)
+                    elif x == 41:
+                        sb41 += str(r)
+                        sb41 += " "
+                        sb41 += str(g)
+                        sb41 += " "
+                        sb41 += str(b)
+                        sb41 += " "
+                        sb41 += str(y)
+                    elif x == 42:
+                        sb42 += str(r)
+                        sb42 += " "
+                        sb42 += str(g)
+                        sb42 += " "
+                        sb42 += str(b)
+                        sb42 += " "
+                        sb42 += str(y)
+                    elif x == 43:
+                        sb43 += str(r)
+                        sb43 += " "
+                        sb43 += str(g)
+                        sb43 += " "
+                        sb43 += str(b)
+                        sb43 += " "
+                        sb43 += str(y)
+                    elif x == 44:
+                        sb44 += str(r)
+                        sb44 += " "
+                        sb44 += str(g)
+                        sb44 += " "
+                        sb44 += str(b)
+                        sb44 += " "
+                        sb44 += str(y)
+                    elif x == 45:
+                        sb45 += str(r)
+                        sb45 += " "
+                        sb45 += str(g)
+                        sb45 += " "
+                        sb45 += str(b)
+                        sb45 += " "
+                        sb45 += str(y)
+                    elif x == 46:
+                        sb46 += str(r)
+                        sb46 += " "
+                        sb46 += str(g)
+                        sb46 += " "
+                        sb46 += str(b)
+                        sb46 += " "
+                        sb46 += str(y)
+                    elif x == 47:
+                        sb47 += str(r)
+                        sb47 += " "
+                        sb47 += str(g)
+                        sb47 += " "
+                        sb47 += str(b)
+                        sb47 += " "
+                        sb47 += str(y)
+                    elif x == 48:
+                        sb48 += str(r)
+                        sb48 += " "
+                        sb48 += str(g)
+                        sb48 += " "
+                        sb48 += str(b)
+                        sb48 += " "
+                        sb48 += str(y)
+                    elif x == 49:
+                        sb49 += str(r)
+                        sb49 += " "
+                        sb49 += str(g)
+                        sb49 += " "
+                        sb49 += str(b)
+                        sb49 += " "
+                        sb49 += str(y)
+                    elif x == 50:
+                        sb50 += str(r)
+                        sb50 += " "
+                        sb50 += str(g)
+                        sb50 += " "
+                        sb50 += str(b)
+                        sb50 += " "
+                        sb50 += str(y)
+                    elif x == 51:
+                        sb51 += str(r)
+                        sb51 += " "
+                        sb51 += str(g)
+                        sb51 += " "
+                        sb51 += str(b)
+                        sb51 += " "
+                        sb51 += str(y)
+                    elif x == 52:
+                        sb52 += str(r)
+                        sb52 += " "
+                        sb52 += str(g)
+                        sb52 += " "
+                        sb52 += str(b)
+                        sb52 += " "
+                        sb52 += str(y)
+                    elif x == 53:
+                        sb53 += str(r)
+                        sb53 += " "
+                        sb53 += str(g)
+                        sb53 += " "
+                        sb53 += str(b)
+                        sb53 += " "
+                        sb53 += str(y)
+                    elif x == 54:
+                        sb54 += str(r)
+                        sb54 += " "
+                        sb54 += str(g)
+                        sb54 += " "
+                        sb54 += str(b)
+                        sb54 += " "
+                        sb54 += str(y)
+                    elif x == 55:
+                        sb55 += str(r)
+                        sb55 += " "
+                        sb55 += str(g)
+                        sb55 += " "
+                        sb55 += str(b)
+                        sb55 += " "
+                        sb55 += str(y)
+                    elif x == 56:
+                        sb56 += str(r)
+                        sb56 += " "
+                        sb56 += str(g)
+                        sb56 += " "
+                        sb56 += str(b)
+                        sb56 += " "
+                        sb56 += str(y)
+                    elif x == 57:
+                        sb57 += str(r)
+                        sb57 += " "
+                        sb57 += str(g)
+                        sb57 += " "
+                        sb57 += str(b)
+                        sb57 += " "
+                        sb57 += str(y)
+                    elif x == 58:
+                        sb58 += str(r)
+                        sb58 += " "
+                        sb58 += str(g)
+                        sb58 += " "
+                        sb58 += str(b)
+                        sb58 += " "
+                        sb58 += str(y)
+                    elif x == 59:
+                        sb59 += str(r)
+                        sb59 += " "
+                        sb59 += str(g)
+                        sb59 += " "
+                        sb59 += str(b)
+                        sb59 += " "
+                        sb59 += str(y)
+                    elif x == 60:
+                        sb60 += str(r)
+                        sb60 += " "
+                        sb60 += str(g)
+                        sb60 += " "
+                        sb60 += str(b)
+                        sb60 += " "
+                        sb60 += str(y)
+                    elif x == 61:
+                        sb61 += str(r)
+                        sb61 += " "
+                        sb61 += str(g)
+                        sb61 += " "
+                        sb61 += str(b)
+                        sb61 += " "
+                        sb61 += str(y)
+                    elif x == 62:
+                        sb62 += str(r)
+                        sb62 += " "
+                        sb62 += str(g)
+                        sb62 += " "
+                        sb62 += str(b)
+                        sb62 += " "
+                        sb62 += str(y)
+                    elif x == 63:
+                        sb63 += str(r)
+                        sb63 += " "
+                        sb63 += str(g)
+                        sb63 += " "
+                        sb63 += str(b)
+                        sb63 += " "
+                        sb63 += str(y)
+                    elif x == 64:
+                        sb64 += str(r)
+                        sb64 += " "
+                        sb64 += str(g)
+                        sb64 += " "
+                        sb64 += str(b)
+                        sb64 += " "
+                        sb64 += str(y)
+                    elif x == 65:
+                        sb65 += str(r)
+                        sb65 += " "
+                        sb65 += str(g)
+                        sb65 += " "
+                        sb65 += str(b)
+                        sb65 += " "
+                        sb65 += str(y)
+                    elif x == 66:
+                        sb66 += str(r)
+                        sb66 += " "
+                        sb66 += str(g)
+                        sb66 += " "
+                        sb66 += str(b)
+                        sb66 += " "
+                        sb66 += str(y)
+                                
+        time.sleep(1.0/float(sample_every))
+
+    # average out the values for each frame
+    #average_delta_f = sum_delta_fs / n_frames
+    #average_f = sum_fs / n_frames
+
+    # Create images
+    #delta_img = Image.fromarray(average_delta_f.astype(np.uint8))
+    #delta_img.save(os.path.join(outpath, 'average_delta.png'))
+    #final_img = Image.fromarray(average_f.astype(np.uint8))
+    #final_img.save(os.path.join(outpath, 'average.png'))
+
+
 address = ('0.0.0.0', 6454)  
 s = socket.socket(socket.AF_INET, socket.SOCK_DGRAM)  
 s.bind(address)  
@@ -583,952 +1185,21 @@ thread.start_new_thread(Threadfun11, ("192.168.12." + str(i), "192.168.12." + st
                                      "192.168.12." + str(i+3), "192.168.12." + str(i+4), "192.168.12." + str(i+5)
                                          ) )
 
-while True:  
-    data, addr = s.recvfrom(8192)  
-    if ((len(data) > 20) and (data[0:8] == "Art-Net\x00")):
-        rawbytes = map(ord, data)
-        opcode = rawbytes[8] + (rawbytes[9] << 8)
-        protocolVersion = (rawbytes[10] << 8) + rawbytes[11]
-        #print opcode
-        if ((opcode == 0x5000) and (protocolVersion >= 14)):
-            sub_net = (rawbytes[14] & 0xF0) >> 4
-            universe = rawbytes[14] & 0x0F
-            nowy = (sub_net << 4) + universe
-            rgb_length = (rawbytes[16] << 8) + rawbytes[17]
-            idx = 18
-            x = 1
-            y = nowy 
-            while ((idx < (rgb_length+18)) ):
-                if x == 1:
-                    r = rawbytes[idx]
-                    idx += 1
-                    sb1 += str(r)
-                    sb1 += " "
-                    g = rawbytes[idx]
-                    idx += 1
-                    sb1 += str(g)
-                    sb1 += " "
-                    b = rawbytes[idx]
-                    idx += 1
-                    sb1 += str(b)
-                    sb1 += " "
-                    sb1 += str(y)
-                elif x == 2:
-                    r = rawbytes[idx]
-                    idx += 1
-                    sb2 += str(r)
-                    sb2 += " "
-                    g = rawbytes[idx]
-                    idx += 1
-                    sb2 += str(g)
-                    sb2 += " "
-                    b = rawbytes[idx]
-                    idx += 1
-                    sb2 += str(b)
-                    sb2 += " "
-                    sb2 += str(y)
-                elif x == 3:
-                    r = rawbytes[idx]
-                    idx += 1
-                    sb3 += str(r)
-                    sb3 += " "
-                    g = rawbytes[idx]
-                    idx += 1
-                    sb3 += str(g)
-                    sb3 += " "
-                    b = rawbytes[idx]
-                    idx += 1
-                    sb3 += str(b)
-                    sb3 += " "
-                    sb3 += str(y)
-                elif x == 4:
-                    r = rawbytes[idx]
-                    idx += 1
-                    sb4 += str(r)
-                    sb4 += " "
-                    g = rawbytes[idx]
-                    idx += 1
-                    sb4 += str(g)
-                    sb4 += " "
-                    b = rawbytes[idx]
-                    idx += 1
-                    sb4 += str(b)
-                    sb4 += " "
-                    sb4 += str(y)
-                elif x == 5:
-                    r = rawbytes[idx]
-                    idx += 1
-                    sb5 += str(r)
-                    sb5 += " "
-                    g = rawbytes[idx]
-                    idx += 1
-                    sb5 += str(g)
-                    sb5 += " "
-                    b = rawbytes[idx]
-                    idx += 1
-                    sb5 += str(b)
-                    sb5 += " "
-                    sb5 += str(y)
-                elif x == 6:
-                    r = rawbytes[idx]
-                    idx += 1
-                    sb6 += str(r)
-                    sb6 += " "
-                    g = rawbytes[idx]
-                    idx += 1
-                    sb6 += str(g)
-                    sb6 += " "
-                    b = rawbytes[idx]
-                    idx += 1
-                    sb6 += str(b)
-                    sb6 += " "
-                    sb6 += str(y)
-                elif x == 7:
-                    r = rawbytes[idx]
-                    idx += 1
-                    sb7 += str(r)
-                    sb7 += " "
-                    g = rawbytes[idx]
-                    idx += 1
-                    sb7 += str(g)
-                    sb7 += " "
-                    b = rawbytes[idx]
-                    idx += 1
-                    sb7 += str(b)
-                    sb7 += " "
-                    sb7 += str(y)
-                elif x == 8:
-                    r = rawbytes[idx]
-                    idx += 1
-                    sb8 += str(r)
-                    sb8 += " "
-                    g = rawbytes[idx]
-                    idx += 1
-                    sb8 += str(g)
-                    sb8 += " "
-                    b = rawbytes[idx]
-                    idx += 1
-                    sb8 += str(b)
-                    sb8 += " "
-                    sb8 += str(y)
-                elif x == 9:
-                    r = rawbytes[idx]
-                    idx += 1
-                    sb9 += str(r)
-                    sb9 += " "
-                    g = rawbytes[idx]
-                    idx += 1
-                    sb9 += str(g)
-                    sb9 += " "
-                    b = rawbytes[idx]
-                    idx += 1
-                    sb9 += str(b)
-                    sb9 += " "
-                    sb9 += str(y)
-                elif x == 10:
-                    r = rawbytes[idx]
-                    idx += 1
-                    sb10 += str(r)
-                    sb10 += " "
-                    g = rawbytes[idx]
-                    idx += 1
-                    sb10 += str(g)
-                    sb10 += " "
-                    b = rawbytes[idx]
-                    idx += 1
-                    sb10 += str(b)
-                    sb10 += " "
-                    sb10 += str(y)
-                elif x == 11:
-                    r = rawbytes[idx]
-                    idx += 1
-                    sb11 += str(r)
-                    sb11 += " "
-                    g = rawbytes[idx]
-                    idx += 1
-                    sb11 += str(g)
-                    sb11 += " "
-                    b = rawbytes[idx]
-                    idx += 1
-                    sb11 += str(b)
-                    sb11 += " "
-                    sb11 += str(y)
-                elif x == 12:
-                    r = rawbytes[idx]
-                    idx += 1
-                    sb12 += str(r)
-                    sb12 += " "
-                    g = rawbytes[idx]
-                    idx += 1
-                    sb12 += str(g)
-                    sb12 += " "
-                    b = rawbytes[idx]
-                    idx += 1
-                    sb12 += str(b)
-                    sb12 += " "
-                    sb12 += str(y)
-                elif x == 13:
-                    r = rawbytes[idx]
-                    idx += 1
-                    sb13 += str(r)
-                    sb13 += " "
-                    g = rawbytes[idx]
-                    idx += 1
-                    sb13 += str(g)
-                    sb13 += " "
-                    b = rawbytes[idx]
-                    idx += 1
-                    sb13 += str(b)
-                    sb13 += " "
-                    sb13 += str(y)
-                elif x == 14:
-                    r = rawbytes[idx]
-                    idx += 1
-                    sb14 += str(r)
-                    sb14 += " "
-                    g = rawbytes[idx]
-                    idx += 1
-                    sb14 += str(g)
-                    sb14 += " "
-                    b = rawbytes[idx]
-                    idx += 1
-                    sb14 += str(b)
-                    sb14 += " "
-                    sb14 += str(y)
-                elif x == 15:
-                    r = rawbytes[idx]
-                    idx += 1
-                    sb15 += str(r)
-                    sb15 += " "
-                    g = rawbytes[idx]
-                    idx += 1
-                    sb15 += str(g)
-                    sb15 += " "
-                    b = rawbytes[idx]
-                    idx += 1
-                    sb15 += str(b)
-                    sb15 += " "
-                    sb15 += str(y)
-                elif x == 16:
-                    r = rawbytes[idx]
-                    idx += 1
-                    sb16 += str(r)
-                    sb16 += " "
-                    g = rawbytes[idx]
-                    idx += 1
-                    sb16 += str(g)
-                    sb16 += " "
-                    b = rawbytes[idx]
-                    idx += 1
-                    sb16 += str(b)
-                    sb16 += " "
-                    sb16 += str(y)
-                elif x == 17:
-                    r = rawbytes[idx]
-                    idx += 1
-                    sb17 += str(r)
-                    sb17 += " "
-                    g = rawbytes[idx]
-                    idx += 1
-                    sb17 += str(g)
-                    sb17 += " "
-                    b = rawbytes[idx]
-                    idx += 1
-                    sb17 += str(b)
-                    sb17 += " "
-                    sb17 += str(y)
-                elif x == 18:
-                    r = rawbytes[idx]
-                    idx += 1
-                    sb18 += str(r)
-                    sb18 += " "
-                    g = rawbytes[idx]
-                    idx += 1
-                    sb18 += str(g)
-                    sb18 += " "
-                    b = rawbytes[idx]
-                    idx += 1
-                    sb18 += str(b)
-                    sb18 += " "
-                    sb18 += str(y)
-                elif x == 19:
-                    r = rawbytes[idx]
-                    idx += 1
-                    sb19 += str(r)
-                    sb19 += " "
-                    g = rawbytes[idx]
-                    idx += 1
-                    sb19 += str(g)
-                    sb19 += " "
-                    b = rawbytes[idx]
-                    idx += 1
-                    sb19 += str(b)
-                    sb19 += " "
-                    sb19 += str(y)
-                elif x == 20:
-                    r = rawbytes[idx]
-                    idx += 1
-                    sb20 += str(r)
-                    sb20 += " "
-                    g = rawbytes[idx]
-                    idx += 1
-                    sb20 += str(g)
-                    sb20 += " "
-                    b = rawbytes[idx]
-                    idx += 1
-                    sb20 += str(b)
-                    sb20 += " "
-                    sb20 += str(y)
-                elif x == 21:
-                    r = rawbytes[idx]
-                    idx += 1
-                    sb21 += str(r)
-                    sb21 += " "
-                    g = rawbytes[idx]
-                    idx += 1
-                    sb21 += str(g)
-                    sb21 += " "
-                    b = rawbytes[idx]
-                    idx += 1
-                    sb21 += str(b)
-                    sb21 += " "
-                    sb21 += str(y)
-                elif x == 22:
-                    r = rawbytes[idx]
-                    idx += 1
-                    sb22 += str(r)
-                    sb22 += " "
-                    g = rawbytes[idx]
-                    idx += 1
-                    sb22 += str(g)
-                    sb22 += " "
-                    b = rawbytes[idx]
-                    idx += 1
-                    sb22 += str(b)
-                    sb22 += " "
-                    sb22 += str(y)
-                elif x == 23:
-                    r = rawbytes[idx]
-                    idx += 1
-                    sb23 += str(r)
-                    sb23 += " "
-                    g = rawbytes[idx]
-                    idx += 1
-                    sb23 += str(g)
-                    sb23 += " "
-                    b = rawbytes[idx]
-                    idx += 1
-                    sb23 += str(b)
-                    sb23 += " "
-                    sb23 += str(y)
-                elif x == 24:
-                    r = rawbytes[idx]
-                    idx += 1
-                    sb24 += str(r)
-                    sb24 += " "
-                    g = rawbytes[idx]
-                    idx += 1
-                    sb24 += str(g)
-                    sb24 += " "
-                    b = rawbytes[idx]
-                    idx += 1
-                    sb24 += str(b)
-                    sb24 += " "
-                    sb24 += str(y)
-                elif x == 25:
-                    r = rawbytes[idx]
-                    idx += 1
-                    sb25 += str(r)
-                    sb25 += " "
-                    g = rawbytes[idx]
-                    idx += 1
-                    sb25 += str(g)
-                    sb25 += " "
-                    b = rawbytes[idx]
-                    idx += 1
-                    sb25 += str(b)
-                    sb25 += " "
-                    sb25 += str(y)
-                elif x == 26:
-                    r = rawbytes[idx]
-                    idx += 1
-                    sb26 += str(r)
-                    sb26 += " "
-                    g = rawbytes[idx]
-                    idx += 1
-                    sb26 += str(g)
-                    sb26 += " "
-                    b = rawbytes[idx]
-                    idx += 1
-                    sb26 += str(b)
-                    sb26 += " "
-                    sb26 += str(y)
-                elif x == 27:
-                    r = rawbytes[idx]
-                    idx += 1
-                    sb27 += str(r)
-                    sb27 += " "
-                    g = rawbytes[idx]
-                    idx += 1
-                    sb27 += str(g)
-                    sb27 += " "
-                    b = rawbytes[idx]
-                    idx += 1
-                    sb27 += str(b)
-                    sb27 += " "
-                    sb27 += str(y)
-                elif x == 28:
-                    r = rawbytes[idx]
-                    idx += 1
-                    sb28 += str(r)
-                    sb28 += " "
-                    g = rawbytes[idx]
-                    idx += 1
-                    sb28 += str(g)
-                    sb28 += " "
-                    b = rawbytes[idx]
-                    idx += 1
-                    sb28 += str(b)
-                    sb28 += " "
-                    sb28 += str(y)
-                elif x == 29:
-                    r = rawbytes[idx]
-                    idx += 1
-                    sb29 += str(r)
-                    sb29 += " "
-                    g = rawbytes[idx]
-                    idx += 1
-                    sb29 += str(g)
-                    sb29 += " "
-                    b = rawbytes[idx]
-                    idx += 1
-                    sb29 += str(b)
-                    sb29 += " "
-                    sb29 += str(y)
-                elif x == 30:
-                    r = rawbytes[idx]
-                    idx += 1
-                    sb30 += str(r)
-                    sb30 += " "
-                    g = rawbytes[idx]
-                    idx += 1
-                    sb30 += str(g)
-                    sb30 += " "
-                    b = rawbytes[idx]
-                    idx += 1
-                    sb30 += str(b)
-                    sb30 += " "
-                    sb30 += str(y)
-                elif x == 31:
-                    r = rawbytes[idx]
-                    idx += 1
-                    sb31 += str(r)
-                    sb31 += " "
-                    g = rawbytes[idx]
-                    idx += 1
-                    sb31 += str(g)
-                    sb31 += " "
-                    b = rawbytes[idx]
-                    idx += 1
-                    sb31 += str(b)
-                    sb31 += " "
-                    sb31 += str(y)
-                elif x == 32:
-                    r = rawbytes[idx]
-                    idx += 1
-                    sb32 += str(r)
-                    sb32 += " "
-                    g = rawbytes[idx]
-                    idx += 1
-                    sb32 += str(g)
-                    sb32 += " "
-                    b = rawbytes[idx]
-                    idx += 1
-                    sb32 += str(b)
-                    sb32 += " "
-                    sb32 += str(y)
-                elif x == 33:
-                    r = rawbytes[idx]
-                    idx += 1
-                    sb33 += str(r)
-                    sb33 += " "
-                    g = rawbytes[idx]
-                    idx += 1
-                    sb33 += str(g)
-                    sb33 += " "
-                    b = rawbytes[idx]
-                    idx += 1
-                    sb33 += str(b)
-                    sb33 += " "
-                    sb33 += str(y)
-                elif x == 34:
-                    r = rawbytes[idx]
-                    idx += 1
-                    sb34 += str(r)
-                    sb34 += " "
-                    g = rawbytes[idx]
-                    idx += 1
-                    sb34 += str(g)
-                    sb34 += " "
-                    b = rawbytes[idx]
-                    idx += 1
-                    sb34 += str(b)
-                    sb34 += " "
-                    sb34 += str(y)
-                elif x == 35:
-                    r = rawbytes[idx]
-                    idx += 1
-                    sb35 += str(r)
-                    sb35 += " "
-                    g = rawbytes[idx]
-                    idx += 1
-                    sb35 += str(g)
-                    sb35 += " "
-                    b = rawbytes[idx]
-                    idx += 1
-                    sb35 += str(b)
-                    sb35 += " "
-                    sb35 += str(y)
-                elif x == 36:
-                    r = rawbytes[idx]
-                    idx += 1
-                    sb36 += str(r)
-                    sb36 += " "
-                    g = rawbytes[idx]
-                    idx += 1
-                    sb36 += str(g)
-                    sb36 += " "
-                    b = rawbytes[idx]
-                    idx += 1
-                    sb36 += str(b)
-                    sb36 += " "
-                    sb36 += str(y)
-                elif x == 37:
-                    r = rawbytes[idx]
-                    idx += 1
-                    sb37 += str(r)
-                    sb37 += " "
-                    g = rawbytes[idx]
-                    idx += 1
-                    sb37 += str(g)
-                    sb37 += " "
-                    b = rawbytes[idx]
-                    idx += 1
-                    sb37 += str(b)
-                    sb37 += " "
-                    sb37 += str(y)
-                elif x == 38:
-                    r = rawbytes[idx]
-                    idx += 1
-                    sb38 += str(r)
-                    sb38 += " "
-                    g = rawbytes[idx]
-                    idx += 1
-                    sb38 += str(g)
-                    sb38 += " "
-                    b = rawbytes[idx]
-                    idx += 1
-                    sb38 += str(b)
-                    sb38 += " "
-                    sb38 += str(y)
-                elif x == 39:
-                    r = rawbytes[idx]
-                    idx += 1
-                    sb39 += str(r)
-                    sb39 += " "
-                    g = rawbytes[idx]
-                    idx += 1
-                    sb39 += str(g)
-                    sb39 += " "
-                    b = rawbytes[idx]
-                    idx += 1
-                    sb39 += str(b)
-                    sb39 += " "
-                    sb39 += str(y)
-                elif x == 40:
-                    r = rawbytes[idx]
-                    idx += 1
-                    sb40 += str(r)
-                    sb40 += " "
-                    g = rawbytes[idx]
-                    idx += 1
-                    sb40 += str(g)
-                    sb40 += " "
-                    b = rawbytes[idx]
-                    idx += 1
-                    sb40 += str(b)
-                    sb40 += " "
-                    sb40 += str(y)
-                elif x == 41:
-                    r = rawbytes[idx]
-                    idx += 1
-                    sb41 += str(r)
-                    sb41 += " "
-                    g = rawbytes[idx]
-                    idx += 1
-                    sb41 += str(g)
-                    sb41 += " "
-                    b = rawbytes[idx]
-                    idx += 1
-                    sb41 += str(b)
-                    sb41 += " "
-                    sb41 += str(y)
-                elif x == 42:
-                    r = rawbytes[idx]
-                    idx += 1
-                    sb42 += str(r)
-                    sb42 += " "
-                    g = rawbytes[idx]
-                    idx += 1
-                    sb42 += str(g)
-                    sb42 += " "
-                    b = rawbytes[idx]
-                    idx += 1
-                    sb42 += str(b)
-                    sb42 += " "
-                    sb42 += str(y)
-                elif x == 43:
-                    r = rawbytes[idx]
-                    idx += 1
-                    sb43 += str(r)
-                    sb43 += " "
-                    g = rawbytes[idx]
-                    idx += 1
-                    sb43 += str(g)
-                    sb43 += " "
-                    b = rawbytes[idx]
-                    idx += 1
-                    sb43 += str(b)
-                    sb43 += " "
-                    sb43 += str(y)
-                elif x == 44:
-                    r = rawbytes[idx]
-                    idx += 1
-                    sb44 += str(r)
-                    sb44 += " "
-                    g = rawbytes[idx]
-                    idx += 1
-                    sb44 += str(g)
-                    sb44 += " "
-                    b = rawbytes[idx]
-                    idx += 1
-                    sb44 += str(b)
-                    sb44 += " "
-                    sb44 += str(y)
-                elif x == 45:
-                    r = rawbytes[idx]
-                    idx += 1
-                    sb45 += str(r)
-                    sb45 += " "
-                    g = rawbytes[idx]
-                    idx += 1
-                    sb45 += str(g)
-                    sb45 += " "
-                    b = rawbytes[idx]
-                    idx += 1
-                    sb45 += str(b)
-                    sb45 += " "
-                    sb45 += str(y)
-                elif x == 46:
-                    r = rawbytes[idx]
-                    idx += 1
-                    sb46 += str(r)
-                    sb46 += " "
-                    g = rawbytes[idx]
-                    idx += 1
-                    sb46 += str(g)
-                    sb46 += " "
-                    b = rawbytes[idx]
-                    idx += 1
-                    sb46 += str(b)
-                    sb46 += " "
-                    sb46 += str(y)
-                elif x == 47:
-                    r = rawbytes[idx]
-                    idx += 1
-                    sb47 += str(r)
-                    sb47 += " "
-                    g = rawbytes[idx]
-                    idx += 1
-                    sb47 += str(g)
-                    sb47 += " "
-                    b = rawbytes[idx]
-                    idx += 1
-                    sb47 += str(b)
-                    sb47 += " "
-                    sb47 += str(y)
-                elif x == 48:
-                    r = rawbytes[idx]
-                    idx += 1
-                    sb48 += str(r)
-                    sb48 += " "
-                    g = rawbytes[idx]
-                    idx += 1
-                    sb48 += str(g)
-                    sb48 += " "
-                    b = rawbytes[idx]
-                    idx += 1
-                    sb48 += str(b)
-                    sb48 += " "
-                    sb48 += str(y)
-                elif x == 49:
-                    r = rawbytes[idx]
-                    idx += 1
-                    sb49 += str(r)
-                    sb49 += " "
-                    g = rawbytes[idx]
-                    idx += 1
-                    sb49 += str(g)
-                    sb49 += " "
-                    b = rawbytes[idx]
-                    idx += 1
-                    sb49 += str(b)
-                    sb49 += " "
-                    sb49 += str(y)
-                elif x == 50:
-                    r = rawbytes[idx]
-                    idx += 1
-                    sb50 += str(r)
-                    sb50 += " "
-                    g = rawbytes[idx]
-                    idx += 1
-                    sb50 += str(g)
-                    sb50 += " "
-                    b = rawbytes[idx]
-                    idx += 1
-                    sb50 += str(b)
-                    sb50 += " "
-                    sb50 += str(y)
-                elif x == 51:
-                    r = rawbytes[idx]
-                    idx += 1
-                    sb51 += str(r)
-                    sb51 += " "
-                    g = rawbytes[idx]
-                    idx += 1
-                    sb51 += str(g)
-                    sb51 += " "
-                    b = rawbytes[idx]
-                    idx += 1
-                    sb51 += str(b)
-                    sb51 += " "
-                    sb51 += str(y)
-                elif x == 52:
-                    r = rawbytes[idx]
-                    idx += 1
-                    sb52 += str(r)
-                    sb52 += " "
-                    g = rawbytes[idx]
-                    idx += 1
-                    sb52 += str(g)
-                    sb52 += " "
-                    b = rawbytes[idx]
-                    idx += 1
-                    sb52 += str(b)
-                    sb52 += " "
-                    sb52 += str(y)
-                elif x == 53:
-                    r = rawbytes[idx]
-                    idx += 1
-                    sb53 += str(r)
-                    sb53 += " "
-                    g = rawbytes[idx]
-                    idx += 1
-                    sb53 += str(g)
-                    sb53 += " "
-                    b = rawbytes[idx]
-                    idx += 1
-                    sb53 += str(b)
-                    sb53 += " "
-                    sb53 += str(y)
-                elif x == 54:
-                    r = rawbytes[idx]
-                    idx += 1
-                    sb54 += str(r)
-                    sb54 += " "
-                    g = rawbytes[idx]
-                    idx += 1
-                    sb54 += str(g)
-                    sb54 += " "
-                    b = rawbytes[idx]
-                    idx += 1
-                    sb54 += str(b)
-                    sb54 += " "
-                    sb54 += str(y)
-                elif x == 55:
-                    r = rawbytes[idx]
-                    idx += 1
-                    sb55 += str(r)
-                    sb55 += " "
-                    g = rawbytes[idx]
-                    idx += 1
-                    sb55 += str(g)
-                    sb55 += " "
-                    b = rawbytes[idx]
-                    idx += 1
-                    sb55 += str(b)
-                    sb55 += " "
-                    sb55 += str(y)
-                elif x == 56:
-                    r = rawbytes[idx]
-                    idx += 1
-                    sb56 += str(r)
-                    sb56 += " "
-                    g = rawbytes[idx]
-                    idx += 1
-                    sb56 += str(g)
-                    sb56 += " "
-                    b = rawbytes[idx]
-                    idx += 1
-                    sb56 += str(b)
-                    sb56 += " "
-                    sb56 += str(y)
-                elif x == 57:
-                    r = rawbytes[idx]
-                    idx += 1
-                    sb57 += str(r)
-                    sb57 += " "
-                    g = rawbytes[idx]
-                    idx += 1
-                    sb57 += str(g)
-                    sb57 += " "
-                    b = rawbytes[idx]
-                    idx += 1
-                    sb57 += str(b)
-                    sb57 += " "
-                    sb57 += str(y)
-                elif x == 58:
-                    r = rawbytes[idx]
-                    idx += 1
-                    sb58 += str(r)
-                    sb58 += " "
-                    g = rawbytes[idx]
-                    idx += 1
-                    sb58 += str(g)
-                    sb58 += " "
-                    b = rawbytes[idx]
-                    idx += 1
-                    sb58 += str(b)
-                    sb58 += " "
-                    sb58 += str(y)
-                elif x == 59:
-                    r = rawbytes[idx]
-                    idx += 1
-                    sb59 += str(r)
-                    sb59 += " "
-                    g = rawbytes[idx]
-                    idx += 1
-                    sb59 += str(g)
-                    sb59 += " "
-                    b = rawbytes[idx]
-                    idx += 1
-                    sb59 += str(b)
-                    sb59 += " "
-                    sb59 += str(y)
-                elif x == 60:
-                    r = rawbytes[idx]
-                    idx += 1
-                    sb60 += str(r)
-                    sb60 += " "
-                    g = rawbytes[idx]
-                    idx += 1
-                    sb60 += str(g)
-                    sb60 += " "
-                    b = rawbytes[idx]
-                    idx += 1
-                    sb60 += str(b)
-                    sb60 += " "
-                    sb60 += str(y)
-                elif x == 61:
-                    r = rawbytes[idx]
-                    idx += 1
-                    sb61 += str(r)
-                    sb61 += " "
-                    g = rawbytes[idx]
-                    idx += 1
-                    sb61 += str(g)
-                    sb61 += " "
-                    b = rawbytes[idx]
-                    idx += 1
-                    sb61 += str(b)
-                    sb61 += " "
-                    sb61 += str(y)
-                elif x == 62:
-                    r = rawbytes[idx]
-                    idx += 1
-                    sb62 += str(r)
-                    sb62 += " "
-                    g = rawbytes[idx]
-                    idx += 1
-                    sb62 += str(g)
-                    sb62 += " "
-                    b = rawbytes[idx]
-                    idx += 1
-                    sb62 += str(b)
-                    sb62 += " "
-                    sb62 += str(y)
-                elif x == 63:
-                    r = rawbytes[idx]
-                    idx += 1
-                    sb63 += str(r)
-                    sb63 += " "
-                    g = rawbytes[idx]
-                    idx += 1
-                    sb63 += str(g)
-                    sb63 += " "
-                    b = rawbytes[idx]
-                    idx += 1
-                    sb63 += str(b)
-                    sb63 += " "
-                    sb63 += str(y)
-                elif x == 64:
-                    r = rawbytes[idx]
-                    idx += 1
-                    sb64 += str(r)
-                    sb64 += " "
-                    g = rawbytes[idx]
-                    idx += 1
-                    sb64 += str(g)
-                    sb64 += " "
-                    b = rawbytes[idx]
-                    idx += 1
-                    sb64 += str(b)
-                    sb64 += " "
-                    sb64 += str(y)
-                elif x == 65:
-                    r = rawbytes[idx]
-                    idx += 1
-                    sb65 += str(r)
-                    sb65 += " "
-                    g = rawbytes[idx]
-                    idx += 1
-                    sb65 += str(g)
-                    sb65 += " "
-                    b = rawbytes[idx]
-                    idx += 1
-                    sb65 += str(b)
-                    sb65 += " "
-                    sb65 += str(y)
-                elif x == 66:
-                    r = rawbytes[idx]
-                    idx += 1
-                    sb66 += str(r)
-                    sb66 += " "
-                    g = rawbytes[idx]
-                    idx += 1
-                    sb66 += str(g)
-                    sb66 += " "
-                    b = rawbytes[idx]
-                    idx += 1
-                    sb66 += str(b)
-                    sb66 += " "
-                    sb66 += str(y)
-                #print (str(x) + ":" + str(y))
-                x += 1
-                #if (x >= 66):
-                #    x = 0
-                #    y += 1
-        
-    time.sleep(sleeptime)
+parser = ArgumentParser(description="Creates image with averaged pixels"
+                                        "for a given movie clip")
+parser.add_argument("-i", default="/home/oem/extractframes/fixtures/100frames.avi", type=str,
+                        help="filepath to movie clip")
+parser.add_argument("-o", default="/home/oem/Shanghai/rayspi/", type=str,
+                        help="filepath to save image to")
+parser.add_argument("-s", type=int, required=False,
+                        help="Start time for image processing, in seconds")
+parser.add_argument("-e", type=int, required=False,
+                        help="End time for image processing, in seconds")
+parser.add_argument("-f", type=int, default=1,
+                        help="Sample every f frames (default 24)")
+args = parser.parse_args()
     
+while True:  
+    average_video(args.i, args.o, args.s, args.e, args.f)
+       
 s.close()  
