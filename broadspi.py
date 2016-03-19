@@ -31,7 +31,6 @@ def Threadfun1(string1, string2, string3, string4, string5, string6, *args):
         end5 = len(sb5)
         end6 = len(sb6)
         if end1 > 6:
-            print sb1
             s1.sendto(sb1, s1tuple)
             sb1 = "artnet"
         if end2 > 6:
@@ -1328,7 +1327,7 @@ parser.add_argument("-s", type=int, required=False,
                         help="Start time for image processing, in seconds")
 parser.add_argument("-e", type=int, required=False,
                         help="End time for image processing, in seconds")
-parser.add_argument("-f", type=int, default=24,
+parser.add_argument("-f", type=int, default=15,
                         help="Sample every f frames (default 24)")
 args = parser.parse_args()
     
