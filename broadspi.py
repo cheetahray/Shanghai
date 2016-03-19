@@ -599,6 +599,7 @@ def average_video(filepath, outpath, start=None, end=None, sample_every=1):
                         sb1 += str(b)
                         sb1 += " "
                         sb1 += str(y)
+                        sb1 += " "
                     elif x == 2:
                         sb2 += str(r)
                         sb2 += " "
@@ -607,6 +608,7 @@ def average_video(filepath, outpath, start=None, end=None, sample_every=1):
                         sb2 += str(b)
                         sb2 += " "
                         sb2 += str(y)
+                        sb2 += " "
                     elif x == 3:
                         sb3 += str(r)
                         sb3 += " "
@@ -615,6 +617,7 @@ def average_video(filepath, outpath, start=None, end=None, sample_every=1):
                         sb3 += str(b)
                         sb3 += " "
                         sb3 += str(y)
+                        sb3 += " "
                     elif x == 4:
                         sb4 += str(r)
                         sb4 += " "
@@ -623,6 +626,7 @@ def average_video(filepath, outpath, start=None, end=None, sample_every=1):
                         sb4 += str(b)
                         sb4 += " "
                         sb4 += str(y)
+                        sb4 += " "
                     elif x == 5:
                         sb5 += str(r)
                         sb5 += " "
@@ -631,6 +635,7 @@ def average_video(filepath, outpath, start=None, end=None, sample_every=1):
                         sb5 += str(b)
                         sb5 += " "
                         sb5 += str(y)
+                        sb5 += " "
                     elif x == 6:
                         sb6 += str(r)
                         sb6 += " "
@@ -639,6 +644,7 @@ def average_video(filepath, outpath, start=None, end=None, sample_every=1):
                         sb6 += str(b)
                         sb6 += " "
                         sb6 += str(y)
+                        sb6 += " "
                     elif x == 7:
                         sb7 += str(r)
                         sb7 += " "
@@ -647,6 +653,7 @@ def average_video(filepath, outpath, start=None, end=None, sample_every=1):
                         sb7 += str(b)
                         sb7 += " "
                         sb7 += str(y)
+                        sb7 += " "
                     elif x == 8:
                         sb8 += str(r)
                         sb8 += " "
@@ -655,6 +662,7 @@ def average_video(filepath, outpath, start=None, end=None, sample_every=1):
                         sb8 += str(b)
                         sb8 += " "
                         sb8 += str(y)
+                        sb8 += " "
                     elif x == 9:
                         sb9 += str(r)
                         sb9 += " "
@@ -663,6 +671,7 @@ def average_video(filepath, outpath, start=None, end=None, sample_every=1):
                         sb9 += str(b)
                         sb9 += " "
                         sb9 += str(y)
+                        sb9 += " "
                     elif x == 10:
                         sb10 += str(r)
                         sb10 += " "
@@ -671,6 +680,7 @@ def average_video(filepath, outpath, start=None, end=None, sample_every=1):
                         sb10 += str(b)
                         sb10 += " "
                         sb10 += str(y)
+                        sb10 += " "
                     elif x == 11:
                         sb11 += str(r)
                         sb11 += " "
@@ -679,6 +689,7 @@ def average_video(filepath, outpath, start=None, end=None, sample_every=1):
                         sb11 += str(b)
                         sb11 += " "
                         sb11 += str(y)
+                        sb11 += " "
                     elif x == 12:
                         sb12 += str(r)
                         sb12 += " "
@@ -687,6 +698,7 @@ def average_video(filepath, outpath, start=None, end=None, sample_every=1):
                         sb12 += str(b)
                         sb12 += " "
                         sb12 += str(y)
+                        sb12 += " "
                     elif x == 13:
                         sb13 += str(r)
                         sb13 += " "
@@ -695,6 +707,7 @@ def average_video(filepath, outpath, start=None, end=None, sample_every=1):
                         sb13 += str(b)
                         sb13 += " "
                         sb13 += str(y)
+                        sb13 += " "
                     elif x == 14:
                         sb14 += str(r)
                         sb14 += " "
@@ -703,6 +716,7 @@ def average_video(filepath, outpath, start=None, end=None, sample_every=1):
                         sb14 += str(b)
                         sb14 += " "
                         sb14 += str(y)
+                        sb14 += " "
                     elif x == 15:
                         sb15 += str(r)
                         sb15 += " "
@@ -711,6 +725,7 @@ def average_video(filepath, outpath, start=None, end=None, sample_every=1):
                         sb15 += str(b)
                         sb15 += " "
                         sb15 += str(y)
+                        sb15 += " "
                     elif x == 16:
                         sb16 += str(r)
                         sb16 += " "
@@ -719,6 +734,7 @@ def average_video(filepath, outpath, start=None, end=None, sample_every=1):
                         sb16 += str(b)
                         sb16 += " "
                         sb16 += str(y)
+                        sb16 += " "
                     elif x == 17:
                         sb17 += str(r)
                         sb17 += " "
@@ -727,6 +743,7 @@ def average_video(filepath, outpath, start=None, end=None, sample_every=1):
                         sb17 += str(b)
                         sb17 += " "
                         sb17 += str(y)
+                        sb17 += " "
                     elif x == 18:
                         sb18 += str(r)
                         sb18 += " "
@@ -735,6 +752,7 @@ def average_video(filepath, outpath, start=None, end=None, sample_every=1):
                         sb18 += str(b)
                         sb18 += " "
                         sb18 += str(y)
+                        sb18 += " "
                     elif x == 19:
                         sb19 += str(r)
                         sb19 += " "
@@ -743,6 +761,7 @@ def average_video(filepath, outpath, start=None, end=None, sample_every=1):
                         sb19 += str(b)
                         sb19 += " "
                         sb19 += str(y)
+                        sb19 += " "
                     elif x == 20:
                         sb20 += str(r)
                         sb20 += " "
@@ -751,6 +770,7 @@ def average_video(filepath, outpath, start=None, end=None, sample_every=1):
                         sb20 += str(b)
                         sb20 += " "
                         sb20 += str(y)
+                        sb20 += " "
                     elif x == 21:
                         sb21 += str(r)
                         sb21 += " "
@@ -759,6 +779,7 @@ def average_video(filepath, outpath, start=None, end=None, sample_every=1):
                         sb21 += str(b)
                         sb21 += " "
                         sb21 += str(y)
+                        sb21 += " "
                     elif x == 22:
                         sb22 += str(r)
                         sb22 += " "
@@ -767,6 +788,7 @@ def average_video(filepath, outpath, start=None, end=None, sample_every=1):
                         sb22 += str(b)
                         sb22 += " "
                         sb22 += str(y)
+                        sb22 += " "
                     elif x == 23:
                         sb23 += str(r)
                         sb23 += " "
@@ -775,6 +797,7 @@ def average_video(filepath, outpath, start=None, end=None, sample_every=1):
                         sb23 += str(b)
                         sb23 += " "
                         sb23 += str(y)
+                        sb23 += " "
                     elif x == 24:
                         sb24 += str(r)
                         sb24 += " "
@@ -783,6 +806,7 @@ def average_video(filepath, outpath, start=None, end=None, sample_every=1):
                         sb24 += str(b)
                         sb24 += " "
                         sb24 += str(y)
+                        sb24 += " "
                     elif x == 25:
                         sb25 += str(r)
                         sb25 += " "
@@ -791,6 +815,7 @@ def average_video(filepath, outpath, start=None, end=None, sample_every=1):
                         sb25 += str(b)
                         sb25 += " "
                         sb25 += str(y)
+                        sb25 += " "
                     elif x == 26:
                         sb26 += str(r)
                         sb26 += " "
@@ -799,6 +824,7 @@ def average_video(filepath, outpath, start=None, end=None, sample_every=1):
                         sb26 += str(b)
                         sb26 += " "
                         sb26 += str(y)
+                        sb26 += " "
                     elif x == 27:
                         sb27 += str(r)
                         sb27 += " "
@@ -807,6 +833,7 @@ def average_video(filepath, outpath, start=None, end=None, sample_every=1):
                         sb27 += str(b)
                         sb27 += " "
                         sb27 += str(y)
+                        sb27 += " "
                     elif x == 28:
                         sb28 += str(r)
                         sb28 += " "
@@ -815,6 +842,7 @@ def average_video(filepath, outpath, start=None, end=None, sample_every=1):
                         sb28 += str(b)
                         sb28 += " "
                         sb28 += str(y)
+                        sb28 += " "
                     elif x == 29:
                         sb29 += str(r)
                         sb29 += " "
@@ -823,6 +851,7 @@ def average_video(filepath, outpath, start=None, end=None, sample_every=1):
                         sb29 += str(b)
                         sb29 += " "
                         sb29 += str(y)
+                        sb29 += " "
                     elif x == 30:
                         sb30 += str(r)
                         sb30 += " "
@@ -831,6 +860,7 @@ def average_video(filepath, outpath, start=None, end=None, sample_every=1):
                         sb30 += str(b)
                         sb30 += " "
                         sb30 += str(y)
+                        sb30 += " "
                     elif x == 31:
                         sb31 += str(r)
                         sb31 += " "
@@ -839,6 +869,7 @@ def average_video(filepath, outpath, start=None, end=None, sample_every=1):
                         sb31 += str(b)
                         sb31 += " "
                         sb31 += str(y)
+                        sb31 += " "
                     elif x == 32:
                         sb32 += str(r)
                         sb32 += " "
@@ -847,6 +878,7 @@ def average_video(filepath, outpath, start=None, end=None, sample_every=1):
                         sb32 += str(b)
                         sb32 += " "
                         sb32 += str(y)
+                        sb32 += " "
                     elif x == 33:
                         sb33 += str(r)
                         sb33 += " "
@@ -855,6 +887,7 @@ def average_video(filepath, outpath, start=None, end=None, sample_every=1):
                         sb33 += str(b)
                         sb33 += " "
                         sb33 += str(y)
+                        sb33 += " "
                     elif x == 34:
                         sb34 += str(r)
                         sb34 += " "
@@ -863,6 +896,7 @@ def average_video(filepath, outpath, start=None, end=None, sample_every=1):
                         sb34 += str(b)
                         sb34 += " "
                         sb34 += str(y)
+                        sb34 += " "
                     elif x == 35:
                         sb35 += str(r)
                         sb35 += " "
@@ -871,6 +905,7 @@ def average_video(filepath, outpath, start=None, end=None, sample_every=1):
                         sb35 += str(b)
                         sb35 += " "
                         sb35 += str(y)
+                        sb35 += " "
                     elif x == 36:
                         sb36 += str(r)
                         sb36 += " "
@@ -879,6 +914,7 @@ def average_video(filepath, outpath, start=None, end=None, sample_every=1):
                         sb36 += str(b)
                         sb36 += " "
                         sb36 += str(y)
+                        sb36 += " "
                     elif x == 37:
                         sb37 += str(r)
                         sb37 += " "
@@ -887,6 +923,7 @@ def average_video(filepath, outpath, start=None, end=None, sample_every=1):
                         sb37 += str(b)
                         sb37 += " "
                         sb37 += str(y)
+                        sb37 += " "
                     elif x == 38:
                         sb38 += str(r)
                         sb38 += " "
@@ -895,6 +932,7 @@ def average_video(filepath, outpath, start=None, end=None, sample_every=1):
                         sb38 += str(b)
                         sb38 += " "
                         sb38 += str(y)
+                        sb38 += " "
                     elif x == 39:
                         sb39 += str(r)
                         sb39 += " "
@@ -903,6 +941,7 @@ def average_video(filepath, outpath, start=None, end=None, sample_every=1):
                         sb39 += str(b)
                         sb39 += " "
                         sb39 += str(y)
+                        sb39 += " "
                     elif x == 40:
                         sb40 += str(r)
                         sb40 += " "
@@ -911,6 +950,7 @@ def average_video(filepath, outpath, start=None, end=None, sample_every=1):
                         sb40 += str(b)
                         sb40 += " "
                         sb40 += str(y)
+                        sb40 += " "
                     elif x == 41:
                         sb41 += str(r)
                         sb41 += " "
@@ -919,6 +959,7 @@ def average_video(filepath, outpath, start=None, end=None, sample_every=1):
                         sb41 += str(b)
                         sb41 += " "
                         sb41 += str(y)
+                        sb41 += " "
                     elif x == 42:
                         sb42 += str(r)
                         sb42 += " "
@@ -927,6 +968,7 @@ def average_video(filepath, outpath, start=None, end=None, sample_every=1):
                         sb42 += str(b)
                         sb42 += " "
                         sb42 += str(y)
+                        sb42 += " "
                     elif x == 43:
                         sb43 += str(r)
                         sb43 += " "
@@ -935,6 +977,7 @@ def average_video(filepath, outpath, start=None, end=None, sample_every=1):
                         sb43 += str(b)
                         sb43 += " "
                         sb43 += str(y)
+                        sb43 += " "
                     elif x == 44:
                         sb44 += str(r)
                         sb44 += " "
@@ -943,6 +986,7 @@ def average_video(filepath, outpath, start=None, end=None, sample_every=1):
                         sb44 += str(b)
                         sb44 += " "
                         sb44 += str(y)
+                        sb44 += " "
                     elif x == 45:
                         sb45 += str(r)
                         sb45 += " "
@@ -951,6 +995,7 @@ def average_video(filepath, outpath, start=None, end=None, sample_every=1):
                         sb45 += str(b)
                         sb45 += " "
                         sb45 += str(y)
+                        sb45 += " "
                     elif x == 46:
                         sb46 += str(r)
                         sb46 += " "
@@ -959,6 +1004,7 @@ def average_video(filepath, outpath, start=None, end=None, sample_every=1):
                         sb46 += str(b)
                         sb46 += " "
                         sb46 += str(y)
+                        sb46 += " "
                     elif x == 47:
                         sb47 += str(r)
                         sb47 += " "
@@ -967,6 +1013,7 @@ def average_video(filepath, outpath, start=None, end=None, sample_every=1):
                         sb47 += str(b)
                         sb47 += " "
                         sb47 += str(y)
+                        sb47 += " "
                     elif x == 48:
                         sb48 += str(r)
                         sb48 += " "
@@ -975,6 +1022,7 @@ def average_video(filepath, outpath, start=None, end=None, sample_every=1):
                         sb48 += str(b)
                         sb48 += " "
                         sb48 += str(y)
+                        sb48 += " "
                     elif x == 49:
                         sb49 += str(r)
                         sb49 += " "
@@ -983,6 +1031,7 @@ def average_video(filepath, outpath, start=None, end=None, sample_every=1):
                         sb49 += str(b)
                         sb49 += " "
                         sb49 += str(y)
+                        sb49 += " "
                     elif x == 50:
                         sb50 += str(r)
                         sb50 += " "
@@ -991,6 +1040,7 @@ def average_video(filepath, outpath, start=None, end=None, sample_every=1):
                         sb50 += str(b)
                         sb50 += " "
                         sb50 += str(y)
+                        sb50 += " "
                     elif x == 51:
                         sb51 += str(r)
                         sb51 += " "
@@ -999,6 +1049,7 @@ def average_video(filepath, outpath, start=None, end=None, sample_every=1):
                         sb51 += str(b)
                         sb51 += " "
                         sb51 += str(y)
+                        sb51 += " "
                     elif x == 52:
                         sb52 += str(r)
                         sb52 += " "
@@ -1007,6 +1058,7 @@ def average_video(filepath, outpath, start=None, end=None, sample_every=1):
                         sb52 += str(b)
                         sb52 += " "
                         sb52 += str(y)
+                        sb52 += " "
                     elif x == 53:
                         sb53 += str(r)
                         sb53 += " "
@@ -1015,6 +1067,7 @@ def average_video(filepath, outpath, start=None, end=None, sample_every=1):
                         sb53 += str(b)
                         sb53 += " "
                         sb53 += str(y)
+                        sb53 += " "
                     elif x == 54:
                         sb54 += str(r)
                         sb54 += " "
@@ -1023,6 +1076,7 @@ def average_video(filepath, outpath, start=None, end=None, sample_every=1):
                         sb54 += str(b)
                         sb54 += " "
                         sb54 += str(y)
+                        sb54 += " "
                     elif x == 55:
                         sb55 += str(r)
                         sb55 += " "
@@ -1031,6 +1085,7 @@ def average_video(filepath, outpath, start=None, end=None, sample_every=1):
                         sb55 += str(b)
                         sb55 += " "
                         sb55 += str(y)
+                        sb55 += " "
                     elif x == 56:
                         sb56 += str(r)
                         sb56 += " "
@@ -1039,6 +1094,7 @@ def average_video(filepath, outpath, start=None, end=None, sample_every=1):
                         sb56 += str(b)
                         sb56 += " "
                         sb56 += str(y)
+                        sb56 += " "
                     elif x == 57:
                         sb57 += str(r)
                         sb57 += " "
@@ -1047,6 +1103,7 @@ def average_video(filepath, outpath, start=None, end=None, sample_every=1):
                         sb57 += str(b)
                         sb57 += " "
                         sb57 += str(y)
+                        sb57 += " "
                     elif x == 58:
                         sb58 += str(r)
                         sb58 += " "
@@ -1055,6 +1112,7 @@ def average_video(filepath, outpath, start=None, end=None, sample_every=1):
                         sb58 += str(b)
                         sb58 += " "
                         sb58 += str(y)
+                        sb58 += " "
                     elif x == 59:
                         sb59 += str(r)
                         sb59 += " "
@@ -1063,6 +1121,7 @@ def average_video(filepath, outpath, start=None, end=None, sample_every=1):
                         sb59 += str(b)
                         sb59 += " "
                         sb59 += str(y)
+                        sb59 += " "
                     elif x == 60:
                         sb60 += str(r)
                         sb60 += " "
@@ -1071,6 +1130,7 @@ def average_video(filepath, outpath, start=None, end=None, sample_every=1):
                         sb60 += str(b)
                         sb60 += " "
                         sb60 += str(y)
+                        sb60 += " "
                     elif x == 61:
                         sb61 += str(r)
                         sb61 += " "
@@ -1079,6 +1139,7 @@ def average_video(filepath, outpath, start=None, end=None, sample_every=1):
                         sb61 += str(b)
                         sb61 += " "
                         sb61 += str(y)
+                        sb61 += " "
                     elif x == 62:
                         sb62 += str(r)
                         sb62 += " "
@@ -1087,6 +1148,7 @@ def average_video(filepath, outpath, start=None, end=None, sample_every=1):
                         sb62 += str(b)
                         sb62 += " "
                         sb62 += str(y)
+                        sb62 += " "
                     elif x == 63:
                         sb63 += str(r)
                         sb63 += " "
@@ -1095,6 +1157,7 @@ def average_video(filepath, outpath, start=None, end=None, sample_every=1):
                         sb63 += str(b)
                         sb63 += " "
                         sb63 += str(y)
+                        sb63 += " "
                     elif x == 64:
                         sb64 += str(r)
                         sb64 += " "
@@ -1103,6 +1166,7 @@ def average_video(filepath, outpath, start=None, end=None, sample_every=1):
                         sb64 += str(b)
                         sb64 += " "
                         sb64 += str(y)
+                        sb64 += " "
                     elif x == 65:
                         sb65 += str(r)
                         sb65 += " "
@@ -1111,6 +1175,7 @@ def average_video(filepath, outpath, start=None, end=None, sample_every=1):
                         sb65 += str(b)
                         sb65 += " "
                         sb65 += str(y)
+                        sb65 += " "
                     elif x == 66:
                         sb66 += str(r)
                         sb66 += " "
@@ -1119,6 +1184,7 @@ def average_video(filepath, outpath, start=None, end=None, sample_every=1):
                         sb66 += str(b)
                         sb66 += " "
                         sb66 += str(y)
+                        sb66 += " "
                                 
         time.sleep(1.0/float(sample_every))
 
@@ -1254,7 +1320,7 @@ thread.start_new_thread(Threadfun11, ("192.168.12." + str(i), "192.168.12." + st
 
 parser = ArgumentParser(description="Creates image with averaged pixels"
                                         "for a given movie clip")
-parser.add_argument("-i", default="/home/oem/extractframes/fixtures/100frames.avi", type=str,
+parser.add_argument("-i", default="/home/oem/video_effect_for_light.mov", type=str,
                         help="filepath to movie clip")
 parser.add_argument("-o", default="/home/oem/Shanghai/rayspi/", type=str,
                         help="filepath to save image to")
