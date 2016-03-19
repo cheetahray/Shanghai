@@ -586,7 +586,7 @@ def average_video(filepath, outpath, start=None, end=None, sample_every=1):
         #print len(f[0])
         for x in range(1,len(f[0])+1):
             for y in range(0,len(f)):
-                if y <= 41:
+                if y < 41:
                     r = f[y][x-1][0]
                     g = f[y][x-1][1]
                     b = f[y][x-1][2]
