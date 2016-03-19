@@ -584,11 +584,12 @@ thread.start_new_thread(Threadfun11, ("192.168.12." + str(i), "192.168.12." + st
                                          ) )
 
 while True:  
-    data, addr = s.recvfrom(16384)  
+    data, addr = s.recvfrom(8192)  
     if ((len(data) > 20) and (data[0:8] == "Art-Net\x00")):
         rawbytes = map(ord, data)
         opcode = rawbytes[8] + (rawbytes[9] << 8)
         protocolVersion = (rawbytes[10] << 8) + rawbytes[11]
+        print opcode
         if ((opcode == 0x5000) and (protocolVersion >= 14)):
             sub_net = (rawbytes[14] & 0xF0) >> 4
             universe = rawbytes[14] & 0x0F
