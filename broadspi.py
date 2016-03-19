@@ -589,7 +589,7 @@ while True:
         rawbytes = map(ord, data)
         opcode = rawbytes[8] + (rawbytes[9] << 8)
         protocolVersion = (rawbytes[10] << 8) + rawbytes[11]
-        print opcode
+        #print opcode
         if ((opcode == 0x5000) and (protocolVersion >= 14)):
             sub_net = (rawbytes[14] & 0xF0) >> 4
             universe = rawbytes[14] & 0x0F
