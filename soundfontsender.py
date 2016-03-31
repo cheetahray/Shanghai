@@ -42,21 +42,26 @@ def raymr(tid):
     altocnt = 0
     sopranocnt = 0.0
     if 3 != startmode:
-        while tid != rndrayint :
+        tttid, basefeq = shiftbase(tid, rayshift[whoami]) 
+        while tttid != rndrayint :
             mycmd("ms")
             mycmd("aa") 
-            if 0 == whattype[whoami]:
-                time.sleep(0.1)
-            elif 1 == whattype[whoami]:
-                time.sleep(0.111)
-            elif 2 == whattype[whoami]:
+            #if 0 == whattype[whoami]:
+            #    time.sleep(0.1)
+            #elif 1 == whattype[whoami]:
+            #    time.sleep(0.111)
+            if 2 >= whattype[whoami]:
                 time.sleep(10)
             elif 3 == whattype[whoami]:
                 time.sleep(15)
             rndrayint = round(raypitch(),1)
             ismh = False
-            while tid != rndrayint :
+            feqnochange = True
+            lastfeq = rndrayint
+            while tttid != rndrayint :
                 if basscnt > 30:
+                    if True == feqnochange:
+                        tscnt("tst",0.1)
                     basscnt = 0
                     break;
                 elif tenorcnt > 25:
@@ -69,38 +74,41 @@ def raymr(tid):
                     sopranocnt = 0.0
                     break;
                 elif rndrayint > 0: 
-                    checkfreq = str(tid) + ":" + str(rndrayint)
+                    checkfreq = str(tttid) + ":" + str(rndrayint)
                     print( checkfreq )
                     sock.sendto(checkfreq, ("192.168.12.255", 15005))
-                    if rayshift[whoami] == tid :
-                        bassbool = ( 3 == whattype[whoami] and ( rndrayint - tid > 2.5 or tid - rndrayint > 8.5 ) )
-                        tenorbool = ( 2 == whattype[whoami] and ( rndrayint - tid > 2.5 or tid - rndrayint > 6.0 ) )
-                        altobool = ( 1 == whattype[whoami] and ( rndrayint - tid > 2.5 or tid - rndrayint > 8.0 ) )
-                        sopranobool = ( 0 == whattype[whoami] )
+                    if basefeq == tttid :
+                        bassbool = ( 3 == whattype[whoami] and ( rndrayint - tttid > 2.5 or tttid - rndrayint > 8.5 ) )
+                        tenorbool = ( 2 >= whattype[whoami] and ( rndrayint - tttid > 2.5 or tttid - rndrayint > 6.0 ) )
+                        altobool = False #( 1 == whattype[whoami] and ( rndrayint - tttid > 2.5 or tttid - rndrayint > 8.0 ) )
+                        sopranobool = False #( 0 == whattype[whoami] )
                         if True == bassbool:
+                            if rndrayint - lastfeq > 0.1:
+                                feqnochange = False  
+                                lastfeq = rndrayint
                             basscnt += 1
                         elif True == tenorbool:
                             tenorcnt += 1
                         elif True == altobool:
                             altocnt += 1 
-                        elif tid < rndrayint:
+                        elif tttid < rndrayint:
                             basscnt = 0
                             tenorcnt = 0
                             altocnt = 0
                             tscnt("tsl",0.025)
                             if True == sopranobool:
-                                sopranocnt += 2.5
-                        elif tid > rndrayint:
+                                sopranocnt += 6
+                        elif tttid > rndrayint:
                             basscnt = 0
                             tenorcnt = 0
                             altocnt = 0
                             tscnt("tst",0.025)
                             if True == sopranobool:
-                                sopranocnt += 2.5
+                                sopranocnt += 6
                     else:
-                        bassbool = ( 3 == whattype[whoami] and (rndrayint - tid > 1.5 or tid - rndrayint > 1.5) )
-                        tenorbool = ( 2 == whattype[whoami] and ( rndrayint - tid > 0.5 or tid - rndrayint > 1.5 ) )
-                        altobool = ( 1 == whattype[whoami] and ( rndrayint - tid > 0.5 or tid - rndrayint > 1.5 ) )
+                        bassbool = ( 3 == whattype[whoami] and (rndrayint - tttid > 1.5 or tttid - rndrayint > 1.5) )
+                        tenorbool = ( 2 == whattype[whoami] and ( rndrayint - tttid > 0.5 or tttid - rndrayint > 1.5 ) )
+                        altobool = ( 1 == whattype[whoami] and ( rndrayint - tttid > 0.5 or tttid - rndrayint > 1.5 ) )
                         sopranobool = ( 0 == whattype[whoami] )
                         if True == bassbool:
                             basscnt += 1   
@@ -108,35 +116,35 @@ def raymr(tid):
                             tenorcnt += 1
                         elif True == altobool:
                             altocnt += 1
-                        elif tid < rndrayint:
+                        elif tttid < rndrayint:
                             if True == ismh:
                                 mycmd("ms")
                                 ismh = False
                                 mycmd("ml")
                             if True == sopranobool:
-                                if (tid - rayshift[whoami]) >= 15 : 
+                                if (tttid - basefeq) >= 15 : 
                                     sopranocnt += 1
                                 else:
                                     sopranocnt += 0.375
-                        elif tid > rndrayint:
+                        elif tttid > rndrayint:
                             if False == ismh:
                                 mycmd("ms")
                                 ismh = True
                                 mycmd("mh")
                             if True == sopranobool:
-                                if (tid - rayshift[whoami]) >= 15 :
+                                if (tttid - basefeq) >= 15 :
                                     sopranocnt += 1
                                 else:
                                     sopranocnt += 0.375
                 rndrayint = round(raypitch(),1)
         mycmd("ms")
-        checkfreq = str(tid) + ":" + str(rndrayint)
+        checkfreq = str(tttid) + ":" + str(rndrayint)
         print( checkfreq )
         sock.sendto(checkfreq, ("192.168.12.255", 15005))
-        mycmd("mr" + str(tid-rayshift[whoami]))
+        mycmd("mr" + str(tttid-basefeq))
         data, addr = sock.recvfrom(1024)
-        tp0[tid-rayshift[whoami]] = int(data)
-        print(tp0[tid-rayshift[whoami]])
+        tp0[tttid-basefeq] = int(data)
+        print(tp0[tttid-basefeq])
     else: 
         mycmd("tst")
         time.sleep(0.5)
@@ -154,7 +162,7 @@ def rayudp():
     global whattype
     global UDP_tuple
     thischunk = chunk
-    if whattype[whoami] > 0:
+    if True:#whattype[whoami] > 0:
         thischunk = 8192
     strm = pa.open(
         format = pyaudio.paInt16,
@@ -197,18 +205,18 @@ def rayudp():
                         raymr(x)
                 elif 3 == startmode:
                     sock.sendto("tsl", UDP_tuple)
-                    time.sleep(0.5)
+                    time.sleep(2.5)
                     sock.sendto("tss", UDP_tuple)
                     time.sleep(0.5)
                     sock.sendto("tst", UDP_tuple)
-                    time.sleep(0.5)
+                    time.sleep(2.5)
                     sock.sendto("tss", UDP_tuple)
                     sock.sendto("mh", UDP_tuple)
-                    time.sleep(0.5)
+                    time.sleep(2.5)
                     sock.sendto("ms", UDP_tuple)
                     time.sleep(0.5)
                     sock.sendto("ml", UDP_tuple)
-                    time.sleep(0.5)
+                    time.sleep(2.5)
                     sock.sendto("ms", UDP_tuple)
             else:
                 return False 
@@ -229,7 +237,7 @@ def raypitch():
     global chunk
     thenote = 0.0
     try:
-        if 0 != whattype[whoami]:
+        if True:#0 != whattype[whoami]:
             thischunk = 8192
             sdata = strm.read(thischunk)
             swidth = pyaudio.paInt16
@@ -322,9 +330,11 @@ def AR(printnote, velocity):
     global canweas
     global whoami
     global biggestvolume
+    global issoundfont
     if 3 == canweas[whoami]:
-        nowvolume = (biggestvolume-60) * velocity / 127 + 60
-        commands.getoutput("amixer cset numid=6 " + str(nowvolume) + "% " + str(nowvolume) + "%")
+        if False == issoundfont:
+            nowvolume = (biggestvolume-60) * velocity / 127 + 60
+            commands.getoutput("amixer cset numid=6 " + str(nowvolume) + "% " + str(nowvolume) + "%")
         sock.sendto("ar", UDP_tuple)
         print("ar" + str(printnote))
         canweas[whoami] = 1
@@ -342,6 +352,19 @@ def fluidnoteon(chnl, noteint, intmylist):
     global fl
     fl.noteon(chnl, noteint, intmylist)
     
+def shiftbase(mynote, mybase):
+    global whattype
+    global whoami
+    tttid = mynote
+    basefeq = mybase
+    if 0 == whattype[whoami]:
+        tttid = mynote - 22
+        basefeq = mybase - 22
+    elif 1 == whattype[whoami]:
+        tttid = mynote - 10
+        basefeq = mybase - 10
+    return tttid, basefeq
+
 def raylist(mylist):
     global fl
     global rayshift
@@ -365,36 +388,50 @@ def raylist(mylist):
             noteint = int(mylist[1])
             nowm = noteint - rayshift[whoami]
             #print(nowm)
-            if 3 == startmode:
-                pass
-            elif nowm >= 0 and nowm < howmanypitch[whoami]:
-                if True == issoundfont:
-                    threading.Timer(notedelay-0.3, fl.noteoff, [chnl, noteint]).start()
+            if False == issoundfont:
+                if nowm >= 0 and nowm < howmanypitch[whoami]:
+                    threading.Timer(notedelay, AS, [noteint]).start()
+                    isthistablenumberone = True
+            else:
+                threading.Timer(notedelay-0.3, fl.noteoff, [chnl, noteint]).start()
                 threading.Timer(notedelay, AS, [noteint]).start()
-                isthistablenumberone = True
     elif mylist[0] == '144':
-    	  if not ( len(mylist) == 4 and mylist[3] != str(whoami+1) ):
+        if not ( len(mylist) == 4 and mylist[3] != str(whoami+1) ):
             noteint = int(mylist[1])
             nowm = noteint - rayshift[whoami]
             #print(nowm)
-            if 3 == startmode:
-                threading.Timer(notedelay, func).start()
-            elif nowm >= 0 and nowm < howmanypitch[whoami]:
+            if False == issoundfont:
+                if nowm >= 0 and nowm < howmanypitch[whoami]:
+                    if mylist[2] != '0': 
+                         if False == dropnote:
+                             threading.Timer(notedelay, funcdrop, [noteint]).start()
+                             threading.Timer(notedelay-0.1, AR, [noteint,int(mylist[2])]).start()
+                             sock.sendto("mt" + str(nowm) , UDP_tuple)
+                             dropnote = True
+                             if False == islightout:
+                                 clientsock.send("slide{0} {1} {2}".format( tp[whattype[whoami]][nowm] , math.fabs( tp[whattype[whoami]][nowm]-tp[whattype[whoami]][lastm] )*0.025 , whattype[whoami] ) )
+                             lastm = nowm
+                    else:
+                         threading.Timer(notedelay, AS, [noteint]).start()
+            else:
+                if nowm < 0:
+                    nowm = 0
+                elif nowm >= howmanypitch[whoami]:
+                    nowm = howmanypitch[whoami] - 1
                 if mylist[2] != '0': 
                     if False == dropnote:
                         threading.Timer(notedelay, funcdrop, [noteint]).start()
                         threading.Timer(notedelay-0.1, AR, [noteint,int(mylist[2])]).start()
-                        if True == issoundfont:
-                            threading.Timer(notedelay-0.3, fluidnoteon, [chnl, noteint, int(mylist[1])] ).start()
+                        threading.Timer(notedelay-0.3, fluidnoteon, [chnl, noteint, int(mylist[2])] ).start()
                         sock.sendto("mt" + str(nowm) , UDP_tuple)
                         dropnote = True
                         if False == islightout:
-                            clientsock.send("slide{0} {1} {2}".format( tp[whattype[whoami]][nowm] , math.fabs( tp[whattype[whoami]][nowm]-tp[whattype[whoami]][lastm] )*0.05 , whattype[whoami] ) )
+                            clientsock.send("slide{0} {1} {2}".format( tp[whattype[whoami]][nowm] , math.fabs( tp[whattype[whoami]][nowm]-tp[whattype[whoami]][lastm] )*0.025 , whattype[whoami] ) )
                         lastm = nowm
                 else:
-                    if True == issoundfont:
-                        threading.Timer(notedelay-0.3, fl.noteoff, [chnl, noteint]).start()
+                    threading.Timer(notedelay-0.3, fl.noteoff, [chnl, noteint]).start()
                     threading.Timer(notedelay, AS, [noteint]).start()
+
     elif mylist[0] == '224':
         #if True == issoundfont:
         #    fl.pitch_bend( chnl,raymap(int(mylist[2]), 0, 127, -8192, 8192))
@@ -412,24 +449,19 @@ def raylist(mylist):
         #else:
         #    isslide127 = False
         #    isslide0 = False
-        if not ( len(mylist) == 4 and mylist[3] != str(whoami+1) ):
-            noteint = int(mylist[1])
-            nowm = noteint - rayshift[whoami]
-            #print(nowm)
-            if nowm >= 0 and nowm < howmanypitch[whoami]:
-                if mylist[2] != '0':
-                    #dropnote = True
-                    sock.sendto("mt" + str(nowm) , UDP_tuple)
-                    if True == isthistablenumberone:
-                        threading.Timer(notedelay-0.1, AR, [noteint]).start()
-                        threading.Timer(notedelay, func).start()
-                        isthistablenumberone = False
-                    if False == islightout:
-                        clientsock.send("slide{0} {1} {2}".format( tp[whattype[whoami]][nowm] , math.fabs( tp[whattype[whoami]][nowm]-tp[whattype[whoami]][lastm] )*0.01 , whattype[whoami] ) )
-                    lastm = nowm
-                else:
-                    threading.Timer(notedelay, AS, [noteint]).start()
-                    isthistablenumberone = True
+        noteint = int(mylist[1])
+        tttint, basefeq = shiftbase(noteint, rayshift[whoami]) 
+        nowm = tttint - basefeq
+        #print(nowm)
+        if nowm >= 0 and nowm < howmanypitch[whoami]:
+            if mylist[2] != '0':
+                #dropnote = True
+                AR(tttint, int(mylist[2]))
+                threading.Timer(0.1, func).start()
+                sock.sendto("mt" + str(nowm) , UDP_tuple)
+                lastm = nowm
+            else:
+                AS(tttint)
                 
     elif mylist[0] == '225':
         if '1' == mylist[1]:
@@ -438,8 +470,40 @@ def raylist(mylist):
         elif '0' == mylist[1]:
             islightout = False 
             clientsock.send("in")
+        elif '2' == mylist[1]:
+            islightout = False 
+            clientsock.send("qq")
     elif mylist[0] == '249':
-        if '1' == mylist[1]:
+        if '3' == mylist[1]:
+            if False == issoundfont and pa is None:
+                pa = pyaudio.PyAudio()
+                strm = pa.open(
+                    format = pyaudio.paInt16,
+                    channels = 1,
+                    rate = 44100,
+                    input_device_index = 0,
+                    input = True,
+                    output_device_index = 0,
+                    output = True,
+                    frames_per_buffer = chunk,
+                    stream_callback=callback
+                )
+                strm.start_stream()
+            elif True == issoundfont and fl is None:
+                fl = fluidsynth.Synth()
+                fl.start('alsa')
+                sfid = fl.sfload("/home/pi/Shanghai/FluidR3_GM.sf2")
+                fl.program_select(chnl, sfid, 0, 27 )
+        elif '2' == mylist[1]:
+            if False == issoundfont and pa is not None:
+                strm.stop_stream()
+                strm.close()    
+                pa.terminate()
+                pa = None
+            elif True == issoundfont and fl is not None:
+                fl.delete()
+                fl = None
+        elif '1' == mylist[1]:
             if False == issoundfont:
                 strm.stop_stream()
                 strm.close()    
@@ -496,25 +560,25 @@ dropnote = False
 #isslide0 = False
 #isslide127 = False
 isthistablenumberone = True
-startmode = 2
+startmode = 4
            # 1   2   3   4   5   6   7   8   9  10  11  12  13  14  15  16  17  18  19  20
-rayshift = [58, 58, 58, 58, 58, 58, 48, 48, 48, 48, 48, 48, 48, 48, 48, 48, 48, 38, 38, 38,
-            38, 38, 38, 28, 28, 28, 28, 28, 38, 48, 48, 48, 58, 58, 58, 48, 48, 38, 38, 28, 
+rayshift = [60, 60, 60, 60, 60, 60, 48, 48, 48, 48, 48, 48, 48, 48, 48, 48, 48, 38, 38, 38,
+            38, 38, 38, 28, 28, 28, 28, 28, 38, 48, 48, 48, 60, 60, 60, 48, 48, 38, 38, 28, 
             28, 28, 28, 38, 38, 38, 38, 38, 38, 48, 48, 48, 48, 48, 48, 48, 48, 48, 48, 48, 
-            58, 58, 58, 58, 58, 58, 58, 48, 38, 28]
+            60, 60, 60, 60, 60, 60, 60, 48, 38, 60, 60, 48, 38, 28]
                # 1   2   3   4   5   6   7   8   9  10  11  12  13  14  15  16  17  18  19  20
 howmanypitch = [20, 20, 20, 20, 20, 20, 20, 20, 20, 20, 20, 20, 20, 20, 20, 20, 20, 20, 20, 20, 
                 20, 20, 20, 20, 20, 20, 20, 20, 20, 20, 20, 20, 20, 20, 20, 20, 20, 20, 20, 20, 
                 20, 20, 20, 20, 20, 20, 20, 20, 20, 20, 20, 20, 20, 20, 20, 20, 20, 20, 20, 20, 
-                20, 20, 20, 20, 20, 20, 20, 20, 20, 20]
+                20, 20, 20, 20, 20, 20, 20, 20, 20, 20, 20, 20, 20, 20]
 whattype = [0, 0, 0, 0, 0, 0, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 2, 2, 2, 
             2, 2, 2, 3, 3, 3, 3, 3, 2, 1, 1, 1, 0, 0, 0, 1, 1, 2, 2, 3, 
             3, 3, 3, 2, 2, 2, 2, 2, 2, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 
-            0, 0, 0, 0, 0, 0, 0, 1, 2, 3]
+            0, 0, 0, 0, 0, 0, 0, 1, 2, 0, 0, 1, 2, 3]
 canweas = [2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2,
            2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 
            2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2,
-           2, 2, 2, 2, 2, 2, 2, 2, 2, 2]
+           2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2]
 lastm = 0
 nowm = 0
 tp0 = [0, 2120, 4879, 7575, 10566, 13007, 15121, 17015, 19858, 21518, 23323, 24730, 26738, 27945, 30184, 31591, 32820, 33827, 35629, 36685, 37689]
@@ -523,7 +587,7 @@ tp = [ [5, 7, 10, 13, 15, 18, 20, 22, 24, 26, 27, 29, 31, 32, 33, 35, 36, 37, 38
        [5, 8, 10, 13, 16, 18, 20, 22, 24, 26, 28, 29, 31, 32, 34, 35, 36, 37, 39, 40, 40],
        [5, 7, 10, 13, 15, 18, 20, 22, 24, 26, 28, 29, 31, 32, 34, 35, 36, 37, 39, 40, 40]  ]
 islightout = True
-issoundfont = False
+issoundfont = True
 chnl = 0
 strm = None
 pa = None
@@ -534,10 +598,10 @@ while True:
     for ii in range(0,66):
         canweas[ii] = 2
     pa = pyaudio.PyAudio()
-    if startmode < 4:
-        if 3 == startmode:
-            issoundfont = True
-        rayudp()
+    
+    if 3 == startmode:
+        issoundfont = True
+    rayudp()
     
     if True == issoundfont:
         fl = fluidsynth.Synth()
@@ -561,7 +625,19 @@ while True:
     try:
         #port.flushInput()
         #port.flushOutput()
-        threading.Timer(10, AS, [0]).start()
+        if 3 == startmode:
+            threading.Timer(1, AS, [0]).start()
+            clientsock.send("in")
+            time.sleep(0.5)
+            islightout = False
+            clientsock.send("rgbw")
+            time.sleep(3.5)
+        elif 4 == startmode:
+            threading.Timer(1, AS, [0]).start()
+        else:
+            threading.Timer(10, AS, [0]).start()
+            
+        commands.getoutput("amixer cset numid=6 100% 100%")    
         while True:
             #rcv = readlineCR(port)
             rcv, addr = sock.recvfrom(1024)
