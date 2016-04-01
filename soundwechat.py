@@ -382,6 +382,7 @@ def raylist(mylist):
     global UDP_tuple
     global dropnote
     global biggestvolume
+    global aanote
     notedelay = 1.2
     if mylist[0] == '128':
         if not ( len(mylist) == 4 and mylist[3] != str(whoami+1) ):
@@ -435,6 +436,7 @@ def raylist(mylist):
     elif mylist[0] == '224':
         if not ( len(mylist) == 4 and mylist[3] != str(whoami+1) ):
             noteint = int(mylist[1])
+            aanote = noteint
             nowm = noteint - rayshift[whoami]
             #print(nowm)
             if False == issoundfont:
@@ -599,7 +601,7 @@ strm = None
 pa = None
 fl = None
 #port = serial.Serial("/dev/ttyAMA0", baudrate=115200)#, timeout=0.01)
-
+aanote = 0
 while True:
     for ii in range(0,66):
         canweas[ii] = 2
@@ -657,6 +659,9 @@ while True:
                     else:
                         fl.delete()
                     break
+                elif rcv == '100':
+                    fluidnoteon(0, aanote, 127)
+                    funcdrop(aanote)
                 else:
                     mylist = rcv.split(" ")
                     print(mylist)
