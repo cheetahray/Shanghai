@@ -131,20 +131,6 @@ while True:
     
                 motor1.picker_action(170) #speed define by rpm, 
                 print "aa"
-                '''
-                p1=os.fork()
-                if p1!=0:
-                    os.waitpid(p1, 0)
-                else:
-                    p2=os.fork()
-                    if p2!=0:
-                        os._exit(0)
-                    else:
-                        motor2.rotate(1, v_back_range, rpm_vback, 10, 10)#(direction, laps, rpm, at, dt)
-                        motor2.rotate(-1, v_back_range, 200, 10, 10)#(direction, laps, rpm, at, dt)
-                        #print "This is forked and wont zombie or defunct"
-                    os._exit(0)
-                '''
             elif data[1] == 's':
                 motor1.picker_stopsound(stop_range[whattype[whoami]]) #stop_range
                 print "as"
