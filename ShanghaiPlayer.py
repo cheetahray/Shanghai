@@ -316,7 +316,7 @@ try:
         parser.add_argument("--song",
                              default="newyear", help="Midi file")
         args = parser.parse_args()
-        mid = MidiFile('/home/oem/' + args.song + '.mid')
+        mid = MidiFile('/home/oem/midi/' + args.song + '.mid')
         midi_suite = unittest.TestSuite()   #Add play midi test function
         all_suite = unittest.TestSuite()
         midi_suite.addTest(Tests("test_0"))

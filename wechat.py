@@ -438,7 +438,7 @@ while run:
         data, addr = sock.recvfrom(1024)
         if len(data) > 2:
             if (data[0:2] == "SS"):
-                midstr = '/home/oem/' + data[2:] + '.mid'
+                midstr = '/home/oem/midi/' + data[2:] + '.mid'
                 if os.path.isfile(midstr):
                     mid = MidiFile(midstr)
                     port.sendto("PS" + data[2:], (addr, 12345) )
