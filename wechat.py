@@ -38,13 +38,16 @@ def checkbound(whattype, oidx):
 
 s1 = socket.socket(socket.AF_INET, socket.SOCK_DGRAM)
 
+def raysendto(raystr, raytuple, myport=5005 ):
+    global port
+    #port.sendto( raystr, ("192.168.12." + raytuple, myport) )
+    print raystr
+    
 def play_midi():
     global isplay
     global myshift
-    global port
     global boidx,toidx,aoidx,soidx
     global thethree
-    global addr
     #workbook = xlsxwriter.Workbook('demo.xlsx')
     #worksheet = workbook.add_worksheet()
     #f = []
@@ -52,12 +55,12 @@ def play_midi():
     #port.flush()
         
     for i in range(1,67):
-        port.sendto("249 3", ("192.168.12." + str(i), 5005) )
+        raysendto("249 3", str(i) )
         time.sleep(0.01)
     time.sleep(4)
     for i in range(34,67):
-        port.sendto("225 0", ("192.168.12." + str(i), 5005) )
-        port.sendto("225 0", ("192.168.12." + str(67-i), 5005) )
+        raysendto("225 0", str(i) )
+        raysendto("225 0", str(67-i) )
         time.sleep(0.02)
         #f.append(0)
         #worksheet.write(i, 0, 0)
@@ -69,123 +72,123 @@ def play_midi():
             if 0 == message.velocity:
                 if message.channel == 3:
                     if pickidx[3].has_key(message.note):
-                        port.sendto("144 " + str(message.note) + " 0 " + str(pickidx[3][message.note]), ("192.168.12." + str(pickidx[3][message.note]), 5005) )
+                        raysendto("144 " + str(message.note) + " 0 " + str(pickidx[3][message.note]), str(pickidx[3][message.note] )
                         del pickidx[3][message.note]
                 elif message.channel == 2:
                     if pickidx[2].has_key(message.note):
-                        port.sendto("144 " + str(message.note) + " 0 " + str(pickidx[2][message.note]), ("192.168.12." + str(pickidx[2][message.note]), 5005) )
+                        raysendto("144 " + str(message.note) + " 0 " + str(pickidx[2][message.note]), str(pickidx[2][message.note] )
                         del pickidx[2][message.note]
                 elif message.channel == 1:
                     if pickidx[1].has_key(message.note):
-                        port.sendto("144 " + str(message.note) + " 0 " + str(pickidx[1][message.note]), ("192.168.12." + str(pickidx[1][message.note]), 5005) )
+                        raysendto("144 " + str(message.note) + " 0 " + str(pickidx[1][message.note]), str(pickidx[1][message.note] )
                         del pickidx[1][message.note]
                 elif message.channel == 0:
                     if pickidx[0].has_key(message.note):
-                        port.sendto("144 " + str(message.note) + " 0 " + str(pickidx[0][message.note]), ("192.168.12." + str(pickidx[0][message.note]), 5005) )
+                        raysendto("144 " + str(message.note) + " 0 " + str(pickidx[0][message.note]), str(pickidx[0][message.note] )
                         del pickidx[0][message.note]
                 elif message.channel == 11:
                     if pickidx[7].has_key(message.note):
-                        port.sendto("144 " + str(message.note) + " 0 " + str(pickidx[7][message.note]) + "\r")
+                        raysendto("144 " + str(message.note) + " 0 " + str(pickidx[7][message.note]) , str(pickidx[7][message.note]) )
                         del pickidx[7][message.note]
                     if pickidx[11].has_key(message.note):
-                        port.sendto("144 " + str(message.note) + " 0 " + str(pickidx[11][message.note]) + "\r")
+                        raysendto("144 " + str(message.note) + " 0 " + str(pickidx[11][message.note]) , str(pickidx[11][message.note]) )
                         del pickidx[11][message.note]
                 elif message.channel == 10:
                     if pickidx[6].has_key(message.note):
-                        port.sendto("144 " + str(message.note) + " 0 " + str(pickidx[6][message.note]) + "\r")
+                        raysendto("144 " + str(message.note) + " 0 " + str(pickidx[6][message.note]) , str(pickidx[6][message.note]) )
                         del pickidx[6][message.note]
                     if pickidx[10].has_key(message.note):
-                        port.sendto("144 " + str(message.note) + " 0 " + str(pickidx[10][message.note]) + "\r")
+                        raysendto("144 " + str(message.note) + " 0 " + str(pickidx[10][message.note]) , str(pickidx[10][message.note]) )
                         del pickidx[10][message.note]
                 elif message.channel == 9:
                     if pickidx[5].has_key(message.note):
-                        port.sendto("144 " + str(message.note) + " 0 " + str(pickidx[5][message.note]) + "\r")
+                        raysendto("144 " + str(message.note) + " 0 " + str(pickidx[5][message.note]) , str(pickidx[5][message.note]) )
                         del pickidx[5][message.note]
                     if pickidx[9].has_key(message.note):
-                        port.sendto("144 " + str(message.note) + " 0 " + str(pickidx[9][message.note]) + "\r")
+                        raysendto("144 " + str(message.note) + " 0 " + str(pickidx[9][message.note]) , str(pickidx[9][message.note]) )
                         del pickidx[9][message.note]
                 elif message.channel == 8:
                     if pickidx[4].has_key(message.note):
-                        port.sendto("144 " + str(message.note) + " 0 " + str(pickidx[4][message.note]) + "\r")
+                        raysendto("144 " + str(message.note) + " 0 " + str(pickidx[4][message.note]) , str(pickidx[4][message.note]) )
                         del pickidx[4][message.note]
                     if pickidx[8].has_key(message.note):
-                        port.sendto("144 " + str(message.note) + " 0 " + str(pickidx[8][message.note]) + "\r")
+                        raysendto("144 " + str(message.note) + " 0 " + str(pickidx[8][message.note]) , str(pickidx[8][message.note]) )
                         del pickidx[8][message.note]
             else:
                 if False:#message.channel == 7:
                     boidx = checkbound(3,boidx)
-                    port.sendto("224 " + str(message.note) + " " + str(raymap(message.velocity, 0, 127, boundary, 127)) + " " + str(boidx) + "\r")
+                    raysendto("224 " + str(message.note) + " " + str(raymap(message.velocity, 0, 127, boundary, 127)) + " " + str(boidx) + "\r")
                     slideidx[3][message.note] = boidx
                     boidx += 1
                 elif False:#message.channel == 6:
                     toidx = checkbound(2,toidx)
-                    port.sendto("224 " + str(message.note) + " " + str(raymap(message.velocity, 0, 127, boundary, 127)) + " " + str(toidx) + "\r")
+                    raysendto("224 " + str(message.note) + " " + str(raymap(message.velocity, 0, 127, boundary, 127)) + " " + str(toidx) + "\r")
                     slideidx[2][message.note] = toidx
                     toidx += 1
                 elif False:#message.channel == 5:
                     aoidx = checkbound(1,aoidx)
-                    port.sendto("224 " + str(message.note) + " " + str(raymap(message.velocity, 0, 127, boundary, 127)) + " " + str(aoidx) + "\r")
+                    raysendto("224 " + str(message.note) + " " + str(raymap(message.velocity, 0, 127, boundary, 127)) + " " + str(aoidx) + "\r")
                     slideidx[1][message.note] = aoidx
                     aoidx += 1
                 elif False:#message.channel == 4:
                     soidx = checkbound(0,soidx)
-                    port.sendto("224 " + str(message.note) + " " + str(raymap(message.velocity, 0, 127, boundary, 127)) + " " + str(soidx) + "\r")
+                    raysendto("224 " + str(message.note) + " " + str(raymap(message.velocity, 0, 127, boundary, 127)) + " " + str(soidx) + "\r")
                     slideidx[0][message.note] = soidx
                     soidx += 1
                 elif message.channel == 3:
                     boidx = checkbound(3,boidx)
                     if boidx in thethree:
                         if boidx == thethree[0]
-                            port.sendto("M" + str(message.note) + "F", (addr, 12345) )
+                            raysendto("M" + str(message.note) + "F", "202", 12345 )
                         elif boidx == thethree[1]
-                            port.sendto("M" + str(message.note) + "S", (addr, 12345) )
+                            raysendto("M" + str(message.note) + "S", "202", 12345 )
                         elif boidx == thethree[2]
-                            port.sendto("M" + str(message.note) + "T", (addr, 12345) )
-                        port.sendto("224 " + str(message.note) + " " + str(raymap(message.velocity, 0, 127, boundary, 127)) + " " + str(boidx) , ("192.168.12." + str(boidx), 5005) )
+                            raysendto("M" + str(message.note) + "T", "202", 12345 )
+                        raysendto("224 " + str(message.note) + " " + str(raymap(message.velocity, 0, 127, boundary, 127)) + " " + str(boidx) , str(boidx) )
                     else:
-                        port.sendto("144 " + str(message.note) + " " + str(raymap(message.velocity, 0, 127, boundary, 127)) + " " + str(boidx) , ("192.168.12." + str(boidx), 5005) )
+                        raysendto("144 " + str(message.note) + " " + str(raymap(message.velocity, 0, 127, boundary, 127)) + " " + str(boidx) , str(boidx) )
                     pickidx[3][message.note] = boidx
                     boidx += 1
                 elif message.channel == 2:
                     toidx = checkbound(2,toidx)
                     if toidx in thethree:
                         if toidx == thethree[0]
-                            port.sendto("M" + str(message.note) + "F", (addr, 12345) )
+                            raysendto("M" + str(message.note) + "F", "202", 12345 )
                         elif toidx == thethree[1]
-                            port.sendto("M" + str(message.note) + "S", (addr, 12345) )
+                            raysendto("M" + str(message.note) + "S", "202", 12345 )
                         elif toidx == thethree[2]
-                            port.sendto("M" + str(message.note) + "T", (addr, 12345) )
-                        port.sendto("224 " + str(message.note) + " " + str(raymap(message.velocity, 0, 127, boundary, 127)) + " " + str(toidx) , ("192.168.12." + str(toidx), 5005))
+                            raysendto("M" + str(message.note) + "T", "202", 12345 )
+                        raysendto("224 " + str(message.note) + " " + str(raymap(message.velocity, 0, 127, boundary, 127)) + " " + str(toidx) , str(toidx))
                     else:
-                        port.sendto("144 " + str(message.note) + " " + str(raymap(message.velocity, 0, 127, boundary, 127)) + " " + str(toidx) , ("192.168.12." + str(toidx), 5005))
+                        raysendto("144 " + str(message.note) + " " + str(raymap(message.velocity, 0, 127, boundary, 127)) + " " + str(toidx) , str(toidx))
                     pickidx[2][message.note] = toidx
                     toidx += 1
                 elif message.channel == 1:
                     aoidx = checkbound(1,aoidx)
                     if aoidx in thethree:
                         if aoidx == thethree[0]
-                            port.sendto("M" + str(message.note) + "F", (addr, 12345) )
+                            raysendto("M" + str(message.note) + "F", "202", 12345 )
                         elif aoidx == thethree[1]
-                            port.sendto("M" + str(message.note) + "S", (addr, 12345) )
+                            raysendto("M" + str(message.note) + "S", "202", 12345 )
                         elif aoidx == thethree[2]
-                            port.sendto("M" + str(message.note) + "T", (addr, 12345) )
-                        port.sendto("224 " + str(message.note) + " " + str(raymap(message.velocity, 0, 127, boundary, 127)) + " " + str(aoidx) , ("192.168.12." + str(aoidx), 5005))
+                            raysendto("M" + str(message.note) + "T", "202", 12345 )
+                        raysendto("224 " + str(message.note) + " " + str(raymap(message.velocity, 0, 127, boundary, 127)) + " " + str(aoidx) , str(aoidx))
                     else:
-                        port.sendto("144 " + str(message.note) + " " + str(raymap(message.velocity, 0, 127, boundary, 127)) + " " + str(aoidx) , ("192.168.12." + str(aoidx), 5005))
+                        raysendto("144 " + str(message.note) + " " + str(raymap(message.velocity, 0, 127, boundary, 127)) + " " + str(aoidx) , str(aoidx))
                     pickidx[1][message.note] = aoidx
                     aoidx += 1
                 elif message.channel == 0:
                     soidx = checkbound(0,soidx)
                     if soidx in thethree:
                         if soidx == thethree[0]
-                            port.sendto("M" + str(message.note) + "F", (addr, 12345) )
+                            raysendto("M" + str(message.note) + "F", "202", 12345 )
                         elif soidx == thethree[1]
-                            port.sendto("M" + str(message.note) + "S", (addr, 12345) )
+                            raysendto("M" + str(message.note) + "S", "202", 12345 )
                         elif soidx == thethree[2]
-                            port.sendto("M" + str(message.note) + "T", (addr, 12345) )
-                        port.sendto("224 " + str(message.note) + " " + str(raymap(message.velocity, 0, 127, boundary, 127)) + " " + str(soidx) , ("192.168.12." + str(soidx), 5005))
+                            raysendto("M" + str(message.note) + "T", "202", 12345 )
+                        raysendto("224 " + str(message.note) + " " + str(raymap(message.velocity, 0, 127, boundary, 127)) + " " + str(soidx) , str(soidx))
                     else:
-                        port.sendto("144 " + str(message.note) + " " + str(raymap(message.velocity, 0, 127, boundary, 127)) + " " + str(soidx) , ("192.168.12." + str(soidx), 5005))
+                        raysendto("144 " + str(message.note) + " " + str(raymap(message.velocity, 0, 127, boundary, 127)) + " " + str(soidx) , str(soidx))
                     pickidx[0][message.note] = soidx
                     soidx += 1
                 elif message.channel == 11:
@@ -193,27 +196,27 @@ def play_midi():
                     boidx = checkbound(3,boidx)
                     if boidx in thethree:
                         if boidx == thethree[0]
-                            port.sendto("M" + str(message.note) + "F", (addr, 12345) )
+                            raysendto("M" + str(message.note) + "F", "202", 12345 )
                         elif boidx == thethree[1]
-                            port.sendto("M" + str(message.note) + "S", (addr, 12345) )
+                            raysendto("M" + str(message.note) + "S", "202", 12345 )
                         elif boidx == thethree[2]
-                            port.sendto("M" + str(message.note) + "T", (addr, 12345) )
-                        port.sendto("224 " + str(message.note) + " " + str(rayv) + " " + str(boidx) , ("192.168.12." + str(boidx), 5005) )
+                            raysendto("M" + str(message.note) + "T", "202", 12345 )
+                        raysendto("224 " + str(message.note) + " " + str(rayv) + " " + str(boidx) , str(boidx) )
                     else:
-                        port.sendto("144 " + str(message.note) + " " + str(rayv) + " " + str(boidx) , ("192.168.12." + str(boidx), 5005) )
+                        raysendto("144 " + str(message.note) + " " + str(rayv) + " " + str(boidx) , str(boidx) )
                     pickidx[7][message.note] = boidx
                     boidx += 1
                     boidx = checkbound(3,boidx)
                     if boidx in thethree:
                         if boidx == thethree[0]
-                            port.sendto("M" + str(message.note) + "F", (addr, 12345) )
+                            raysendto("M" + str(message.note) + "F", "202", 12345 )
                         elif boidx == thethree[1]
-                            port.sendto("M" + str(message.note) + "S", (addr, 12345) )
+                            raysendto("M" + str(message.note) + "S", "202", 12345 )
                         elif boidx == thethree[2]
-                            port.sendto("M" + str(message.note) + "T", (addr, 12345) )
-                        port.sendto("224 " + str(message.note) + " " + str(rayv) + " " + str(boidx) , ("192.168.12." + str(boidx), 5005) )
+                            raysendto("M" + str(message.note) + "T", "202", 12345 )
+                        raysendto("224 " + str(message.note) + " " + str(rayv) + " " + str(boidx) , str(boidx) )
                     else:
-                        port.sendto("144 " + str(message.note) + " " + str(rayv) + " " + str(boidx) , ("192.168.12." + str(boidx), 5005) )
+                        raysendto("144 " + str(message.note) + " " + str(rayv) + " " + str(boidx) , str(boidx) )
                     pickidx[11][message.note] = boidx
                     boidx += 1
                 elif message.channel == 10:
@@ -221,27 +224,27 @@ def play_midi():
                     toidx = checkbound(2,toidx)
                     if toidx in thethree:
                         if toidx == thethree[0]
-                            port.sendto("M" + str(message.note) + "F", (addr, 12345) )
+                            raysendto("M" + str(message.note) + "F", "202", 12345 )
                         elif toidx == thethree[1]
-                            port.sendto("M" + str(message.note) + "S", (addr, 12345) )
+                            raysendto("M" + str(message.note) + "S", "202", 12345 )
                         elif toidx == thethree[2]
-                            port.sendto("M" + str(message.note) + "T", (addr, 12345) )
-                        port.sendto("224 " + str(message.note) + " " + str(rayv) + " " + str(toidx) , ("192.168.12." + str(toidx), 5005))
+                            raysendto("M" + str(message.note) + "T", "202", 12345 )
+                        raysendto("224 " + str(message.note) + " " + str(rayv) + " " + str(toidx) , str(toidx))
                     else:
-                        port.sendto("144 " + str(message.note) + " " + str(rayv) + " " + str(toidx) , ("192.168.12." + str(toidx), 5005))
+                        raysendto("144 " + str(message.note) + " " + str(rayv) + " " + str(toidx) , str(toidx))
                     pickidx[6][message.note] = toidx
                     toidx += 1
                     toidx = checkbound(2,toidx)
                     if toidx in thethree:
                         if toidx == thethree[0]
-                            port.sendto("M" + str(message.note) + "F", (addr, 12345) )
+                            raysendto("M" + str(message.note) + "F", "202", 12345 )
                         elif toidx == thethree[1]
-                            port.sendto("M" + str(message.note) + "S", (addr, 12345) )
+                            raysendto("M" + str(message.note) + "S", "202", 12345 )
                         elif toidx == thethree[2]
-                            port.sendto("M" + str(message.note) + "T", (addr, 12345) )
-                        port.sendto("224 " + str(message.note) + " " + str(rayv) + " " + str(toidx) , ("192.168.12." + str(toidx), 5005))
+                            raysendto("M" + str(message.note) + "T", "202", 12345 )
+                        raysendto("224 " + str(message.note) + " " + str(rayv) + " " + str(toidx) , str(toidx))
                     else:
-                        port.sendto("144 " + str(message.note) + " " + str(rayv) + " " + str(toidx) , ("192.168.12." + str(toidx), 5005))
+                        raysendto("144 " + str(message.note) + " " + str(rayv) + " " + str(toidx) , str(toidx))
                     pickidx[10][message.note] = toidx
                     toidx += 1
                 elif message.channel == 9:
@@ -249,27 +252,27 @@ def play_midi():
                     aoidx = checkbound(1,aoidx)
                     if aoidx in thethree:
                         if aoidx == thethree[0]
-                            port.sendto("M" + str(message.note) + "F", (addr, 12345) )
+                            raysendto("M" + str(message.note) + "F", "202", 12345 )
                         elif aoidx == thethree[1]
-                            port.sendto("M" + str(message.note) + "S", (addr, 12345) )
+                            raysendto("M" + str(message.note) + "S", "202", 12345 )
                         elif aoidx == thethree[2]
-                            port.sendto("M" + str(message.note) + "T", (addr, 12345) )
-                        port.sendto("224 " + str(message.note) + " " + str(rayv) + " " + str(aoidx) , ("192.168.12." + str(aoidx), 5005))
+                            raysendto("M" + str(message.note) + "T", "202", 12345 )
+                        raysendto("224 " + str(message.note) + " " + str(rayv) + " " + str(aoidx) , str(aoidx))
                     else:
-                        port.sendto("144 " + str(message.note) + " " + str(rayv) + " " + str(aoidx) , ("192.168.12." + str(aoidx), 5005))
+                        raysendto("144 " + str(message.note) + " " + str(rayv) + " " + str(aoidx) , str(aoidx))
                     pickidx[5][message.note] = aoidx
                     aoidx += 1
                     aoidx = checkbound(1,aoidx)
                     if aoidx in thethree:
                         if aoidx == thethree[0]
-                            port.sendto("M" + str(message.note) + "F", (addr, 12345) )
+                            raysendto("M" + str(message.note) + "F", "202", 12345 )
                         elif aoidx == thethree[1]
-                            port.sendto("M" + str(message.note) + "S", (addr, 12345) )
+                            raysendto("M" + str(message.note) + "S", "202", 12345 )
                         elif aoidx == thethree[2]
-                            port.sendto("M" + str(message.note) + "T", (addr, 12345) )
-                        port.sendto("224 " + str(message.note) + " " + str(rayv) + " " + str(aoidx) , ("192.168.12." + str(aoidx), 5005))
+                            raysendto("M" + str(message.note) + "T", "202", 12345 )
+                        raysendto("224 " + str(message.note) + " " + str(rayv) + " " + str(aoidx) , str(aoidx))
                     else:
-                        port.sendto("144 " + str(message.note) + " " + str(rayv) + " " + str(aoidx) , ("192.168.12." + str(aoidx), 5005))
+                        raysendto("144 " + str(message.note) + " " + str(rayv) + " " + str(aoidx) , str(aoidx))
                     pickidx[9][message.note] = aoidx
                     aoidx += 1
                 elif message.channel == 8:
@@ -277,103 +280,103 @@ def play_midi():
                     soidx = checkbound(0,soidx)
                     if soidx in thethree:
                         if soidx == thethree[0]
-                            port.sendto("M" + str(message.note) + "F", (addr, 12345) )
+                            raysendto("M" + str(message.note) + "F", "202", 12345 )
                         elif soidx == thethree[1]
-                            port.sendto("M" + str(message.note) + "S", (addr, 12345) )
+                            raysendto("M" + str(message.note) + "S", "202", 12345 )
                         elif soidx == thethree[2]
-                            port.sendto("M" + str(message.note) + "T", (addr, 12345) )
-                        port.sendto("224 " + str(message.note) + " " + str(rayv) + " " + str(soidx) , ("192.168.12." + str(soidx), 5005))
+                            raysendto("M" + str(message.note) + "T", "202", 12345 )
+                        raysendto("224 " + str(message.note) + " " + str(rayv) + " " + str(soidx) , str(soidx))
                     else:
-                        port.sendto("144 " + str(message.note) + " " + str(rayv) + " " + str(soidx) , ("192.168.12." + str(soidx), 5005))
+                        raysendto("144 " + str(message.note) + " " + str(rayv) + " " + str(soidx) , str(soidx))
                     pickidx[4][message.note] = soidx
                     soidx += 1
                     soidx = checkbound(0,soidx)
                     if soidx in thethree:
                         if soidx == thethree[0]
-                            port.sendto("M" + str(message.note) + "F", (addr, 12345) )
+                            raysendto("M" + str(message.note) + "F", "202", 12345 )
                         elif soidx == thethree[1]
-                            port.sendto("M" + str(message.note) + "S", (addr, 12345) )
+                            raysendto("M" + str(message.note) + "S", "202", 12345 )
                         elif soidx == thethree[2]
-                            port.sendto("M" + str(message.note) + "T", (addr, 12345) )
-                        port.sendto("224 " + str(message.note) + " " + str(rayv) + " " + str(soidx) , ("192.168.12." + str(soidx), 5005))
+                            raysendto("M" + str(message.note) + "T", "202", 12345 )
+                        raysendto("224 " + str(message.note) + " " + str(rayv) + " " + str(soidx) , str(soidx))
                     else:
-                        port.sendto("144 " + str(message.note) + " " + str(rayv) + " " + str(soidx) , ("192.168.12." + str(soidx), 5005))
+                        raysendto("144 " + str(message.note) + " " + str(rayv) + " " + str(soidx) , str(soidx))
                     pickidx[8][message.note] = soidx
                     soidx += 1
         elif 'note_off' == message.type :
             if message.channel == 3:
                 if pickidx[3].has_key(message.note):
-                    port.sendto("128 " + str(message.note) + " " + str(message.velocity) + " " + str(pickidx[3][message.note]) , ("192.168.12." + str(pickidx[3][message.note]), 5005) )
+                    raysendto("128 " + str(message.note) + " " + str(message.velocity) + " " + str(pickidx[3][message.note]) , str(pickidx[3][message.note]) )
                     del pickidx[3][message.note]
             elif message.channel == 2:
                 if pickidx[2].has_key(message.note):
-                    port.sendto("128 " + str(message.note) + " " + str(message.velocity) + " " + str(pickidx[2][message.note]) , ("192.168.12." + str(pickidx[2][message.note]), 5005) )
+                    raysendto("128 " + str(message.note) + " " + str(message.velocity) + " " + str(pickidx[2][message.note]) , str(pickidx[2][message.note]) )
                     del pickidx[2][message.note]
             elif message.channel == 1:
                 if pickidx[1].has_key(message.note):
-                    port.sendto("128 " + str(message.note) + " " + str(message.velocity) + " " + str(pickidx[1][message.note]) , ("192.168.12." + str(pickidx[1][message.note]), 5005) )
+                    raysendto("128 " + str(message.note) + " " + str(message.velocity) + " " + str(pickidx[1][message.note]) , str(pickidx[1][message.note]) )
                     del pickidx[1][message.note]
             elif message.channel == 0:
                 if pickidx[0].has_key(message.note):
-                    port.sendto("128 " + str(message.note) + " " + str(message.velocity) + " " + str(pickidx[0][message.note]) , ("192.168.12." + str(pickidx[0][message.note]), 5005) )
+                    raysendto("128 " + str(message.note) + " " + str(message.velocity) + " " + str(pickidx[0][message.note]) , str(pickidx[0][message.note]) )
                     del pickidx[0][message.note]
             elif message.channel == 11:
                 if pickidx[7].has_key(message.note):
-                    port.sendto("128 " + str(message.note) + " " + str(message.velocity) + " " + str(pickidx[7][message.note]) , ("192.168.12." + str(pickidx[7][message.note]), 5005) )
+                    raysendto("128 " + str(message.note) + " " + str(message.velocity) + " " + str(pickidx[7][message.note]) , str(pickidx[7][message.note]) )
                     del pickidx[7][message.note]
                 if pickidx[11].has_key(message.note):
-                    port.sendto("128 " + str(message.note) + " " + str(message.velocity) + " " + str(pickidx[11][message.note]) , ("192.168.12." + str(pickidx[11][message.note]), 5005) )
+                    raysendto("128 " + str(message.note) + " " + str(message.velocity) + " " + str(pickidx[11][message.note]) , str(pickidx[11][message.note]) )
                     del pickidx[11][message.note]
             elif message.channel == 10:
                 if pickidx[6].has_key(message.note):
-                    port.sendto("128 " + str(message.note) + " " + str(message.velocity) + " " + str(pickidx[6][message.note]) , ("192.168.12." + str(pickidx[6][message.note]), 5005) )
+                    raysendto("128 " + str(message.note) + " " + str(message.velocity) + " " + str(pickidx[6][message.note]) , str(pickidx[6][message.note]) )
                     del pickidx[6][message.note]
                 if pickidx[10].has_key(message.note):
-                    port.sendto("128 " + str(message.note) + " " + str(message.velocity) + " " + str(pickidx[10][message.note]) , ("192.168.12." + str(pickidx[10][message.note]), 5005) )
+                    raysendto("128 " + str(message.note) + " " + str(message.velocity) + " " + str(pickidx[10][message.note]) , str(pickidx[10][message.note]) )
                     del pickidx[10][message.note]
             elif message.channel == 9:
                 if pickidx[5].has_key(message.note):
-                    port.sendto("128 " + str(message.note) + " " + str(message.velocity) + " " + str(pickidx[5][message.note]) , ("192.168.12." + str(pickidx[5][message.note]), 5005) )
+                    raysendto("128 " + str(message.note) + " " + str(message.velocity) + " " + str(pickidx[5][message.note]) , str(pickidx[5][message.note]) )
                     del pickidx[5][message.note]
                 if pickidx[9].has_key(message.note):
-                    port.sendto("128 " + str(message.note) + " " + str(message.velocity) + " " + str(pickidx[9][message.note]) , ("192.168.12." + str(pickidx[9][message.note]), 5005) )
+                    raysendto("128 " + str(message.note) + " " + str(message.velocity) + " " + str(pickidx[9][message.note]) , str(pickidx[9][message.note]) )
                     del pickidx[9][message.note]
             elif message.channel == 8:
                 if pickidx[4].has_key(message.note):
-                    port.sendto("128 " + str(message.note) + " " + str(message.velocity) + " " + str(pickidx[4][message.note]) , ("192.168.12." + str(pickidx[4][message.note]), 5005) )
+                    raysendto("128 " + str(message.note) + " " + str(message.velocity) + " " + str(pickidx[4][message.note]) , str(pickidx[4][message.note]) )
                     del pickidx[4][message.note]
                 if pickidx[8].has_key(message.note):
-                    port.sendto("128 " + str(message.note) + " " + str(message.velocity) + " " + str(pickidx[8][message.note]) , ("192.168.12." + str(pickidx[8][message.note]), 5005) )
+                    raysendto("128 " + str(message.note) + " " + str(message.velocity) + " " + str(pickidx[8][message.note]) , str(pickidx[8][message.note]) )
                     del pickidx[8][message.note]
     time.sleep(2.5);
     for i in range(66,33,-1):
-        port.sendto("225 1", ("192.168.12." + str(i), 5005) )
-        port.sendto("225 1", ("192.168.12." + str(67-i), 5005) )
+        raysendto("225 1", str(i) )
+        raysendto("225 1", str(67-i) )
         time.sleep(0.02)
     for i in range(1,67):
         if 1 == ST[i]:
-            port.sendto("144 60 1", ("192.168.12." + str(i), 5005))
+            raysendto("144 60 1", str(i))
         if 1 == AT[i]:
-            port.sendto("144 48 1", ("192.168.12." + str(i), 5005))
+            raysendto("144 48 1", str(i))
         if 1 == TT[i]:
-            port.sendto("144 38 1", ("192.168.12." + str(i), 5005))
+            raysendto("144 38 1", str(i))
         if 1 == BT[i]:
-            port.sendto("144 28 1", ("192.168.12." + str(i), 5005))
+            raysendto("144 28 1", str(i))
         time.sleep(0.02)
     time.sleep(2.5);
     for i in range(1,67):
         if 1 == ST[i]:
-            port.sendto("144 60 0", ("192.168.12." + str(i), 5005))
+            raysendto("144 60 0", str(i))
         if 1 == AT[i]:
-            port.sendto("144 48 0", ("192.168.12." + str(i), 5005))
+            raysendto("144 48 0", str(i))
         if 1 == TT[i]:
-            port.sendto("144 38 0", ("192.168.12." + str(i), 5005))
+            raysendto("144 38 0", str(i))
         if 1 == BT[i]:
-            port.sendto("144 28 0", ("192.168.12." + str(i), 5005))
+            raysendto("144 28 0", str(i))
         time.sleep(0.02)
     time.sleep(2.5);
     for i in range(1,67):
-        port.sendto("249 2" , ("192.168.12." + str(i), 5005))
+        raysendto("249 2" , str(i))
         time.sleep(0.01)
     change3(False)
 
@@ -384,7 +387,7 @@ def change3(isslider):
     if True == isslider:
         thethree[howmanyCM] = random.sample([ 1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13, 14, 15, 16, 17, 18, 19, 20, 21, 22, 23, 24, 25, 26, 27, 28, 29, 30, 31, 32, 33, 34, 35, 36, 37, 38, 39, 40, 41, 42, 43, 44, 45, 46, 47, 48, 49, 50, 51, 52, 53, 54, 55, 56, 57, 58, 59, 60, 61, 62, 63, 64, 65, 66 ],  3)
         howmanyCM += 1
-        port.sendto("CM" + howmanyCM + "F" + thethree[0] + "S" + thethree[1] + "T" + thethree[2])
+        raysendto("CM" + howmanyCM + "F" + thethree[0] + "S" + thethree[1] + "T" + thethree[2], "202", 12345 )
         time.sleep(60) # maybe recvfrom another udp string to start it, now it's my control
         thread.start_new_thread(play_midi,())       
     else:
@@ -398,7 +401,7 @@ data = ""
 sleeptime = 0.001
 
 sock = socket.socket(socket.AF_INET, socket.SOCK_DGRAM) # UDP
-sock.bind(("0.0.0.0", 12345))
+sock.bind(("0.0.0.0", 5005))
 sock.settimeout(0.001)
 
     #27 28 29 30 31 32 33 34 35 36 37 38 39 40 
@@ -422,16 +425,16 @@ slideidx = [{},{},{},{},{},{},{},{},{},{},{},{}]
 port = socket.socket(socket.AF_INET, socket.SOCK_DGRAM)      
 
 for i in range(1,67):
-    port.sendto("249 3", ("192.168.12." + str(i), 5005) )
+    raysendto("249 3", str(i) )
     time.sleep(0.01)
 for i in range(1,67):
-    port.sendto("225 2", ("192.168.12." + str(i), 5005) )
+    raysendto("225 2", str(i) )
     time.sleep(0.01)
 
 howmanyCM = 0    
 thethree = [[],[],[]]
 tmpthree = [[],[],[]]
-addr = None
+
 # simulate a "game engine"
 while run:
     try:
@@ -441,7 +444,7 @@ while run:
                 midstr = '/home/oem/midi/' + data[2:] + '.mid'
                 if os.path.isfile(midstr):
                     mid = MidiFile(midstr)
-                    port.sendto("PS" + data[2:], (addr, 12345) )
+                    raysendto("PS" + data[2:], "202", 12345 )
             elif (data[0:2] == "TM"):
                 if howmanyCM <= 3:
                     change3(True)
@@ -457,7 +460,7 @@ while run:
                 tmpthree[tmpidx] = []
                 
     except IOError:
-        port.sendto("ES" + data[2:], (addr, 12345) )
+        raysendto("ES" + data[2:], "202", 12345 )
     except socket.timeout:
         pass                    
     except ValueError:

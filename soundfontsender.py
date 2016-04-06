@@ -382,6 +382,7 @@ def raylist(mylist):
     global UDP_tuple
     global dropnote
     global biggestvolume
+    global aanote
     notedelay = 1.2
     if mylist[0] == '128':
         if not ( len(mylist) == 4 and mylist[3] != str(whoami+1) ):
@@ -433,35 +434,42 @@ def raylist(mylist):
                     threading.Timer(notedelay, AS, [noteint]).start()
 
     elif mylist[0] == '224':
-        #if True == issoundfont:
-        #    fl.pitch_bend( chnl,raymap(int(mylist[2]), 0, 127, -8192, 8192))
-        #if True == isslide0 and '1' == mylist[2]:
-        #    rayslide(2)
-        #if True == isslide127 and '126' == mylist[2]:
-        #    rayslide(-2)
-        #if '0' == mylist[2]:
-        #    isslide0 = True
-        #else: 
-        #    isslide0 = False
-        #    isslide127 = False
-        #if '127' == mylist[2]:
-        #    isslide127 = True
-        #else:
-        #    isslide127 = False
-        #    isslide0 = False
-        noteint = int(mylist[1])
-        tttint, basefeq = shiftbase(noteint, rayshift[whoami]) 
-        nowm = tttint - basefeq
-        #print(nowm)
-        if nowm >= 0 and nowm < howmanypitch[whoami]:
-            if mylist[2] != '0':
-                #dropnote = True
-                AR(tttint, int(mylist[2]))
-                threading.Timer(0.1, func).start()
-                sock.sendto("mt" + str(nowm) , UDP_tuple)
-                lastm = nowm
+        if not ( len(mylist) == 4 and mylist[3] != str(whoami+1) ):
+            noteint = int(mylist[1])
+            aanote = noteint
+            nowm = noteint - rayshift[whoami]
+            #print(nowm)
+            if False == issoundfont:
+                if nowm >= 0 and nowm < howmanypitch[whoami]:
+                    if mylist[2] != '0': 
+                         if False == dropnote:
+                             #threading.Timer(notedelay, funcdrop, [noteint]).start()
+                             threading.Timer(notedelay-0.1, AR, [noteint,int(mylist[2])]).start()
+                             sock.sendto("mt" + str(nowm) , UDP_tuple)
+                             dropnote = True
+                             if False == islightout:
+                                 clientsock.send("slide{0} {1} {2}".format( tp[whattype[whoami]][nowm] , math.fabs( tp[whattype[whoami]][nowm]-tp[whattype[whoami]][lastm] )*0.025 , whattype[whoami] ) )
+                             lastm = nowm
+                    else:
+                         threading.Timer(notedelay, AS, [noteint]).start()
             else:
-                AS(tttint)
+                if nowm < 0:
+                    nowm = 0
+                elif nowm >= howmanypitch[whoami]:
+                    nowm = howmanypitch[whoami] - 1
+                if mylist[2] != '0': 
+                    if False == dropnote:
+                        #threading.Timer(notedelay, funcdrop, [noteint]).start()
+                        threading.Timer(notedelay-0.1, AR, [noteint,int(mylist[2])]).start()
+                        #threading.Timer(notedelay-0.3, fluidnoteon, [chnl, noteint, int(mylist[2])] ).start()
+                        sock.sendto("mt" + str(nowm) , UDP_tuple)
+                        dropnote = True
+                        if False == islightout:
+                            clientsock.send("slide{0} {1} {2}".format( tp[whattype[whoami]][nowm] , math.fabs( tp[whattype[whoami]][nowm]-tp[whattype[whoami]][lastm] )*0.025 , whattype[whoami] ) )
+                        lastm = nowm
+                else:
+                    threading.Timer(notedelay-0.3, fl.noteoff, [chnl, noteint]).start()
+                    threading.Timer(notedelay, AS, [noteint]).start()
                 
     elif mylist[0] == '225':
         if '1' == mylist[1]:
@@ -593,7 +601,7 @@ strm = None
 pa = None
 fl = None
 #port = serial.Serial("/dev/ttyAMA0", baudrate=115200)#, timeout=0.01)
-
+aanote = 0
 while True:
     for ii in range(0,66):
         canweas[ii] = 2
@@ -651,6 +659,10 @@ while True:
                     else:
                         fl.delete()
                     break
+                elif rcv == '100' and aanote > 0:
+                    fluidnoteon(0, aanote, 127)
+                    funcdrop(aanote)
+                    aanote = 0
                 else:
                     mylist = rcv.split(" ")
                     print(mylist)
