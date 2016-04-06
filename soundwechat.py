@@ -659,9 +659,10 @@ while True:
                     else:
                         fl.delete()
                     break
-                elif rcv == '100':
+                elif rcv == '100' and aanote > 0:
                     fluidnoteon(0, aanote, 127)
                     funcdrop(aanote)
+                    aanote = 0
                 else:
                     mylist = rcv.split(" ")
                     print(mylist)
