@@ -5,16 +5,16 @@ import time
 sock = socket.socket(socket.AF_INET, socket.SOCK_DGRAM)
 
 server_address = ('192.168.4.1', 8888)
-message = 'Yes or No?'
+message = ['23','34','2','654','45','3452','45','6','78','90','768','67','879','97','657','45','5','435','65','87']
 cnt = 0
 try:
 
-    while True:
+    for ii in message:
         # Send data
-        print >>sys.stderr, 'sending "%d"' % cnt
-        sent = sock.sendto(str(cnt), server_address)
-        cnt = cnt + 1
+        print >>sys.stderr, 'sending "%s"' % ii
+        sent = sock.sendto( ii, server_address)
         time.sleep(1)
+        
 finally:
     print >>sys.stderr, 'closing socket'
     sock.close()
