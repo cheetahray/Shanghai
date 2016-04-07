@@ -338,8 +338,11 @@ def change3(isslider):
     global port
     global howmanyCM
     global thethree
+    global set66
     if True == isslider:
-        thethree[howmanyCM] = random.sample([ 1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13, 14, 15, 16, 17, 18, 19, 20, 21, 22, 23, 24, 25, 26, 27, 28, 29, 30, 31, 32, 33, 34, 35, 36, 37, 38, 39, 40, 41, 42, 43, 44, 45, 46, 47, 48, 49, 50, 51, 52, 53, 54, 55, 56, 57, 58, 59, 60, 61, 62, 63, 64, 65, 66 ],  3)
+        thethree[howmanyCM] = [1,2,3] #random.sample(set66,  3)
+        for jj in len(thethree[howmanyCM])
+            set66.discard[thethree[howmanyCM][jj]]
         raysendto("CM" + str(howmanyCM) + "F" + str(thethree[howmanyCM][0]) + "S" + str(thethree[howmanyCM][1]) + "T" + str(thethree[howmanyCM][2]), "202", 12345 )
         if 1 == howmanyCM:
             time.sleep(3) # maybe recvfrom another udp string to start it, now it's my control
@@ -347,7 +350,8 @@ def change3(isslider):
         howmanyCM += 1
     else:
         # should port send to webserver to say it's done
-        howmanyCM -= 1
+        howmanyCM = 1
+        set66 = [ 1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13, 14, 15, 16, 17, 18, 19, 20, 21, 22, 23, 24, 25, 26, 27, 28, 29, 30, 31, 32, 33, 34, 35, 36, 37, 38, 39, 40, 41, 42, 43, 44, 45, 46, 47, 48, 49, 50, 51, 52, 53, 54, 55, 56, 57, 58, 59, 60, 61, 62, 63, 64, 65, 66 ]
         thethree[howmanyCM] = []
         raysendto("EndofGame", "202", 12345 )
         
@@ -359,6 +363,8 @@ sleeptime = 0.001
 sock = socket.socket(socket.AF_INET, socket.SOCK_DGRAM) # UDP
 sock.bind(("0.0.0.0", 5005))
 sock.settimeout(0.001)
+
+set66 = [ 1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13, 14, 15, 16, 17, 18, 19, 20, 21, 22, 23, 24, 25, 26, 27, 28, 29, 30, 31, 32, 33, 34, 35, 36, 37, 38, 39, 40, 41, 42, 43, 44, 45, 46, 47, 48, 49, 50, 51, 52, 53, 54, 55, 56, 57, 58, 59, 60, 61, 62, 63, 64, 65, 66 ]
 
     #27 28 29 30 31 32 33 34 35 36 37 38 39 40 
 SS = [0 ,0, 0, 0, 0, 0, 1, 1, 1, 0, 0, 0, 0, 0]
