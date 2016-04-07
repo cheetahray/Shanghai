@@ -70,7 +70,7 @@ def play_midi():
         #worksheet.write(i, 0, 0)
     for message in mid.play():  #Next note from midi in this moment
         isplay = False          #To avoid duplicate doorbell button press during midi play
-        if debug:
+        if False:
             print(message)
         elif 'note_on' == message.type :
             if 0 == message.velocity:
@@ -391,7 +391,7 @@ def change3(isslider):
     if True == isslider:
         thethree[howmanyCM] = random.sample([ 1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13, 14, 15, 16, 17, 18, 19, 20, 21, 22, 23, 24, 25, 26, 27, 28, 29, 30, 31, 32, 33, 34, 35, 36, 37, 38, 39, 40, 41, 42, 43, 44, 45, 46, 47, 48, 49, 50, 51, 52, 53, 54, 55, 56, 57, 58, 59, 60, 61, 62, 63, 64, 65, 66 ],  3)
         raysendto("CM" + str(howmanyCM) + "F" + str(thethree[howmanyCM][0]) + "S" + str(thethree[howmanyCM][1]) + "T" + str(thethree[howmanyCM][2]), "202", 12345 )
-        time.sleep(60) # maybe recvfrom another udp string to start it, now it's my control
+        time.sleep(10) # maybe recvfrom another udp string to start it, now it's my control
         thread.start_new_thread(play_midi,())
         howmanyCM += 1
     else:
