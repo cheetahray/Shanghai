@@ -5,6 +5,7 @@ import types
 import thread
 import time
 import socket
+import os
 
 def checkbound(whattype, oidx):
     global ST,AT,TT,BT
