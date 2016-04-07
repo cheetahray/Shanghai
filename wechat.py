@@ -451,11 +451,11 @@ while run:
                 else:
                     pass #should be something about phone is above three, maybe let webserver to control it
             elif (data[0:2] == "RM"):
-                int tmpidx = int(data[2:])
+                tmpidx = int(data[2:])
                 tmpthree[tmpidx] = thethree[tmpidx]
                 thethree[tmpidx] = []
             elif (data[0:2] == "BM"):
-                int tmpidx = int(data[2:])
+                tmpidx = int(data[2:])
                 thethree[tmpidx] = tmpthree[tmpidx]
                 tmpthree[tmpidx] = []
                 
