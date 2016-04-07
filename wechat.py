@@ -449,6 +449,8 @@ while run:
                 if os.path.isfile(midstr):
                     mid = MidiFile(midstr)
                     raysendto("PS" + data[2:], "202", 12345 )
+                else:
+                    raysendto("ES" + data[2:], "202", 12345 )
             elif (data[0:2] == "TM"):
                 if howmanyCM <= 3:
                     change3(True)
@@ -463,11 +465,6 @@ while run:
                 thethree[tmpidx] = tmpthree[tmpidx]
                 tmpthree[tmpidx] = []
                 
-    except IOError as e:
-        raysendto("ES" + data[2:], "202", 12345 )
-        print e
-        time.sleep(5)
-        pass
     except socket.timeout:
         pass                    
     except ValueError:
