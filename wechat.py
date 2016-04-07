@@ -442,7 +442,7 @@ tmpthree = [[],[],[]]
 while run:
     try:
         data, addr = sock.recvfrom(1024)
-        if len(data) > 2:
+        if len(data) >= 2:
             print data
             if (data[0:2] == "SS"):
                 midstr = '/home/oem/midi/' + data[2:] + '.mid'
@@ -464,7 +464,8 @@ while run:
                 tmpthree[tmpidx] = []
                 
     except IOError:
-        pass #raysendto("ES" + data[2:], "202", 12345 )
+        raysendto("ES" + data[2:], "202", 12345 )
+        time.sleep(5)
     except socket.timeout:
         pass                    
     except ValueError:
