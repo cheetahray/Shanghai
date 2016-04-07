@@ -9,6 +9,11 @@ import os
 from mido import MidiFile
 import random
 
+def raymap(value, istart, istop, ostart, ostop):
+    #wierd = ostart + (ostop - ostart) * (value - istart) / (istop - istart); 
+    #print wierd
+    return value#wierd
+
 def checkbound(whattype, oidx):
     global ST,AT,TT,BT
     if 67 == oidx:
