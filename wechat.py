@@ -463,8 +463,9 @@ while run:
                 thethree[tmpidx] = tmpthree[tmpidx]
                 tmpthree[tmpidx] = []
                 
-    except IOError:
+    except IOError as e:
         raysendto("ES" + data[2:], "202", 12345 )
+        print e
         time.sleep(5)
     except socket.timeout:
         pass                    
