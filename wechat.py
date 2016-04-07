@@ -60,11 +60,11 @@ def rayiii(playidx, mynote):
     for iii in range(1,4):
         if playidx in thethree[iii]:
             if playidx == thethree[iii][0]:
-                raysendto("M" + str(mynote-rayshift[playidx]) + "F", "202", 12345 )
+                raysendto("M" + str(mynote-rayshift[playidx-1]) + "F", "202", 12345 )
             elif playidx == thethree[iii][1]:
-                raysendto("M" + str(mynote-rayshift[playidx]) + "S", "202", 12345 )
+                raysendto("M" + str(mynote-rayshift[playidx-1]) + "S", "202", 12345 )
             elif playidx == thethree[iii][2]:
-                raysendto("M" + str(mynote-rayshift[playidx]) + "T", "202", 12345 )
+                raysendto("M" + str(mynote-rayshift[playidx-1]) + "T", "202", 12345 )
             TF = True
             break
     return TF                
