@@ -7,6 +7,7 @@ import time
 import socket
 import os
 from mido import MidiFile
+import random
 
 def checkbound(whattype, oidx):
     global ST,AT,TT,BT
