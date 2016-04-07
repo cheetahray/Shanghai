@@ -72,19 +72,19 @@ def play_midi():
             if 0 == message.velocity:
                 if message.channel == 3:
                     if pickidx[3].has_key(message.note):
-                        raysendto("144 " + str(message.note) + " 0 " + str(pickidx[3][message.note]), str(pickidx[3][message.note] )
+                        raysendto("144 " + str(message.note) + " 0 " + str(pickidx[3][message.note]), str(pickidx[3][message.note]) )
                         del pickidx[3][message.note]
                 elif message.channel == 2:
                     if pickidx[2].has_key(message.note):
-                        raysendto("144 " + str(message.note) + " 0 " + str(pickidx[2][message.note]), str(pickidx[2][message.note] )
+                        raysendto("144 " + str(message.note) + " 0 " + str(pickidx[2][message.note]), str(pickidx[2][message.note]) )
                         del pickidx[2][message.note]
                 elif message.channel == 1:
                     if pickidx[1].has_key(message.note):
-                        raysendto("144 " + str(message.note) + " 0 " + str(pickidx[1][message.note]), str(pickidx[1][message.note] )
+                        raysendto("144 " + str(message.note) + " 0 " + str(pickidx[1][message.note]), str(pickidx[1][message.note]) )
                         del pickidx[1][message.note]
                 elif message.channel == 0:
                     if pickidx[0].has_key(message.note):
-                        raysendto("144 " + str(message.note) + " 0 " + str(pickidx[0][message.note]), str(pickidx[0][message.note] )
+                        raysendto("144 " + str(message.note) + " 0 " + str(pickidx[0][message.note]), str(pickidx[0][message.note]) )
                         del pickidx[0][message.note]
                 elif message.channel == 11:
                     if pickidx[7].has_key(message.note):
