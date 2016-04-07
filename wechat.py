@@ -41,7 +41,7 @@ s1 = socket.socket(socket.AF_INET, socket.SOCK_DGRAM)
 def raysendto(raystr, raytuple, myport=5005 ):
     global port
     #port.sendto( raystr, ("192.168.12." + raytuple, myport) )
-    print raystr
+    #print raystr
     
 def play_midi():
     global isplay
@@ -440,6 +440,7 @@ while run:
     try:
         data, addr = sock.recvfrom(1024)
         if len(data) > 2:
+            print data
             if (data[0:2] == "SS"):
                 midstr = '/home/oem/midi/' + data[2:] + '.mid'
                 if os.path.isfile(midstr):
