@@ -435,9 +435,9 @@ for i in range(1,67):
     raysendto("225 2", str(i) )
     time.sleep(0.01)
 
-howmanyCM = 0    
-thethree = [[],[],[]]
-tmpthree = [[],[],[]]
+howmanyCM = 1    
+thethree = [[],[],[],[]]
+tmpthree = [[],[],[],[]]
 
 # simulate a "game engine"
 while run:
@@ -453,7 +453,7 @@ while run:
                 else:
                     raysendto("ES" + data[2:], "202", 12345 )
             elif (data[0:2] == "TM"):
-                if howmanyCM <= 3:
+                if howmanyCM <= 4:
                     change3(True)
                 else:
                     pass #should be something about phone is above three, maybe let webserver to control it
