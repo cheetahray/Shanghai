@@ -467,6 +467,7 @@ while run:
         raysendto("ES" + data[2:], "202", 12345 )
         print e
         time.sleep(5)
+        pass
     except socket.timeout:
         pass                    
     except ValueError:
