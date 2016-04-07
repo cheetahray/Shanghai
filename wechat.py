@@ -51,7 +51,23 @@ def raysendto(raystr, raytuple, myport=5005 ):
     if raytuple == "202":
         port.sendto( raystr, ("192.168.12." + raytuple, myport) )
         print raystr
-    
+
+def rayiii(playidx):
+    global thethree
+    iii = 0
+    TF = False
+    for iii in range(1,4):
+        if playidx in thethree[iii]:
+            if playidx == thethree[iii][0]:
+                raysendto("M" + str(message.note) + "F", "202", 12345 )
+            elif playidx == thethree[iii][1]:
+                raysendto("M" + str(message.note) + "S", "202", 12345 )
+            elif playidx == thethree[iii][2]:
+                raysendto("M" + str(message.note) + "T", "202", 12345 )
+            TF = True
+            break
+    return TF                
+        
 def play_midi():
     global isplay
     global myshift
@@ -146,13 +162,7 @@ def play_midi():
                     soidx += 1
                 elif message.channel == 3:
                     boidx = checkbound(3,boidx)
-                    if boidx in thethree:
-                        if boidx == thethree[0]:
-                            raysendto("M" + str(message.note) + "F", "202", 12345 )
-                        elif boidx == thethree[1]:
-                            raysendto("M" + str(message.note) + "S", "202", 12345 )
-                        elif boidx == thethree[2]:
-                            raysendto("M" + str(message.note) + "T", "202", 12345 )
+                    if True == rayiii(boidx):
                         raysendto("224 " + str(message.note) + " " + str(raymap(message.velocity, 0, 127, boundary, 127)) + " " + str(boidx) , str(boidx) )
                     else:
                         raysendto("144 " + str(message.note) + " " + str(raymap(message.velocity, 0, 127, boundary, 127)) + " " + str(boidx) , str(boidx) )
@@ -160,13 +170,7 @@ def play_midi():
                     boidx += 1
                 elif message.channel == 2:
                     toidx = checkbound(2,toidx)
-                    if toidx in thethree:
-                        if toidx == thethree[0]:
-                            raysendto("M" + str(message.note) + "F", "202", 12345 )
-                        elif toidx == thethree[1]:
-                            raysendto("M" + str(message.note) + "S", "202", 12345 )
-                        elif toidx == thethree[2]:
-                            raysendto("M" + str(message.note) + "T", "202", 12345 )
+                    if True == rayiii(toidx):
                         raysendto("224 " + str(message.note) + " " + str(raymap(message.velocity, 0, 127, boundary, 127)) + " " + str(toidx) , str(toidx))
                     else:
                         raysendto("144 " + str(message.note) + " " + str(raymap(message.velocity, 0, 127, boundary, 127)) + " " + str(toidx) , str(toidx))
@@ -174,13 +178,7 @@ def play_midi():
                     toidx += 1
                 elif message.channel == 1:
                     aoidx = checkbound(1,aoidx)
-                    if aoidx in thethree:
-                        if aoidx == thethree[0]:
-                            raysendto("M" + str(message.note) + "F", "202", 12345 )
-                        elif aoidx == thethree[1]:
-                            raysendto("M" + str(message.note) + "S", "202", 12345 )
-                        elif aoidx == thethree[2]:
-                            raysendto("M" + str(message.note) + "T", "202", 12345 )
+                    if True == rayiii(aoidx):
                         raysendto("224 " + str(message.note) + " " + str(raymap(message.velocity, 0, 127, boundary, 127)) + " " + str(aoidx) , str(aoidx))
                     else:
                         raysendto("144 " + str(message.note) + " " + str(raymap(message.velocity, 0, 127, boundary, 127)) + " " + str(aoidx) , str(aoidx))
@@ -188,13 +186,7 @@ def play_midi():
                     aoidx += 1
                 elif message.channel == 0:
                     soidx = checkbound(0,soidx)
-                    if soidx in thethree:
-                        if soidx == thethree[0]:
-                            raysendto("M" + str(message.note) + "F", "202", 12345 )
-                        elif soidx == thethree[1]:
-                            raysendto("M" + str(message.note) + "S", "202", 12345 )
-                        elif soidx == thethree[2]:
-                            raysendto("M" + str(message.note) + "T", "202", 12345 )
+                    if True == rayiii(soidx):
                         raysendto("224 " + str(message.note) + " " + str(raymap(message.velocity, 0, 127, boundary, 127)) + " " + str(soidx) , str(soidx))
                     else:
                         raysendto("144 " + str(message.note) + " " + str(raymap(message.velocity, 0, 127, boundary, 127)) + " " + str(soidx) , str(soidx))
@@ -203,26 +195,14 @@ def play_midi():
                 elif message.channel == 11:
                     rayv = raymap(message.velocity, 0, 127, boundary, 127)
                     boidx = checkbound(3,boidx)
-                    if boidx in thethree:
-                        if boidx == thethree[0]:
-                            raysendto("M" + str(message.note) + "F", "202", 12345 )
-                        elif boidx == thethree[1]:
-                            raysendto("M" + str(message.note) + "S", "202", 12345 )
-                        elif boidx == thethree[2]:
-                            raysendto("M" + str(message.note) + "T", "202", 12345 )
+                    if True == rayiii(boidx):
                         raysendto("224 " + str(message.note) + " " + str(rayv) + " " + str(boidx) , str(boidx) )
                     else:
                         raysendto("144 " + str(message.note) + " " + str(rayv) + " " + str(boidx) , str(boidx) )
                     pickidx[7][message.note] = boidx
                     boidx += 1
                     boidx = checkbound(3,boidx)
-                    if boidx in thethree:
-                        if boidx == thethree[0]:
-                            raysendto("M" + str(message.note) + "F", "202", 12345 )
-                        elif boidx == thethree[1]:
-                            raysendto("M" + str(message.note) + "S", "202", 12345 )
-                        elif boidx == thethree[2]:
-                            raysendto("M" + str(message.note) + "T", "202", 12345 )
+                    if True == rayiii(boidx):
                         raysendto("224 " + str(message.note) + " " + str(rayv) + " " + str(boidx) , str(boidx) )
                     else:
                         raysendto("144 " + str(message.note) + " " + str(rayv) + " " + str(boidx) , str(boidx) )
@@ -231,26 +211,14 @@ def play_midi():
                 elif message.channel == 10:
                     rayv = raymap(message.velocity, 0, 127, boundary, 127)
                     toidx = checkbound(2,toidx)
-                    if toidx in thethree:
-                        if toidx == thethree[0]:
-                            raysendto("M" + str(message.note) + "F", "202", 12345 )
-                        elif toidx == thethree[1]:
-                            raysendto("M" + str(message.note) + "S", "202", 12345 )
-                        elif toidx == thethree[2]:
-                            raysendto("M" + str(message.note) + "T", "202", 12345 )
+                    if True == rayiii(toidx):
                         raysendto("224 " + str(message.note) + " " + str(rayv) + " " + str(toidx) , str(toidx))
                     else:
                         raysendto("144 " + str(message.note) + " " + str(rayv) + " " + str(toidx) , str(toidx))
                     pickidx[6][message.note] = toidx
                     toidx += 1
                     toidx = checkbound(2,toidx)
-                    if toidx in thethree:
-                        if toidx == thethree[0]:
-                            raysendto("M" + str(message.note) + "F", "202", 12345 )
-                        elif toidx == thethree[1]:
-                            raysendto("M" + str(message.note) + "S", "202", 12345 )
-                        elif toidx == thethree[2]:
-                            raysendto("M" + str(message.note) + "T", "202", 12345 )
+                    if True == rayiii(toidx):
                         raysendto("224 " + str(message.note) + " " + str(rayv) + " " + str(toidx) , str(toidx))
                     else:
                         raysendto("144 " + str(message.note) + " " + str(rayv) + " " + str(toidx) , str(toidx))
@@ -259,26 +227,14 @@ def play_midi():
                 elif message.channel == 9:
                     rayv = raymap(message.velocity, 0, 127, boundary, 127)
                     aoidx = checkbound(1,aoidx)
-                    if aoidx in thethree:
-                        if aoidx == thethree[0]:
-                            raysendto("M" + str(message.note) + "F", "202", 12345 )
-                        elif aoidx == thethree[1]:
-                            raysendto("M" + str(message.note) + "S", "202", 12345 )
-                        elif aoidx == thethree[2]:
-                            raysendto("M" + str(message.note) + "T", "202", 12345 )
+                    if True == rayiii(aoidx):
                         raysendto("224 " + str(message.note) + " " + str(rayv) + " " + str(aoidx) , str(aoidx))
                     else:
                         raysendto("144 " + str(message.note) + " " + str(rayv) + " " + str(aoidx) , str(aoidx))
                     pickidx[5][message.note] = aoidx
                     aoidx += 1
                     aoidx = checkbound(1,aoidx)
-                    if aoidx in thethree:
-                        if aoidx == thethree[0]:
-                            raysendto("M" + str(message.note) + "F", "202", 12345 )
-                        elif aoidx == thethree[1]:
-                            raysendto("M" + str(message.note) + "S", "202", 12345 )
-                        elif aoidx == thethree[2]:
-                            raysendto("M" + str(message.note) + "T", "202", 12345 )
+                    if True == rayiii(aoidx):
                         raysendto("224 " + str(message.note) + " " + str(rayv) + " " + str(aoidx) , str(aoidx))
                     else:
                         raysendto("144 " + str(message.note) + " " + str(rayv) + " " + str(aoidx) , str(aoidx))
@@ -287,26 +243,14 @@ def play_midi():
                 elif message.channel == 8:
                     rayv = raymap(message.velocity, 0, 127, boundary, 127)
                     soidx = checkbound(0,soidx)
-                    if soidx in thethree:
-                        if soidx == thethree[0]:
-                            raysendto("M" + str(message.note) + "F", "202", 12345 )
-                        elif soidx == thethree[1]:
-                            raysendto("M" + str(message.note) + "S", "202", 12345 )
-                        elif soidx == thethree[2]:
-                            raysendto("M" + str(message.note) + "T", "202", 12345 )
+                    if True == rayiii(soidx):
                         raysendto("224 " + str(message.note) + " " + str(rayv) + " " + str(soidx) , str(soidx))
                     else:
                         raysendto("144 " + str(message.note) + " " + str(rayv) + " " + str(soidx) , str(soidx))
                     pickidx[4][message.note] = soidx
                     soidx += 1
                     soidx = checkbound(0,soidx)
-                    if soidx in thethree:
-                        if soidx == thethree[0]:
-                            raysendto("M" + str(message.note) + "F", "202", 12345 )
-                        elif soidx == thethree[1]:
-                            raysendto("M" + str(message.note) + "S", "202", 12345 )
-                        elif soidx == thethree[2]:
-                            raysendto("M" + str(message.note) + "T", "202", 12345 )
+                    if True == rayiii(soidx):
                         raysendto("224 " + str(message.note) + " " + str(rayv) + " " + str(soidx) , str(soidx))
                     else:
                         raysendto("144 " + str(message.note) + " " + str(rayv) + " " + str(soidx) , str(soidx))
