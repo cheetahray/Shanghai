@@ -383,7 +383,7 @@ def raylist(mylist):
     global dropnote
     global biggestvolume
     global aanote
-    notedelay = 1.2
+    notedelay = 2.5
     if mylist[0] == '128':
         if not ( len(mylist) == 4 and mylist[3] != str(whoami+1) ):
             noteint = int(mylist[1])
