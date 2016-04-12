@@ -257,7 +257,7 @@ def play_midi():
                 if pickidx[8].has_key(message.note):
                     port.sendto("128 " + str(message.note) + " " + str(message.velocity) + " " + str(pickidx[8][message.note]) , ("192.168.12." + str(pickidx[8][message.note]), 5005) )
                     del pickidx[8][message.note]
-    time.sleep(2.5);
+    time.sleep(5.5);
     for i in range(66,33,-1):
         port.sendto("225 1", ("192.168.12." + str(i), 5005) )
         port.sendto("225 1", ("192.168.12." + str(67-i), 5005) )
