@@ -341,11 +341,11 @@ def change3(isslider):
     global set66
     if True == isslider:
         theone = random.sample(set66, 1)
-        if theone == 1:
+        if theone[0] == 1:
             thethree[howmanyCM].append(1)
             thethree[howmanyCM].append(2)
             thethree[howmanyCM].append(3)
-        elif theone == 66:
+        elif theone[0] == 66:
             thethree[howmanyCM].append(64)
             thethree[howmanyCM].append(65)
             thethree[howmanyCM].append(66)
