@@ -62,7 +62,7 @@ def rayiii(playidx, mynote):
             mypos = mynote-rayshift[playidx-1]+1
             if mypos < 1:
                 mypos = 1
-            elif mypos > 20
+            elif mypos > 20:
                 mypos = 20
             if playidx == thethree[iii][0]:
                 raysendto("M" + str(mypos) + "F", "202", 12345 )
