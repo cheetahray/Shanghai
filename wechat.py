@@ -59,12 +59,17 @@ def rayiii(playidx, mynote):
     TF = False
     for iii in range(1,4):
         if playidx in thethree[iii]:
+            mypos = mynote-rayshift[playidx-1]+1
+            if mypos < 1:
+                mypos = 1
+            elif mypos > 20
+                mypos = 20
             if playidx == thethree[iii][0]:
-                raysendto("M" + str(mynote-rayshift[playidx-1]+1) + "F", "202", 12345 )
+                raysendto("M" + str(mypos) + "F", "202", 12345 )
             elif playidx == thethree[iii][1]:
-                raysendto("M" + str(mynote-rayshift[playidx-1]+1) + "S", "202", 12345 )
+                raysendto("M" + str(mypos) + "S", "202", 12345 )
             elif playidx == thethree[iii][2]:
-                raysendto("M" + str(mynote-rayshift[playidx-1]+1) + "T", "202", 12345 )
+                raysendto("M" + str(mypos) + "T", "202", 12345 )
             TF = True
             break
     return TF                
@@ -365,10 +370,10 @@ def change3(isslider):
         # should port send to webserver to say it's done
         raysendto("EndofGame", "202", 12345 )
         howmanyCM = 1
+        print thethree
         for ii in range(len(thethree)):
             for jj in range(len(thethree[ii])):
                 set66.append(thethree[ii][jj])
-                print set66
                 thethree[ii].remove(thethree[ii][jj])
         
 run = True
