@@ -457,12 +457,12 @@ while run:
                 tmpidx = int(data[2:])
                 for jj in range(len(thethree[tmpidx])):
                     tmpthree[tmpidx].append(thethree[tmpidx][jj])
-                    thethree[tmpidx].remove(thethree[tmpidx][jj])
+                    thethree[tmpidx].remove(thethree[tmpidx][0])
             elif (data[0:2] == "BM"):
                 tmpidx = int(data[2:])
                 for jj in range(len(tmpthree[tmpidx])):
                     thethree[tmpidx].append(tmpthree[tmpidx][jj])
-                    tmpthree[tmpidx].remove(tmpthree[tmpidx][jj])
+                    tmpthree[tmpidx].remove(tmpthree[tmpidx][0])
                 
     except socket.timeout:
         pass                    
