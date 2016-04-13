@@ -340,9 +340,16 @@ def change3(isslider):
     global thethree
     global set66
     if True == isslider:
-        thethree[howmanyCM] = [1,2,3] #random.sample(set66,  3)
+        theone = random.sample(set66, 1)
+        if theone == 1:
+            thethree[howmanyCM] = [1,2,3]
+        elif theone == 66:
+            thethree[howmanyCM] = [64,65,66]
+        else
+            thethree[howmanyCM] = [theone-1, theone, theone+1] 
         for jj in range(len(thethree[howmanyCM])):
             set66.remove(thethree[howmanyCM][jj])
+        print set66
         raysendto("CM" + str(howmanyCM) + "F" + str(thethree[howmanyCM][0]) + "S" + str(thethree[howmanyCM][1]) + "T" + str(thethree[howmanyCM][2]), "202", 12345 )
         if 1 == howmanyCM:
             time.sleep(3) # maybe recvfrom another udp string to start it, now it's my control
@@ -355,6 +362,7 @@ def change3(isslider):
         for ii in range(len(thethree)):
             for jj in range(len(thethree[ii])):
                 set66.append(thethree[ii][jj])
+                print set66
                 thethree[ii].remove(thethree[ii][jj])
         
 run = True
