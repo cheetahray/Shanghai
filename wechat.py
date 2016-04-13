@@ -350,12 +350,12 @@ def change3(isslider):
         howmanyCM += 1
     else:
         # should port send to webserver to say it's done
-        howmanyCM = 1
-        set66.clear()
-        for jj in range(1,67):
-            set66.add(jj)
-        thethree[howmanyCM].clear()
         raysendto("EndofGame", "202", 12345 )
+        for ii in range(len(thethree)):
+            for jj in range(len(thethree[ii])):
+                set66.append(thethree[ii][jj])
+                thethree[ii].remove(thethree[ii][jj])
+        howmanyCM = 1
         
 run = True
 
