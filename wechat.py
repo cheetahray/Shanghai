@@ -376,11 +376,13 @@ def change3(isslider):
             for jj in range(len(thethree[ii])):
                 set66.append(thethree[ii][jj])
         for ii in range(len(thethree)):
-            for jj in range(len(thethree[ii])):
-                print ii
-                print jj
-                print thethree[ii][jj]
-                thethree[ii].remove(thethree[ii][jj])
+            if len(thethree[ii]) == 3:
+                mone = thethree[ii][0]
+                mtwo = thethree[ii][1]
+                mthree = thethree[ii][2]
+                thethree[ii].remove(mone)
+                thethree[ii].remove(mtwo)
+                thethree[ii].remove(mthree)
         howmanyCM = 1
         AmIPlay = False
         
