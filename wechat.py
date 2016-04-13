@@ -342,7 +342,7 @@ def change3(isslider):
     if True == isslider:
         thethree[howmanyCM] = [1,2,3] #random.sample(set66,  3)
         for jj in range(len(thethree[howmanyCM])):
-            set66.remove[thethree[howmanyCM][jj]]
+            set66.remove(thethree[howmanyCM][jj])
         raysendto("CM" + str(howmanyCM) + "F" + str(thethree[howmanyCM][0]) + "S" + str(thethree[howmanyCM][1]) + "T" + str(thethree[howmanyCM][2]), "202", 12345 )
         if 1 == howmanyCM:
             time.sleep(3) # maybe recvfrom another udp string to start it, now it's my control
