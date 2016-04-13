@@ -340,7 +340,7 @@ def change3(isslider):
     global thethree
     global set66
     if True == isslider:
-        thethree[howmanyCM] = [1,2,3] #random.sample(set66,  3)
+        thethree[howmanyCM] = random.sample(set66,  3) #[1,2,3] 
         for jj in thethree[howmanyCM]:
             set66.discard[thethree[howmanyCM][jj]]
         raysendto("CM" + str(howmanyCM) + "F" + str(thethree[howmanyCM][0]) + "S" + str(thethree[howmanyCM][1]) + "T" + str(thethree[howmanyCM][2]), "202", 12345 )
