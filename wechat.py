@@ -340,9 +340,9 @@ def change3(isslider):
     global thethree
     global set66
     if True == isslider:
-        thethree[howmanyCM] = [1,2,3] # random.sample(set66, 3) 
-        #for jj in range(3):
-        #    set66.remove[thethree[howmanyCM][jj]]
+        thethree[howmanyCM] = [1,2,3] #random.sample(set66,  3)
+        for jj in len(thethree[howmanyCM]):
+            set66.remove[thethree[howmanyCM][jj]]
         raysendto("CM" + str(howmanyCM) + "F" + str(thethree[howmanyCM][0]) + "S" + str(thethree[howmanyCM][1]) + "T" + str(thethree[howmanyCM][2]), "202", 12345 )
         if 1 == howmanyCM:
             time.sleep(3) # maybe recvfrom another udp string to start it, now it's my control
@@ -351,11 +351,11 @@ def change3(isslider):
     else:
         # should port send to webserver to say it's done
         raysendto("EndofGame", "202", 12345 )
+        howmanyCM = 1
         for ii in range(len(thethree)):
             for jj in range(len(thethree[ii])):
                 set66.append(thethree[ii][jj])
                 thethree[ii].remove(thethree[ii][jj])
-        howmanyCM = 1
         
 run = True
 
@@ -425,13 +425,12 @@ while run:
                     pass #should be something about phone is above three, maybe let webserver to control it
             elif (data[0:2] == "RM"):
                 tmpidx = int(data[2:])
-                tmpthree[tmpidx].update(thethree[tmpidx])
-                thethree[tmpidx].clear()
+                tmpthree[tmpidx] = thethree[tmpidx]
+                thethree[tmpidx] = []
             elif (data[0:2] == "BM"):
                 tmpidx = int(data[2:])
                 thethree[tmpidx] = tmpthree[tmpidx]
-                thethree[tmpidx].update(tmpthree[tmpidx]) 
-                tmpthree[tmpidx].clear()
+                tmpthree[tmpidx] = []
                 
     except socket.timeout:
         pass                    
