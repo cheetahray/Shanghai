@@ -425,12 +425,14 @@ while run:
                     pass #should be something about phone is above three, maybe let webserver to control it
             elif (data[0:2] == "RM"):
                 tmpidx = int(data[2:])
-                tmpthree[tmpidx] = thethree[tmpidx]
-                thethree[tmpidx] = []
+                for jj in range(len(thethree[tmpidx])):
+                    tmpthree[tmpidx].append(thethree[tmpidx][jj])
+                    thethree[tmpidx].remove(thethree[tmpidx][jj])
             elif (data[0:2] == "BM"):
                 tmpidx = int(data[2:])
-                thethree[tmpidx] = tmpthree[tmpidx]
-                tmpthree[tmpidx] = []
+                for jj in range(len(tmpthree[tmpidx])):
+                    thethree[tmpidx].append(tmpthree[tmpidx][jj])
+                    tmpthree[tmpidx].remove(tmpthree[tmpidx][jj])
                 
     except socket.timeout:
         pass                    
