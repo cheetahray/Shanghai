@@ -346,6 +346,7 @@ def change3(isslider):
     global howmanyCM
     global thethree
     global set66
+    global AmIPlay
     if True == isslider:
         theone = random.sample(set66, 1)
         if theone[0] == 1:
@@ -371,13 +372,17 @@ def change3(isslider):
     else:
         # should port send to webserver to say it's done
         raysendto("EndofGame", "202", 12345 )
-        howmanyCM = 1
         for ii in range(len(thethree)):
             for jj in range(len(thethree[ii])):
                 set66.append(thethree[ii][jj])
         for ii in range(len(thethree)):
             for jj in range(len(thethree[ii])):
+                print ii
+                print jj
+                print thethree[ii][jj]
                 thethree[ii].remove(thethree[ii][jj])
+        howmanyCM = 1
+        AmIPlay = False
         
 run = True
 
@@ -426,18 +431,19 @@ for i in range(1,67):
 howmanyCM = 1    
 thethree = [[],[],[],[]]
 tmpthree = [[],[],[],[]]
-
+AmIPlay = False
 # simulate a "game engine"
 while run:
     try:
         data, addr = sock.recvfrom(1024)
         if len(data) >= 2:
             print data
-            if (data[0:2] == "SS"):
+            if (data[0:2] == "SS") and False == AmIPlay:
                 midstr = '/home/oem/midi/' + data[2:] + '.mid'
                 if os.path.isfile(midstr):
                     mid = MidiFile(midstr)
                     raysendto("PS" + data[2:], "202", 12345 )
+                    AmIPlay = True
                 else:
                     raysendto("ES" + data[2:], "202", 12345 )
             elif (data[0:2] == "TM"):
