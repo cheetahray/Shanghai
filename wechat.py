@@ -342,11 +342,17 @@ def change3(isslider):
     if True == isslider:
         theone = random.sample(set66, 1)
         if theone == 1:
-            thethree[howmanyCM] = [1,2,3]
+            thethree[howmanyCM].append(1)
+            thethree[howmanyCM].append(2)
+            thethree[howmanyCM].append(3)
         elif theone == 66:
-            thethree[howmanyCM] = [64,65,66]
+            thethree[howmanyCM].append(64)
+            thethree[howmanyCM].append(65)
+            thethree[howmanyCM].append(66)
         else
-            thethree[howmanyCM] = [theone-1, theone, theone+1] 
+            thethree[howmanyCM].append(theone-1)
+            thethree[howmanyCM].append(theone)
+            thethree[howmanyCM].append(theone+1)
         for jj in range(len(thethree[howmanyCM])):
             set66.remove(thethree[howmanyCM][jj])
         print set66
