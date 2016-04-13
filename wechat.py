@@ -52,24 +52,26 @@ def raysendto(raystr, raytuple, myport=5005 ):
         port.sendto( raystr, ("192.168.12." + raytuple, myport) )
         print raystr
 
-def rayiii(playidx, mynote):
+def rayiii(playidx, mynote=0):
     global thethree
     global rayshift
     iii = 0
     TF = False
     for iii in range(1,4):
         if playidx in thethree[iii]:
+            '''
             mypos = mynote-rayshift[playidx-1]+1
             if mypos < 1:
                 mypos = 1
             elif mypos > 20:
                 mypos = 20
+            '''
             if playidx == thethree[iii][0]:
-                raysendto("M" + str(mypos) + "F", "202", 12345 )
+                raysendto("M" + str(iii) + "F", "202", 12345 )
             elif playidx == thethree[iii][1]:
-                raysendto("M" + str(mypos) + "S", "202", 12345 )
+                raysendto("M" + str(iii) + "S", "202", 12345 )
             elif playidx == thethree[iii][2]:
-                raysendto("M" + str(mypos) + "T", "202", 12345 )
+                raysendto("M" + str(iii) + "T", "202", 12345 )
             TF = True
             break
     return TF                
@@ -370,9 +372,12 @@ def change3(isslider):
         # should port send to webserver to say it's done
         raysendto("EndofGame", "202", 12345 )
         howmanyCM = 1
-        print thethree
+        
         for ii in range(len(thethree)):
             for jj in range(len(thethree[ii])):
+                print ii
+                print jj
+                print thethree[ii][jj]
                 set66.append(thethree[ii][jj])
                 thethree[ii].remove(thethree[ii][jj])
         
