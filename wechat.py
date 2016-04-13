@@ -349,7 +349,7 @@ def change3(isslider):
             thethree[howmanyCM].append(64)
             thethree[howmanyCM].append(65)
             thethree[howmanyCM].append(66)
-        else
+        else:
             thethree[howmanyCM].append(theone-1)
             thethree[howmanyCM].append(theone)
             thethree[howmanyCM].append(theone+1)
