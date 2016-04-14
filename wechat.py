@@ -348,7 +348,13 @@ def change3(isslider):
     global set66
     global AmIPlay
     if True == isslider:
-        theone = random.sample(set66, 1)
+        #theone = random.sample(set66, 1)
+        if howmanyCM == 1:
+            theone = 5
+        elif howmanyCM == 2:
+            theone = 8
+        elif howmanyCM == 3:
+            theone = 11
         thethree[howmanyCM].append(theone[0]-1)
         thethree[howmanyCM].append(theone[0])
         thethree[howmanyCM].append(theone[0]+1)
