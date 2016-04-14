@@ -351,7 +351,7 @@ def change3(isslider):
         theone = None
         if howmanyCM == 1:
             theone = [5]
-        else
+        else:
             theone = random.sample(set66, 1)
         thethree[howmanyCM].append(theone[0]-1)
         thethree[howmanyCM].append(theone[0])
