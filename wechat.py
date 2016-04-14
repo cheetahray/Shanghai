@@ -350,15 +350,15 @@ def change3(isslider):
     if True == isslider:
         #theone = random.sample(set66, 1)
         if howmanyCM == 1:
-            theone = 5
+            theone = [5]
         elif howmanyCM == 2:
-            theone = 8
+            theone = [8]
         elif howmanyCM == 3:
-            theone = 11
+            theone = [11]
         thethree[howmanyCM].append(theone[0]-1)
         thethree[howmanyCM].append(theone[0])
         thethree[howmanyCM].append(theone[0]+1)
-        set66.remove(theone)
+        set66.remove(theone[0])
         print set66
         raysendto("CM" + str(howmanyCM) + "F" + str(thethree[howmanyCM][0]) + "S" + str(thethree[howmanyCM][1]) + "T" + str(thethree[howmanyCM][2]), "202", 12345 )
         if 1 == howmanyCM:
