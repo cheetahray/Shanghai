@@ -57,7 +57,7 @@ def rayiii(playidx, mynote=0):
     global rayshift
     iii = 0
     TF = False
-    for iii in range(1,4):
+    for iii in range(len(thethree)):
         if playidx in thethree[iii]:
             '''
             mypos = mynote-rayshift[playidx-1]+1
@@ -421,8 +421,8 @@ for i in range(1,67):
     time.sleep(0.01)
 
 howmanyCM = 1    
-thethree = [[],[],[],[]]
-tmpthree = [[],[],[],[]]
+thethree = [[],[],[],[],[],[],[],[],[],[],[],[],[],[],[],[],[],[],[],[],[],[]]
+tmpthree = [[],[],[],[],[],[],[],[],[],[],[],[],[],[],[],[],[],[],[],[],[],[]]
 AmIPlay = False
 # simulate a "game engine"
 while run:
