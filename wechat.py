@@ -349,20 +349,10 @@ def change3(isslider):
     global AmIPlay
     if True == isslider:
         theone = random.sample(set66, 1)
-        if theone[0] == 1:
-            thethree[howmanyCM].append(1)
-            thethree[howmanyCM].append(2)
-            thethree[howmanyCM].append(3)
-        elif theone[0] == 66:
-            thethree[howmanyCM].append(64)
-            thethree[howmanyCM].append(65)
-            thethree[howmanyCM].append(66)
-        else:
-            thethree[howmanyCM].append(theone[0]-1)
-            thethree[howmanyCM].append(theone[0])
-            thethree[howmanyCM].append(theone[0]+1)
-        for jj in range(len(thethree[howmanyCM])):
-            set66.remove(thethree[howmanyCM][jj])
+        thethree[howmanyCM].append(theone[0]-1)
+        thethree[howmanyCM].append(theone[0])
+        thethree[howmanyCM].append(theone[0]+1)
+        set66.remove(theone)
         print set66
         raysendto("CM" + str(howmanyCM) + "F" + str(thethree[howmanyCM][0]) + "S" + str(thethree[howmanyCM][1]) + "T" + str(thethree[howmanyCM][2]), "202", 12345 )
         if 1 == howmanyCM:
@@ -373,16 +363,12 @@ def change3(isslider):
         # should port send to webserver to say it's done
         raysendto("EndofGame", "202", 12345 )
         for ii in range(len(thethree)):
-            for jj in range(len(thethree[ii])):
-                set66.append(thethree[ii][jj])
-        for ii in range(len(thethree)):
             if len(thethree[ii]) == 3:
-                mone = thethree[ii][0]
-                mtwo = thethree[ii][1]
-                mthree = thethree[ii][2]
-                thethree[ii].remove(mone)
-                thethree[ii].remove(mtwo)
-                thethree[ii].remove(mthree)
+                set66.append(thethree[ii][1])
+        for ii in range(len(thethree)):
+            for jj in range(len(thethree[ii])):
+                thethree[ii].pop()
+                
         howmanyCM = 1
         AmIPlay = False
         
@@ -395,7 +381,7 @@ sock = socket.socket(socket.AF_INET, socket.SOCK_DGRAM) # UDP
 sock.bind(("0.0.0.0", 5005))
 sock.settimeout(0.001)
 
-set66 = [ 1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13, 14, 15, 16, 17, 18, 19, 20, 21, 22, 23, 24, 25, 26, 27, 28, 29, 30, 31, 32, 33, 34, 35, 36, 37, 38, 39, 40, 41, 42, 43, 44, 45, 46, 47, 48, 49, 50, 51, 52, 53, 54, 55, 56, 57, 58, 59, 60, 61, 62, 63, 64, 65, 66 ]
+set66 = [ 2, 5, 8, 11, 14, 17, 20, 23, 26, 29, 32, 35, 38, 41, 44, 47, 50, 53, 56, 59, 62, 65 ]
 
     #27 28 29 30 31 32 33 34 35 36 37 38 39 40 
 SS = [0 ,0, 0, 0, 0, 0, 1, 1, 1, 0, 0, 0, 0, 0]
@@ -457,12 +443,12 @@ while run:
                 tmpidx = int(data[2:])
                 for jj in range(len(thethree[tmpidx])):
                     tmpthree[tmpidx].append(thethree[tmpidx][jj])
-                    thethree[tmpidx].remove(thethree[tmpidx][0])
+                    thethree[tmpidx].pop()
             elif (data[0:2] == "BM"):
                 tmpidx = int(data[2:])
                 for jj in range(len(tmpthree[tmpidx])):
                     thethree[tmpidx].append(tmpthree[tmpidx][jj])
-                    tmpthree[tmpidx].remove(tmpthree[tmpidx][0])
+                    tmpthree[tmpidx].pop()
                 
     except socket.timeout:
         pass                    
