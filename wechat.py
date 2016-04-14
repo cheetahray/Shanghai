@@ -48,8 +48,8 @@ s1 = socket.socket(socket.AF_INET, socket.SOCK_DGRAM)
 
 def raysendto(raystr, raytuple, myport=5005 ):
     global port
+    port.sendto( raystr, ("192.168.12." + raytuple, myport) )
     if raytuple == "202":
-        port.sendto( raystr, ("192.168.12." + raytuple, myport) )
         print raystr
 
 def rayiii(playidx, mynote=0):
