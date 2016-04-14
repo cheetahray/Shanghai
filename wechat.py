@@ -348,13 +348,11 @@ def change3(isslider):
     global set66
     global AmIPlay
     if True == isslider:
-        #theone = random.sample(set66, 1)
+        theone = None
         if howmanyCM == 1:
             theone = [5]
-        elif howmanyCM == 2:
-            theone = [8]
-        elif howmanyCM == 3:
-            theone = [11]
+        else
+            theone = random.sample(set66, 1)
         thethree[howmanyCM].append(theone[0]-1)
         thethree[howmanyCM].append(theone[0])
         thethree[howmanyCM].append(theone[0]+1)
@@ -441,7 +439,7 @@ while run:
                 else:
                     raysendto("ES" + data[2:], "202", 12345 )
             elif (data[0:2] == "TM"):
-                if howmanyCM <= 4:
+                if howmanyCM <= 22:
                     change3(True)
                 else:
                     pass #should be something about phone is above three, maybe let webserver to control it
