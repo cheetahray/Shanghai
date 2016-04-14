@@ -434,7 +434,9 @@ def raylist(mylist):
                     threading.Timer(notedelay, AS, [noteint]).start()
 
     elif mylist[0] == '224':
-        if not ( len(mylist) == 4 and mylist[3] != str(whoami+1) ):
+        if True:
+            print mylist
+        elif not ( len(mylist) == 4 and mylist[3] != str(whoami+1) ):
             noteint = int(mylist[1])
             aanote = noteint
             nowm = noteint - rayshift[whoami]
