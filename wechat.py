@@ -443,7 +443,7 @@ while run:
                     raysendto("ES" + data[2:], "202", 12345 )
             elif (data[0:2] == "TM"):
                 if False == AmIPlay:
-                    raysendto("NoCM", "202", 12345 )
+                    raysendto("NoSSxxx", "202", 12345 )
                 elif howmanyCM <= 22:
                     change3(True)
                 else:
