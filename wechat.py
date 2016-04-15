@@ -312,7 +312,7 @@ def play_midi():
                 if pickidx[8].has_key(message.note):
                     raysendto("128 " + str(message.note) + " " + str(message.velocity) + " " + str(pickidx[8][message.note]) , str(pickidx[8][message.note]) )
                     del pickidx[8][message.note]
-    time.sleep(3);
+    time.sleep(3.5);
     for i in range(66,33,-1):
         raysendto("225 1", str(i) )
         raysendto("225 1", str(67-i) )
@@ -327,7 +327,7 @@ def play_midi():
         if 1 == BT[i]:
             raysendto("144 28 1", str(i))
         time.sleep(0.02)
-    time.sleep(3);
+    time.sleep(3.5);
     for i in range(1,67):
         if 1 == ST[i]:
             raysendto("144 60 0", str(i))
@@ -338,7 +338,7 @@ def play_midi():
         if 1 == BT[i]:
             raysendto("144 28 0", str(i))
         time.sleep(0.02)
-    time.sleep(3);
+    time.sleep(3.5);
     for i in range(1,67):
         raysendto("249 2" , str(i))
         time.sleep(0.01)
@@ -442,10 +442,12 @@ while run:
                 else:
                     raysendto("ES" + data[2:], "202", 12345 )
             elif (data[0:2] == "TM"):
-                if False == AmIPlay or howmanyCM > 22:
+                if False == AmIPlay:
                     raysendto("NoCM", "202", 12345 )
-                else:
+                elif howmanyCM <= 22:
                     change3(True)
+                else:
+                    raysendto("NoCM", "202", 12345 ) #should be something about phone is above three, maybe let webserver to control it
             elif (data[0:2] == "RM"):
                 tmpidx = int(data[2:])
                 for jj in range(len(thethree[tmpidx])):
