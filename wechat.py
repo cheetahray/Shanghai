@@ -312,8 +312,8 @@ def play_midi():
                 if pickidx[8].has_key(message.note):
                     raysendto("128 " + str(message.note) + " " + str(message.velocity) + " " + str(pickidx[8][message.note]) , str(pickidx[8][message.note]) )
                     del pickidx[8][message.note]
-    time.sleep(3);
     change3(False)
+    time.sleep(3);
     for i in range(66,33,-1):
         raysendto("225 1", str(i) )
         raysendto("225 1", str(67-i) )
