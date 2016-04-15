@@ -434,8 +434,6 @@ def raylist(mylist):
                     threading.Timer(notedelay, AS, [noteint]).start()
 
     elif mylist[0] == '224':
-        #if True:
-        print mylist
         if not ( len(mylist) == 4 and mylist[3] != str(whoami+1) ):
             noteint = int(mylist[1])
             aanote = noteint
@@ -669,6 +667,7 @@ while True:
                     print(rcv)
                 else:
                     mylist = rcv.split(" ")
+                    print mylist
                     raylist(mylist)
     except KeyboardInterrupt:    
         strm.stop_stream()
