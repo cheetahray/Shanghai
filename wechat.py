@@ -442,12 +442,10 @@ while run:
                 else:
                     raysendto("ES" + data[2:], "202", 12345 )
             elif (data[0:2] == "TM"):
-                if False == AmIPlay:
-                    raysendto("No SSxxx first", "202", 12345 )
-                elif howmanyCM <= 22:
-                    change3(True)
+                if False == AmIPlay or howmanyCM > 22:
+                    raysendto("NoCM", "202", 12345 )
                 else:
-                    pass #should be something about phone is above three, maybe let webserver to control it
+                    change3(True)
             elif (data[0:2] == "RM"):
                 tmpidx = int(data[2:])
                 for jj in range(len(thethree[tmpidx])):
