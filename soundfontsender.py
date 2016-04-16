@@ -444,7 +444,7 @@ def raylist(mylist):
                     if mylist[2] != '0': 
                          if False == dropnote:
                              #threading.Timer(notedelay, funcdrop, [noteint]).start()
-                             threading.Timer(notedelay-0.1, AR, [noteint,int(mylist[2])]).start()
+                             #threading.Timer(notedelay-0.1, AR, [noteint,int(mylist[2])]).start()
                              sock.sendto("mt" + str(nowm) , UDP_tuple)
                              dropnote = True
                              if False == islightout:
@@ -460,7 +460,7 @@ def raylist(mylist):
                 if mylist[2] != '0': 
                     if False == dropnote:
                         #threading.Timer(notedelay, funcdrop, [noteint]).start()
-                        threading.Timer(notedelay-0.1, AR, [noteint,int(mylist[2])]).start()
+                        #threading.Timer(notedelay-0.1, AR, [noteint,int(mylist[2])]).start()
                         #threading.Timer(notedelay-0.3, fluidnoteon, [chnl, noteint, int(mylist[2])] ).start()
                         sock.sendto("mt" + str(nowm) , UDP_tuple)
                         dropnote = True
@@ -662,7 +662,8 @@ while True:
                 elif rcv == '100':
                     if aanote > 0:
                         fluidnoteon(0, aanote, 127)
-                        funcdrop(aanote)
+                        threading.Timer(0.1, AR, [aanote, 127]).start()
+                        threading.Timer(0.2, funcdrop, [aanote]).start()
                         aanote = 0
                     print(rcv)
                 else:
