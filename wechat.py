@@ -312,8 +312,7 @@ def play_midi():
                 if pickidx[8].has_key(message.note):
                     raysendto("128 " + str(message.note) + " " + str(message.velocity) + " " + str(pickidx[8][message.note]) , str(pickidx[8][message.note]) )
                     del pickidx[8][message.note]
-    change3(False)
-    time.sleep(4);
+    time.sleep(3);
     for i in range(66,33,-1):
         raysendto("225 1", str(i) )
         raysendto("225 1", str(67-i) )
@@ -339,11 +338,23 @@ def play_midi():
         if 1 == BT[i]:
             raysendto("144 28 0", str(i))
         time.sleep(0.02)
-    time.sleep(2.5);
+    time.sleep(3);
+    for i in range(1,67):
+        if 1 == ST[i]:
+            raysendto("224 60 1", str(i))
+        if 1 == AT[i]:
+            raysendto("224 48 1", str(i))
+        if 1 == TT[i]:
+            raysendto("224 38 1", str(i))
+        if 1 == BT[i]:
+            raysendto("224 28 1", str(i))
+        time.sleep(0.02)
+    time.sleep(3);
     for i in range(1,67):
         raysendto("249 2" , str(i))
         time.sleep(0.01)
-    
+    change3(False)
+
 def change3(isslider):
     global port
     global howmanyCM
@@ -433,18 +444,21 @@ while run:
         data, addr = sock.recvfrom(1024)
         if len(data) >= 2:
             print data
-            if (data[0:2] == "SS") and False == AmIPlay:
+            if (data[0:2] == "SS"):
                 midstr = '/home/oem/midi/' + data[2:] + '.mid'
                 if os.path.isfile(midstr):
-                    mid = MidiFile(midstr)
-                    raysendto("PS" + data[2:], "202", 12345 )
+                    if False == AmIPlay and mid is not None:
+                        mid = MidiFile(midstr)
+                        raysendto("PS" + data[2:], "202", 12345 )
+                    else:
+                        raysendto("YSS", "202", 12345 )
                     AmIPlay = True
                 else:
                     raysendto("ES" + data[2:], "202", 12345 )
             elif (data[0:2] == "TM"):
-                if False == AmIPlay:
-                    raysendto("NoSSxxx", "202", 12345 )
-                elif howmanyCM <= 22:
+                if mid is None:
+                    mid = MidiFile('/home/oem/midi/001.mid')
+                if howmanyCM <= 22:
                     change3(True)
                 else:
                     raysendto("NoCM", "202", 12345 ) #should be something about phone is above three, maybe let webserver to control it
