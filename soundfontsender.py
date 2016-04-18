@@ -319,6 +319,20 @@ def funcdrop(printnote):
         clientsock.send("picker")
         canweas[whoami] = 2
     dropnote = False
+
+def funcdrop2(printnote):
+    global UDP_tuple
+    global canweas
+    global whoami
+    if 1 == canweas[whoami]:
+        sock.sendto("aa", UDP_tuple)
+        print("aa" + str(printnote))
+        clientsock.send("picker")
+        canweas[whoami] = 2
+
+def funcdrop3(printnote):
+    global dropnote
+    dropnote = False
     
 def func():
     global UDP_tuple
@@ -347,7 +361,6 @@ def AS(printnote):
         sock.sendto("as", UDP_tuple)
         print("as" + str(printnote))
         canweas[whoami] = 3
-    dropnote = False
     
 def fluidnoteon(chnl, noteint, intmylist):
     global fl
@@ -444,7 +457,7 @@ def raylist(mylist):
                 if nowm >= 0 and nowm < howmanypitch[whoami]:
                     if mylist[2] != '0': 
                          if False == dropnote:
-                             #threading.Timer(notedelay, funcdrop, [noteint]).start()
+                             threading.Timer(notedelay, funcdrop3, [noteint]).start()
                              #threading.Timer(notedelay-0.1, AR, [noteint,int(mylist[2])]).start()
                              mycmd("mt" + str(nowm))
                              dropnote = True
@@ -460,7 +473,7 @@ def raylist(mylist):
                     nowm = howmanypitch[whoami] - 1
                 if mylist[2] != '0': 
                     if False == dropnote:
-                        #threading.Timer(notedelay, funcdrop, [noteint]).start()
+                        threading.Timer(notedelay, funcdrop3, [noteint]).start()
                         #threading.Timer(notedelay-0.1, AR, [noteint,int(mylist[2])]).start()
                         #threading.Timer(notedelay-0.3, fluidnoteon, [chnl, noteint, int(mylist[2])] ).start()
                         mycmd("mt" + str(nowm))
@@ -664,7 +677,7 @@ while True:
                     if aanote > 0:
                         fluidnoteon(0, aanote, 127)
                         threading.Timer(0.1, AR, [aanote, 127]).start()
-                        threading.Timer(0.2, funcdrop, [aanote]).start()
+                        threading.Timer(0.2, funcdrop2, [aanote]).start()
                         aanote = 0
                     print(rcv)
                 else:
