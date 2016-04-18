@@ -447,7 +447,7 @@ while run:
             if (data[0:2] == "SS"):
                 midstr = '/home/oem/midi/' + data[2:] + '.mid'
                 if os.path.isfile(midstr):
-                    if False == AmIPlay and mid is not None:
+                    if False == AmIPlay and mid is None:
                         mid = MidiFile(midstr)
                         raysendto("PS" + data[2:], "202", 12345 )
                     else:
