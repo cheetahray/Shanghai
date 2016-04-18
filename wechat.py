@@ -313,7 +313,6 @@ def play_midi():
                     raysendto("128 " + str(message.note) + " " + str(message.velocity) + " " + str(pickidx[8][message.note]) , str(pickidx[8][message.note]) )
                     del pickidx[8][message.note]
     # should port send to webserver to say it's done
-    raysendto("EndofGame", "202", 12345 )
     time.sleep(3);
     for i in range(66,33,-1):
         raysendto("225 1", str(i) )
@@ -380,6 +379,7 @@ def change3(isslider):
             thread.start_new_thread(play_midi,())
         howmanyCM += 1
     else:
+        raysendto("EndofGame", "202", 12345 )
         for ii in range(len(thethree)):
             if len(thethree[ii]) == 3:
                 set66.append(thethree[ii][1])
