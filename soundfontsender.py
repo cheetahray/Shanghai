@@ -407,7 +407,7 @@ def raylist(mylist):
                          if False == dropnote:
                              threading.Timer(notedelay, funcdrop, [noteint]).start()
                              threading.Timer(notedelay-0.1, AR, [noteint,int(mylist[2])]).start()
-                             sock.sendto("mt" + str(nowm) , UDP_tuple)
+                             mycmd("mt" + str(nowm))
                              dropnote = True
                              if False == islightout:
                                  clientsock.send("slide{0} {1} {2}".format( tp[whattype[whoami]][nowm] , math.fabs( tp[whattype[whoami]][nowm]-tp[whattype[whoami]][lastm] )*0.025 , whattype[whoami] ) )
@@ -424,7 +424,7 @@ def raylist(mylist):
                         threading.Timer(notedelay, funcdrop, [noteint]).start()
                         threading.Timer(notedelay-0.1, AR, [noteint,int(mylist[2])]).start()
                         threading.Timer(notedelay-0.3, fluidnoteon, [chnl, noteint, int(mylist[2])] ).start()
-                        sock.sendto("mt" + str(nowm) , UDP_tuple)
+                        mycmd("mt" + str(nowm))
                         dropnote = True
                         if False == islightout:
                             clientsock.send("slide{0} {1} {2}".format( tp[whattype[whoami]][nowm] , math.fabs( tp[whattype[whoami]][nowm]-tp[whattype[whoami]][lastm] )*0.025 , whattype[whoami] ) )
@@ -445,7 +445,7 @@ def raylist(mylist):
                          if False == dropnote:
                              #threading.Timer(notedelay, funcdrop, [noteint]).start()
                              #threading.Timer(notedelay-0.1, AR, [noteint,int(mylist[2])]).start()
-                             sock.sendto("mt" + str(nowm) , UDP_tuple)
+                             mycmd("mt" + str(nowm))
                              dropnote = True
                              if False == islightout:
                                  clientsock.send("slide{0} {1} {2}".format( tp[whattype[whoami]][nowm] , math.fabs( tp[whattype[whoami]][nowm]-tp[whattype[whoami]][lastm] )*0.025 , whattype[whoami] ) )
@@ -462,7 +462,7 @@ def raylist(mylist):
                         #threading.Timer(notedelay, funcdrop, [noteint]).start()
                         #threading.Timer(notedelay-0.1, AR, [noteint,int(mylist[2])]).start()
                         #threading.Timer(notedelay-0.3, fluidnoteon, [chnl, noteint, int(mylist[2])] ).start()
-                        sock.sendto("mt" + str(nowm) , UDP_tuple)
+                        mycmd("mt" + str(nowm))
                         dropnote = True
                         if False == islightout:
                             clientsock.send("slide{0} {1} {2}".format( tp[whattype[whoami]][nowm] , math.fabs( tp[whattype[whoami]][nowm]-tp[whattype[whoami]][lastm] )*0.025 , whattype[whoami] ) )
@@ -668,7 +668,8 @@ while True:
                     print(rcv)
                 else:
                     mylist = rcv.split(" ")
-                    print mylist
+                    if (mylist[0] == "249"):
+                       print mylist
                     raylist(mylist)
     except KeyboardInterrupt:    
         strm.stop_stream()
