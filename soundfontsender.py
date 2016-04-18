@@ -347,6 +347,7 @@ def AS(printnote):
         sock.sendto("as", UDP_tuple)
         print("as" + str(printnote))
         canweas[whoami] = 3
+    dropnote = False
     
 def fluidnoteon(chnl, noteint, intmylist):
     global fl
@@ -668,7 +669,7 @@ while True:
                     print(rcv)
                 else:
                     mylist = rcv.split(" ")
-                    if (mylist[0] == "249"):
+                    if (mylist[0] == "249" or mylist[0] == "224"):
                        print mylist
                     raylist(mylist)
     except KeyboardInterrupt:    
