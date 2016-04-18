@@ -320,35 +320,25 @@ def play_midi():
         time.sleep(0.02)
     for i in range(1,67):
         if 1 == ST[i]:
-            raysendto("144 60 1", str(i))
+            if True == rayiii(i, 60):
+                raysendto("224 60 1 " + str(i) , str(i) )
+            else:
+                raysendto("144 60 1 " + str(i) , str(i) )
         if 1 == AT[i]:
-            raysendto("144 48 1", str(i))
+            if True == rayiii(i, 48):
+                raysendto("224 48 1 " + str(i) , str(i) )
+            else:
+                raysendto("144 48 1 " + str(i) , str(i) )
         if 1 == TT[i]:
-            raysendto("144 38 1", str(i))
+            if True == rayiii(i, 38):
+                raysendto("224 38 1 " + str(i) , str(i) )
+            else:
+                raysendto("144 38 1 " + str(i) , str(i) )
         if 1 == BT[i]:
-            raysendto("144 28 1", str(i))
-        time.sleep(0.02)
-    time.sleep(3);
-    for i in range(1,67):
-        if 1 == ST[i]:
-            raysendto("224 60 1", str(i))
-        if 1 == AT[i]:
-            raysendto("224 48 1", str(i))
-        if 1 == TT[i]:
-            raysendto("224 38 1", str(i))
-        if 1 == BT[i]:
-            raysendto("224 28 1", str(i))
-        time.sleep(0.02)
-    time.sleep(3);
-    for i in range(1,67):
-        if 1 == ST[i]:
-            raysendto("144 60 0", str(i))
-        if 1 == AT[i]:
-            raysendto("144 48 0", str(i))
-        if 1 == TT[i]:
-            raysendto("144 38 0", str(i))
-        if 1 == BT[i]:
-            raysendto("144 28 0", str(i))
+            if True == rayiii(i, 28):
+                raysendto("224 28 1 " + str(i) , str(i) )
+            else:
+                raysendto("144 28 1 " + str(i) , str(i) )
         time.sleep(0.02)
     time.sleep(3);
     for i in range(1,67):
