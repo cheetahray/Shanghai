@@ -427,12 +427,6 @@ slideidx = [{},{},{},{},{},{},{},{},{},{},{},{}]
 
 port = socket.socket(socket.AF_INET, socket.SOCK_DGRAM)      
 mid = None
-for i in range(1,67):
-    raysendto("249 3", str(i) )
-    time.sleep(0.01)
-for i in range(1,67):
-    raysendto("225 2", str(i) )
-    time.sleep(0.01)
 
 howmanyCM = 1    
 thethree = [[],[],[],[],[],[],[],[],[],[],[],[],[],[],[],[],[],[],[],[],[],[]]
