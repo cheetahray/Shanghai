@@ -176,7 +176,7 @@ def play_midi():
                     if True == rayiii(boidx, message.note):
                         raysendto("224 " + str(message.note) + " " + str(raymap(message.velocity, 0, 127, boundary, 127)) + " " + str(boidx) , str(boidx) )
                     else:
-                        raysendto("224 " + str(message.note) + " " + str(raymap(message.velocity, 0, 127, boundary, 127)) + " " + str(boidx) , str(boidx) )
+                        raysendto("144 " + str(message.note) + " 1 " + str(boidx) , str(boidx) )
                     pickidx[3][message.note] = boidx
                     boidx += 1
                 elif message.channel == 2:
@@ -184,7 +184,7 @@ def play_midi():
                     if True == rayiii(toidx, message.note):
                         raysendto("224 " + str(message.note) + " " + str(raymap(message.velocity, 0, 127, boundary, 127)) + " " + str(toidx) , str(toidx))
                     else:
-                        raysendto("224 " + str(message.note) + " " + str(raymap(message.velocity, 0, 127, boundary, 127)) + " " + str(toidx) , str(toidx))
+                        raysendto("144 " + str(message.note) + " 1 " + str(toidx) , str(toidx))
                     pickidx[2][message.note] = toidx
                     toidx += 1
                 elif message.channel == 1:
@@ -192,7 +192,7 @@ def play_midi():
                     if True == rayiii(aoidx, message.note):
                         raysendto("224 " + str(message.note) + " " + str(raymap(message.velocity, 0, 127, boundary, 127)) + " " + str(aoidx) , str(aoidx))
                     else:
-                        raysendto("224 " + str(message.note) + " " + str(raymap(message.velocity, 0, 127, boundary, 127)) + " " + str(aoidx) , str(aoidx))
+                        raysendto("144 " + str(message.note) + " 1 " + str(aoidx) , str(aoidx))
                     pickidx[1][message.note] = aoidx
                     aoidx += 1
                 elif message.channel == 0:
@@ -200,7 +200,7 @@ def play_midi():
                     if True == rayiii(soidx, message.note):
                         raysendto("224 " + str(message.note) + " " + str(raymap(message.velocity, 0, 127, boundary, 127)) + " " + str(soidx) , str(soidx))
                     else:
-                        raysendto("224 " + str(message.note) + " " + str(raymap(message.velocity, 0, 127, boundary, 127)) + " " + str(soidx) , str(soidx))
+                        raysendto("144 " + str(message.note) + " 1 " + str(soidx) , str(soidx))
                     pickidx[0][message.note] = soidx
                     soidx += 1
                 elif message.channel == 11:
@@ -209,14 +209,14 @@ def play_midi():
                     if True == rayiii(boidx, message.note):
                         raysendto("224 " + str(message.note) + " " + str(rayv) + " " + str(boidx) , str(boidx) )
                     else:
-                        raysendto("224 " + str(message.note) + " " + str(rayv) + " " + str(boidx) , str(boidx) )
+                        raysendto("144 " + str(message.note) + " 1 " + str(boidx) , str(boidx) )
                     pickidx[7][message.note] = boidx
                     boidx += 1
                     boidx = checkbound(3,boidx)
                     if True == rayiii(boidx, message.note):
                         raysendto("224 " + str(message.note) + " " + str(rayv) + " " + str(boidx) , str(boidx) )
                     else:
-                        raysendto("224 " + str(message.note) + " " + str(rayv) + " " + str(boidx) , str(boidx) )
+                        raysendto("144 " + str(message.note) + " 1 " + str(boidx) , str(boidx) )
                     pickidx[11][message.note] = boidx
                     boidx += 1
                 elif message.channel == 10:
@@ -225,14 +225,14 @@ def play_midi():
                     if True == rayiii(toidx, message.note):
                         raysendto("224 " + str(message.note) + " " + str(rayv) + " " + str(toidx) , str(toidx))
                     else:
-                        raysendto("224 " + str(message.note) + " " + str(rayv) + " " + str(toidx) , str(toidx))
+                        raysendto("144 " + str(message.note) + " 1 " + str(toidx) , str(toidx))
                     pickidx[6][message.note] = toidx
                     toidx += 1
                     toidx = checkbound(2,toidx)
                     if True == rayiii(toidx, message.note):
                         raysendto("224 " + str(message.note) + " " + str(rayv) + " " + str(toidx) , str(toidx))
                     else:
-                        raysendto("224 " + str(message.note) + " " + str(rayv) + " " + str(toidx) , str(toidx))
+                        raysendto("144 " + str(message.note) + " 1 " + str(toidx) , str(toidx))
                     pickidx[10][message.note] = toidx
                     toidx += 1
                 elif message.channel == 9:
@@ -241,14 +241,14 @@ def play_midi():
                     if True == rayiii(aoidx, message.note):
                         raysendto("224 " + str(message.note) + " " + str(rayv) + " " + str(aoidx) , str(aoidx))
                     else:
-                        raysendto("224 " + str(message.note) + " " + str(rayv) + " " + str(aoidx) , str(aoidx))
+                        raysendto("144 " + str(message.note) + " 1 " + str(aoidx) , str(aoidx))
                     pickidx[5][message.note] = aoidx
                     aoidx += 1
                     aoidx = checkbound(1,aoidx)
                     if True == rayiii(aoidx, message.note):
                         raysendto("224 " + str(message.note) + " " + str(rayv) + " " + str(aoidx) , str(aoidx))
                     else:
-                        raysendto("224 " + str(message.note) + " " + str(rayv) + " " + str(aoidx) , str(aoidx))
+                        raysendto("144 " + str(message.note) + " 1 " + str(aoidx) , str(aoidx))
                     pickidx[9][message.note] = aoidx
                     aoidx += 1
                 elif message.channel == 8:
@@ -257,14 +257,14 @@ def play_midi():
                     if True == rayiii(soidx, message.note):
                         raysendto("224 " + str(message.note) + " " + str(rayv) + " " + str(soidx) , str(soidx))
                     else:
-                        raysendto("224 " + str(message.note) + " " + str(rayv) + " " + str(soidx) , str(soidx))
+                        raysendto("144 " + str(message.note) + " 1 " + str(soidx) , str(soidx))
                     pickidx[4][message.note] = soidx
                     soidx += 1
                     soidx = checkbound(0,soidx)
                     if True == rayiii(soidx, message.note):
                         raysendto("224 " + str(message.note) + " " + str(rayv) + " " + str(soidx) , str(soidx))
                     else:
-                        raysendto("224 " + str(message.note) + " " + str(rayv) + " " + str(soidx) , str(soidx))
+                        raysendto("144 " + str(message.note) + " 1 " + str(soidx) , str(soidx))
                     pickidx[8][message.note] = soidx
                     soidx += 1
         elif 'note_off' == message.type :
