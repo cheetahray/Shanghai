@@ -673,13 +673,12 @@ while True:
                     else:
                         fl.delete()
                     break
-                elif rcv == '100':
+                elif addr[0].endswith("202") and rcv == '100':
                     #if aanote > 0:
                     fluidnoteon(0, aanote, 127)
                     threading.Timer(0.1, AR, [aanote, 127]).start()
                     threading.Timer(0.2, funcdrop2, [aanote]).start()
                     #    aanote = 0
-                    print addr
                 else:
                     mylist = rcv.split(" ")
                     if (mylist[0] == "249" or mylist[0] == "224"):
