@@ -424,6 +424,10 @@ AmIPlay = False
 # simulate a "game engine"
 while run:
     try:
+        if mid is None:
+            mid = MidiFile('/home/oem/midi/001.mid')
+        if howmanyCM <= 22:
+            change3(True)
         data, addr = sock.recvfrom(1024)
         if len(data) >= 2:
             print data
