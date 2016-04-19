@@ -102,7 +102,7 @@ def play_midi():
         #worksheet.write(i, 0, 0)
     for message in mid.play():  #Next note from midi in this moment
         isplay = False          #To avoid duplicate doorbell button press during midi play
-        if True:
+        if False:
             print(message)
         elif 'note_on' == message.type :
             if 0 == message.velocity:
@@ -424,10 +424,6 @@ AmIPlay = False
 # simulate a "game engine"
 while run:
     try:
-        if mid is None:
-            mid = MidiFile('/home/oem/midi/001.mid')
-        if howmanyCM <= 22:
-            change3(True)
         data, addr = sock.recvfrom(1024)
         if len(data) >= 2:
             print data
