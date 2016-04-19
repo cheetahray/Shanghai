@@ -8,6 +8,7 @@ import socket
 import os
 from mido import MidiFile
 import random
+import threading
 
 def raymap(value, istart, istop, ostart, ostop):
     #wierd = ostart + (ostop - ostart) * (value - istart) / (istop - istart); 
@@ -48,8 +49,10 @@ s1 = socket.socket(socket.AF_INET, socket.SOCK_DGRAM)
 
 def raysendto(raystr, raytuple, myport=5005 ):
     global port
-    #if raystr.startswith('224'):
-    port.sendto( raystr, ("192.168.12." + raytuple, myport) )
+    if raystr.startswith('224') == True:
+        port.sendto( raystr, ("192.168.12." + raytuple, myport) )
+    else
+        threading.Timer( 1.5, port.sendto, [raystr, ("192.168.12." + raytuple, myport)]).start()
     if False: #raytuple == "202":
         #port.sendto( raystr, ("192.168.12." + raytuple, myport) )
         print raystr
