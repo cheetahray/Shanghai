@@ -673,7 +673,7 @@ while True:
                     else:
                         fl.delete()
                     break
-                elif addr[0].endswith("202") and rcv == '100':
+                elif rcv == '100' and addr[0].endswith("202"):
                     #if aanote > 0:
                     fluidnoteon(0, aanote, 127)
                     threading.Timer(0.1, AR, [aanote, 127]).start()
