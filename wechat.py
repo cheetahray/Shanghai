@@ -52,7 +52,7 @@ def raysendto(raystr, raytuple, myport=5005 ):
     if raytuple == "202":
         port.sendto( raystr, ("192.168.12." + raytuple, myport) )
     else:
-        threading.Timer( 1.8, port.sendto, [raystr, ("192.168.12." + raytuple, myport)]).start()
+        threading.Timer( 2, port.sendto, [raystr, ("192.168.12." + raytuple, myport)]).start()
     
 def rayiii(playidx, mynote=0):
     global thethree
