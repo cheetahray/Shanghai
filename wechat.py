@@ -312,7 +312,7 @@ def play_midi():
                 if pickidx[8].has_key(message.note):
                     raysendto("128 " + str(message.note) + " " + str(message.velocity) + " " + str(pickidx[8][message.note]) , str(pickidx[8][message.note]) )
                     del pickidx[8][message.note]
-    # should port send to webserver to say it's done
+    raysendto("EndofGame", "202", 12345 )
     time.sleep(3);
     for i in range(66,33,-1):
         raysendto("225 1", str(i) )
@@ -329,7 +329,6 @@ def play_midi():
             raysendto("144 28 1 " + str(i) , str(i) )
         time.sleep(0.02)
     time.sleep(3);
-    change3(False)
     for i in range(1,67):
         if 1 == ST[i]:
             raysendto("144 60 0 " + str(i), str(i))
@@ -344,6 +343,7 @@ def play_midi():
     for i in range(1,67):
         raysendto("249 2" , str(i))
         time.sleep(0.01)
+    change3(False)
     
 def change3(isslider):
     global port
@@ -367,8 +367,8 @@ def change3(isslider):
             time.sleep(5) # maybe recvfrom another udp string to start it, now it's my control
             thread.start_new_thread(play_midi,())
         howmanyCM += 1
+        AmIPlay = True
     else:
-        raysendto("EndofGame", "202", 12345 )
         for ii in range(len(thethree)):
             if len(thethree[ii]) == 3:
                 set66.append(thethree[ii][1])
@@ -428,33 +428,36 @@ while run:
         if len(data) >= 2:
             print data
             if (data[0:2] == "SS"):
-                midstr = '/home/oem/midi/' + data[2:] + '.mid'
-                if os.path.isfile(midstr):
-                    if False == AmIPlay and mid is None:
-                        mid = MidiFile(midstr)
-                        raysendto("PS" + data[2:], "202", 12345 )
+                if False == AmIPlay:
+                    midstr = '/home/oem/midi/' + data[2:] + '.mid'
+                    if os.path.isfile(midstr):
+                        if mid is None:
+                            mid = MidiFile(midstr)
+                            raysendto("PS" + data[2:], "202", 12345 )
+                        else:
+                            raysendto("YSS", "202", 12345 )
                     else:
-                        raysendto("YSS", "202", 12345 )
-                    AmIPlay = True
-                else:
-                    raysendto("ES" + data[2:], "202", 12345 )
+                        raysendto("ES" + data[2:], "202", 12345 )
             elif (data[0:2] == "TM"):
-                if mid is None:
-                    mid = MidiFile('/home/oem/midi/001.mid')
-                if howmanyCM <= 22:
-                    change3(True)
-                else:
-                    raysendto("NoCM", "202", 12345 ) #should be something about phone is above three, maybe let webserver to control it
+                if False == AmIPlay:
+                    if mid is None:
+                        mid = MidiFile('/home/oem/midi/001.mid')
+                    if howmanyCM <= 22:
+                        change3(True)
+                    else:
+                        raysendto("NoCM", "202", 12345 ) #should be something about phone is above three, maybe let webserver to control it
             elif (data[0:2] == "RM"):
-                tmpidx = int(data[2:])
-                for jj in range(len(thethree[tmpidx])):
-                    tmpthree[tmpidx].append(thethree[tmpidx][jj])
-                    thethree[tmpidx].pop()
+                if True == AmIPlay:
+                    tmpidx = int(data[2:])
+                    for jj in range(len(thethree[tmpidx])):
+                        tmpthree[tmpidx].append(thethree[tmpidx][jj])
+                        thethree[tmpidx].pop()
             elif (data[0:2] == "BM"):
-                tmpidx = int(data[2:])
-                for jj in range(len(tmpthree[tmpidx])):
-                    thethree[tmpidx].append(tmpthree[tmpidx][jj])
-                    tmpthree[tmpidx].pop()
+                if True == AmIPlay:
+                    tmpidx = int(data[2:])
+                    for jj in range(len(tmpthree[tmpidx])):
+                        thethree[tmpidx].append(tmpthree[tmpidx][jj])
+                        tmpthree[tmpidx].pop()
                 
     except socket.timeout:
         pass                    
