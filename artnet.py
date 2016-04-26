@@ -49,6 +49,9 @@ def handler(clientsocket, clientaddr):
             islightout = True
         elif len(data) == 2  and (data[0:2] == "in"):
             anim.cleargb()
+            p31.ChangeDutyCycle(0)
+            p33.ChangeDutyCycle(0)
+            p35.ChangeDutyCycle(0)
             islightout = False
             
 def func():
