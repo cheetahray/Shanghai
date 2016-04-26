@@ -357,6 +357,7 @@ def change3(isslider):
         #if howmanyCM == 1:
         #    theone = [2]
         #else:
+        AmIPlay = True
         theone = random.sample(set66, 1)
         thethree[howmanyCM].append(theone[0]-1)
         thethree[howmanyCM].append(theone[0])
@@ -368,7 +369,6 @@ def change3(isslider):
             time.sleep(5) # maybe recvfrom another udp string to start it, now it's my control
             thread.start_new_thread(play_midi,())
         howmanyCM += 1
-        AmIPlay = True
     else:
         for ii in range(len(thethree)):
             if len(thethree[ii]) == 3:
@@ -430,15 +430,17 @@ while run:
             print data
             if (data[0:2] == "SS"):
                 if False == AmIPlay:
-                    midstr = '/home/oem/midi/' + data[2:] + '.mid'
-                    if os.path.isfile(midstr):
-                        if mid is None:
+                    if mid is None:
+                        midstr = '/home/oem/midi/' + data[2:] + '.mid'
+                        if os.path.isfile(midstr):
                             mid = MidiFile(midstr)
                             raysendto("PS" + data[2:], "202", 12345 )
                         else:
-                            raysendto("YSS", "202", 12345 )
+                            mid = MidiFile('/home/oem/midi/001.mid')
                     else:
-                        raysendto("ES" + data[2:], "202", 12345 )
+                        raysendto("YSS", "202", 12345 )
+                else:
+                    raysendto("ES" + data[2:], "202", 12345 )
             elif (data[0:2] == "TM"):
                 if False == AmIPlay and mid is None:
                     mid = MidiFile('/home/oem/midi/001.mid')
