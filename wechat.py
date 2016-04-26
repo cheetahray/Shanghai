@@ -440,13 +440,12 @@ while run:
                     else:
                         raysendto("ES" + data[2:], "202", 12345 )
             elif (data[0:2] == "TM"):
-                if False == AmIPlay:
-                    if mid is None:
-                        mid = MidiFile('/home/oem/midi/001.mid')
-                    if howmanyCM <= 22:
-                        change3(True)
-                    else:
-                        raysendto("NoCM", "202", 12345 ) #should be something about phone is above three, maybe let webserver to control it
+                if False == AmIPlay and mid is None:
+                    mid = MidiFile('/home/oem/midi/001.mid')
+                if howmanyCM <= 22:
+                    change3(True)
+                else:
+                    raysendto("NoCM", "202", 12345 ) #should be something about phone is above three, maybe let webserver to control it
             elif (data[0:2] == "RM"):
                 if True == AmIPlay:
                     tmpidx = int(data[2:])
