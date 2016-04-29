@@ -426,45 +426,44 @@ AmIPlay = False
 while run:
     try:
         now = datetime.datetime.now()
-        if now.hour >= 17 and now.minute >= 33:
+        if now.hour > 17 or (now.hour == 17 and now.minute >= 33):
             os._exit(1)
-        else:
+        elif now.hour < 17 or (now.hour == 17 and now.minute < 30):
             data, addr = sock.recvfrom(1024)
-            if now.hour <= 17 and now.minute < 30 and len(data) >= 2:
-                print data
-                if (data[0:2] == "SS"):
-                    if False == AmIPlay:
-                        if mid is None:
-                            midstr = '/home/oem/midi/' + data[2:] + '.mid'
-                            if os.path.isfile(midstr):
-                                mid = MidiFile(midstr)
-                                raysendto("PS" + data[2:], "202", 12345 )
-                            else:
-                                mid = MidiFile('/home/oem/midi/001.mid')
+            print data
+            if (data[0:2] == "SS"):
+                if False == AmIPlay:
+                    if mid is None:
+                        midstr = '/home/oem/midi/' + data[2:] + '.mid'
+                        if os.path.isfile(midstr):
+                            mid = MidiFile(midstr)
+                            raysendto("PS" + data[2:], "202", 12345 )
                         else:
-                            raysendto("YSS", "202", 12345 )
+                            mid = MidiFile('/home/oem/midi/001.mid')
                     else:
-                        raysendto("ES" + data[2:], "202", 12345 )
-                elif (data[0:2] == "TM"):
-                    if False == AmIPlay and mid is None:
-                        mid = MidiFile('/home/oem/midi/001.mid')
-                    if howmanyCM <= 22:
-                        change3(True)
-                    else:
-                        raysendto("NoCM", "202", 12345 ) #should be something about phone is above three, maybe let webserver to control it
-                elif (data[0:2] == "RM"):
-                    if True == AmIPlay:
-                        tmpidx = int(data[2:])
-                        for jj in range(len(thethree[tmpidx])):
-                            tmpthree[tmpidx].append(thethree[tmpidx][jj])
-                            thethree[tmpidx].pop()
-                elif (data[0:2] == "BM"):
-                    if True == AmIPlay:
-                        tmpidx = int(data[2:])
-                        for jj in range(len(tmpthree[tmpidx])):
-                            thethree[tmpidx].append(tmpthree[tmpidx][jj])
-                            tmpthree[tmpidx].pop()
-                    
+                        raysendto("YSS", "202", 12345 )
+                else:
+                    raysendto("ES" + data[2:], "202", 12345 )
+            elif (data[0:2] == "TM"):
+                if False == AmIPlay and mid is None:
+                    mid = MidiFile('/home/oem/midi/001.mid')
+                if howmanyCM <= 22:
+                    change3(True)
+                else:
+                    raysendto("NoCM", "202", 12345 ) #should be something about phone is above three, maybe let webserver to control it
+            elif (data[0:2] == "RM"):
+                if True == AmIPlay:
+                    tmpidx = int(data[2:])
+                    for jj in range(len(thethree[tmpidx])):
+                        tmpthree[tmpidx].append(thethree[tmpidx][jj])
+                        thethree[tmpidx].pop()
+            elif (data[0:2] == "BM"):
+                if True == AmIPlay:
+                    tmpidx = int(data[2:])
+                    for jj in range(len(tmpthree[tmpidx])):
+                        thethree[tmpidx].append(tmpthree[tmpidx][jj])
+                        tmpthree[tmpidx].pop()
+                
     except socket.timeout:
         pass                    
     except ValueError:
