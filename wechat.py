@@ -425,6 +425,7 @@ AmIPlay = False
 # simulate a "game engine"
 while run:
     try:
+        os._exit(1)
         data, addr = sock.recvfrom(1024)
         if len(data) >= 2:
             print data
