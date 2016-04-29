@@ -314,7 +314,7 @@ def play_midi():
                     raysendto("128 " + str(message.note) + " " + str(message.velocity) + " " + str(pickidx[8][message.note]) , str(pickidx[8][message.note]) )
                     del pickidx[8][message.note]
     raysendto("EndofGame", "202", 12345 )
-    time.sleep(3);
+    time.sleep(5);
     for i in range(66,33,-1):
         raysendto("225 1", str(i) )
         raysendto("225 1", str(67-i) )
