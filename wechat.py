@@ -426,7 +426,7 @@ AmIPlay = False
 while run:
     try:
         now = datetime.datetime.now()
-        if now.hour > 17 or (now.hour == 17 and now.minute > 34):
+        if now.hour > 17 or (now.hour == 17 and now.minute > 38):
             os._exit(1)
         elif now.hour < 17 or (now.hour == 17 and now.minute <= 30):
             data, addr = sock.recvfrom(1024)
