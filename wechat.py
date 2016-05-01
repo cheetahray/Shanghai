@@ -392,6 +392,7 @@ wb = load_workbook('test.xlsx')
 ws = wb.active
 myrow = 1
 mycolume = 1
+now = datetime.datetime.now()
 for row in ws.iter_rows('A2:A488'):
     for cell in row:
         myrow = myrow + 1
@@ -404,7 +405,7 @@ sleeptime = 0.001
 
 sock = socket.socket(socket.AF_INET, socket.SOCK_DGRAM) # UDP
 sock.bind(("0.0.0.0", 5005))
-sock.settimeout(0.001)
+sock.settimeout(0.005)
 
 set66 = [ 2, 5, 8, 11, 14, 17, 20, 23, 26, 29, 32, 35, 38, 41, 44, 47, 50, 53, 56, 59, 62, 65 ]
 
