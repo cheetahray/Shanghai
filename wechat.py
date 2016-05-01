@@ -382,7 +382,7 @@ def change3(isslider):
         for ii in range(len(thethree)):
             for jj in range(len(thethree[ii])):
                 thethree[ii].pop()
-        ws.cell(row = myrow, column = mycolume)
+        ws.cell(row = myrow, column = mycolume) = howmanyCM
         wb.save('test.xlsx')
         howmanyCM = 1
         AmIPlay = False
