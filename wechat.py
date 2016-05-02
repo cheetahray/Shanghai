@@ -470,11 +470,15 @@ while run:
                     mid = MidiFile('/home/oem/midi/001.mid')
                 if howmanyCM <= 22:
                     if howmanyCM == 1:
-                        for column in ws.iter_rows('B1:I1'):
+                        for row in ws.iter_rows('B1:I1'):
                             if True == goout:
                                 break;
-                            for cell in column:
+                            for cell in row:
                                 mycolume = mycolume + 1
+                                print now.hour
+                                print cell.value.hour
+                                print now.minute
+                                print cell.value.minute
                                 if now.hour == cell.value.hour and now.minute == cell.value.minute: 
                                     goout = True
                     change3(True)
