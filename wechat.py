@@ -475,6 +475,8 @@ while run:
                                 break;
                             for cell in row:
                                 mycolume = mycolume + 1
+                                print now.minute 
+                                print cell.value.minute
                                 if now.hour == cell.value.hour and now.minute == cell.value.minute: 
                                     goout = True
                     change3(True)
