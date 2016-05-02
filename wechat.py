@@ -10,6 +10,8 @@ from mido import MidiFile
 import random
 import threading
 import datetime
+from openpyxl import load_workbook
+
 def raymap(value, istart, istop, ostart, ostop):
     #wierd = ostart + (ostop - ostart) * (value - istart) / (istop - istart); 
     #print wierd
@@ -352,6 +354,10 @@ def change3(isslider):
     global thethree
     global set66
     global AmIPlay
+    global ws
+    global wb
+    global myrow
+    global mycolume
     if True == isslider:
         theone = None
         if howmanyCM == 1:
@@ -376,11 +382,23 @@ def change3(isslider):
         for ii in range(len(thethree)):
             for jj in range(len(thethree[ii])):
                 thethree[ii].pop()
-                
+        ws[str(ord('A') + mycolume) + str(myrow)] = howmanyCM
+        wb.save('/home/oem/Desktop/wechat.xlsx')
         howmanyCM = 1
         AmIPlay = False
         
 run = True
+wb = load_workbook('/home/oem/Desktop/wechat.xlsx')
+ws = wb.active
+myrow = 1
+mycolume = 1
+now = datetime.datetime.now()
+for row in ws.iter_rows('A2:A488'):
+    for cell in row:
+        myrow = myrow + 1
+        if now.year == cell.value.year and now.month == cell.value.month and now.day == cell.value.day: 
+            #print myrow
+            break
 
 data = ""
 sleeptime = 0.001
@@ -448,6 +466,13 @@ while run:
                 if False == AmIPlay and mid is None:
                     mid = MidiFile('/home/oem/midi/001.mid')
                 if howmanyCM <= 22:
+                    if howmanyCM == 1:
+                        for row in ws.iter_rows('B1:J1'):
+                            for cell in row:
+                                mycolume = mycolume + 1
+                                if now.hour == cell.value.hour and now.minute == cell.value.minute: 
+                                    #print mycolume
+                                    break
                     change3(True)
                 else:
                     raysendto("NoCM", "202", 12345 ) #should be something about phone is above three, maybe let webserver to control it
