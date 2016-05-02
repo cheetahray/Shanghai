@@ -395,7 +395,7 @@ myrow = 1
 mycolume = 1
 now = datetime.datetime.now()
 for row in ws.iter_rows('A2:A488'):
-    for cell in row:
+    if cell in row:
         myrow = myrow + 1
         if now.year == cell.value.year and now.month == cell.value.month and now.day == cell.value.day: 
             print myrow
@@ -469,7 +469,7 @@ while run:
                 if howmanyCM <= 22:
                     if howmanyCM == 1:
                         for row in ws.iter_rows('B1:I1'):
-                            for cell in row:
+                            if cell in row:
                                 mycolume = mycolume + 1
                                 if now.hour == cell.value.hour and now.minute == cell.value.minute: 
                                     #print mycolume
