@@ -471,9 +471,9 @@ while run:
                     if howmanyCM == 1:
                         for row in ws.iter_rows('B1:I1'):
                             for cell in row:
-                                mycolume = mycolume + 1
                                 if now.hour == cell.value.hour and now.minute == cell.value.minute: 
                                     break
+                                mycolume = mycolume + 1
                     change3(True)
                 else:
                     raysendto("NoCM", "202", 12345 ) #should be something about phone is above three, maybe let webserver to control it
