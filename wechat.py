@@ -382,8 +382,8 @@ def change3(isslider):
         for ii in range(len(thethree)):
             for jj in range(len(thethree[ii])):
                 thethree[ii].pop()
-        print str(ord('A') + mycolume) + str(myrow)
-        ws[str(ord('A') + mycolume) + str(myrow)] = howmanyCM
+        print str(unichr(ord('A') + mycolume)) + str(myrow)
+        ws[str(unichr(ord('A') + mycolume)) + str(myrow)] = howmanyCM
         wb.save('/home/oem/Desktop/wechat.xlsx')
         howmanyCM = 1
         AmIPlay = False
@@ -403,7 +403,6 @@ for row in ws.iter_rows('A2:A488'):
         myrow = myrow + 1
         if now.year == cell.value.year and now.month == cell.value.month and now.day == cell.value.day: 
             goout = True
-print myrow
 goout = False
 
 data = ""
