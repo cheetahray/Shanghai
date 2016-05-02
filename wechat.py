@@ -470,7 +470,7 @@ while run:
                     mid = MidiFile('/home/oem/midi/001.mid')
                 if howmanyCM <= 22:
                     if howmanyCM == 1:
-                        for column in ws.iter_columns('B1:I1'):
+                        for column in ws.iter_rows('B1:I1'):
                             if True == goout:
                                 break;
                             for cell in column:
