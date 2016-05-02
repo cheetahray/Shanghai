@@ -382,6 +382,7 @@ def change3(isslider):
         for ii in range(len(thethree)):
             for jj in range(len(thethree[ii])):
                 thethree[ii].pop()
+        print str(ord('A') + mycolume) + str(myrow)
         ws[str(ord('A') + mycolume) + str(myrow)] = howmanyCM
         wb.save('/home/oem/Desktop/wechat.xlsx')
         howmanyCM = 1
