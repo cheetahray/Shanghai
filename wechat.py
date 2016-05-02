@@ -403,7 +403,6 @@ for row in ws.iter_rows('A2:A488'):
         myrow = myrow + 1
         if now.year == cell.value.year and now.month == cell.value.month and now.day == cell.value.day: 
             goout = True
-goout = False
 
 data = ""
 sock = socket.socket(socket.AF_INET, socket.SOCK_DGRAM) # UDP
@@ -471,16 +470,10 @@ while run:
                 if howmanyCM <= 22:
                     if howmanyCM == 1:
                         for row in ws.iter_rows('B1:I1'):
-                            if True == goout:
-                                break;
                             for cell in row:
                                 mycolume = mycolume + 1
-                                print now.hour
-                                print cell.value.hour
-                                print now.minute
-                                print cell.value.minute
                                 if now.hour == cell.value.hour and now.minute == cell.value.minute: 
-                                    goout = True
+                                    break
                     change3(True)
                 else:
                     raysendto("NoCM", "202", 12345 ) #should be something about phone is above three, maybe let webserver to control it
