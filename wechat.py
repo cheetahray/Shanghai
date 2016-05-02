@@ -389,21 +389,24 @@ def change3(isslider):
         AmIPlay = False
         
 run = True
+
 wb = load_workbook('/home/oem/Desktop/wechat.xlsx')
 ws = wb.active
 myrow = 1
 mycolume = 1
 now = datetime.datetime.now()
+goout = False
 for row in ws.iter_rows('A2:A488'):
-    if cell in row:
+    if True == goout:
+        break;
+    for cell in row:
         myrow = myrow + 1
         if now.year == cell.value.year and now.month == cell.value.month and now.day == cell.value.day: 
-            print myrow
-            break
+            goout = True
 print myrow
-data = ""
-sleeptime = 0.001
+goout = False
 
+data = ""
 sock = socket.socket(socket.AF_INET, socket.SOCK_DGRAM) # UDP
 sock.bind(("0.0.0.0", 5005))
 sock.settimeout(0.005)
@@ -469,11 +472,12 @@ while run:
                 if howmanyCM <= 22:
                     if howmanyCM == 1:
                         for row in ws.iter_rows('B1:I1'):
-                            if cell in row:
+                            if True == goout:
+                                break;
+                            for cell in row:
                                 mycolume = mycolume + 1
                                 if now.hour == cell.value.hour and now.minute == cell.value.minute: 
-                                    #print mycolume
-                                    break
+                                    goout = True
                     change3(True)
                 else:
                     raysendto("NoCM", "202", 12345 ) #should be something about phone is above three, maybe let webserver to control it
