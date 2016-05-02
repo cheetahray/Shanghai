@@ -398,9 +398,9 @@ for row in ws.iter_rows('A2:A488'):
     for cell in row:
         myrow = myrow + 1
         if now.year == cell.value.year and now.month == cell.value.month and now.day == cell.value.day: 
-            #print myrow
+            print myrow
             break
-
+print myrow
 data = ""
 sleeptime = 0.001
 
