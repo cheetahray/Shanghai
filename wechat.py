@@ -469,7 +469,7 @@ while run:
                     mid = MidiFile('/home/oem/midi/001.mid')
                 if howmanyCM <= 22:
                     if howmanyCM == 1:
-                        for row in ws.iter_rows('B1:I1'):
+                        for row in ws.iter_rows('B1:J1'):
                             for cell in row:
                                 if now.hour == cell.value.hour and now.minute == cell.value.minute: 
                                     break
