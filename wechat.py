@@ -357,7 +357,7 @@ def change3(isslider):
     global ws
     global wb
     global myrow
-    global mycolume
+    global mycolumn
     if True == isslider:
         theone = None
         if howmanyCM == 1:
@@ -382,9 +382,10 @@ def change3(isslider):
         for ii in range(len(thethree)):
             for jj in range(len(thethree[ii])):
                 thethree[ii].pop()
-        print str(unichr(ord('A') + mycolume)) + str(myrow)
-        ws[str(unichr(ord('A') + mycolume)) + str(myrow)] = howmanyCM-1
+        print str(unichr(ord('A') + mycolumn)) + str(myrow)
+        ws[str(unichr(ord('A') + mycolumn)) + str(myrow)] = howmanyCM-1
         wb.save('/home/oem/Desktop/wechat.xlsx')
+        mycolumn = 1
         howmanyCM = 1
         AmIPlay = False
         
@@ -393,7 +394,7 @@ run = True
 wb = load_workbook('/home/oem/Desktop/wechat.xlsx')
 ws = wb.active
 myrow = 1
-mycolume = 1
+mycolumn = 1
 now = datetime.datetime.now()
 goout = False
 for row in ws.iter_rows('A2:A488'):
@@ -473,7 +474,7 @@ while run:
                             for cell in row:
                                 if now.hour == cell.value.hour and now.minute == cell.value.minute: 
                                     break
-                                mycolume = mycolume + 1
+                                mycolumn = mycolumn + 1
                     change3(True)
                 else:
                     raysendto("NoCM", "202", 12345 ) #should be something about phone is above three, maybe let webserver to control it
