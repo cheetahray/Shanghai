@@ -442,13 +442,13 @@ howmanyCM = 1
 thethree = [[],[],[],[],[],[],[],[],[],[],[],[],[],[],[],[],[],[],[],[],[],[],[]]
 tmpthree = [[],[],[],[],[],[],[],[],[],[],[],[],[],[],[],[],[],[],[],[],[],[],[]]
 AmIPlay = False
-# simulate a "game engine"
+thehr = 22
 while run:
     try:
         now = datetime.datetime.now()
-        if now.hour > 17 or (now.hour == 17 and now.minute > 38):
+        if now.hour > thehr or (now.hour == thehr and now.minute > 38):
             os._exit(1)
-        elif now.hour < 17 or (now.hour == 17 and now.minute <= 30):
+        elif now.hour < thehr or (now.hour == thehr and now.minute <= 30):
             data, addr = sock.recvfrom(1024)
             print data
             if (data[0:2] == "SS"):
