@@ -443,7 +443,7 @@ howmanyCM = 1
 thethree = [[],[],[],[],[],[],[],[],[],[],[],[],[],[],[],[],[],[],[],[],[],[],[]]
 tmpthree = [[],[],[],[],[],[],[],[],[],[],[],[],[],[],[],[],[],[],[],[],[],[],[]]
 AmIPlay = False
-thehr = 22
+thehr = 17
 while run:
     try:
         now = datetime.datetime.now()
