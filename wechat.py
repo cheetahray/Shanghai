@@ -53,7 +53,8 @@ def raysendto(raystr, raytuple, myport=5005 ):
     global port
     if raytuple == "202":
         port.sendto( raystr, ("192.168.12." + raytuple, myport) )
-        print raystr
+        if raystr.indexOf(0) != "M":
+		    print raystr
     else:
         threading.Timer( 2, port.sendto, [raystr, ("192.168.12." + raytuple, myport)]).start()
     
@@ -382,7 +383,7 @@ def change3(isslider):
         for ii in range(len(thethree)):
             for jj in range(len(thethree[ii])):
                 thethree[ii].pop()
-        print str(unichr(ord('A') + mycolumn)) + str(myrow)
+        print set66
         ws[str(unichr(ord('A') + mycolumn)) + str(myrow)] = howmanyCM-1
         wb.save('/home/oem/Desktop/wechat.xlsx')
         mycolumn = 1
