@@ -53,7 +53,7 @@ def raysendto(raystr, raytuple, myport=5005 ):
     global port
     if raytuple == "202":
         port.sendto( raystr, ("192.168.12." + raytuple, myport) )
-        if raystr.indexOf(0) != "M":
+        if raystr.index("M") != 0:
 		    print raystr
     else:
         threading.Timer( 2, port.sendto, [raystr, ("192.168.12." + raytuple, myport)]).start()
