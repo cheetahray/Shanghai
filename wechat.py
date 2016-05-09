@@ -53,7 +53,8 @@ def raysendto(raystr, raytuple, myport=5005 ):
     global port
     if raytuple == "202":
         port.sendto( raystr, ("192.168.12." + raytuple, myport) )
-        print raystr
+        if raystr.startswith("M") == False:
+            print raystr
     else:
         threading.Timer( 2, port.sendto, [raystr, ("192.168.12." + raytuple, myport)]).start()
     
@@ -357,7 +358,7 @@ def change3(isslider):
     global ws
     global wb
     global myrow
-    global mycolume
+    global mycolumn
     if True == isslider:
         theone = None
         if howmanyCM == 1:
@@ -382,9 +383,10 @@ def change3(isslider):
         for ii in range(len(thethree)):
             for jj in range(len(thethree[ii])):
                 thethree[ii].pop()
-        print str(unichr(ord('A') + mycolume)) + str(myrow)
-        ws[str(unichr(ord('A') + mycolume)) + str(myrow)] = howmanyCM-1
+        print set66
+        ws[str(unichr(ord('A') + mycolumn)) + str(myrow)] = howmanyCM-1
         wb.save('/home/oem/Desktop/wechat.xlsx')
+        mycolumn = 1
         howmanyCM = 1
         AmIPlay = False
         
@@ -393,7 +395,7 @@ run = True
 wb = load_workbook('/home/oem/Desktop/wechat.xlsx')
 ws = wb.active
 myrow = 1
-mycolume = 1
+mycolumn = 1
 now = datetime.datetime.now()
 goout = False
 for row in ws.iter_rows('A2:A488'):
@@ -442,13 +444,13 @@ howmanyCM = 1
 thethree = [[],[],[],[],[],[],[],[],[],[],[],[],[],[],[],[],[],[],[],[],[],[],[]]
 tmpthree = [[],[],[],[],[],[],[],[],[],[],[],[],[],[],[],[],[],[],[],[],[],[],[]]
 AmIPlay = False
-# simulate a "game engine"
+thehr = 17
 while run:
     try:
         now = datetime.datetime.now()
-        if now.hour > 17 or (now.hour == 17 and now.minute > 38):
+        if now.hour > thehr or (now.hour == thehr and now.minute > 38):
             os._exit(1)
-        elif now.hour < 17 or (now.hour == 17 and now.minute <= 30):
+        elif now.hour < thehr or (now.hour == thehr and now.minute <= 30):
             data, addr = sock.recvfrom(1024)
             print data
             if (data[0:2] == "SS"):
@@ -473,7 +475,7 @@ while run:
                             for cell in row:
                                 if now.hour == cell.value.hour and now.minute == cell.value.minute: 
                                     break
-                                mycolume = mycolume + 1
+                                mycolumn = mycolumn + 1
                     change3(True)
                 else:
                     raysendto("NoCM", "202", 12345 ) #should be something about phone is above three, maybe let webserver to control it
