@@ -327,7 +327,9 @@ def funcdrop2(printnote):
     if 1 == canweas[whoami]:
         sock.sendto("aa", UDP_tuple)
         print("aa" + str(printnote))
-        clientsock.send("picker")
+        clientsock.send("wechat")
+        if False == islightout:
+            clientsock.send("slide{0} {1}".format( tp[whattype[whoami]][nowm] , whattype[whoami] ) )
         canweas[whoami] = 2
 
 def funcdrop3(printnote):
@@ -461,8 +463,6 @@ def raylist(mylist):
                              #threading.Timer(notedelay-0.1, AR, [noteint,int(mylist[2])]).start()
                              mycmd("mt" + str(nowm))
                              dropnote = True
-                             if False == islightout:
-                                 clientsock.send("slide{0} {1} {2}".format( tp[whattype[whoami]][nowm] , math.fabs( tp[whattype[whoami]][nowm]-tp[whattype[whoami]][lastm] )*0.025 , whattype[whoami] ) )
                              lastm = nowm
                     else:
                          threading.Timer(notedelay, AS, [noteint]).start()
@@ -478,8 +478,6 @@ def raylist(mylist):
                         #threading.Timer(notedelay-0.3, fluidnoteon, [chnl, noteint, int(mylist[2])] ).start()
                         mycmd("mt" + str(nowm))
                         dropnote = True
-                        if False == islightout:
-                            clientsock.send("slide{0} {1} {2}".format( tp[whattype[whoami]][nowm] , math.fabs( tp[whattype[whoami]][nowm]-tp[whattype[whoami]][lastm] )*0.025 , whattype[whoami] ) )
                         lastm = nowm
                 else:
                     threading.Timer(notedelay-0.3, fl.noteoff, [chnl, noteint]).start()

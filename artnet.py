@@ -53,6 +53,34 @@ def handler(clientsocket, clientaddr):
                         p31.ChangeDutyCycle(100)
                         p33.ChangeDutyCycle(0)
                         p35.ChangeDutyCycle(0)
+        elif ( len(data) >= 6  and (data[0:6] == "wechat") ):
+            GPIO.output(13, False) #p13.ChangeDutyCycle(0)
+            p38.ChangeDutyCycle(100) #GPIO.output(38, True)
+            p40.ChangeDutyCycle(0) #GPIO.output(40, False)
+            Timer(0.333, func).start()
+            if False == islightout:
+                mylist2 = data[6:].split(" ")
+                #print(mylist2)
+                if '0' == mylist2[1] : 
+                    anim.rayanim(0,255,0,255,int(mylist2[0])+1,0.01)
+                    p31.ChangeDutyCycle(0)
+                    p33.ChangeDutyCycle(100)
+                    p35.ChangeDutyCycle(0)
+                elif '1' == mylist2[1] : 
+                    anim.rayanim(255,255,255,255,int(mylist2[0])+1,0.01)
+                    p31.ChangeDutyCycle(100)
+                    p33.ChangeDutyCycle(100)
+                    p35.ChangeDutyCycle(100)
+                elif '2' == mylist2[1] : 
+                    anim.rayanim(255,112,0,255,int(mylist2[0])+1,0.01)
+                    p31.ChangeDutyCycle(100)
+                    p33.ChangeDutyCycle(50)
+                    p35.ChangeDutyCycle(0)
+                elif '3' == mylist2[1] : 
+                    anim.rayanim(255,0,0,255,int(mylist2[0])+1,0.01)
+                    p31.ChangeDutyCycle(100)
+                    p33.ChangeDutyCycle(0)
+                    p35.ChangeDutyCycle(0)
         elif len(data) == 3  and (data[0:3] == "out"):
             QQ = False
             qq50 = 50
