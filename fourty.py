@@ -25,20 +25,20 @@ print "Starting... "
 
 while True:
 
-  if False:  
+  if True:  
     print "Spark"
     GPIO.output(led13Pin, False)
     time.sleep(1)
     GPIO.output(led13Pin, True)
     time.sleep(1)
 
-  if False:
-    print "warm white"
+  if True:
+    print "cold white"
     GPIO.output(led38Pin, True)
     time.sleep(1)
     GPIO.output(led38Pin, False)
 
-    print "cold white"
+    print "warm white"
     GPIO.output(led40Pin, True)
     time.sleep(1)
     GPIO.output(led40Pin, False)
@@ -46,22 +46,22 @@ while True:
   if True:
     print "Red"
     GPIO.output(led31Pin, True)
-    time.sleep(2)
+    time.sleep(1)
     GPIO.output(led31Pin, False)
 
     print "Green"
     GPIO.output(led33Pin, True)
-    time.sleep(2)
+    time.sleep(1)
     GPIO.output(led33Pin, False)
 
     print "Blue"
     GPIO.output(led35Pin, True)
-    time.sleep(2)
+    time.sleep(1)
     GPIO.output(led35Pin, False)
 
     print "White"
     GPIO.output(led37Pin, True)
-    time.sleep(2)
+    time.sleep(1)
     GPIO.output(led37Pin, False)
 
 GPIO.cleanup()
