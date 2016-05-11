@@ -47,8 +47,6 @@ def checkbound(whattype, oidx):
                 oidx += 1
     return oidx                
 
-s1 = socket.socket(socket.AF_INET, socket.SOCK_DGRAM)
-
 def raysendto(raystr, raytuple, myport=5005 ):
     global port
     if raytuple == "202":
@@ -407,9 +405,6 @@ for row in ws.iter_rows('A2:A488'):
             goout = True
 
 data = ""
-sock = socket.socket(socket.AF_INET, socket.SOCK_DGRAM) # UDP
-sock.bind(("0.0.0.0", 5005))
-sock.settimeout(0.005)
 
 set66 = [ 2, 5, 8, 11, 14, 17, 20, 23, 26, 29, 32, 35, 38, 41, 44, 47, 50, 53, 56, 59, 62, 65 ]
 
@@ -438,6 +433,8 @@ pickidx = [{},{},{},{},{},{},{},{},{},{},{},{}]
 slideidx = [{},{},{},{},{},{},{},{},{},{},{},{}]
 
 port = socket.socket(socket.AF_INET, socket.SOCK_DGRAM)      
+port.bind(("0.0.0.0", 5005))
+port.settimeout(0.005)
 mid = None
 
 howmanyCM = 1    
@@ -451,7 +448,7 @@ while run:
         if now.hour > thehr or (now.hour == thehr and now.minute > 38):
             os._exit(1)
         elif now.hour < thehr or (now.hour == thehr and now.minute <= 30):
-            data, addr = sock.recvfrom(1024)
+            data, addr = port.recvfrom(1024)
             print data
             if (data[0:2] == "SS"):
                 if False == AmIPlay:

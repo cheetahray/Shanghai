@@ -103,6 +103,208 @@ def play_midi():
                     if pickidx[0].has_key(message.note):
                         port.sendto("144 " + str(message.note) + " 0 " + str(pickidx[0][message.note]), ("192.168.12." + str(pickidx[0][message.note]), 5005) )
                         del pickidx[0][message.note]
+                elif False:#message.channel == 12:
+                    if message.note == 84:
+                        for dd in range(drumlen*4,drumlen*5):
+                            port.sendto("127", ("192.168.13." + drum[dd], 8888) )
+                    elif message.note == 86:
+                        for dd in range(drumlen*4,drumlen*5):
+                            port.sendto("143", ("192.168.13." + drum[dd], 8888) )
+                    elif message.note == 88:
+                        for dd in range(drumlen*4,drumlen*5):
+                            port.sendto("159", ("192.168.13." + drum[dd], 8888) )
+                    elif message.note == 89:
+                        for dd in range(drumlen*4,drumlen*5):
+                            port.sendto("175", ("192.168.13." + drum[dd], 8888) )
+                    elif message.note == 91:
+                        for dd in range(drumlen*4,drumlen*5):
+                            port.sendto("191", ("192.168.13." + drum[dd], 8888) )
+                    elif message.note == 93:
+                        for dd in range(drumlen*4,drumlen*5):
+                            port.sendto("207", ("192.168.13." + drum[dd], 8888) )
+                    elif message.note == 95:
+                        for dd in range(drumlen*4,drumlen*5):
+                            port.sendto("223", ("192.168.13." + drum[dd], 8888) )
+                    elif message.note == 96:
+                        for dd in range(drumlen*4,drumlen*5):
+                            port.sendto("239", ("192.168.13." + drum[dd], 8888) )        
+                elif False:#message.channel == 7:
+                    if message.note == 84:
+                        for dd in range(drumlen*3,drumlen*4):
+                            port.sendto("127", ("192.168.13." + drum[dd], 8888) )
+                    elif message.note == 86:
+                        for dd in range(drumlen*3,drumlen*4):
+                            port.sendto("143", ("192.168.13." + drum[dd], 8888) )
+                    elif message.note == 88:
+                        for dd in range(drumlen*3,drumlen*4):
+                            port.sendto("159", ("192.168.13." + drum[dd], 8888) )
+                    elif message.note == 89:
+                        for dd in range(drumlen*3,drumlen*4):
+                            port.sendto("175", ("192.168.13." + drum[dd], 8888) )
+                    elif message.note == 91:
+                        for dd in range(drumlen*3,drumlen*4):
+                            port.sendto("191", ("192.168.13." + drum[dd], 8888) )
+                    elif message.note == 93:
+                        for dd in range(drumlen*3,drumlen*4):
+                            port.sendto("207", ("192.168.13." + drum[dd], 8888) )
+                    elif message.note == 95:
+                        for dd in range(drumlen*3,drumlen*4):
+                            port.sendto("223", ("192.168.13." + drum[dd], 8888) )
+                    elif message.note == 96:
+                        for dd in range(drumlen*3,drumlen*4):
+                            port.sendto("239", ("192.168.13." + drum[dd], 8888) )        
+                elif False:#message.channel == 6:
+                    if message.note == 84:
+                        for dd in range(drumlen*2,drumlen*3):
+                            port.sendto("127", ("192.168.13." + drum[dd], 8888) )
+                    elif message.note == 86:
+                        for dd in range(drumlen*2,drumlen*3):
+                            port.sendto("143", ("192.168.13." + drum[dd], 8888) )
+                    elif message.note == 88:
+                        for dd in range(drumlen*2,drumlen*3):
+                            port.sendto("159", ("192.168.13." + drum[dd], 8888) )
+                    elif message.note == 89:
+                        for dd in range(drumlen*2,drumlen*3):
+                            port.sendto("175", ("192.168.13." + drum[dd], 8888) )
+                    elif message.note == 91:
+                        for dd in range(drumlen*2,drumlen*3):
+                            port.sendto("191", ("192.168.13." + drum[dd], 8888) )
+                    elif message.note == 93:
+                        for dd in range(drumlen*2,drumlen*3):
+                            port.sendto("207", ("192.168.13." + drum[dd], 8888) )
+                    elif message.note == 95:
+                        for dd in range(drumlen*2,drumlen*3):
+                            port.sendto("223", ("192.168.13." + drum[dd], 8888) )
+                    elif message.note == 96:
+                        for dd in range(drumlen*2,drumlen*3):
+                            port.sendto("239", ("192.168.13." + drum[dd], 8888) )        
+                elif False:#message.channel == 5:
+                    if message.note == 84:
+                        for dd in range(drumlen,drumlen*2):
+                            port.sendto("127", ("192.168.13." + drum[dd], 8888) )
+                    elif message.note == 86:
+                        for dd in range(drumlen,drumlen*2):
+                            port.sendto("143", ("192.168.13." + drum[dd], 8888) )
+                    elif message.note == 88:
+                        for dd in range(drumlen,drumlen*2):
+                            port.sendto("159", ("192.168.13." + drum[dd], 8888) )
+                    elif message.note == 89:
+                        for dd in range(drumlen,drumlen*2):
+                            port.sendto("175", ("192.168.13." + drum[dd], 8888) )
+                    elif message.note == 91:
+                        for dd in range(drumlen,drumlen*2):
+                            port.sendto("191", ("192.168.13." + drum[dd], 8888) )
+                    elif message.note == 93:
+                        for dd in range(drumlen,drumlen*2):
+                            port.sendto("207", ("192.168.13." + drum[dd], 8888) )
+                    elif message.note == 95:
+                        for dd in range(drumlen,drumlen*2):
+                            port.sendto("223", ("192.168.13." + drum[dd], 8888) )
+                    elif message.note == 96:
+                        for dd in range(drumlen/5,drumlen/5):
+                            port.sendto("239", ("192.168.13." + drum[dd], 8888) )        
+                elif False:#message.channel == 4:
+                    if message.note == 84:
+                        for dd in range(0,drumlen):
+                            port.sendto("127", ("192.168.13." + drum[dd], 8888) )
+                    elif message.note == 86:
+                        for dd in range(0,drumlen):
+                            port.sendto("143", ("192.168.13." + drum[dd], 8888) )
+                    elif message.note == 88:
+                        for dd in range(0,drumlen):
+                            port.sendto("159", ("192.168.13." + drum[dd], 8888) )
+                    elif message.note == 89:
+                        for dd in range(0,drumlen):
+                            port.sendto("175", ("192.168.13." + drum[dd], 8888) )
+                    elif message.note == 91:
+                        for dd in range(0,drumlen):
+                            port.sendto("191", ("192.168.13." + drum[dd], 8888) )
+                    elif message.note == 93:
+                        for dd in range(0,drumlen):
+                            port.sendto("207", ("192.168.13." + drum[dd], 8888) )
+                    elif message.note == 95:
+                        for dd in range(0,drumlen):
+                            port.sendto("223", ("192.168.13." + drum[dd], 8888) )
+                    elif message.note == 96:
+                        for dd in range(0,drumlen):
+                            port.sendto("239", ("192.168.13." + drum[dd], 8888) )        
+                elif False:#message.channel == 13:
+                    if message.note == 36:
+                        port.sendto("127", ("192.168.11.141", 8888) )
+                    elif message.note == 37:
+                        port.sendto("127", ("192.168.11.141", 8888) )
+                    elif message.note == 38:
+                        port.sendto("127", ("192.168.11.141", 8888) )
+                    elif message.note == 39:
+                        port.sendto("127", ("192.168.11.141", 8888) )
+                    elif message.note == 40:
+                        port.sendto("127", ("192.168.11.141", 8888) )
+                    elif message.note == 41:
+                        port.sendto("127", ("192.168.11.141", 8888) )
+                    elif message.note == 42:
+                        port.sendto("127", ("192.168.11.141", 8888) )
+                    elif message.note == 43:
+                        port.sendto("127", ("192.168.11.141", 8888) )
+                    elif message.note == 44:
+                        port.sendto("127", ("192.168.11.141", 8888) )
+                    elif message.note == 45:
+                        port.sendto("127", ("192.168.11.141", 8888) )
+                    elif message.note == 46:
+                        port.sendto("127", ("192.168.11.141", 8888) )
+                    elif message.note == 47:
+                        port.sendto("127", ("192.168.11.141", 8888) )
+                    elif message.note == 48:
+                        port.sendto("127", ("192.168.11.141", 8888) )
+                    elif message.note == 49:
+                        port.sendto("127", ("192.168.11.141", 8888) )
+                    elif message.note == 50:
+                        port.sendto("127", ("192.168.11.141", 8888) )
+                    elif message.note == 51:
+                        port.sendto("127", ("192.168.11.141", 8888) )
+                    elif message.note == 52:
+                        port.sendto("127", ("192.168.11.141", 8888) )
+                    elif message.note == 53:
+                        port.sendto("127", ("192.168.11.141", 8888) )
+                    elif message.note == 54:
+                        port.sendto("127", ("192.168.11.141", 8888) )
+                    elif message.note == 55:
+                        port.sendto("127", ("192.168.11.141", 8888) )
+                    elif message.note == 56:
+                        port.sendto("127", ("192.168.11.141", 8888) )
+                    elif message.note == 57:
+                        port.sendto("127", ("192.168.11.141", 8888) )
+                    elif message.note == 58:
+                        port.sendto("127", ("192.168.11.141", 8888) )
+                    elif message.note == 59:
+                        port.sendto("127", ("192.168.11.141", 8888) )
+                    elif message.note == 60:
+                        port.sendto("127", ("192.168.11.141", 8888) )
+                    elif message.note == 61:
+                        port.sendto("127", ("192.168.11.141", 8888) )
+                    elif message.note == 62:
+                        port.sendto("127", ("192.168.11.141", 8888) )
+                    elif message.note == 63:
+                        port.sendto("127", ("192.168.11.141", 8888) )
+                    elif message.note == 64:
+                        port.sendto("127", ("192.168.11.141", 8888) )
+                    elif message.note == 65:
+                        port.sendto("127", ("192.168.11.141", 8888) )
+                    elif message.note == 66:
+                        port.sendto("127", ("192.168.11.141", 8888) )
+                    elif message.note == 67:
+                        port.sendto("127", ("192.168.11.141", 8888) )
+                    elif message.note == 68:
+                        port.sendto("127", ("192.168.11.141", 8888) )
+                    elif message.note == 69:
+                        port.sendto("127", ("192.168.11.141", 8888) )
+                    elif message.note == 70:
+                        port.sendto("127", ("192.168.11.141", 8888) )
+                    elif message.note == 71:
+                        port.sendto("127", ("192.168.11.141", 8888) )
+                    elif message.note == 72:
+                        port.sendto("127", ("192.168.11.141", 8888) )
+                    elif message.note == 73:
+                        port.sendto("127", ("192.168.11.141", 8888) )                                            
                 elif message.channel == 11:
                     if pickidx[7].has_key(message.note):
                         port.sendto("144 " + str(message.note) + " 0 " + str(pickidx[7][message.note]) + "\r")
@@ -304,17 +506,35 @@ boidx = 1
 pickidx = [{},{},{},{},{},{},{},{},{},{},{},{}]
 slideidx = [{},{},{},{},{},{},{},{},{},{},{},{}]
 port = socket.socket(socket.AF_INET, socket.SOCK_DGRAM)      
+port.bind(("0.0.0.0", 8888))
+port.settimeout(0.005)
+drum = []
+drumlen = 0
 #port = serial.Serial("\\\\.\\COM7", baudrate=115200)
 try:
     #port.flushInput()
     #port.flushOutput()
-
+    for dd in range(1,255):
+        port.sendto("WHO", ("192.168.12." + str(dd), 8888))
+        try:    
+            data, addr = port.recvfrom(1024)
+            if (data[0:4] == "bell"):
+                drum.append(dd);
+                print drum  
+        except socket.timeout:
+            pass 
+    drumlen = len(drum) / 5
+    if drumlen == 0:
+        drumlen = 1
+        for dd in range(len(drum),5):
+            drum.append(str(135+dd))        
+            print drum
     whoami = "65"
     #Register the door bell button GPIO input call back function
     if '__main__' == __name__ :
         parser = argparse.ArgumentParser()
         parser.add_argument("--song",
-                             default="newyear", help="Midi file")
+                             default="001", help="Midi file")
         args = parser.parse_args()
         mid = MidiFile('/home/oem/midi/' + args.song + '.mid')
         midi_suite = unittest.TestSuite()   #Add play midi test function
