@@ -1,4 +1,5 @@
 import pysimpledmx
+import time
 mydmx = pysimpledmx.DMXConnection("/dev/ttyUSB0")
 chan = [ 0  , 0  , 0  , 0  ,
          0  , 0  , 0  , 255,
