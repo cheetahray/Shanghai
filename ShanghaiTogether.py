@@ -516,7 +516,7 @@ drum = [202,203]
 drumlen = 0
 #port = serial.Serial("\\\\.\\COM7", baudrate=115200)
 try:
-    for dd in range(121,240):
+    for dd in range(1,240):
         port.sendto("WHO", ("192.168.13." + str(dd), 8888))
         try:    
             data, addr = port.recvfrom(1024)
