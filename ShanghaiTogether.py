@@ -103,7 +103,7 @@ def play_midi():
                     if pickidx[0].has_key(message.note):
                         port.sendto("144 " + str(message.note) + " 0 " + str(pickidx[0][message.note]), ("192.168.12." + str(pickidx[0][message.note]), 5005) )
                         del pickidx[0][message.note]
-                elif False:#message.channel == 12:
+                elif message.channel == 12:
                     if message.note == 84:
                         for dd in range(drumlen*4,drumlen*5):
                             port.sendto("127", ("192.168.13." + drum[dd], 8888) )
@@ -128,7 +128,7 @@ def play_midi():
                     elif message.note == 96:
                         for dd in range(drumlen*4,drumlen*5):
                             port.sendto("239", ("192.168.13." + drum[dd], 8888) )        
-                elif False:#message.channel == 7:
+                elif message.channel == 7:
                     if message.note == 84:
                         for dd in range(drumlen*3,drumlen*4):
                             port.sendto("127", ("192.168.13." + drum[dd], 8888) )
@@ -153,7 +153,7 @@ def play_midi():
                     elif message.note == 96:
                         for dd in range(drumlen*3,drumlen*4):
                             port.sendto("239", ("192.168.13." + drum[dd], 8888) )        
-                elif False:#message.channel == 6:
+                elif message.channel == 6:
                     if message.note == 84:
                         for dd in range(drumlen*2,drumlen*3):
                             port.sendto("127", ("192.168.13." + drum[dd], 8888) )
@@ -178,7 +178,7 @@ def play_midi():
                     elif message.note == 96:
                         for dd in range(drumlen*2,drumlen*3):
                             port.sendto("239", ("192.168.13." + drum[dd], 8888) )        
-                elif False:#message.channel == 5:
+                elif message.channel == 5:
                     if message.note == 84:
                         for dd in range(drumlen,drumlen*2):
                             port.sendto("127", ("192.168.13." + drum[dd], 8888) )
@@ -203,7 +203,7 @@ def play_midi():
                     elif message.note == 96:
                         for dd in range(drumlen/5,drumlen/5):
                             port.sendto("239", ("192.168.13." + drum[dd], 8888) )        
-                elif False:#message.channel == 4:
+                elif message.channel == 4:
                     if message.note == 84:
                         for dd in range(0,drumlen):
                             port.sendto("127", ("192.168.13." + drum[dd], 8888) )
@@ -228,7 +228,7 @@ def play_midi():
                     elif message.note == 96:
                         for dd in range(0,drumlen):
                             port.sendto("239", ("192.168.13." + drum[dd], 8888) )        
-                elif False:#message.channel == 13:
+                elif message.channel == 13:
                     if message.note == 36:
                         port.sendto("239", ("192.168.13.241", 8888) )
                     #elif message.note == 37:
