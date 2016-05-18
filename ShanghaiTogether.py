@@ -512,7 +512,7 @@ port = socket.socket(socket.AF_INET, socket.SOCK_DGRAM)
 #time.sleep(2)
 port.bind(("0.0.0.0", 8888))
 port.settimeout(0.005)
-drum = [49,55,201,202,203]
+drum = [202,203]
 drumlen = 0
 #port = serial.Serial("\\\\.\\COM7", baudrate=115200)
 try:
