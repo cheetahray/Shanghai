@@ -307,31 +307,31 @@ def play_midi():
                         port.sendto("127", ("192.168.13.249", 8888) )                                            
                 elif message.channel == 11:
                     if pickidx[7].has_key(message.note):
-                        port.sendto("144 " + str(message.note) + " 0 " + str(pickidx[7][message.note]) + "\r")
+                        port.sendto("144 " + str(message.note) + " 0 " + str(pickidx[7][message.note]) + "\r", ("192.168.12." + str(pickidx[7][message.note]), 5005))
                         del pickidx[7][message.note]
                     if pickidx[11].has_key(message.note):
-                        port.sendto("144 " + str(message.note) + " 0 " + str(pickidx[11][message.note]) + "\r")
+                        port.sendto("144 " + str(message.note) + " 0 " + str(pickidx[11][message.note]) + "\r", ("192.168.12." + str(pickidx[11][message.note]), 5005))
                         del pickidx[11][message.note]
                 elif message.channel == 10:
                     if pickidx[6].has_key(message.note):
-                        port.sendto("144 " + str(message.note) + " 0 " + str(pickidx[6][message.note]) + "\r")
+                        port.sendto("144 " + str(message.note) + " 0 " + str(pickidx[6][message.note]) + "\r", ("192.168.12." + str(pickidx[6][message.note]), 5005))
                         del pickidx[6][message.note]
                     if pickidx[10].has_key(message.note):
-                        port.sendto("144 " + str(message.note) + " 0 " + str(pickidx[10][message.note]) + "\r")
+                        port.sendto("144 " + str(message.note) + " 0 " + str(pickidx[10][message.note]) + "\r", ("192.168.12." + str(pickidx[10][message.note]), 5005))
                         del pickidx[10][message.note]
                 elif message.channel == 9:
                     if pickidx[5].has_key(message.note):
-                        port.sendto("144 " + str(message.note) + " 0 " + str(pickidx[5][message.note]) + "\r")
+                        port.sendto("144 " + str(message.note) + " 0 " + str(pickidx[5][message.note]) + "\r", ("192.168.12." + str(pickidx[5][message.note]), 5005))
                         del pickidx[5][message.note]
                     if pickidx[9].has_key(message.note):
-                        port.sendto("144 " + str(message.note) + " 0 " + str(pickidx[9][message.note]) + "\r")
+                        port.sendto("144 " + str(message.note) + " 0 " + str(pickidx[9][message.note]) + "\r", ("192.168.12." + str(pickidx[9][message.note]), 5005))
                         del pickidx[9][message.note]
                 elif message.channel == 8:
                     if pickidx[4].has_key(message.note):
-                        port.sendto("144 " + str(message.note) + " 0 " + str(pickidx[4][message.note]) + "\r")
+                        port.sendto("144 " + str(message.note) + " 0 " + str(pickidx[4][message.note]) + "\r", ("192.168.12." + str(pickidx[4][message.note]), 5005))
                         del pickidx[4][message.note]
                     if pickidx[8].has_key(message.note):
-                        port.sendto("144 " + str(message.note) + " 0 " + str(pickidx[8][message.note]) + "\r")
+                        port.sendto("144 " + str(message.note) + " 0 " + str(pickidx[8][message.note]) + "\r", ("192.168.12." + str(pickidx[8][message.note]), 5005))
                         del pickidx[8][message.note]
             else:
                 if False:#message.channel == 7:
