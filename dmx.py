@@ -1,7 +1,26 @@
 import pysimpledmx
 mydmx = pysimpledmx.DMXConnection("/dev/ttyUSB0")
-mydmx.setChannel(1, 255) # set DMX channel 1 to full
-mydmx.setChannel(2, 255) # set DMX channel 2 to 128
-mydmx.setChannel(3, 0) # set DMX channel 3 to 0
-mydmx.setChannel(4, 255)
-mydmx.render()
+chan = [ 0  , 0  , 0  , 0  ,
+         0  , 0  , 0  , 255,
+         0  , 0  , 255, 0  ,
+         0  , 0  , 255, 255,
+         0  , 255, 0  , 0  ,
+         0  , 255, 0  , 255,
+         0  , 255, 255, 0  ,
+         0  , 255, 255, 255,
+         255, 0  , 0  , 0  ,
+         255, 0  , 0  , 255,
+         255, 0  , 255, 0  ,
+         255, 0  , 255, 255,
+         255, 255, 0  , 0  ,
+         255, 255, 0  , 255,
+         255, 255, 255, 0  ,
+         255, 255, 255, 255 ]
+         
+for ii in range(0,52,4):         
+    mydmx.setChannel(1, chan[ii]) # set DMX channel 1 to full
+    mydmx.setChannel(2, chan[ii+1]) # set DMX channel 2 to 128
+    mydmx.setChannel(3, chan[ii+2]) # set DMX channel 3 to 0
+    mydmx.setChannel(4, chan[ii+3])
+    mydmx.render()
+    time.sleep(1)
