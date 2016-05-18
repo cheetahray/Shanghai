@@ -524,7 +524,7 @@ try:
                 drum.append(dd);
                 print drum  
         except socket.timeout:
-            pass 
+            continue 
     drumlen = len(drum) / 5
     if drumlen == 0:
         drumlen = 1
