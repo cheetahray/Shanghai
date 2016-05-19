@@ -512,15 +512,15 @@ port = socket.socket(socket.AF_INET, socket.SOCK_DGRAM)
 #time.sleep(2)
 port.bind(("0.0.0.0", 8888))
 port.settimeout(0.15)
-drum = [202,203]
+drum = [237,238,239,236]
 drumlen = 0
 #port = serial.Serial("\\\\.\\COM7", baudrate=115200)
 try:
-    for dd in range(1,240):
+    for dd in range(200,206):
         port.sendto("WHO", ("192.168.13." + str(dd), 8888))
         try:    
             data, addr = port.recvfrom(1024)
-            if (data[0:4] == "bell"):
+            if (data == "bell"):
                 drum.append(dd);
                 print drum  
         except socket.timeout:
@@ -529,7 +529,7 @@ try:
     if drumlen == 0:
         drumlen = 1
         for dd in range(len(drum),5):
-            drum.append(str(135+dd))        
+            drum.append(135+dd)        
             print drum
     whoami = "65"
     #Register the door bell button GPIO input call back function

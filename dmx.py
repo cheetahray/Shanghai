@@ -27,6 +27,6 @@ while True:
     mydmx.render()
     if jj >= 60:
         jj = 0
-    else
+    else:
         jj += 4
     time.sleep(10)
