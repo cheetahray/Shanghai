@@ -11,6 +11,7 @@
 import argparse
 import time
 import unittest
+import threading
 from mido import MidiFile
 #import xlsxwriter
 #import serial
