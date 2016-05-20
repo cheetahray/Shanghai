@@ -64,7 +64,7 @@ def checkbound(whattype, oidx):
 
 def raysendto(_1st,_2nd,_3rd,_4th, raystr, raytuple):
     play_dmx(_1st,_2nd,_3rd,_4th)
-    port.sendto( raystr, (raytuple, 8888) )
+    port.sendto( raystr, (raytuple, 6666) )
 
 def play_dmx(_1st,_2nd,_3rd,_4th):
     global mydmx
@@ -124,131 +124,23 @@ def play_midi():
                     if pickidx[0].has_key(message.note):
                         port.sendto("144 " + str(message.note) + " 0 " + str(pickidx[0][message.note]), ("192.168.12." + str(pickidx[0][message.note]), 5005) )
                         del pickidx[0][message.note]
-                elif message.channel == 12:
+                elif message.channel == 12 or (message.channel <= 7 and message.channel >= 4):
                     if message.note == 84:
-                        for dd in range(drumlen*4,drumlen*5):
-                            threading.Timer( DELAY, port.sendto, ["127", ("192.168.13." + str(drum[dd]), 8888)]).start()
+                        threading.Timer( DELAY, port.sendto, ["127", ("192.168.13.255", 8888)]).start()
                     elif message.note == 86:
-                        for dd in range(drumlen*4,drumlen*5):
-                            threading.Timer( DELAY, port.sendto, ["143", ("192.168.13." + str(drum[dd]), 8888)]).start()
+                        threading.Timer( DELAY, port.sendto, ["143", ("192.168.13.255", 8888)]).start()
                     elif message.note == 88:
-                        for dd in range(drumlen*4,drumlen*5):
-                            threading.Timer( DELAY, port.sendto, ["159", ("192.168.13." + str(drum[dd]), 8888)]).start()
+                        threading.Timer( DELAY, port.sendto, ["159", ("192.168.13.255", 8888)]).start()
                     elif message.note == 89:
-                        for dd in range(drumlen*4,drumlen*5):
-                            threading.Timer( DELAY, port.sendto, ["175", ("192.168.13." + str(drum[dd]), 8888)]).start()
+                        threading.Timer( DELAY, port.sendto, ["175", ("192.168.13.255", 8888)]).start()
                     elif message.note == 91:
-                        for dd in range(drumlen*4,drumlen*5):
-                            threading.Timer( DELAY, port.sendto, ["191", ("192.168.13." + str(drum[dd]), 8888)]).start()
+                        threading.Timer( DELAY, port.sendto, ["191", ("192.168.13.255", 8888)]).start()
                     elif message.note == 93:
-                        for dd in range(drumlen*4,drumlen*5):
-                            threading.Timer( DELAY, port.sendto, ["207", ("192.168.13." + str(drum[dd]), 8888)]).start()
+                        threading.Timer( DELAY, port.sendto, ["207", ("192.168.13.255", 8888)]).start()
                     elif message.note == 95:
-                        for dd in range(drumlen*4,drumlen*5):
-                            threading.Timer( DELAY, port.sendto, ["223", ("192.168.13." + str(drum[dd]), 8888)]).start()
+                        threading.Timer( DELAY, port.sendto, ["223", ("192.168.13.255", 8888)]).start()
                     elif message.note == 96:
-                        for dd in range(drumlen*4,drumlen*5):
-                            threading.Timer( DELAY, port.sendto, ["239", ("192.168.13." + str(drum[dd]), 8888)]).start()        
-                elif message.channel == 7:
-                    if message.note == 84:
-                        for dd in range(drumlen*3,drumlen*4):
-                            threading.Timer( DELAY, port.sendto, ["127", ("192.168.13." + str(drum[dd]), 8888)]).start()
-                    elif message.note == 86:
-                        for dd in range(drumlen*3,drumlen*4):
-                            threading.Timer( DELAY, port.sendto, ["143", ("192.168.13." + str(drum[dd]), 8888)]).start()
-                    elif message.note == 88:
-                        for dd in range(drumlen*3,drumlen*4):
-                            threading.Timer( DELAY, port.sendto, ["159", ("192.168.13." + str(drum[dd]), 8888)]).start()
-                    elif message.note == 89:
-                        for dd in range(drumlen*3,drumlen*4):
-                            threading.Timer( DELAY, port.sendto, ["175", ("192.168.13." + str(drum[dd]), 8888)]).start()
-                    elif message.note == 91:
-                        for dd in range(drumlen*3,drumlen*4):
-                            threading.Timer( DELAY, port.sendto, ["191", ("192.168.13." + str(drum[dd]), 8888)]).start()
-                    elif message.note == 93:
-                        for dd in range(drumlen*3,drumlen*4):
-                            threading.Timer( DELAY, port.sendto, ["207", ("192.168.13." + str(drum[dd]), 8888)]).start()
-                    elif message.note == 95:
-                        for dd in range(drumlen*3,drumlen*4):
-                            threading.Timer( DELAY, port.sendto, ["223", ("192.168.13." + str(drum[dd]), 8888)]).start()
-                    elif message.note == 96:
-                        for dd in range(drumlen*3,drumlen*4):
-                            threading.Timer( DELAY, port.sendto, ["239", ("192.168.13." + str(drum[dd]), 8888)]).start()        
-                elif message.channel == 6:
-                    if message.note == 84:
-                        for dd in range(drumlen*2,drumlen*3):
-                            threading.Timer( DELAY, port.sendto, ["127", ("192.168.13." + str(drum[dd]), 8888)]).start()
-                    elif message.note == 86:
-                        for dd in range(drumlen*2,drumlen*3):
-                            threading.Timer( DELAY, port.sendto, ["143", ("192.168.13." + str(drum[dd]), 8888)]).start()
-                    elif message.note == 88:
-                        for dd in range(drumlen*2,drumlen*3):
-                            threading.Timer( DELAY, port.sendto, ["159", ("192.168.13." + str(drum[dd]), 8888)]).start()
-                    elif message.note == 89:
-                        for dd in range(drumlen*2,drumlen*3):
-                            threading.Timer( DELAY, port.sendto, ["175", ("192.168.13." + str(drum[dd]), 8888)]).start()
-                    elif message.note == 91:
-                        for dd in range(drumlen*2,drumlen*3):
-                            threading.Timer( DELAY, port.sendto, ["191", ("192.168.13." + str(drum[dd]), 8888)]).start()
-                    elif message.note == 93:
-                        for dd in range(drumlen*2,drumlen*3):
-                            threading.Timer( DELAY, port.sendto, ["207", ("192.168.13." + str(drum[dd]), 8888)]).start()
-                    elif message.note == 95:
-                        for dd in range(drumlen*2,drumlen*3):
-                            threading.Timer( DELAY, port.sendto, ["223", ("192.168.13." + str(drum[dd]), 8888)]).start()
-                    elif message.note == 96:
-                        for dd in range(drumlen*2,drumlen*3):
-                            threading.Timer( DELAY, port.sendto, ["239", ("192.168.13." + str(drum[dd]), 8888)]).start()        
-                elif message.channel == 5:
-                    if message.note == 84:
-                        for dd in range(drumlen,drumlen*2):
-                            threading.Timer( DELAY, port.sendto, ["127", ("192.168.13." + str(drum[dd]), 8888)]).start()
-                    elif message.note == 86:
-                        for dd in range(drumlen,drumlen*2):
-                            threading.Timer( DELAY, port.sendto, ["143", ("192.168.13." + str(drum[dd]), 8888)]).start()
-                    elif message.note == 88:
-                        for dd in range(drumlen,drumlen*2):
-                            threading.Timer( DELAY, port.sendto, ["159", ("192.168.13." + str(drum[dd]), 8888)]).start()
-                    elif message.note == 89:
-                        for dd in range(drumlen,drumlen*2):
-                            threading.Timer( DELAY, port.sendto, ["175", ("192.168.13." + str(drum[dd]), 8888)]).start()
-                    elif message.note == 91:
-                        for dd in range(drumlen,drumlen*2):
-                            threading.Timer( DELAY, port.sendto, ["191", ("192.168.13." + str(drum[dd]), 8888)]).start()
-                    elif message.note == 93:
-                        for dd in range(drumlen,drumlen*2):
-                            threading.Timer( DELAY, port.sendto, ["207", ("192.168.13." + str(drum[dd]), 8888)]).start()
-                    elif message.note == 95:
-                        for dd in range(drumlen,drumlen*2):
-                            threading.Timer( DELAY, port.sendto, ["223", ("192.168.13." + str(drum[dd]), 8888)]).start()
-                    elif message.note == 96:
-                        for dd in range(drumlen/5,drumlen/5):
-                            threading.Timer( DELAY, port.sendto, ["239", ("192.168.13." + str(drum[dd]), 8888)]).start()        
-                elif message.channel == 4:
-                    if message.note == 84:
-                        for dd in range(0,drumlen):
-                            threading.Timer( DELAY, port.sendto, ["127", ("192.168.13." + str(drum[dd]), 8888)]).start()
-                    elif message.note == 86:
-                        for dd in range(0,drumlen):
-                            threading.Timer( DELAY, port.sendto, ["143", ("192.168.13." + str(drum[dd]), 8888)]).start()
-                    elif message.note == 88:
-                        for dd in range(0,drumlen):
-                            threading.Timer( DELAY, port.sendto, ["159", ("192.168.13." + str(drum[dd]), 8888)]).start()
-                    elif message.note == 89:
-                        for dd in range(0,drumlen):
-                            threading.Timer( DELAY, port.sendto, ["175", ("192.168.13." + str(drum[dd]), 8888)]).start()
-                    elif message.note == 91:
-                        for dd in range(0,drumlen):
-                            threading.Timer( DELAY, port.sendto, ["191", ("192.168.13." + str(drum[dd]), 8888)]).start()
-                    elif message.note == 93:
-                        for dd in range(0,drumlen):
-                            threading.Timer( DELAY, port.sendto, ["207", ("192.168.13." + str(drum[dd]), 8888)]).start()
-                    elif message.note == 95:
-                        for dd in range(0,drumlen):
-                            threading.Timer( DELAY, port.sendto, ["223", ("192.168.13." + str(drum[dd]), 8888)]).start()
-                    elif message.note == 96:
-                        for dd in range(0,drumlen):
-                            threading.Timer( DELAY, port.sendto, ["239", ("192.168.13." + str(drum[dd]), 8888)]).start()        
+                        threading.Timer( DELAY, port.sendto, ["239", ("192.168.13.255", 8888)]).start()        
                 elif message.channel == 13:
                     if message.note == 36:
                         threading.Timer( DELAY, raysendto, [1,1,0,0,"239", "192.168.13.241"]).start()
