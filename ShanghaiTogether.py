@@ -16,6 +16,7 @@ from mido import MidiFile
 #import xlsxwriter
 #import serial
 import socket
+import pysimpledmx
 
 mid = None
 debug = False        #Boolean for on/off our debug print 
@@ -60,7 +61,23 @@ def checkbound(whattype, oidx):
             else:
                 oidx += 1
     return oidx                
-        
+
+def raysendto(_1st,_2nd,_3rd,_4th, raystr, raytuple):
+    play_dmx(_1st,_2nd,_3rd,_4th)
+    port.sendto( raystr, (raytuple, 8888) )
+
+def play_dmx(_1st,_2nd,_3rd,_4th):
+    global mydmx
+    mydmx.setChannel(2, _1st) # set DMX channel 1 to full
+    #print chan[ii]
+    mydmx.setChannel(3, _2nd) # set DMX channel 2 to 128
+    #print chan[ii+1]
+    mydmx.setChannel(4, _3rd) # set DMX channel 3 to 0
+    #print chan[ii+2]
+    mydmx.setChannel(5, _4th)    
+    #print chan[ii+3]
+    mydmx.render()
+                
 def play_midi():
     global isplay
     global myshift
@@ -231,81 +248,81 @@ def play_midi():
                             threading.Timer( DELAY, port.sendto, ["239", ("192.168.13." + str(drum[dd]), 8888)]).start()        
                 elif message.channel == 13:
                     if message.note == 36:
-                        threading.Timer( DELAY, port.sendto, ["239", ("192.168.13.241", 8888)]).start()
+                        threading.Timer( DELAY, raysendto, [1,1,0,0,"239", "192.168.13.241"]).start()
                     #elif message.note == 37:
-                    #    threading.Timer( DELAY, port.sendto, ["127", ("192.168.13.241", 8888)]).start()
+                    #    threading.Timer( DELAY, raysendto, [1,1,0,0,"127", "192.168.13.241"]).start()
                     elif message.note == 38:
-                        threading.Timer( DELAY, port.sendto, ["223", ("192.168.13.241", 8888)]).start()
+                        threading.Timer( DELAY, raysendto, [1,1,0,0,"223", "192.168.13.241"]).start()
                     elif message.note == 39:
-                        threading.Timer( DELAY, port.sendto, ["207", ("192.168.13.241", 8888)]).start()
+                        threading.Timer( DELAY, raysendto, [1,1,0,0,"207", "192.168.13.241"]).start()
                     elif message.note == 40:
-                        threading.Timer( DELAY, port.sendto, ["191", ("192.168.13.242", 8888)]).start()
+                        threading.Timer( DELAY, raysendto, [1,1,0,0,"191", "192.168.13.242"]).start()
                     elif message.note == 41:
-                        threading.Timer( DELAY, port.sendto, ["239", ("192.168.13.242", 8888)]).start()
+                        threading.Timer( DELAY, raysendto, [1,1,0,0,"239", "192.168.13.242"]).start()
                     elif message.note == 42:
-                        threading.Timer( DELAY, port.sendto, ["223", ("192.168.13.242", 8888)]).start()
+                        threading.Timer( DELAY, raysendto, [1,1,0,0,"223", "192.168.13.242"]).start()
                     elif message.note == 43:
-                        threading.Timer( DELAY, port.sendto, ["143", ("192.168.13.247", 8888)]).start()
+                        threading.Timer( DELAY, raysendto, [0,1,1,0,"143", "192.168.13.247"]).start()
                     elif message.note == 44:
-                        threading.Timer( DELAY, port.sendto, ["127", ("192.168.13.247", 8888)]).start()
+                        threading.Timer( DELAY, raysendto, [0,1,1,0,"127", "192.168.13.247"]).start()
                     elif message.note == 45:
-                        threading.Timer( DELAY, port.sendto, ["159", ("192.168.13.247", 8888)]).start()
+                        threading.Timer( DELAY, raysendto, [0,1,1,0,"159", "192.168.13.247"]).start()
                     elif message.note == 46:
-                        threading.Timer( DELAY, port.sendto, ["143", ("192.168.13.243", 8888)]).start()
+                        threading.Timer( DELAY, raysendto, [0,1,1,0,"143", "192.168.13.243"]).start()
                     elif message.note == 47:
-                        threading.Timer( DELAY, port.sendto, ["127", ("192.168.13.243", 8888)]).start()
+                        threading.Timer( DELAY, raysendto, [0,1,1,0,"127", "192.168.13.243"]).start()
                     elif message.note == 48:
-                        threading.Timer( DELAY, port.sendto, ["175", ("192.168.13.241", 8888)]).start()
+                        threading.Timer( DELAY, raysendto, [0,1,1,0,"175", "192.168.13.241"]).start()
                     elif message.note == 49:
-                        threading.Timer( DELAY, port.sendto, ["159", ("192.168.13.241", 8888)]).start()
+                        threading.Timer( DELAY, raysendto, [0,1,1,0,"159", "192.168.13.241"]).start()
                     elif message.note == 50:
-                        threading.Timer( DELAY, port.sendto, ["239", ("192.168.13.243", 8888)]).start()
+                        threading.Timer( DELAY, raysendto, [1,0,1,0,"239", "192.168.13.243"]).start()
                     elif message.note == 51:
-                        threading.Timer( DELAY, port.sendto, ["223", ("192.168.13.243", 8888)]).start()
+                        threading.Timer( DELAY, raysendto, [1,0,1,0,"223", "192.168.13.243"]).start()
                     elif message.note == 52:
-                        threading.Timer( DELAY, port.sendto, ["207", ("192.168.13.243", 8888)]).start()
+                        threading.Timer( DELAY, raysendto, [1,0,1,0,"207", "192.168.13.243"]).start()
                     elif message.note == 53:
-                        threading.Timer( DELAY, port.sendto, ["191", ("192.168.13.243", 8888)]).start()
+                        threading.Timer( DELAY, raysendto, [1,0,1,0,"191", "192.168.13.243"]).start()
                     elif message.note == 54:
-                        threading.Timer( DELAY, port.sendto, ["175", ("192.168.13.243", 8888)]).start()
+                        threading.Timer( DELAY, raysendto, [1,0,1,0,"175", "192.168.13.243"]).start()
                     elif message.note == 55:
-                        threading.Timer( DELAY, port.sendto, ["239", ("192.168.13.244", 8888)]).start()
+                        threading.Timer( DELAY, raysendto, [1,0,0,1,"239", "192.168.13.244"]).start()
                     elif message.note == 56:
-                        threading.Timer( DELAY, port.sendto, ["223", ("192.168.13.244", 8888)]).start()
+                        threading.Timer( DELAY, raysendto, [1,0,0,1,"223", "192.168.13.244"]).start()
                     elif message.note == 57:
-                        threading.Timer( DELAY, port.sendto, ["207", ("192.168.13.244", 8888)]).start()
+                        threading.Timer( DELAY, raysendto, [1,0,0,1,"207", "192.168.13.244"]).start()
                     elif message.note == 58:
-                        threading.Timer( DELAY, port.sendto, ["191", ("192.168.13.244", 8888)]).start()
+                        threading.Timer( DELAY, raysendto, [1,0,0,1,"191", "192.168.13.244"]).start()
                     elif message.note == 59:
-                        threading.Timer( DELAY, port.sendto, ["175", ("192.168.13.244", 8888)]).start()
+                        threading.Timer( DELAY, raysendto, [1,0,0,1,"175", "192.168.13.244"]).start()
                     elif message.note == 60:
-                        threading.Timer( DELAY, port.sendto, ["239", ("192.168.13.245", 8888)]).start()
+                        threading.Timer( DELAY, raysendto, [1,1,1,0,"239", "192.168.13.245"]).start()
                     elif message.note == 61:
-                        threading.Timer( DELAY, port.sendto, ["223", ("192.168.13.245", 8888)]).start()
+                        threading.Timer( DELAY, raysendto, [1,1,1,0,"223", "192.168.13.245"]).start()
                     elif message.note == 62:
-                        threading.Timer( DELAY, port.sendto, ["207", ("192.168.13.245", 8888)]).start()
+                        threading.Timer( DELAY, raysendto, [1,1,1,0,"207", "192.168.13.245"]).start()
                     elif message.note == 63:
-                        threading.Timer( DELAY, port.sendto, ["191", ("192.168.13.245", 8888)]).start()
+                        threading.Timer( DELAY, raysendto, [1,1,1,0,"191", "192.168.13.245"]).start()
                     elif message.note == 64:
-                        threading.Timer( DELAY, port.sendto, ["175", ("192.168.13.245", 8888)]).start()
-                    elif message.note == 65:
-                        threading.Timer( DELAY, port.sendto, ["239", ("192.168.13.246", 8888)]).start()
-                    elif message.note == 66:
-                        threading.Timer( DELAY, port.sendto, ["223", ("192.168.13.246", 8888)]).start()
-                    elif message.note == 67:
-                        threading.Timer( DELAY, port.sendto, ["207", ("192.168.13.246", 8888)]).start()
-                    elif message.note == 68:
-                        threading.Timer( DELAY, port.sendto, ["191", ("192.168.13.246", 8888)]).start()
-                    elif message.note == 69:
-                        threading.Timer( DELAY, port.sendto, ["175", ("192.168.13.246", 8888)]).start()
+                        threading.Timer( DELAY, raysendto, [1,1,1,0,"175", "192.168.13.245"]).start()
+                    #elif message.note == 65:
+                    #    threading.Timer( DELAY, raysendto, ["239", "192.168.13.246"]).start()
+                    #elif message.note == 66:
+                    #    threading.Timer( DELAY, raysendto, ["223", "192.168.13.246"]).start()
+                    #elif message.note == 67:
+                    #    threading.Timer( DELAY, raysendto, ["207", "192.168.13.246"]).start()
+                    #elif message.note == 68:
+                    #    threading.Timer( DELAY, raysendto, ["191", "192.168.13.246"]).start()
+                    #elif message.note == 69:
+                    #    threading.Timer( DELAY, raysendto, ["175", "192.168.13.246"]).start()
                     #elif message.note == 70:
-                    #    threading.Timer( DELAY, port.sendto, ["127", ("192.168.13.241", 8888)]).start()
+                    #    threading.Timer( DELAY, raysendto, ["127", "192.168.13.241"]).start()
                     #elif message.note == 71:
-                    #    threading.Timer( DELAY, port.sendto, ["127", ("192.168.13.241", 8888)]).start()
+                    #    threading.Timer( DELAY, raysendto, ["127", "192.168.13.241"]).start()
                     elif message.note == 72:
-                        threading.Timer( DELAY, port.sendto, ["143", ("192.168.13.249", 8888)]).start()
+                        threading.Timer( DELAY, raysendto, [1,0,1,1,"143", "192.168.13.249"]).start()
                     elif message.note == 73:
-                        threading.Timer( DELAY, port.sendto, ["127", ("192.168.13.249", 8888)]).start()                                            
+                        threading.Timer( DELAY, raysendto, [1,1,1,0,"127", "192.168.13.249"]).start()                                            
                 elif message.channel == 11:
                     if pickidx[7].has_key(message.note):
                         port.sendto("144 " + str(message.note) + " 0 " + str(pickidx[7][message.note]) + "\r", ("192.168.12." + str(pickidx[7][message.note]), 5005))
@@ -515,7 +532,7 @@ port.bind(("0.0.0.0", 8888))
 port.settimeout(0.15)
 drum = [202,203]
 drumlen = 0
-#port = serial.Serial("\\\\.\\COM7", baudrate=115200)
+mydmx = pysimpledmx.DMXConnection("/dev/ttyUSB0")
 try:
     for dd in range(1,121):
         port.sendto("WHO", ("192.168.13." + str(dd), 8888))
