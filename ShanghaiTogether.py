@@ -432,7 +432,7 @@ drum = [202,203]
 drumlen = 0
 mydmx = pysimpledmx.DMXConnection("/dev/ttyUSB0")
 try:
-    for dd in range(4,6):
+    for dd in range(1,121):
         port.sendto("WHO", ("192.168.13." + str(dd), 8888))
         try:    
             data, addr = port.recvfrom(1024)
@@ -448,7 +448,7 @@ try:
             drum.append(135+dd)        
             print drum
     port.setsockopt(socket.SOL_SOCKET , socket.SO_BROADCAST , 1)      
-    #Register the door bell button GPIO input call back function
+    port.settimeout(0)
     if '__main__' == __name__ :
         parser = argparse.ArgumentParser()
         parser.add_argument("--song",
