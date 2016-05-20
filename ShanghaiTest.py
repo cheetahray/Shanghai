@@ -309,14 +309,52 @@ try:
     #port.flushInput()
     #port.flushOutput()
 
-    whoami = "67"
+    whoami = "68"
     #Register the door bell button GPIO input call back function
-    if True:
-        port.sendto("253 " + whoami + " 100", ("192.168.12." + whoami, 5005) )
-        time.sleep(0.01)
-        port.sendto("225 0", ("192.168.12." + whoami, 5005) )
-        time.sleep(0.01)
-        whattype = 'S'
+    port.sendto("253 " + whoami + " 100", ("192.168.12." + whoami, 5005) )
+    time.sleep(0.01)
+    port.sendto("225 0", ("192.168.12." + whoami, 5005) )
+    time.sleep(0.01)
+    whattype = 'A'
+    if False:
+        for i in range(1,10):
+            if whattype == 'S':
+                port.sendto("144 79 127", ("192.168.12." + whoami, 5005))
+            elif whattype == 'A':
+                port.sendto("144 67 127", ("192.168.12." + whoami, 5005))
+            elif whattype == 'T':
+                port.sendto("144 57 127", ("192.168.12." + whoami, 5005))
+            elif whattype == 'B':
+                port.sendto("144 47 127", ("192.168.12." + whoami, 5005))
+            time.sleep(2.5);
+            if whattype == 'S':
+                port.sendto("144 79 0", ("192.168.12." + whoami, 5005))
+            elif whattype == 'A':
+                port.sendto("144 67 0", ("192.168.12." + whoami, 5005))
+            elif whattype == 'T':
+                port.sendto("144 57 0", ("192.168.12." + whoami, 5005))
+            elif whattype == 'B':
+                port.sendto("144 47 0", ("192.168.12." + whoami, 5005))
+            time.sleep(0.5);
+            if whattype == 'S':
+                port.sendto("144 60 127", ("192.168.12." + whoami, 5005))
+            elif whattype == 'A':
+                port.sendto("144 48 127", ("192.168.12." + whoami, 5005))
+            elif whattype == 'T':
+                port.sendto("144 38 127", ("192.168.12." + whoami, 5005))
+            elif whattype == 'B':
+                port.sendto("144 28 127", ("192.168.12." + whoami, 5005))
+            time.sleep(2.5);
+            if whattype == 'S':
+                port.sendto("144 60 0", ("192.168.12." + whoami, 5005))
+            elif whattype == 'A':
+                port.sendto("144 48 0", ("192.168.12." + whoami, 5005))
+            elif whattype == 'T':
+                port.sendto("144 38 0", ("192.168.12." + whoami, 5005))
+            elif whattype == 'B':
+                port.sendto("144 28 0", ("192.168.12." + whoami, 5005))
+            time.sleep(0.5);
+    elif True:
         multi = True
         if whattype == 'B':
             if multi:
@@ -384,10 +422,10 @@ try:
                     time.sleep(0.3)
             
         time.sleep(1)
-        port.sendto("225 1", ("192.168.12." + whoami, 5005) )
-        #port.flush()
     elif False:
         port.sendto("Home", ("192.168.12." + whoami, 5005))
-
+    port.sendto("225 1", ("192.168.12." + whoami, 5005) )
+    #port.flush()
+    
 except KeyboardInterrupt:
     print "Cleaning up the GPIO" 
