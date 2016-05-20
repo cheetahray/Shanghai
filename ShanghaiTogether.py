@@ -71,7 +71,7 @@ def play_midi():
     #f = []
     boundary = 0
     #port.flush()
-    DELAY = 1    
+    DELAY = 1.1
     for i in range(1,67):
         port.sendto("249 3", ("192.168.12." + str(i), 5005) )
         time.sleep(0.01)
@@ -517,7 +517,7 @@ drum = [237,238,239,236]
 drumlen = 0
 #port = serial.Serial("\\\\.\\COM7", baudrate=115200)
 try:
-    for dd in range(121,239):
+    for dd in range(200,205):
         port.sendto("WHO", ("192.168.13." + str(dd), 8888))
         try:    
             data, addr = port.recvfrom(1024)
