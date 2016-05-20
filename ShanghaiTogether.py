@@ -421,7 +421,7 @@ toidx = 1
 boidx = 1
 pickidx = [{},{},{},{},{},{},{},{},{},{},{},{}]
 slideidx = [{},{},{},{},{},{},{},{},{},{},{},{}]
-port = socket.socket(socket.AF_INET, socket.SOCK_DGRAM)      
+port = socket.socket(socket.AF_INET, socket.SOCK_DGRAM)
 #port.sendto("127", ("192.168.13.249", 8888))
 #time.sleep(2)
 #port.sendto("143", ("192.168.13.249", 8888))
@@ -447,7 +447,7 @@ try:
         for dd in range(len(drum),5):
             drum.append(135+dd)        
             print drum
-    whoami = "65"
+    port.setsockopt(socket.SOL_SOCKET , socket.SO_BROADCAST , 1)      
     #Register the door bell button GPIO input call back function
     if '__main__' == __name__ :
         parser = argparse.ArgumentParser()
