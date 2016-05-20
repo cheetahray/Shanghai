@@ -513,11 +513,11 @@ port = socket.socket(socket.AF_INET, socket.SOCK_DGRAM)
 #time.sleep(2)
 port.bind(("0.0.0.0", 8888))
 port.settimeout(0.15)
-drum = [237,238,239,236]
+drum = [202,203]
 drumlen = 0
 #port = serial.Serial("\\\\.\\COM7", baudrate=115200)
 try:
-    for dd in range(200,205):
+    for dd in range(1,121):
         port.sendto("WHO", ("192.168.13." + str(dd), 8888))
         try:    
             data, addr = port.recvfrom(1024)
