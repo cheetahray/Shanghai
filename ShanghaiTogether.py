@@ -529,7 +529,7 @@ port = socket.socket(socket.AF_INET, socket.SOCK_DGRAM)
 #port.sendto("143", ("192.168.13.249", 8888))
 #time.sleep(2)
 port.bind(("0.0.0.0", 8888))
-port.settimeout(0.15)
+port.settimeout(0.2)
 drum = [202,203]
 drumlen = 0
 mydmx = pysimpledmx.DMXConnection("/dev/ttyUSB0")
