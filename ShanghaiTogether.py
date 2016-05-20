@@ -92,6 +92,9 @@ def play_midi():
     for i in range(1,67):
         port.sendto("249 3", ("192.168.12." + str(i), 5005) )
         time.sleep(0.01)
+    for dd in range(0,len(drum)):
+        port.sendto("249 3", ("192.168.13." + str(drum[dd]), 8888) )
+        time.sleep(0.01)
     time.sleep(4)
     for i in range(34,67):
         port.sendto("225 0", ("192.168.12." + str(i), 5005) )
@@ -506,6 +509,9 @@ def play_midi():
     time.sleep(3);
     for i in range(1,67):
         port.sendto("249 2" , ("192.168.12." + str(i), 5005))
+        time.sleep(0.01)
+    for dd in range(0, len(drum)):
+        port.sendto("249 2" , ("192.168.13." + str(drum[dd]), 8888))
         time.sleep(0.01)
     play_dmx(1,1,1,1)
     #time.sleep(10)
