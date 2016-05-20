@@ -2,33 +2,16 @@ import pysimpledmx
 import time
 mydmx = pysimpledmx.DMXConnection("/dev/ttyUSB0")
 
-chan = [ 0, 0, 0, 0,
-         0, 0, 0, 1,
-         0, 0, 1, 0,
-         0, 0, 1, 1,
-         0, 1, 0, 0,
-         0, 1, 0, 1,
-         0, 1, 1, 0,
-         0, 1, 1, 1,
-         1, 0, 0, 0,
-         1, 0, 0, 1,
-         1, 0, 1, 0,
-         1, 0, 1, 1,
-         1, 1, 0, 0,
-         1, 1, 0, 1,
-         1, 1, 1, 0,
-         1, 1, 1, 1 ]
-'''
-chan = [ 
-         0, 0, 0, 1,
-         0, 0, 1, 0,
-         0, 1, 0, 0,
-         1, 0, 0, 0
+chan = [ 1,1,0,0,
+         0,1,1,0,
+         1,0,1,0,
+         1,0,0,1,
+         1,1,1,0,
+         1,0,1,1
        ]
-'''
-jj = 0
+         
 while True:
-    for ii in range(0,64,4):         
+    for ii in range(0,24,4):         
         mydmx.setChannel(2, chan[ii]) # set DMX channel 1 to full
         #print chan[ii]
         mydmx.setChannel(3, chan[ii+1]) # set DMX channel 2 to 128
