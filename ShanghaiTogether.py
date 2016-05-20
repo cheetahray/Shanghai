@@ -507,7 +507,7 @@ def play_midi():
     for i in range(1,67):
         port.sendto("249 2" , ("192.168.12." + str(i), 5005))
         time.sleep(0.01)
-    
+    play_dmx(1,1,1,1)
     #time.sleep(10)
     #for i in range(1,67):
         #port.sendto("Home", ("192.168.12." + str(i), 5005))        
