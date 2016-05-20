@@ -451,15 +451,17 @@ try:
     #Register the door bell button GPIO input call back function
     if '__main__' == __name__ :
         parser = argparse.ArgumentParser()
-        parser.add_argument("--song",
-                             default="001", help="Midi file")
+        parser.add_argument("--song", default="001", help="Midi file")
         args = parser.parse_args()
         mid = MidiFile('/home/oem/midi/' + args.song + '.mid')
+        '''
         midi_suite = unittest.TestSuite()   #Add play midi test function
         all_suite = unittest.TestSuite()
         midi_suite.addTest(Tests("test_0"))
         all_suite.addTest(midi_suite)
         unittest.TextTestRunner(verbosity=1).run(all_suite)
+        '''
+        play_midi()
     elif False:
         port.sendto("Home", ("192.168.12." + whoami, 5005))
 
