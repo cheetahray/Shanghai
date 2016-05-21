@@ -68,16 +68,16 @@ def raysendto(_1st,_2nd,_3rd,_4th, raystr, raytuple):
 
 def play_dmx(_1st,_2nd,_3rd,_4th):
     global mydmx
-    #mydmx.setChannel(2, _1st) # set DMX channel 1 to full
+    mydmx.setChannel(2, _1st) # set DMX channel 1 to full
     #print chan[ii]
-    #mydmx.setChannel(3, _2nd) # set DMX channel 2 to 128
+    mydmx.setChannel(3, _2nd) # set DMX channel 2 to 128
     #print chan[ii+1]
-    #mydmx.setChannel(4, _3rd) # set DMX channel 3 to 0
+    mydmx.setChannel(4, _3rd) # set DMX channel 3 to 0
     #print chan[ii+2]
-    #mydmx.setChannel(5, _4th)    
+    mydmx.setChannel(5, _4th)    
     #print chan[ii+3]
-    #mydmx.render()
-    mydmx.write(str(_1st)+str(_2nd)+str(_3rd)+str(_4th))            
+    mydmx.render()
+                
 def play_midi():
     global isplay
     global myshift
@@ -538,7 +538,7 @@ port.bind(("0.0.0.0", 8888))
 port.settimeout(0.2)
 drum = [202,203]
 drumlen = 0
-mydmx = serial.Serial("/dev/ttyAMA0", baudrate=115200) #mydmx = pysimpledmx.DMXConnection("/dev/ttyUSB0")
+mydmx = pysimpledmx.DMXConnection("/dev/ttyUSB0")
 try:
     for dd in range(1,121):
         port.sendto("WHO", ("192.168.13." + str(dd), 8888))
