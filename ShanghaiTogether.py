@@ -496,7 +496,6 @@ def play_midi():
             port.sendto("144 28 1", ("192.168.12." + str(i), 5005))
         time.sleep(0.02)
     time.sleep(3);
-    play_dmx(1,1,1,1)
     for i in range(1,67):
         if 1 == ST[i]:
             port.sendto("144 60 0", ("192.168.12." + str(i), 5005))
