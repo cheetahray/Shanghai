@@ -11,11 +11,12 @@ chan = [ 1,1,0,0,
          1,0,0,0,
          0,1,0,0,
          0,0,1,0,
-         0,0,0,1
+         0,0,0,1,
+         1,1,1,1
        ]
          
 while True:
-    for ii in range(24,40,4):         
+    for ii in range(24,44,4):         
         mydmx.setChannel(2, chan[ii]) # set DMX channel 1 to full
         print chan[ii]
         mydmx.setChannel(3, chan[ii+1]) # set DMX channel 2 to 128
@@ -25,5 +26,5 @@ while True:
         mydmx.setChannel(5, chan[ii+3])    
         print chan[ii+3]
         mydmx.render()
-        time.sleep(1)
+        time.sleep(4)
         print "Fa"
