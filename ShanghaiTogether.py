@@ -63,9 +63,9 @@ def checkbound(whattype, oidx):
     return oidx                
 
 def raysendto(_1st,_2nd,_3rd,_4th, raystr, raytuple):
+    port.sendto( raystr, raytuple )
     play_dmx(_1st,_2nd,_3rd,_4th)
-    port.sendto( raystr, (raytuple, 6666) )
-
+    
 def play_dmx(_1st,_2nd,_3rd,_4th):
     global mydmx
     mydmx.setChannel(2, _1st) # set DMX channel 1 to full
@@ -85,7 +85,7 @@ def play_midi():
     global boidx,toidx,aoidx,soidx
     #workbook = xlsxwriter.Workbook('demo.xlsx')
     #worksheet = workbook.add_worksheet()
-    #f = []
+    lastpiano = 0
     boundary = 0
     #port.flush()
     DELAY = 1.1
@@ -125,27 +125,35 @@ def play_midi():
                         port.sendto("144 " + str(message.note) + " 0 " + str(pickidx[0][message.note]), ("192.168.12." + str(pickidx[0][message.note]), 5005) )
                         del pickidx[0][message.note]
                 elif message.channel == 12 or (message.channel <= 7 and message.channel >= 4):
-                    if message.note == 84:
+                    if lastpiano == message.note:
+                        pass
+                    elif message.note == 84:
                         threading.Timer( DELAY, port.sendto, ["127", ("192.168.13.255", 8888)]).start()
+                        lastpiano = message.note
                     elif message.note == 86:
                         threading.Timer( DELAY, port.sendto, ["143", ("192.168.13.255", 8888)]).start()
+                        lastpiano = message.note
                     elif message.note == 88:
                         threading.Timer( DELAY, port.sendto, ["159", ("192.168.13.255", 8888)]).start()
+                        lastpiano = message.note
                     elif message.note == 89:
                         threading.Timer( DELAY, port.sendto, ["175", ("192.168.13.255", 8888)]).start()
+                        lastpiano = message.note
                     elif message.note == 91:
                         threading.Timer( DELAY, port.sendto, ["191", ("192.168.13.255", 8888)]).start()
+                        lastpiano = message.note
                     elif message.note == 93:
                         threading.Timer( DELAY, port.sendto, ["207", ("192.168.13.255", 8888)]).start()
+                        lastpiano = message.note
                     elif message.note == 95:
                         threading.Timer( DELAY, port.sendto, ["223", ("192.168.13.255", 8888)]).start()
+                        lastpiano = message.note
                     elif message.note == 96:
-                        threading.Timer( DELAY, port.sendto, ["239", ("192.168.13.255", 8888)]).start()        
+                        threading.Timer( DELAY, port.sendto, ["239", ("192.168.13.255", 8888)]).start()   
+                        lastpiano = message.note     
                 elif message.channel == 13:
                     if message.note == 36:
-                        threading.Timer( DELAY, raysendto, [1,1,0,0,"239", "192.168.13.241"]).start()
-                    #elif message.note == 37:
-                    #    threading.Timer( DELAY, raysendto, [1,1,0,0,"127", ("192.168.13.241", 8888)]).start()
+                        threading.Timer( DELAY, raysendto, [1,1,0,0,"239", ("192.168.13.241", 6666)]).start()
                     elif message.note == 38:
                         threading.Timer( DELAY, raysendto, [1,1,0,0,"223", ("192.168.13.241", 6666)]).start()
                     elif message.note == 39:
@@ -161,7 +169,7 @@ def play_midi():
                     elif message.note == 44:
                         threading.Timer( DELAY, raysendto, [0,1,1,0,"127", ("192.168.13.247", 6666)]).start()
                     elif message.note == 45:
-                        threading.Timer( DELAY, raysendto, [0,1,1,0,"159", "192.168.13.247"]).start()
+                        threading.Timer( DELAY, raysendto, [0,1,1,0,"159", ("192.168.13.247", 6666)]).start()
                     elif message.note == 46:
                         threading.Timer( DELAY, raysendto, [0,1,1,0,"143", ("192.168.13.243", 6666)]).start()
                     elif message.note == 47:
@@ -171,7 +179,7 @@ def play_midi():
                     elif message.note == 49:
                         threading.Timer( DELAY, raysendto, [0,1,1,0,"159", ("192.168.13.241", 6666)]).start()
                     elif message.note == 50:
-                        threading.Timer( DELAY, raysendto, [1,0,1,0,"239", "192.168.13.243"]).start()
+                        threading.Timer( DELAY, raysendto, [1,0,1,0,"239", ("192.168.13.243", 6666)]).start()
                     elif message.note == 51:
                         threading.Timer( DELAY, raysendto, [1,0,1,0,"223", ("192.168.13.243", 6666)]).start()
                     elif message.note == 52:
@@ -181,7 +189,7 @@ def play_midi():
                     elif message.note == 54:
                         threading.Timer( DELAY, raysendto, [1,0,1,0,"175", ("192.168.13.243", 6666)]).start()
                     elif message.note == 55:
-                        threading.Timer( DELAY, raysendto, [1,0,0,1,"239", "192.168.13.244"]).start()
+                        threading.Timer( DELAY, raysendto, [1,0,0,1,"239", ("192.168.13.244", 6666)]).start()
                     elif message.note == 56:
                         threading.Timer( DELAY, raysendto, [1,0,0,1,"223", ("192.168.13.244", 6666)]).start()
                     elif message.note == 57:
@@ -191,7 +199,7 @@ def play_midi():
                     elif message.note == 59:
                         threading.Timer( DELAY, raysendto, [1,0,0,1,"175", ("192.168.13.244", 6666)]).start()
                     elif message.note == 60:
-                        threading.Timer( DELAY, raysendto, [1,1,1,0,"239", "192.168.13.245"]).start()
+                        threading.Timer( DELAY, raysendto, [1,1,1,0,"239", ("192.168.13.245", 6666)]).start()
                     elif message.note == 61:
                         threading.Timer( DELAY, raysendto, [1,1,1,0,"223", ("192.168.13.245", 6666)]).start()
                     elif message.note == 62:
@@ -200,24 +208,10 @@ def play_midi():
                         threading.Timer( DELAY, raysendto, [1,1,1,0,"191", ("192.168.13.245", 6666)]).start()
                     elif message.note == 64:
                         threading.Timer( DELAY, raysendto, [1,1,1,0,"175", ("192.168.13.245", 6666)]).start()
-                    #elif message.note == 65:
-                    #    threading.Timer( DELAY, raysendto, ["239", "192.168.13.246"]).start()
-                    #elif message.note == 66:
-                    #    threading.Timer( DELAY, raysendto, ["223", "192.168.13.246"]).start()
-                    #elif message.note == 67:
-                    #    threading.Timer( DELAY, raysendto, ["207", "192.168.13.246"]).start()
-                    #elif message.note == 68:
-                    #    threading.Timer( DELAY, raysendto, ["191", "192.168.13.246"]).start()
-                    #elif message.note == 69:
-                    #    threading.Timer( DELAY, raysendto, ["175", "192.168.13.246"]).start()
-                    #elif message.note == 70:
-                    #    threading.Timer( DELAY, port.sendto, ["127", ("192.168.13.241", 6666)]).start()
-                    #elif message.note == 71:
-                    #    threading.Timer( DELAY, port.sendto, ["127", ("192.168.13.241", 6666)]).start()
                     elif message.note == 72:
-                        threading.Timer( DELAY, raysendto, [1,0,1,1,"143", "192.168.13.249"]).start()
+                        threading.Timer( DELAY, raysendto, [1,0,1,1,"143", ("192.168.13.249", 6666)]).start()
                     elif message.note == 73:
-                        threading.Timer( DELAY, raysendto, [1,0,1,1,"127", "192.168.13.249"]).start()                                            
+                        threading.Timer( DELAY, raysendto, [1,0,1,1,"127", ("192.168.13.249", 6666)]).start()                                            
                 elif message.channel == 11:
                     if pickidx[7].has_key(message.note):
                         port.sendto("144 " + str(message.note) + " 0 " + str(pickidx[7][message.note]) + "\r", ("192.168.12." + str(pickidx[7][message.note]), 5005))
