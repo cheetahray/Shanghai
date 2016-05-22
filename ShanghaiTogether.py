@@ -125,7 +125,7 @@ def play_midi():
                         port.sendto("144 " + str(message.note) + " 0 " + str(pickidx[0][message.note]), ("192.168.12." + str(pickidx[0][message.note]), 5005) )
                         del pickidx[0][message.note]
                 elif message.channel == 12 or (message.channel <= 7 and message.channel >= 4):
-                    if lastpiano == message.note and message.time < 0.1:
+                    if lastpiano == message.note and message.time < 0.2:
                         pass
                     else:
                         lastpiano = message.note
