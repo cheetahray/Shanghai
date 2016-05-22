@@ -7,7 +7,7 @@ from moviepy.editor import VideoFileClip
 import numpy as np
 from PIL import Image
 from tqdm import tqdm
-import datetime
+#import datetime
 def Threadfun1(string1, string2, string3, string4, string5, string6, *args):
     global sleeptime
     global sb1,sb2,sb3,sb4,sb5,sb6
@@ -1332,8 +1332,6 @@ parser.add_argument("-f", type=int, default=15,
 args = parser.parse_args()
     
 while True:  
-    now = datetime.datetime.now()
-    if (now.minute < 60 and now.minute > 34) or (now.minute < 30 and now.minute > 4):
-        average_video(args.i, args.o, args.s, args.e, args.f)
+    average_video(args.i, args.o, args.s, args.e, args.f)
        
 #s.close()  
