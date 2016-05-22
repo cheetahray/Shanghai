@@ -85,7 +85,7 @@ def play_midi():
         isplay = False          #To avoid duplicate doorbell button press during midi play
         if True:
             if message.channel == 12 or (message.channel >= 4 and message.channel <= 7):
-                if message.time == 0:
+                if message.time < 0.1:
                     print(message)
         elif 'note_on' == message.type :
             if 0 == message.velocity:
