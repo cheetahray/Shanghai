@@ -85,6 +85,7 @@ def play_midi():
     global boidx,toidx,aoidx,soidx
     #workbook = xlsxwriter.Workbook('demo.xlsx')
     #worksheet = workbook.add_worksheet()
+    lastpiano = 0
     boundary = 0
     #port.flush()
     DELAY = 1.1
@@ -124,22 +125,26 @@ def play_midi():
                         port.sendto("144 " + str(message.note) + " 0 " + str(pickidx[0][message.note]), ("192.168.12." + str(pickidx[0][message.note]), 5005) )
                         del pickidx[0][message.note]
                 elif message.channel == 12 or (message.channel <= 7 and message.channel >= 4):
-                    if message.note == 84:
-                        threading.Timer( DELAY, port.sendto, ["127", ("192.168.13.255", 8888)]).start()
-                    elif message.note == 86:
-                        threading.Timer( DELAY, port.sendto, ["143", ("192.168.13.255", 8888)]).start()
-                    elif message.note == 88:
-                        threading.Timer( DELAY, port.sendto, ["159", ("192.168.13.255", 8888)]).start()
-                    elif message.note == 89:
-                        threading.Timer( DELAY, port.sendto, ["175", ("192.168.13.255", 8888)]).start()
-                    elif message.note == 91:
-                        threading.Timer( DELAY, port.sendto, ["191", ("192.168.13.255", 8888)]).start()
-                    elif message.note == 93:
-                        threading.Timer( DELAY, port.sendto, ["207", ("192.168.13.255", 8888)]).start()
-                    elif message.note == 95:
-                        threading.Timer( DELAY, port.sendto, ["223", ("192.168.13.255", 8888)]).start()
-                    elif message.note == 96:
-                        threading.Timer( DELAY, port.sendto, ["239", ("192.168.13.255", 8888)]).start()
+                    if lastpiano == message.note and message.time == 0:
+                        pass
+                    else:
+                        lastpiano = message.note
+                        if message.note == 84:
+                            threading.Timer( DELAY, port.sendto, ["127", ("192.168.13.255", 8888)]).start()
+                        elif message.note == 86:
+                            threading.Timer( DELAY, port.sendto, ["143", ("192.168.13.255", 8888)]).start()
+                        elif message.note == 88:
+                            threading.Timer( DELAY, port.sendto, ["159", ("192.168.13.255", 8888)]).start()
+                        elif message.note == 89:
+                            threading.Timer( DELAY, port.sendto, ["175", ("192.168.13.255", 8888)]).start()
+                        elif message.note == 91:
+                            threading.Timer( DELAY, port.sendto, ["191", ("192.168.13.255", 8888)]).start()
+                        elif message.note == 93:
+                            threading.Timer( DELAY, port.sendto, ["207", ("192.168.13.255", 8888)]).start()
+                        elif message.note == 95:
+                            threading.Timer( DELAY, port.sendto, ["223", ("192.168.13.255", 8888)]).start()
+                        elif message.note == 96:
+                            threading.Timer( DELAY, port.sendto, ["239", ("192.168.13.255", 8888)]).start()
                 elif message.channel == 13:
                     if message.note == 36:
                         threading.Timer( DELAY, raysendto, [1,1,0,0,"239", ("192.168.13.241", 6666)]).start()

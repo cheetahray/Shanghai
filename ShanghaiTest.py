@@ -83,8 +83,10 @@ def play_midi():
         #worksheet.write(i, 0, 0)
     for message in mid.play():  #Next note from midi in this moment
         isplay = False          #To avoid duplicate doorbell button press during midi play
-        if debug:
-            print(message)
+        if True:
+            if message.channel == 12 or (message.channel >= 4 and message.channel <= 7):
+                if message.time == 0:
+                    print(message)
         elif 'note_on' == message.type :
             if 0 == message.velocity:
                 if message.channel == 3:
@@ -354,7 +356,7 @@ try:
             elif whattype == 'B':
                 port.sendto("144 28 0", ("192.168.12." + whoami, 5005))
             time.sleep(0.5);
-    elif True:
+    elif False:
         multi = True
         if whattype == 'B':
             if multi:
@@ -422,8 +424,14 @@ try:
                     time.sleep(0.3)
             
         time.sleep(1)
-    elif False:
-        port.sendto("Home", ("192.168.12." + whoami, 5005))
+    elif True:
+        parser = argparse.ArgumentParser()
+        parser.add_argument("--song",
+                             default="001", help="Midi file")
+        args = parser.parse_args()
+        mid = MidiFile(args.song + '.mid')
+        play_midi()
+    
     port.sendto("225 1", ("192.168.12." + whoami, 5005) )
     #port.flush()
     
