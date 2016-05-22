@@ -88,7 +88,7 @@ def play_midi():
     lastpiano = 0
     boundary = 0
     #port.flush()
-    DELAY = 1.1
+    DELAY = 1.05
     for i in range(1,67):
         port.sendto("249 3", ("192.168.12." + str(i), 5005) )
         time.sleep(0.01)
