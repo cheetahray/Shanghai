@@ -87,7 +87,7 @@ def play_midi():
     #worksheet = workbook.add_worksheet()
     lastpiano = 0
     boundary = 0
-    #port.flush()
+    pianoDELAY = 0.925
     DELAY = 1.05
     for i in range(1,67):
         port.sendto("249 3", ("192.168.12." + str(i), 5005) )
@@ -130,21 +130,21 @@ def play_midi():
                     else:
                         lastpiano = message.note
                         if message.note == 84:
-                            threading.Timer( DELAY - 0.15, port.sendto, ["127", ("192.168.13.255", 8888)]).start()
+                            threading.Timer( pianoDELAY, port.sendto, ["127", ("192.168.13.255", 8888)]).start()
                         elif message.note == 86:
-                            threading.Timer( DELAY - 0.15, port.sendto, ["143", ("192.168.13.255", 8888)]).start()
+                            threading.Timer( pianoDELAY, port.sendto, ["143", ("192.168.13.255", 8888)]).start()
                         elif message.note == 88:
-                            threading.Timer( DELAY - 0.15, port.sendto, ["159", ("192.168.13.255", 8888)]).start()
+                            threading.Timer( pianoDELAY, port.sendto, ["159", ("192.168.13.255", 8888)]).start()
                         elif message.note == 89:
-                            threading.Timer( DELAY - 0.15, port.sendto, ["175", ("192.168.13.255", 8888)]).start()
+                            threading.Timer( pianoDELAY, port.sendto, ["175", ("192.168.13.255", 8888)]).start()
                         elif message.note == 91:
-                            threading.Timer( DELAY - 0.15, port.sendto, ["191", ("192.168.13.255", 8888)]).start()
+                            threading.Timer( pianoDELAY, port.sendto, ["191", ("192.168.13.255", 8888)]).start()
                         elif message.note == 93:
-                            threading.Timer( DELAY - 0.15, port.sendto, ["207", ("192.168.13.255", 8888)]).start()
+                            threading.Timer( pianoDELAY, port.sendto, ["207", ("192.168.13.255", 8888)]).start()
                         elif message.note == 95:
-                            threading.Timer( DELAY - 0.15, port.sendto, ["223", ("192.168.13.255", 8888)]).start()
+                            threading.Timer( pianoDELAY, port.sendto, ["223", ("192.168.13.255", 8888)]).start()
                         elif message.note == 96:
-                            threading.Timer( DELAY - 0.15, port.sendto, ["239", ("192.168.13.255", 8888)]).start()
+                            threading.Timer( pianoDELAY, port.sendto, ["239", ("192.168.13.255", 8888)]).start()
                 elif message.channel == 13:
                     if message.note == 36:
                         threading.Timer( DELAY, raysendto, [1,1,0,0,"239", ("192.168.13.241", 6666)]).start()
