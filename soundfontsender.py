@@ -327,9 +327,8 @@ def funcdrop2(printnote):
     if 1 == canweas[whoami]:
         sock.sendto("aa", UDP_tuple)
         print("aa" + str(printnote))
-        clientsock.send("wechat")
         if False == islightout:
-            clientsock.send("slide{0} {1}".format( tp[whattype[whoami]][nowm] , whattype[whoami] ) )
+            clientsock.send("wechat{0} {1}".format( tp[whattype[whoami]][nowm] , whattype[whoami] ) )
         canweas[whoami] = 2
 
 def funcdrop3(printnote):
@@ -359,10 +358,12 @@ def AS(printnote):
     global UDP_tuple
     global canweas
     global whoami
+    global shouldas
     if 2 == canweas[whoami]:
         sock.sendto("as", UDP_tuple)
         print("as" + str(printnote))
         canweas[whoami] = 3
+        shouldas = 0
     
 def fluidnoteon(chnl, noteint, intmylist):
     global fl
@@ -399,6 +400,7 @@ def raylist(mylist):
     global dropnote
     global biggestvolume
     global aanote
+    global shouldas
     notedelay = 1.2
     if mylist[0] == '128':
         if not ( len(mylist) == 4 and mylist[3] != str(whoami+1) ):
@@ -416,7 +418,11 @@ def raylist(mylist):
         if not ( len(mylist) == 4 and mylist[3] != str(whoami+1) ):
             noteint = int(mylist[1])
             nowm = noteint - rayshift[whoami]
-            #print(nowm)
+            if(shouldas != 0):
+                if False == issoundfont:
+                    fl.noteoff(chnl, noteint)
+                AS(noteint)
+                shouldas = noteint
             if False == issoundfont:
                 if nowm >= 0 and nowm < howmanypitch[whoami]:
                     if mylist[2] != '0': 
@@ -612,7 +618,7 @@ chnl = 0
 strm = None
 pa = None
 fl = None
-#port = serial.Serial("/dev/ttyAMA0", baudrate=115200)#, timeout=0.01)
+shouldas = 0 #port = serial.Serial("/dev/ttyAMA0", baudrate=115200)#, timeout=0.01)
 aanote = 0
 while True:
     for ii in range(0,66):

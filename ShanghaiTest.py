@@ -1,4 +1,4 @@
-#/usr/bin/python
+#!/usr/bin/python
 #+-+-+-+-+-+-+
 #|d|a|c|.|t|w|
 #+-+-+-+-+-+-+
@@ -11,12 +11,10 @@
 import argparse
 import time
 import unittest
-import threading
 from mido import MidiFile
 #import xlsxwriter
 #import serial
 import socket
-import pysimpledmx
 
 mid = None
 debug = False        #Boolean for on/off our debug print 
@@ -61,23 +59,7 @@ def checkbound(whattype, oidx):
             else:
                 oidx += 1
     return oidx                
-
-def raysendto(_1st,_2nd,_3rd,_4th, raystr, raytuple):
-    port.sendto( raystr, raytuple )
-    play_dmx(_1st,_2nd,_3rd,_4th)
-    
-def play_dmx(_1st,_2nd,_3rd,_4th):
-    global mydmx
-    mydmx.setChannel(2, _1st) # set DMX channel 1 to full
-    #print chan[ii]
-    mydmx.setChannel(3, _2nd) # set DMX channel 2 to 128
-    #print chan[ii+1]
-    mydmx.setChannel(4, _3rd) # set DMX channel 3 to 0
-    #print chan[ii+2]
-    mydmx.setChannel(5, _4th)    
-    #print chan[ii+3]
-    mydmx.render()
-                
+        
 def play_midi():
     global isplay
     global myshift
@@ -85,15 +67,12 @@ def play_midi():
     global boidx,toidx,aoidx,soidx
     #workbook = xlsxwriter.Workbook('demo.xlsx')
     #worksheet = workbook.add_worksheet()
-    lastpiano = 0
+    #f = []
     boundary = 0
-    pianoDELAY = 0.925
-    DELAY = 1.025
+    #port.flush()
+        
     for i in range(1,67):
         port.sendto("249 3", ("192.168.12." + str(i), 5005) )
-        time.sleep(0.01)
-    for dd in range(0,len(drum)):
-        port.sendto("249 3", ("192.168.13." + str(drum[dd]), 8888) )
         time.sleep(0.01)
     time.sleep(4)
     for i in range(34,67):
@@ -104,8 +83,10 @@ def play_midi():
         #worksheet.write(i, 0, 0)
     for message in mid.play():  #Next note from midi in this moment
         isplay = False          #To avoid duplicate doorbell button press during midi play
-        if debug:
-            print(message)
+        if True:
+            if message.channel == 12 or (message.channel >= 4 and message.channel <= 7):
+                if message.time < 0.1:
+                    print(message)
         elif 'note_on' == message.type :
             if 0 == message.velocity:
                 if message.channel == 3:
@@ -124,115 +105,33 @@ def play_midi():
                     if pickidx[0].has_key(message.note):
                         port.sendto("144 " + str(message.note) + " 0 " + str(pickidx[0][message.note]), ("192.168.12." + str(pickidx[0][message.note]), 5005) )
                         del pickidx[0][message.note]
-                elif message.channel == 12 or (message.channel <= 7 and message.channel >= 4):
-                    if lastpiano == message.note and message.time < 0.1:
-                        pass
-                    else:
-                        lastpiano = message.note
-                        if message.note == 84:
-                            threading.Timer( pianoDELAY, port.sendto, ["127", ("192.168.13.255", 8888)]).start()
-                        elif message.note == 86:
-                            threading.Timer( pianoDELAY, port.sendto, ["143", ("192.168.13.255", 8888)]).start()
-                        elif message.note == 88:
-                            threading.Timer( pianoDELAY, port.sendto, ["159", ("192.168.13.255", 8888)]).start()
-                        elif message.note == 89:
-                            threading.Timer( pianoDELAY, port.sendto, ["175", ("192.168.13.255", 8888)]).start()
-                        elif message.note == 91:
-                            threading.Timer( pianoDELAY, port.sendto, ["191", ("192.168.13.255", 8888)]).start()
-                        elif message.note == 93:
-                            threading.Timer( pianoDELAY, port.sendto, ["207", ("192.168.13.255", 8888)]).start()
-                        elif message.note == 95:
-                            threading.Timer( pianoDELAY, port.sendto, ["223", ("192.168.13.255", 8888)]).start()
-                        elif message.note == 96:
-                            threading.Timer( pianoDELAY, port.sendto, ["239", ("192.168.13.255", 8888)]).start()
-                elif message.channel == 13:
-                    if message.note == 36:
-                        threading.Timer( DELAY, raysendto, [1,1,0,0,"239", ("192.168.13.241", 6666)]).start()
-                    elif message.note == 38:
-                        threading.Timer( DELAY, raysendto, [1,1,0,0,"223", ("192.168.13.241", 6666)]).start()
-                    elif message.note == 39:
-                        threading.Timer( DELAY, raysendto, [1,1,0,0,"207", ("192.168.13.241", 6666)]).start()
-                    elif message.note == 40:
-                        threading.Timer( DELAY, raysendto, [1,1,0,0,"191", ("192.168.13.242", 6666)]).start()
-                    elif message.note == 41:
-                        threading.Timer( DELAY, raysendto, [1,1,0,0,"239", ("192.168.13.242", 6666)]).start()
-                    elif message.note == 42:
-                        threading.Timer( DELAY, raysendto, [1,1,0,0,"223", ("192.168.13.242", 6666)]).start()
-                    elif message.note == 43:
-                        threading.Timer( DELAY, raysendto, [0,1,1,0,"143", ("192.168.13.247", 6666)]).start()
-                    elif message.note == 44:
-                        threading.Timer( DELAY, raysendto, [0,1,1,0,"127", ("192.168.13.247", 6666)]).start()
-                    elif message.note == 45:
-                        threading.Timer( DELAY, raysendto, [0,1,1,0,"159", ("192.168.13.247", 6666)]).start()
-                    elif message.note == 46:
-                        threading.Timer( DELAY, raysendto, [0,1,1,0,"143", ("192.168.13.243", 6666)]).start()
-                    elif message.note == 47:
-                        threading.Timer( DELAY, raysendto, [0,1,1,0,"127", ("192.168.13.243", 6666)]).start()
-                    elif message.note == 48:
-                        threading.Timer( DELAY, raysendto, [0,1,1,0,"175", ("192.168.13.241", 6666)]).start()
-                    elif message.note == 49:
-                        threading.Timer( DELAY, raysendto, [0,1,1,0,"159", ("192.168.13.241", 6666)]).start()
-                    elif message.note == 50:
-                        threading.Timer( DELAY, raysendto, [1,0,1,0,"239", ("192.168.13.243", 6666)]).start()
-                    elif message.note == 51:
-                        threading.Timer( DELAY, raysendto, [1,0,1,0,"223", ("192.168.13.243", 6666)]).start()
-                    elif message.note == 52:
-                        threading.Timer( DELAY, raysendto, [1,0,1,0,"207", ("192.168.13.243", 6666)]).start()
-                    elif message.note == 53:
-                        threading.Timer( DELAY, raysendto, [1,0,1,0,"191", ("192.168.13.243", 6666)]).start()
-                    elif message.note == 54:
-                        threading.Timer( DELAY, raysendto, [1,0,1,0,"175", ("192.168.13.243", 6666)]).start()
-                    elif message.note == 55:
-                        threading.Timer( DELAY, raysendto, [1,0,0,1,"239", ("192.168.13.244", 6666)]).start()
-                    elif message.note == 56:
-                        threading.Timer( DELAY, raysendto, [1,0,0,1,"223", ("192.168.13.244", 6666)]).start()
-                    elif message.note == 57:
-                        threading.Timer( DELAY, raysendto, [1,0,0,1,"207", ("192.168.13.244", 6666)]).start()
-                    elif message.note == 58:
-                        threading.Timer( DELAY, raysendto, [1,0,0,1,"191", ("192.168.13.244", 6666)]).start()
-                    elif message.note == 59:
-                        threading.Timer( DELAY, raysendto, [1,0,0,1,"175", ("192.168.13.244", 6666)]).start()
-                    elif message.note == 60:
-                        threading.Timer( DELAY, raysendto, [1,1,1,0,"239", ("192.168.13.245", 6666)]).start()
-                    elif message.note == 61:
-                        threading.Timer( DELAY, raysendto, [1,1,1,0,"223", ("192.168.13.245", 6666)]).start()
-                    elif message.note == 62:
-                        threading.Timer( DELAY, raysendto, [1,1,1,0,"207", ("192.168.13.245", 6666)]).start()
-                    elif message.note == 63:
-                        threading.Timer( DELAY, raysendto, [1,1,1,0,"191", ("192.168.13.245", 6666)]).start()
-                    elif message.note == 64:
-                        threading.Timer( DELAY, raysendto, [1,1,1,0,"175", ("192.168.13.245", 6666)]).start()
-                    elif message.note == 72:
-                        threading.Timer( DELAY, raysendto, [1,0,1,1,"143", ("192.168.13.249", 6666)]).start()
-                    elif message.note == 73:
-                        threading.Timer( DELAY, raysendto, [1,0,1,1,"127", ("192.168.13.249", 6666)]).start()                                            
                 elif message.channel == 11:
                     if pickidx[7].has_key(message.note):
-                        port.sendto("144 " + str(message.note) + " 0 " + str(pickidx[7][message.note]) + "\r", ("192.168.12." + str(pickidx[7][message.note]), 5005))
+                        port.sendto("144 " + str(message.note) + " 0 " + str(pickidx[7][message.note]) + "\r")
                         del pickidx[7][message.note]
                     if pickidx[11].has_key(message.note):
-                        port.sendto("144 " + str(message.note) + " 0 " + str(pickidx[11][message.note]) + "\r", ("192.168.12." + str(pickidx[11][message.note]), 5005))
+                        port.sendto("144 " + str(message.note) + " 0 " + str(pickidx[11][message.note]) + "\r")
                         del pickidx[11][message.note]
                 elif message.channel == 10:
                     if pickidx[6].has_key(message.note):
-                        port.sendto("144 " + str(message.note) + " 0 " + str(pickidx[6][message.note]) + "\r", ("192.168.12." + str(pickidx[6][message.note]), 5005))
+                        port.sendto("144 " + str(message.note) + " 0 " + str(pickidx[6][message.note]) + "\r")
                         del pickidx[6][message.note]
                     if pickidx[10].has_key(message.note):
-                        port.sendto("144 " + str(message.note) + " 0 " + str(pickidx[10][message.note]) + "\r", ("192.168.12." + str(pickidx[10][message.note]), 5005))
+                        port.sendto("144 " + str(message.note) + " 0 " + str(pickidx[10][message.note]) + "\r")
                         del pickidx[10][message.note]
                 elif message.channel == 9:
                     if pickidx[5].has_key(message.note):
-                        port.sendto("144 " + str(message.note) + " 0 " + str(pickidx[5][message.note]) + "\r", ("192.168.12." + str(pickidx[5][message.note]), 5005))
+                        port.sendto("144 " + str(message.note) + " 0 " + str(pickidx[5][message.note]) + "\r")
                         del pickidx[5][message.note]
                     if pickidx[9].has_key(message.note):
-                        port.sendto("144 " + str(message.note) + " 0 " + str(pickidx[9][message.note]) + "\r", ("192.168.12." + str(pickidx[9][message.note]), 5005))
+                        port.sendto("144 " + str(message.note) + " 0 " + str(pickidx[9][message.note]) + "\r")
                         del pickidx[9][message.note]
                 elif message.channel == 8:
                     if pickidx[4].has_key(message.note):
-                        port.sendto("144 " + str(message.note) + " 0 " + str(pickidx[4][message.note]) + "\r", ("192.168.12." + str(pickidx[4][message.note]), 5005))
+                        port.sendto("144 " + str(message.note) + " 0 " + str(pickidx[4][message.note]) + "\r")
                         del pickidx[4][message.note]
                     if pickidx[8].has_key(message.note):
-                        port.sendto("144 " + str(message.note) + " 0 " + str(pickidx[8][message.note]) + "\r", ("192.168.12." + str(pickidx[8][message.note]), 5005))
+                        port.sendto("144 " + str(message.note) + " 0 " + str(pickidx[8][message.note]) + "\r")
                         del pickidx[8][message.note]
             else:
                 if False:#message.channel == 7:
@@ -390,10 +289,7 @@ def play_midi():
     for i in range(1,67):
         port.sendto("249 2" , ("192.168.12." + str(i), 5005))
         time.sleep(0.01)
-    for dd in range(0, len(drum)):
-        port.sendto("249 2" , ("192.168.13." + str(drum[dd]), 8888))
-        time.sleep(0.01)
-    play_dmx(1,1,1,1)
+    
     #time.sleep(10)
     #for i in range(1,67):
         #port.sendto("Home", ("192.168.12." + str(i), 5005))        
@@ -409,49 +305,135 @@ toidx = 1
 boidx = 1
 pickidx = [{},{},{},{},{},{},{},{},{},{},{},{}]
 slideidx = [{},{},{},{},{},{},{},{},{},{},{},{}]
-port = socket.socket(socket.AF_INET, socket.SOCK_DGRAM)
-#port.sendto("127", ("192.168.13.249", 8888))
-#time.sleep(2)
-#port.sendto("143", ("192.168.13.249", 8888))
-#time.sleep(2)
-port.bind(("0.0.0.0", 8888))
-port.settimeout(0.2)
-drum = [202,203]
-drumlen = 0
-mydmx = pysimpledmx.DMXConnection("/dev/ttyUSB0")
+port = socket.socket(socket.AF_INET, socket.SOCK_DGRAM)      
+#port = serial.Serial("\\\\.\\COM7", baudrate=115200)
 try:
+    #port.flushInput()
+    #port.flushOutput()
+
+    whoami = "62"
+    #Register the door bell button GPIO input call back function
+    port.sendto("253 " + whoami + " 100", ("192.168.12." + whoami, 5005) )
+    time.sleep(0.01)
+    port.sendto("225 0", ("192.168.12." + whoami, 5005) )
+    time.sleep(0.01)
+    whattype = 'S'
     if False:
-        for dd in range(1,121):
-            port.sendto("WHO", ("192.168.13." + str(dd), 8888))
-            try:    
-                data, addr = port.recvfrom(1024)
-                if (data == "bell"):
-                    drum.append(dd);
-                    print drum  
-            except socket.timeout:
-                continue 
-        drumlen = len(drum) / 5
-        if drumlen == 0:
-            drumlen = 1
-            for dd in range(len(drum),5):
-                drum.append(135+dd)        
-                print drum
-    else:
-        port.setsockopt(socket.SOL_SOCKET , socket.SO_BROADCAST , 1)      
-    port.settimeout(0)
-    if '__main__' == __name__ :
+        for i in range(1,10):
+            if whattype == 'S':
+                port.sendto("144 79 127", ("192.168.12." + whoami, 5005))
+            elif whattype == 'A':
+                port.sendto("144 67 127", ("192.168.12." + whoami, 5005))
+            elif whattype == 'T':
+                port.sendto("144 57 127", ("192.168.12." + whoami, 5005))
+            elif whattype == 'B':
+                port.sendto("144 47 127", ("192.168.12." + whoami, 5005))
+            time.sleep(2.5);
+            if whattype == 'S':
+                port.sendto("144 79 0", ("192.168.12." + whoami, 5005))
+            elif whattype == 'A':
+                port.sendto("144 67 0", ("192.168.12." + whoami, 5005))
+            elif whattype == 'T':
+                port.sendto("144 57 0", ("192.168.12." + whoami, 5005))
+            elif whattype == 'B':
+                port.sendto("144 47 0", ("192.168.12." + whoami, 5005))
+            time.sleep(0.5);
+            if whattype == 'S':
+                port.sendto("144 60 127", ("192.168.12." + whoami, 5005))
+            elif whattype == 'A':
+                port.sendto("144 48 127", ("192.168.12." + whoami, 5005))
+            elif whattype == 'T':
+                port.sendto("144 38 127", ("192.168.12." + whoami, 5005))
+            elif whattype == 'B':
+                port.sendto("144 28 127", ("192.168.12." + whoami, 5005))
+            time.sleep(2.5);
+            if whattype == 'S':
+                port.sendto("144 60 0", ("192.168.12." + whoami, 5005))
+            elif whattype == 'A':
+                port.sendto("144 48 0", ("192.168.12." + whoami, 5005))
+            elif whattype == 'T':
+                port.sendto("144 38 0", ("192.168.12." + whoami, 5005))
+            elif whattype == 'B':
+                port.sendto("144 28 0", ("192.168.12." + whoami, 5005))
+            time.sleep(0.5);
+    elif False:
+        multi = True
+        if whattype == 'B':
+            if multi:
+                for jj in range(1,2):
+                    for ii in range(28,48):
+                        port.sendto("144 " + str(ii) + " 127 " + whoami, ("192.168.12." + whoami, 5005))
+                        time.sleep(2)
+                        port.sendto("128 " + str(ii) + " 127 " + whoami, ("192.168.12." + whoami, 5005))
+                        time.sleep(0.3)
+            
+            for jj in range(1):
+                    
+                if True:
+                    port.sendto("144 28 127 " + whoami, ("192.168.12." + whoami, 5005))
+                    time.sleep(2)
+                    port.sendto("128 28 127 " + whoami, ("192.168.12." + whoami, 5005))
+                    time.sleep(0.3)
+        elif whattype == 'S':
+            if multi:
+                for jj in range(1,2):
+                    for ii in range(60,80):
+                        port.sendto("144 " + str(ii) + " 127 " + whoami, ("192.168.12." + whoami, 5005))
+                        time.sleep(2)
+                        port.sendto("128 " + str(ii) + " 127 " + whoami, ("192.168.12." + whoami, 5005))
+                        time.sleep(0.3)
+            
+            for jj in range(1):
+                    
+                if True:
+                    port.sendto("144 60 127 " + whoami, ("192.168.12." + whoami, 5005))
+                    time.sleep(2)
+                    port.sendto("128 60 127 " + whoami, ("192.168.12." + whoami, 5005))
+                    time.sleep(0.3)
+        elif whattype == 'A':
+            if multi:
+                for jj in range(1,2):
+                    for ii in range(48,68):
+                        port.sendto("144 " + str(ii) + " 127 " + whoami, ("192.168.12." + whoami, 5005))
+                        time.sleep(2)
+                        port.sendto("128 " + str(ii) + " 127 " + whoami, ("192.168.12." + whoami, 5005))
+                        time.sleep(0.3)
+            
+            for jj in range(1):
+                    
+                if True:
+                    port.sendto("144 48 127 " + whoami, ("192.168.12." + whoami, 5005))
+                    time.sleep(2)
+                    port.sendto("128 48 127 " + whoami, ("192.168.12." + whoami, 5005))
+                    time.sleep(0.3)
+        elif whattype == 'T':
+            if multi:
+                for jj in range(1,2):
+                    for ii in range(38,58):
+                        port.sendto("144 " + str(ii) + " 127 " + whoami, ("192.168.12." + whoami, 5005))
+                        time.sleep(2)
+                        port.sendto("128 " + str(ii) + " 127 " + whoami, ("192.168.12." + whoami, 5005))
+                        time.sleep(0.3)
+            
+            for jj in range(1):
+                    
+                if True:
+                    port.sendto("144 38 127 " + whoami, ("192.168.12." + whoami, 5005))
+                    time.sleep(2)
+                    port.sendto("128 38 127 " + whoami, ("192.168.12." + whoami, 5005))
+                    time.sleep(0.3)
+            
+        time.sleep(1)
+    elif True:
         parser = argparse.ArgumentParser()
         parser.add_argument("--song",
                              default="001", help="Midi file")
         args = parser.parse_args()
-        mid = MidiFile('/home/oem/midi/' + args.song + '.mid')
-        midi_suite = unittest.TestSuite()   #Add play midi test function
-        all_suite = unittest.TestSuite()
-        midi_suite.addTest(Tests("test_0"))
-        all_suite.addTest(midi_suite)
-        unittest.TextTestRunner(verbosity=1).run(all_suite)
-    elif False:
-        port.sendto("Home", ("192.168.12." + whoami, 5005))
-
+        mid = MidiFile(args.song + '.mid')
+        play_midi()
+    
+    port.sendto("225 1", ("192.168.12." + whoami, 5005) )
+    #port.flush()
+    
 except KeyboardInterrupt:
     print "Cleaning up the GPIO" 
