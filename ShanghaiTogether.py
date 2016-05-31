@@ -68,15 +68,17 @@ def raysendto(_1st,_2nd,_3rd,_4th, raystr, raytuple):
     
 def play_dmx(_1st,_2nd,_3rd,_4th):
     global mydmx
-    mydmx.setChannel(2, _1st) # set DMX channel 1 to full
-    #print chan[ii]
-    mydmx.setChannel(3, _2nd) # set DMX channel 2 to 128
-    #print chan[ii+1]
-    mydmx.setChannel(4, _3rd) # set DMX channel 3 to 0
-    #print chan[ii+2]
+    '''
+    mydmx.setChannel(2, _1st) 
+    print chan[ii]
+    mydmx.setChannel(3, _2nd)
+    print chan[ii+1]
+    mydmx.setChannel(4, _3rd)
+    print chan[ii+2]
     mydmx.setChannel(5, _4th)    
-    #print chan[ii+3]
+    print chan[ii+3]
     mydmx.render()
+    '''
                 
 def play_midi():
     global isplay
@@ -360,7 +362,7 @@ def play_midi():
                 if pickidx[8].has_key(message.note):
                     port.sendto("128 " + str(message.note) + " " + str(message.velocity) + " " + str(pickidx[8][message.note]) , ("192.168.12." + str(pickidx[8][message.note]), 5005) )
                     del pickidx[8][message.note]
-    time.sleep(3);
+    time.sleep(3.5);
     for i in range(66,33,-1):
         port.sendto("225 1", ("192.168.12." + str(i), 5005) )
         port.sendto("225 1", ("192.168.12." + str(67-i), 5005) )
@@ -375,7 +377,7 @@ def play_midi():
         if 1 == BT[i]:
             port.sendto("144 28 1", ("192.168.12." + str(i), 5005))
         time.sleep(0.02)
-    time.sleep(3);
+    time.sleep(3.5);
     for i in range(1,67):
         if 1 == ST[i]:
             port.sendto("144 60 0", ("192.168.12." + str(i), 5005))
@@ -386,7 +388,7 @@ def play_midi():
         if 1 == BT[i]:
             port.sendto("144 28 0", ("192.168.12." + str(i), 5005))
         time.sleep(0.02)
-    time.sleep(3);
+    time.sleep(3.5);
     for i in range(1,67):
         port.sendto("249 2" , ("192.168.12." + str(i), 5005))
         time.sleep(0.01)
