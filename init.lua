@@ -1,8 +1,8 @@
 num=1
 
 cfg={}
- --cfg.ssid="uucar_" .. num
- --cfg.pwd="nk888888"
+ cfg.ssid="uucar_" .. num
+ cfg.pwd="nk888888"
  --cfg.ssid="uucar_X"
  --cfg.pwd="noisekitchen"
  wifi.ap.config(cfg)
