@@ -14,7 +14,6 @@ l_a=5 ; l_b=4
 k_b=7 ; k_a=6
 
 led=8
-t_num=0
 
 i_pwm = {0,375,400,450,550,675,800,1023}
 c_pwm = {0,375,400,435,485,600,800,1023}
@@ -75,7 +74,6 @@ s:on("receive", function(s, c)
     then
     else
     
-        gpio.write(led, gpio.HIGH)
         if( bit.rshift(bit.band(c, 240), 4) == 8 ) then
         -- PRESS BTN
             if(bit.band(c, 7)==1) then
@@ -148,19 +146,16 @@ s:on("receive", function(s, c)
       
         end
     
-        --tmr.delay(500)
-        if not tmr.alarm(t_num, 500, tmr.ALARM_SINGLE, 
-            function() 
-               gpio.write(led, gpio.LOW)
-            end) 
-        then
-            if(t_num==6) then   
-                t_num=0
-            else
-                t_num=t_num+1
-            end 
-        end
     end    
+    --tmr.delay(500)
+    if not tmr.alarm(1, 500, tmr.ALARM_SINGLE, 
+        function() 
+           gpio.write(led, gpio.LOW)
+        end) 
+    then
+    else
+        gpio.write(led, gpio.HIGH)
+    end
 
 end)
 s:listen(7777)
