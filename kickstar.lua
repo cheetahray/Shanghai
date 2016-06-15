@@ -1,6 +1,6 @@
 cfg={}
-cfg.ssid = "kickstar"
-cfg.pwd = "noisekitchen"
+cfg.ssid = "bellclass_5"
+cfg.pwd = "noisekitchen_5"
 wifi.ap.config(cfg)
 wifi.setmode(wifi.SOFTAP)
 ip, nm, gw = wifi.ap.getip()
@@ -10,18 +10,12 @@ print(ip)
 --    print(mac,ip)
 -- end
 
-pwm.setup(1, 500, 512)
-pwm.setup(2, 500, 512)
-pwm.start(1)
-pwm.start(2)
-
 s=net.createServer(net.UDP)
 s:on("receive", function(s, c)
+    print( c )
     print( "7th bit is 1 ? " )
     print( bit.isset(c, 7) )
     print( "6,5,4th bits are?" )
-    pwm.setduty(1,1023);
-    pwm.setduty(2,350);
     print( bit.rshift(bit.band(c, 127), 4) )
     print( "3th bit is 1 ? " )
     print( bit.isset(c, 4) )
