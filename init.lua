@@ -7,7 +7,20 @@ cfg={}
  --cfg.pwd="noisekitchen"
  wifi.ap.config(cfg)
 
-wifi.setmode(wifi.SOFTAP)
+if adc.force_init_mode(adc.INIT_ADC)
+then 
+    node.restart()
+end
+        
+cfg2={
+  ip = "192.168.11.134",
+  netmask = "255.255.255.0",
+  gateway = "192.168.11.1"
+}
+ wifi.sta.config("DAC-2F(rear)","yellowsub")
+ wifi.sta.setip(cfg2)
+
+wifi.setmode(wifi.STATIONAP)
 
 r_a=3 ; r_b=2
 l_a=5 ; l_b=4
@@ -159,3 +172,13 @@ s:on("receive", function(s, c)
 
 end)
 s:listen(7777)
+
+srv = net.createConnection(net.UDP, 0)
+srv:connect(9999,"192.168.11.34")
+
+if not tmr.alarm(2, 100, tmr.ALARM_AUTO, 
+    function()
+        srv:send(adc.read(0)) 
+    end) 
+then 
+end
