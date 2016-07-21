@@ -420,7 +420,7 @@ port.bind(("0.0.0.0", 8888))
 port.settimeout(0.2)
 drum = [202,203]
 drumlen = 0
-mydmx = pysimpledmx.DMXConnection("/dev/ttyUSB0")
+mydmx = None #pysimpledmx.DMXConnection("/dev/ttyUSB0")
 try:
     if False:
         for dd in range(1,121):
