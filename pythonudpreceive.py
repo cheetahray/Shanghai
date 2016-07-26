@@ -17,7 +17,7 @@ while True:
     #print >>sys.stderr, 'received %s bytes from %s' % (len(data), address)
     mylist = address[0].split(".")
     if data == "@":
-        if int(mylist[3]) % 2 == 0:
+        if int(mylist[3]) % 2 == 1:
             red += 1
         else:
             blue += 1
