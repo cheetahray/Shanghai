@@ -22,6 +22,17 @@ def handler(clientsocket, clientaddr):
                 p38.ChangeDutyCycle(100) #GPIO.output(38, True)
                 p40.ChangeDutyCycle(0) #GPIO.output(40, False)
             Timer(0.333, func).start()
+        elif ( len(data) == 4  and (data[0:4] == "boom") ):
+            GPIO.output(13, False) #p13.ChangeDutyCycle(0)
+            mylist2 = data[4:].split(" ")
+            degree3 = int(mylist2[2])
+            p38.ChangeDutyCycle(int(mylist2[0])) #GPIO.output(38, True)
+            p40.ChangeDutyCycle(0) #GPIO.output(40, False)
+            anim.rayanim(255,255,255,int(mylist2[1]),20,0.1)
+            p31.ChangeDutyCycle(degree3)
+            p33.ChangeDutyCycle(degree3)
+            p35.ChangeDutyCycle(degree3)
+            Timer(0.333, boom).start()
         elif ( len(data) >= 5  and (data[0:5] == "slide") ):
             if False == islightout:
                 if True == QQ and 50 == qq50:
@@ -115,6 +126,15 @@ def handler(clientsocket, clientaddr):
             time.sleep(1)
             p35.ChangeDutyCycle(0)
             p37.ChangeDutyCycle(100)
+
+def boom():
+    GPIO.output(13, True) #p13.ChangeDutyCycle(0)
+    p38.ChangeDutyCycle(0) #GPIO.output(38, True)
+    #p40.ChangeDutyCycle(0) #GPIO.output(40, False)
+    anim.cleargb()
+    p31.ChangeDutyCycle(100)
+    p33.ChangeDutyCycle(100)
+    p35.ChangeDutyCycle(100)
             
 def func():
     #global p13
