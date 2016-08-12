@@ -312,7 +312,7 @@ AmIPlay = False
 pygame.display.init()
 pygame.display.set_mode((1,1))
 
-while run:
+while True:
     try:
         #port.flushInput()
         #port.flushOutput()
