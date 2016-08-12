@@ -310,7 +310,7 @@ port = socket.socket(socket.AF_INET, socket.SOCK_DGRAM)
 #port = serial.Serial("\\\\.\\COM7", baudrate=115200)
 AmIPlay = False
 pygame.display.init()
-pygame.display.set_mode((1,1))
+pygame.display.set_mode((100,100))
 
 while True:
     #port.flushInput()
