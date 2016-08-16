@@ -150,11 +150,15 @@ def play_midi():
                     port.sendto("224 " + str(message.note) + " " + str(raymap(message.velocity, 0, 127, boundary, 127)) + " " + str(aoidx) + "\r")
                     slideidx[1][message.note] = aoidx
                     aoidx += 1
-                elif False:#message.channel == 4:
-                    soidx = checkbound(0,soidx)
-                    port.sendto("224 " + str(message.note) + " " + str(raymap(message.velocity, 0, 127, boundary, 127)) + " " + str(soidx) + "\r")
-                    slideidx[0][message.note] = soidx
-                    soidx += 1
+                elif message.channel == 4:
+                    pixel = (message.velocity << 9)
+                    red_value = (pixel & 0xF800) >> 11;
+                    green_value = (pixel & 0x7E0) >> 5;
+                    blue_value = (pixel & 0x1F);
+                    red   = red_value << 3;
+                    green = green_value << 2;
+                    blue  = blue_value << 3;
+                    port.sendto("boom" + str(red) + " " + str(green) + " " + str(blue)+ " " + str(red/2.55)+ " " + str(green/2.55)+ " " + str(blue/2.55))
                 elif message.channel == 3:
                     boidx = checkbound(3,boidx)
                     port.sendto("144 " + str(message.note) + " " + str(raymap(message.velocity, 0, 127, boundary, 127)) + " " + str(boidx) , ("192.168.12." + str(boidx), 5005) )

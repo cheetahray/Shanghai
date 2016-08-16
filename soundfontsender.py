@@ -419,7 +419,7 @@ def raylist(mylist):
             noteint = int(mylist[1])
             nowm = noteint - rayshift[whoami]
             if(shouldas != 0):
-                if False == issoundfont:
+                if True == issoundfont:
                     fl.noteoff(chnl, noteint)
                 AS(noteint)
                 shouldas = noteint
@@ -499,6 +499,48 @@ def raylist(mylist):
         elif '2' == mylist[1]:
             islightout = False 
             clientsock.send("qq")
+    
+    elif mylist[0] == '244':
+        if not ( len(mylist) == 4 and mylist[3] != str(whoami+1) ):
+            noteint = int(mylist[1])
+            nowm = noteint - rayshift[whoami]
+            if(shouldas != 0):
+                if True == issoundfont:
+                    fl.noteoff(chnl, noteint)
+                AS(noteint)
+                shouldas = noteint
+            if False == issoundfont:
+                if nowm >= 0 and nowm < howmanypitch[whoami]:
+                    if mylist[2] != '0': 
+                         #if False == dropnote:
+                         threading.Timer(0.1, funcdrop, [noteint]).start()
+                         AR(noteint,int(mylist[2])) #threading.Timer(notedelay-0.1, AR, [noteint,int(mylist[2])]).start()
+                             #mycmd("mt" + str(nowm))
+                             #dropnote = True
+                         if False == islightout:
+                             clientsock.send("slide{0} {1} {2}".format( tp[whattype[whoami]][nowm] , 0.1 , whattype[whoami] ) )
+                         lastm = nowm
+                    else:
+                         threading.Timer(0.1, AS, [noteint]).start()
+            else:
+                if nowm < 0:
+                    nowm = 0
+                elif nowm >= howmanypitch[whoami]:
+                    nowm = howmanypitch[whoami] - 1
+                if mylist[2] != '0': 
+                    #if False == dropnote:
+                    threading.Timer(0.3, funcdrop, [noteint]).start()
+                    threading.Timer(0.2, AR, [noteint,int(mylist[2])]).start()
+                    fluidnoteon(chnl, noteint, int(mylist[2])) #threading.Timer(notedelay-0.3, fluidnoteon, [chnl, noteint, int(mylist[2])] ).start()
+                        #mycmd("mt" + str(nowm))
+                        #dropnote = True
+                    if False == islightout:
+                        clientsock.send("slide{0} {1} {2}".format( tp[whattype[whoami]][nowm] , 0.1 , whattype[whoami] ) )
+                    lastm = nowm
+                else:
+                    threading.Timer(0.3, fl.noteoff, [chnl, noteint]).start()
+                    AS(noteint) #threading.Timer(notedelay, AS, [noteint]).start()
+            
     elif mylist[0] == '249':
         if '3' == mylist[1]:
             if False == issoundfont and pa is None:
@@ -668,6 +710,7 @@ while True:
             #rcv = readlineCR(port)
             rcv, addr = sock.recvfrom(1024)
             if len(rcv) > 0:
+                '''
                 if rcv == 'Home':
                     mycmd(rcv)
                     if False == issoundfont:
@@ -677,6 +720,9 @@ while True:
                     else:
                         fl.delete()
                     break
+                '''
+                if rcv.startswith("boom"):
+                    clientsock.send(rcv)
                 elif rcv == '100' and addr[0].endswith("202"):
                     #if aanote > 0:
                     fluidnoteon(0, aanote, 127)
