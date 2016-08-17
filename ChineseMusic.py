@@ -61,7 +61,29 @@ def checkbound(whattype, oidx):
             else:
                 oidx += 1
     return oidx                
-        
+
+def soundonoff(opensound):
+    if opensound == True:
+        for i in range(1,67):
+            port.sendto("249 3", ("192.168.12." + str(i), 5005) )
+            time.sleep(0.01)
+    else:
+        for i in range(1,67):
+            port.sendto("249 2" , ("192.168.12." + str(i), 5005))
+            time.sleep(0.01)
+    #time.sleep(4)
+
+def lightinout(lightin):
+    if lightin == True:
+        for i in range(34,67):
+            port.sendto("225 0", ("192.168.12." + str(i), 5005) )
+            port.sendto("225 0", ("192.168.12." + str(67-i), 5005) )
+    else:
+        for i in range(66,33,-1):
+            port.sendto("225 1", ("192.168.12." + str(i), 5005) )
+            port.sendto("225 1", ("192.168.12." + str(67-i), 5005) )
+    #time.sleep(4)
+
 def play_midi():
     global isplay
     global myshift
@@ -74,16 +96,7 @@ def play_midi():
     #port.flush()
     global AmIPlay
     AmIPlay = True    
-    for i in range(1,67):
-        port.sendto("249 3", ("192.168.12." + str(i), 5005) )
-        time.sleep(0.01)
-    time.sleep(4)
-    for i in range(34,67):
-        port.sendto("225 0", ("192.168.12." + str(i), 5005) )
-        port.sendto("225 0", ("192.168.12." + str(67-i), 5005) )
-        time.sleep(0.02)
-        #f.append(0)
-        #worksheet.write(i, 0, 0)
+    
     for message in mid.play():  #Next note from midi in this moment
         isplay = False          #To avoid duplicate doorbell button press during midi play
         if debug:
@@ -158,7 +171,8 @@ def play_midi():
                     red   = red_value << 3;
                     green = green_value << 2;
                     blue  = blue_value << 3;
-                    port.sendto("boom" + str(red) + " " + str(green) + " " + str(blue)+ " " + str(red/2.55)+ " " + str(green/2.55)+ " " + str(blue/2.55))
+                    for i in range(1,67):
+                        port.sendto("boom" + str(red) + " " + str(green) + " " + str(blue)+ " " + str(red/2.55)+ " " + str(green/2.55)+ " " + str(blue/2.55))
                 elif message.channel == 3:
                     boidx = checkbound(3,boidx)
                     port.sendto("144 " + str(message.note) + " " + str(raymap(message.velocity, 0, 127, boundary, 127)) + " " + str(boidx) , ("192.168.12." + str(boidx), 5005) )
@@ -264,11 +278,7 @@ def play_midi():
                 if pickidx[8].has_key(message.note):
                     port.sendto("128 " + str(message.note) + " " + str(message.velocity) + " " + str(pickidx[8][message.note]) , ("192.168.12." + str(pickidx[8][message.note]), 5005) )
                     del pickidx[8][message.note]
-    time.sleep(3.5);
-    for i in range(66,33,-1):
-        port.sendto("225 1", ("192.168.12." + str(i), 5005) )
-        port.sendto("225 1", ("192.168.12." + str(67-i), 5005) )
-        time.sleep(0.02)
+    '''
     for i in range(1,67):
         if 1 == ST[i]:
             port.sendto("144 60 1", ("192.168.12." + str(i), 5005))
@@ -291,10 +301,7 @@ def play_midi():
             port.sendto("144 28 0", ("192.168.12." + str(i), 5005))
         time.sleep(0.02)
     time.sleep(3.5);
-    for i in range(1,67):
-        port.sendto("249 2" , ("192.168.12." + str(i), 5005))
-        time.sleep(0.01)
-    
+    '''
     #time.sleep(10)
     #for i in range(1,67):
         #port.sendto("Home", ("192.168.12." + str(i), 5005))        
@@ -343,10 +350,13 @@ while True:
                         sys.exit()
                     args = parser.parse_args()
                     mid = MidiFile('/home/oem/midi/' + args.song + '.mid')
+                    play_midi()
+                    '''
                     midi_suite = unittest.TestSuite()   #Add play midi test function
                     all_suite = unittest.TestSuite()
                     midi_suite.addTest(Tests("test_0"))
                     all_suite.addTest(midi_suite)
                     unittest.TextTestRunner(verbosity=1).run(all_suite)
+                    '''
                 elif False:
                     port.sendto("Home", ("192.168.12." + whoami, 5005))
