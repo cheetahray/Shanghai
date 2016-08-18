@@ -341,8 +341,11 @@ while True:
                 if '__main__' == __name__ :
                     parser = argparse.ArgumentParser()
                     parser.add_argument("--song",default="morning", help="Midi file")
+                    args = parser.parse_args()
                     if event.key == pygame.K_f:
                         waitforkey = False
+                        mid = MidiFile('/home/oem/midi/' + args.song + '.mid')
+                        play_midi()
                     elif event.key == pygame.K_s:
                         waitforkey = False
                     elif event.key == pygame.K_c:
@@ -354,9 +357,6 @@ while True:
                     elif event.key == pygame.K_c and pygame.key.get_mods() & pygame.KMOD_CTRL:
                         pygame.quit();
                         sys.exit()
-                    args = parser.parse_args()
-                    mid = MidiFile('/home/oem/midi/' + args.song + '.mid')
-                    play_midi()
                     '''
                     midi_suite = unittest.TestSuite()   #Add play midi test function
                     all_suite = unittest.TestSuite()
