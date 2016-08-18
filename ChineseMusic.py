@@ -96,13 +96,15 @@ def play_midi():
     #port.flush()
     global AmIPlay
     AmIPlay = True    
-    
+    global waitforkey
     for message in mid.play():  #Next note from midi in this moment
         isplay = False          #To avoid duplicate doorbell button press during midi play
-        if debug:
-            print(message)
-        elif 'note_on' == message.type :
-            if 0 == message.velocity:
+        if 'note_on' == message.type :
+            if 3 == message.velocity:
+                waitforkey = True;
+                while True == waitforkey:
+                    time.sleep(0.001)
+            elif 0 == message.velocity:
                 if message.channel == 3:
                     if pickidx[3].has_key(message.note):
                         port.sendto("144 " + str(message.note) + " 0 " + str(pickidx[3][message.note]), ("192.168.12." + str(pickidx[3][message.note]), 5005) )
@@ -148,6 +150,13 @@ def play_midi():
                         port.sendto("144 " + str(message.note) + " 0 " + str(pickidx[8][message.note]) + "\r")
                         del pickidx[8][message.note]
             else:
+                rayv = None
+                if message.velocity > 3:
+                    rayv = "144 " + str(message.note) + " " + str(raymap(message.velocity, 0, 127, boundary, 127)) + " "
+                elif message.velocity == 2:
+                    rayv = "224 " + str(message.note) + " " + str(raymap(message.velocity, 0, 127, boundary, 127)) + " "
+                else:
+                    rayv = "244 " + str(message.note) + " " + str(raymap(message.velocity, 0, 127, boundary, 127)) + " "
                 if False:#message.channel == 7:
                     boidx = checkbound(3,boidx)
                     port.sendto("224 " + str(message.note) + " " + str(raymap(message.velocity, 0, 127, boundary, 127)) + " " + str(boidx) + "\r")
@@ -175,62 +184,58 @@ def play_midi():
                         port.sendto("boom" + str(red) + " " + str(green) + " " + str(blue)+ " " + str(red/2.55)+ " " + str(green/2.55)+ " " + str(blue/2.55))
                 elif message.channel == 3:
                     boidx = checkbound(3,boidx)
-                    port.sendto("144 " + str(message.note) + " " + str(raymap(message.velocity, 0, 127, boundary, 127)) + " " + str(boidx) , ("192.168.12." + str(boidx), 5005) )
+                    port.sendto(rayv + str(boidx) , ("192.168.12." + str(boidx), 5005) )
                     pickidx[3][message.note] = boidx
                     boidx += 1
                 elif message.channel == 2:
                     toidx = checkbound(2,toidx)
-                    port.sendto("144 " + str(message.note) + " " + str(raymap(message.velocity, 0, 127, boundary, 127)) + " " + str(toidx) , ("192.168.12." + str(toidx), 5005))
+                    port.sendto(rayv + str(toidx) , ("192.168.12." + str(toidx), 5005))
                     pickidx[2][message.note] = toidx
                     toidx += 1
                 elif message.channel == 1:
                     aoidx = checkbound(1,aoidx)
-                    port.sendto("144 " + str(message.note) + " " + str(raymap(message.velocity, 0, 127, boundary, 127)) + " " + str(aoidx) , ("192.168.12." + str(aoidx), 5005))
+                    port.sendto(rayv + str(aoidx) , ("192.168.12." + str(aoidx), 5005))
                     pickidx[1][message.note] = aoidx
                     aoidx += 1
                 elif message.channel == 0:
                     soidx = checkbound(0,soidx)
-                    port.sendto("144 " + str(message.note) + " " + str(raymap(message.velocity, 0, 127, boundary, 127)) + " " + str(soidx) , ("192.168.12." + str(soidx), 5005))
+                    port.sendto(rayv + str(soidx) , ("192.168.12." + str(soidx), 5005))
                     pickidx[0][message.note] = soidx
                     soidx += 1
                 elif message.channel == 11:
-                    rayv = raymap(message.velocity, 0, 127, boundary, 127)
                     boidx = checkbound(3,boidx)
-                    port.sendto("144 " + str(message.note) + " " + str(rayv) + " " + str(boidx) , ("192.168.12." + str(boidx), 5005) )
+                    port.sendto(rayv + str(boidx) , ("192.168.12." + str(boidx), 5005) )
                     pickidx[7][message.note] = boidx
                     boidx += 1
                     boidx = checkbound(3,boidx)
-                    port.sendto("144 " + str(message.note) + " " + str(rayv) + " " + str(boidx) , ("192.168.12." + str(boidx), 5005) )
+                    port.sendto(rayv + str(boidx) , ("192.168.12." + str(boidx), 5005) )
                     pickidx[11][message.note] = boidx
                     boidx += 1
                 elif message.channel == 10:
-                    rayv = raymap(message.velocity, 0, 127, boundary, 127)
                     toidx = checkbound(2,toidx)
-                    port.sendto("144 " + str(message.note) + " " + str(rayv) + " " + str(toidx) , ("192.168.12." + str(toidx), 5005))
+                    port.sendto(rayv + str(toidx) , ("192.168.12." + str(toidx), 5005))
                     pickidx[6][message.note] = toidx
                     toidx += 1
                     toidx = checkbound(2,toidx)
-                    port.sendto("144 " + str(message.note) + " " + str(rayv) + " " + str(toidx) , ("192.168.12." + str(toidx), 5005))
+                    port.sendto(rayv + str(toidx) , ("192.168.12." + str(toidx), 5005))
                     pickidx[10][message.note] = toidx
                     toidx += 1
                 elif message.channel == 9:
-                    rayv = raymap(message.velocity, 0, 127, boundary, 127)
                     aoidx = checkbound(1,aoidx)
-                    port.sendto("144 " + str(message.note) + " " + str(rayv) + " " + str(aoidx) , ("192.168.12." + str(aoidx), 5005))
+                    port.sendto(rayv + str(aoidx) , ("192.168.12." + str(aoidx), 5005))
                     pickidx[5][message.note] = aoidx
                     aoidx += 1
                     aoidx = checkbound(1,aoidx)
-                    port.sendto("144 " + str(message.note) + " " + str(rayv) + " " + str(aoidx) , ("192.168.12." + str(aoidx), 5005))
+                    port.sendto(rayv + str(aoidx) , ("192.168.12." + str(aoidx), 5005))
                     pickidx[9][message.note] = aoidx
                     aoidx += 1
                 elif message.channel == 8:
-                    rayv = raymap(message.velocity, 0, 127, boundary, 127)
                     soidx = checkbound(0,soidx)
-                    port.sendto("144 " + str(message.note) + " " + str(rayv) + " " + str(soidx) , ("192.168.12." + str(soidx), 5005))
+                    port.sendto(rayv + str(soidx) , ("192.168.12." + str(soidx), 5005))
                     pickidx[4][message.note] = soidx
                     soidx += 1
                     soidx = checkbound(0,soidx)
-                    port.sendto("144 " + str(message.note) + " " + str(rayv) + " " + str(soidx) , ("192.168.12." + str(soidx), 5005))
+                    port.sendto(rayv + str(soidx) , ("192.168.12." + str(soidx), 5005))
                     pickidx[8][message.note] = soidx
                     soidx += 1
         elif 'note_off' == message.type :
@@ -322,7 +327,7 @@ port = socket.socket(socket.AF_INET, socket.SOCK_DGRAM)
 AmIPlay = False
 pygame.display.init()
 pygame.display.set_mode((100,100))
-
+waitforkey = False
 while True:
     #port.flushInput()
     #port.flushOutput()
@@ -335,16 +340,17 @@ while True:
                 #Register the door bell button GPIO input call back function
                 if '__main__' == __name__ :
                     parser = argparse.ArgumentParser()
+                    parser.add_argument("--song",default="morning", help="Midi file")
                     if event.key == pygame.K_f:
-                        parser.add_argument("--song",default="morning", help="Midi file")
+                        waitforkey = False
                     elif event.key == pygame.K_s:
-                        parser.add_argument("--song",default="afterNoon", help="Midi file")
+                        waitforkey = False
                     elif event.key == pygame.K_c:
-                        parser.add_argument("--song",default="night", help="Midi file")
+                        waitforkey = False
                     elif event.key == pygame.K_d:
-                        parser.add_argument("--song",default="NewYearA05", help="Midi file")
+                        waitforkey = False
                     elif event.key == pygame.K_ESCAPE:
-                        parser.add_argument("--song",default="C2", help="Midi file")
+                        waitforkey = False
                     elif event.key == pygame.K_c and pygame.key.get_mods() & pygame.KMOD_CTRL:
                         pygame.quit();
                         sys.exit()
@@ -360,3 +366,4 @@ while True:
                     '''
                 elif False:
                     port.sendto("Home", ("192.168.12." + whoami, 5005))
+    time.sleep(0.001)
