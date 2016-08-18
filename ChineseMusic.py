@@ -345,7 +345,7 @@ while True:
                     if event.key == pygame.K_f:
                         waitforkey = False
                         mid = MidiFile('/home/oem/midi/' + args.song + '.mid')
-                        play_midi()
+                        #play_midi()
                     elif event.key == pygame.K_s:
                         waitforkey = False
                     elif event.key == pygame.K_c:
@@ -354,7 +354,7 @@ while True:
                         waitforkey = False
                     elif event.key == pygame.K_ESCAPE:
                         waitforkey = False
-                    elif event.key == pygame.K_c and pygame.key.get_mods() & pygame.KMOD_CTRL:
+                    elif event.key == pygame.K_c and (pygame.key.get_mods() & pygame.KMOD_CTRL):
                         pygame.quit();
                         sys.exit()
                     '''
