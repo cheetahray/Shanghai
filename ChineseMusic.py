@@ -17,6 +17,7 @@ from mido import MidiFile
 import socket
 import sys
 import pygame.display
+import thread
 
 mid = None
 debug = False        #Boolean for on/off our debug print 
@@ -345,7 +346,7 @@ while True:
                     if event.key == pygame.K_f:
                         waitforkey = False
                         mid = MidiFile('/home/oem/midi/' + args.song + '.mid')
-                        #play_midi()
+                        #thread.start_new_thread(play_midi,())
                     elif event.key == pygame.K_s:
                         waitforkey = False
                     elif event.key == pygame.K_c:
