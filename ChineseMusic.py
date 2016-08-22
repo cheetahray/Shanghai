@@ -74,6 +74,11 @@ def soundonoff(opensound):
             time.sleep(0.01)
     #time.sleep(4)
 
+def changemusic(mid):
+    for i in range(1,67):
+        port.sendto("249 1 " + str(mid), ("192.168.12." + str(i), 5005) )
+    #time.sleep(4)
+
 def lightinout(lightin):
     if lightin == True:
         for i in range(34,67):
