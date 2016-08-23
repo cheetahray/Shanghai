@@ -311,13 +311,13 @@ try:
     #port.flushInput()
     #port.flushOutput()
 
-    whoami = "3"
+    whoami = "45"
     #Register the door bell button GPIO input call back function
     port.sendto("253 " + whoami + " 100", ("192.168.12." + whoami, 5005) )
     time.sleep(0.01)
     port.sendto("225 0", ("192.168.12." + whoami, 5005) )
     time.sleep(0.01)
-    whattype = 'S'
+    whattype = 'T'
     if False:
         for i in range(1,10):
             if whattype == 'S':
