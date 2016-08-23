@@ -362,12 +362,12 @@ while True:
                 #Register the door bell button GPIO input call back function
                 if '__main__' == __name__ :
                     parser = argparse.ArgumentParser()
-                    parser.add_argument("--song",default="morning", help="Midi file")
+                    parser.add_argument("--song",default="Summer_solved_1_midi_1", help="Midi file")
                     args = parser.parse_args()
                     if event.key == pygame.K_f:
                         waitforkey = False
                         mid = MidiFile('/home/oem/midi/' + args.song + '.mid')
-                        #thread.start_new_thread(play_midi,())
+                        thread.start_new_thread(play_midi,())
                     elif event.key == pygame.K_s:
                         waitforkey = False
                     elif event.key == pygame.K_c:
