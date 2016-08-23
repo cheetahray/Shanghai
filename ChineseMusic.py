@@ -103,28 +103,30 @@ def play_midi():
     global AmIPlay
     AmIPlay = True    
     global waitforkey
-    psidx = None
-    paidx = None
-    ptidx = None
-    pbidx = None
+    psidx = 0
+    paidx = 0
+    ptidx = 0
+    pbidx = 0
     for message in mid.play():  #Next note from midi in this moment
         isplay = False          #To avoid duplicate doorbell button press during midi play
         if 'note_on' == message.type :
             if message.channel == 14:
-                if 5 == message.velocity:
+                if 3 == message.velocity:
+                    psidx = soidx
+                    paidx = aoidx
+                    ptidx = toidx
+                    pbidx = boidx
+                    print("pulse")                    
+                elif 5 == message.velocity:
                     soidx = psidx
                     aoidx = paidx
                     toidx = ptidx
                     boidx = pbidx
+                    print("resound")
                     waitforkey = True;
                     while True == waitforkey:
                         time.sleep(0.001)
-                elif 3 == message.velocity:
-                    lightinout(True)
-                    psidx = soidx
-                    paidx = aoidx
-                    ptidx = toidx
-                    pbidx = boidx                    
+                    lightinout(True)                        
             elif 0 == message.velocity:
                 if message.channel == 3:
                     if pickidx[3].has_key(message.note):
@@ -179,16 +181,19 @@ def play_midi():
                     red   = red_value << 3;
                     green = green_value << 2;
                     blue  = blue_value << 3;
+                    BOOM = "boom" + str(red) + " " + str(green) + " " + str(blue)+ " " + str(int(red/2.55))+ " " + str(int(green/2.55))+ " " + str(int(blue/2.55))
+                    #print BOOM
                     for i in range(1,67):
-                        port.sendto("boom" + str(red) + " " + str(green) + " " + str(blue)+ " " + str(red/2.55)+ " " + str(green/2.55)+ " " + str(blue/2.55), ("192.168.12." + str(i), 5005))
+                        port.sendto(BOOM, ("192.168.12." + str(i), 5005))
                 else:
                     rayv = None
                     if message.velocity > 2:
                         rayv = "144 " + str(message.note) + " " + str(raymap(message.velocity, 0, 127, boundary, 127)) + " "
                     elif message.velocity == 1:
+                        print("preload")
                         rayv = "224 " + str(message.note) + " " + str(raymap(message.velocity, 0, 127, boundary, 127)) + " "
                     else:
-                        rayv = "244 " + str(message.note) + " " + str(raymap(message.velocity, 0, 127, boundary, 127)) + " "
+                        rayv = "244 " + str(message.note) + " 127 "
                     if False:#message.channel == 7:
                         boidx = checkbound(3,boidx)
                         port.sendto("224 " + str(message.note) + " " + str(raymap(message.velocity, 0, 127, boundary, 127)) + " " + str(boidx) + "\r")
@@ -353,7 +358,7 @@ waitforkey = False
 while True:
     #port.flushInput()
     #port.flushOutput()
-    if False == AmIPlay:
+    if True: #False == AmIPlay:
         for event in pygame.event.get():
             if event.type == pygame.QUIT:
                 pygame.quit();
@@ -362,11 +367,13 @@ while True:
                 #Register the door bell button GPIO input call back function
                 if '__main__' == __name__ :
                     parser = argparse.ArgumentParser()
-                    parser.add_argument("--song",default="Summer_solved_1_midi_1", help="Midi file")
+                    parser.add_argument("--song",default="Summer_solved_3_midi_4", help="Midi file")
                     args = parser.parse_args()
                     if event.key == pygame.K_f:
+                        lightinout(False)
+                        soundonoff(True)
                         waitforkey = False
-                        mid = MidiFile('/home/oem/midi/' + args.song + '.mid')
+                        mid = MidiFile(args.song + '.mid')
                         thread.start_new_thread(play_midi,())
                     elif event.key == pygame.K_s:
                         waitforkey = False
