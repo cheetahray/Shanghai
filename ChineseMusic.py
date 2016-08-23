@@ -180,7 +180,7 @@ def play_midi():
                     green = green_value << 2;
                     blue  = blue_value << 3;
                     for i in range(1,67):
-                        port.sendto("boom" + str(red) + " " + str(green) + " " + str(blue)+ " " + str(red/2.55)+ " " + str(green/2.55)+ " " + str(blue/2.55))
+                        port.sendto("boom" + str(red) + " " + str(green) + " " + str(blue)+ " " + str(red/2.55)+ " " + str(green/2.55)+ " " + str(blue/2.55), ("192.168.12." + str(i), 5005))
                 else:
                     rayv = None
                     if message.velocity > 2:
