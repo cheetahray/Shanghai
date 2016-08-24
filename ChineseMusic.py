@@ -16,7 +16,7 @@ from mido import MidiFile
 #import serial
 import socket
 import sys
-import pygame.display
+#import pygame.display
 import thread
 
 mid = None
@@ -353,40 +353,32 @@ slideidx = [{},{},{},{},{},{},{},{},{},{},{},{}]
 port = socket.socket(socket.AF_INET, socket.SOCK_DGRAM)      
 #port = serial.Serial("\\\\.\\COM7", baudrate=115200)
 AmIPlay = False
-pygame.display.init()
-pygame.display.set_mode((100,100))
+#pygame.display.init()
+#pygame.display.set_mode((100,100))
 waitforkey = False
 while True:
     #port.flushInput()
     #port.flushOutput()
-    if True: #False == AmIPlay:
-        for event in pygame.event.get():
-            if event.type == pygame.QUIT:
-                pygame.quit();
-                sys.exit()
-            elif event.type == pygame.KEYDOWN:
-                #Register the door bell button GPIO input call back function
-                if '__main__' == __name__ :
-                    parser = argparse.ArgumentParser()
-                    parser.add_argument("--song",default="Summer_solved_3_midi_4", help="Midi file")
-                    args = parser.parse_args()
-                    if event.key == pygame.K_f:
-                        lightinout(False)
-                        soundonoff(True)
-                        waitforkey = False
-                        mid = MidiFile(args.song + '.mid')
-                        thread.start_new_thread(play_midi,())
-                    elif event.key == pygame.K_s:
-                        waitforkey = False
-                    elif event.key == pygame.K_c:
-                        waitforkey = False
-                    elif event.key == pygame.K_d:
-                        waitforkey = False
-                    elif event.key == pygame.K_ESCAPE:
-                        waitforkey = False
-                    elif event.key == pygame.K_c and (pygame.key.get_mods() & pygame.KMOD_CTRL):
-                        pygame.quit();
-                        sys.exit()
+    eventkey = sys.stdin.read(1)
+    if '__main__' == __name__ :
+        parser = argparse.ArgumentParser()
+        parser.add_argument("--song",default="Summer_solved_3_midi_4", help="Midi file")
+        args = parser.parse_args()
+        if eventkey == pygame.K_f:
+            lightinout(False)
+            soundonoff(True)
+            waitforkey = False
+            mid = MidiFile(args.song + '.mid')
+            thread.start_new_thread(play_midi,())
+        elif eventkey == pygame.K_s:
+            waitforkey = False
+        elif eventkey == pygame.K_c:
+            waitforkey = False
+        elif eventkey == pygame.K_d:
+            waitforkey = False
+        elif eventkey == pygame.K_ESCAPE:
+            waitforkey = False
+            #sys.exit()
                     '''
                     midi_suite = unittest.TestSuite()   #Add play midi test function
                     all_suite = unittest.TestSuite()
@@ -394,6 +386,6 @@ while True:
                     all_suite.addTest(midi_suite)
                     unittest.TextTestRunner(verbosity=1).run(all_suite)
                     '''
-                elif False:
-                    port.sendto("Home", ("192.168.12." + whoami, 5005))
-    time.sleep(0.001)
+    elif False:
+        port.sendto("Home", ("192.168.12." + whoami, 5005))
+    #time.sleep(0.001)
