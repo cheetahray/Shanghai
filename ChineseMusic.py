@@ -108,6 +108,7 @@ def play_midi():
     paidx = 0
     ptidx = 0
     pbidx = 0
+    mayIpreload = False
     for message in mid.play():  #Next note from midi in this moment
         isplay = False          #To avoid duplicate doorbell button press during midi play
         if 'note_on' == message.type :
@@ -118,12 +119,14 @@ def play_midi():
                     paidx = aoidx
                     ptidx = toidx
                     pbidx = boidx
+                    mayIpreload = True
                     print("pulse")                    
                 elif 5 == message.velocity:
                     soidx = psidx
                     aoidx = paidx
                     toidx = ptidx
                     boidx = pbidx
+                    mayIpreload = False
                     print("resound")
                     waitforkey = True;
                     while True == waitforkey:
@@ -174,7 +177,7 @@ def play_midi():
                         port.sendto("144 " + str(message.note) + " 0 " + str(pickidx[8][message.note]) + "\r")
                         del pickidx[8][message.note]
             else:
-                if False: #message.channel == 4:
+                if message.channel == 4:
                     pixel = (message.velocity << 9)
                     red_value = (pixel & 0xF800) >> 11;
                     green_value = (pixel & 0x7E0) >> 5;
@@ -190,7 +193,7 @@ def play_midi():
                     rayv = None
                     if message.velocity > 2:
                         rayv = "144 " + str(message.note) + " " + str(raymap(message.velocity, 0, 127, boundary, 127)) + " "
-                    elif message.velocity == 1:
+                    elif message.velocity == 1 and True == mayIpreload:
                         print("preload")
                         rayv = "224 " + str(message.note) + " " + str(raymap(message.velocity, 0, 127, boundary, 127)) + " "
                     else:
