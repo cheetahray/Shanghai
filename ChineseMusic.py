@@ -18,7 +18,7 @@ import socket
 import sys
 #import pygame.display
 import thread
-
+import tty
 mid = None
 debug = False        #Boolean for on/off our debug print 
 isplay = False      #Boolean to judge whether the midi is playing
@@ -356,6 +356,7 @@ AmIPlay = False
 #pygame.display.init()
 #pygame.display.set_mode((100,100))
 waitforkey = False
+tty.setcbreak(sys.stdin)
 while True:
     #port.flushInput()
     #port.flushOutput()
@@ -364,28 +365,27 @@ while True:
         parser = argparse.ArgumentParser()
         parser.add_argument("--song",default="Summer_solved_3_midi_4", help="Midi file")
         args = parser.parse_args()
-        if eventkey == pygame.K_f:
+        if eventkey == 'f':
             lightinout(False)
             soundonoff(True)
             waitforkey = False
             mid = MidiFile(args.song + '.mid')
             thread.start_new_thread(play_midi,())
-        elif eventkey == pygame.K_s:
+        elif eventkey == 's':
             waitforkey = False
-        elif eventkey == pygame.K_c:
+        elif eventkey == 'c':
             waitforkey = False
-        elif eventkey == pygame.K_d:
+        elif eventkey == 'd':
             waitforkey = False
-        elif eventkey == pygame.K_ESCAPE:
-            waitforkey = False
-            #sys.exit()
-                    '''
-                    midi_suite = unittest.TestSuite()   #Add play midi test function
-                    all_suite = unittest.TestSuite()
-                    midi_suite.addTest(Tests("test_0"))
-                    all_suite.addTest(midi_suite)
-                    unittest.TextTestRunner(verbosity=1).run(all_suite)
-                    '''
+        elif eventkey == 'q':
+            sys.exit()
+            '''
+            midi_suite = unittest.TestSuite()   #Add play midi test function
+            all_suite = unittest.TestSuite()
+            midi_suite.addTest(Tests("test_0"))
+            all_suite.addTest(midi_suite)
+            unittest.TextTestRunner(verbosity=1).run(all_suite)
+            '''
     elif False:
         port.sendto("Home", ("192.168.12." + whoami, 5005))
     #time.sleep(0.001)
