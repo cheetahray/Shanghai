@@ -375,7 +375,7 @@ while True:
                 parser.add_argument("--song",default="OTONO_PORTENO_0818version", help="Midi file")
             elif eventkey == 'd':
                 parser.add_argument("--song",default="Winter_0818version", help="Midi file")
-            mid = MidiFile(args.song + '.mid')
+            mid = MidiFile("/home/oem/midi/" + args.song + '.mid')
             thread.start_new_thread(play_midi,())
         if ord(eventkey) == 27:
             waitforkey = False
