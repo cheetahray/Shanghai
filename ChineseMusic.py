@@ -315,7 +315,7 @@ def play_midi():
     time.sleep(1.5)
     lightinout(False)
     soundonoff(False)
-	for i in range(1,67):
+    for i in range(1,67):
         if 1 == ST[i]:
             port.sendto("144 60 1", ("192.168.12." + str(i), 5005))
         if 1 == AT[i]:
