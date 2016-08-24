@@ -113,6 +113,7 @@ def play_midi():
         if 'note_on' == message.type :
             if message.channel == 14:
                 if 3 == message.velocity:
+                    lightinout(False)
                     psidx = soidx
                     paidx = aoidx
                     ptidx = toidx
@@ -127,7 +128,6 @@ def play_midi():
                     waitforkey = True;
                     while True == waitforkey:
                         time.sleep(0.001)
-                    lightinout(True)                        
             elif 0 == message.velocity:
                 if message.channel == 3:
                     if pickidx[3].has_key(message.note):
@@ -365,7 +365,7 @@ while True:
         if AmIPlay == False:
             parser = argparse.ArgumentParser()
             args = parser.parse_args()
-            lightinout(False)
+            lightinout(True)
             soundonoff(True)
             if eventkey == 'f':
                 parser.add_argument("--song",default="Spring_0807_version2", help="Midi file")
