@@ -311,8 +311,11 @@ def play_midi():
                 if pickidx[8].has_key(message.note):
                     port.sendto("128 " + str(message.note) + " " + str(message.velocity) + " " + str(pickidx[8][message.note]) , ("192.168.12." + str(pickidx[8][message.note]), 5005) )
                     del pickidx[8][message.note]
-    '''
-    for i in range(1,67):
+    
+    time.sleep(1.5)
+    lightinout(False)
+    soundonoff(False)
+	for i in range(1,67):
         if 1 == ST[i]:
             port.sendto("144 60 1", ("192.168.12." + str(i), 5005))
         if 1 == AT[i]:
@@ -321,8 +324,8 @@ def play_midi():
             port.sendto("144 38 1", ("192.168.12." + str(i), 5005))
         if 1 == BT[i]:
             port.sendto("144 28 1", ("192.168.12." + str(i), 5005))
-        time.sleep(0.02)
-    time.sleep(3.5);
+        time.sleep(0.001)
+    time.sleep(1.5);
     for i in range(1,67):
         if 1 == ST[i]:
             port.sendto("144 60 0", ("192.168.12." + str(i), 5005))
@@ -332,12 +335,7 @@ def play_midi():
             port.sendto("144 38 0", ("192.168.12." + str(i), 5005))
         if 1 == BT[i]:
             port.sendto("144 28 0", ("192.168.12." + str(i), 5005))
-        time.sleep(0.02)
-    time.sleep(3.5);
-    '''
-    #time.sleep(10)
-    #for i in range(1,67):
-        #port.sendto("Home", ("192.168.12." + str(i), 5005))        
+        time.sleep(0.001)
     AmIPlay = False    
      #0  1  2  3  4  5  6  7  8  9 10 11 12 13 14 15 16 17 18 19 20 21 22 23 24 25 26 27 28 29 30 31 32 33 34 35 36 37 38 39 40 41 42 43 44 45 46 47 48 49 50 51 52 53 54 55 56 57 58 59 60 61 62 63 64 65 66
 ST = [0, 1, 1, 1, 1, 1, 1, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0 ,0 ,0 ,0, 0, 0, 0, 0, 1, 1, 1, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 1, 1, 1, 1, 1, 1]
