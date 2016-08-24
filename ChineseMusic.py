@@ -67,11 +67,11 @@ def soundonoff(opensound):
     if opensound == True:
         for i in range(1,67):
             port.sendto("249 3", ("192.168.12." + str(i), 5005) )
-            time.sleep(0.01)
+            time.sleep(0.001)
     else:
         for i in range(1,67):
             port.sendto("249 2" , ("192.168.12." + str(i), 5005))
-            time.sleep(0.01)
+            time.sleep(0.001)
     #time.sleep(4)
 
 def changemusic(mid):
@@ -81,15 +81,16 @@ def changemusic(mid):
 
 def lightinout(lightin):
     if lightin == True:
-        for i in range(34,67):
+        for i in range(1,67):
             port.sendto("225 0", ("192.168.12." + str(i), 5005) )
-            port.sendto("225 0", ("192.168.12." + str(67-i), 5005) )
+            time.sleep(0.001)
+            #port.sendto("225 0", ("192.168.12." + str(67-i), 5005) )
     else:
-        for i in range(66,33,-1):
+        for i in range(66,0,-1):
             port.sendto("225 1", ("192.168.12." + str(i), 5005) )
-            port.sendto("225 1", ("192.168.12." + str(67-i), 5005) )
-    #time.sleep(4)
-
+            time.sleep(0.001)
+            #port.sendto("225 1", ("192.168.12." + str(67-i), 5005) )
+    
 def play_midi():
     global isplay
     global myshift
