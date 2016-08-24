@@ -174,7 +174,7 @@ def play_midi():
                         port.sendto("144 " + str(message.note) + " 0 " + str(pickidx[8][message.note]) + "\r")
                         del pickidx[8][message.note]
             else:
-                if message.channel == 4:
+                if False: #message.channel == 4:
                     pixel = (message.velocity << 9)
                     red_value = (pixel & 0xF800) >> 11;
                     green_value = (pixel & 0x7E0) >> 5;
@@ -361,9 +361,9 @@ while True:
     eventkey = sys.stdin.read(1)
     if '__main__' == __name__ :
         if AmIPlay == False:
+            lightinout(True)
             parser = argparse.ArgumentParser()
             args = parser.parse_args()
-            lightinout(True)
             soundonoff(True)
             if eventkey == 'f':
                 parser.add_argument("--song",default="Spring_0807_version2", help="Midi file")
