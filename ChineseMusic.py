@@ -368,7 +368,7 @@ while True:
             lightinout(False)
             soundonoff(True)
             if eventkey == 'f':
-                parser.add_argument("--song",default="Spring_0821_version_3", help="Midi file")
+                parser.add_argument("--song",default="Spring_0807_version2", help="Midi file")
             elif eventkey == 's':
                 parser.add_argument("--song",default="Summer_solved_3_midi_4", help="Midi file")
             elif eventkey == 'c':
@@ -377,7 +377,7 @@ while True:
                 parser.add_argument("--song",default="Winter_0818version", help="Midi file")
             args = parser.parse_args()
             mid = MidiFile("/home/oem/midi/" + args.song + '.mid')
-            #thread.start_new_thread(play_midi,())
+            thread.start_new_thread(play_midi,())
         if ord(eventkey) == 27:
             waitforkey = False
             #sys.exit()
