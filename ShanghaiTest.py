@@ -356,7 +356,7 @@ try:
             elif whattype == 'B':
                 port.sendto("144 28 0", ("192.168.12." + whoami, 5005))
             time.sleep(0.5);
-    elif True:
+    elif False:
         multi = True
         if whattype == 'B':
             if multi:
@@ -424,6 +424,10 @@ try:
                     time.sleep(0.3)
             
         time.sleep(1)
+    elif True:    
+        for i in range(1,67):
+            port.sendto("225 0", ("192.168.12." + str(i), 5005) )
+            time.sleep(0.001)
     elif True:
         parser = argparse.ArgumentParser()
         parser.add_argument("--song",

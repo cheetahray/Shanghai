@@ -357,39 +357,29 @@ AmIPlay = False
 #pygame.display.set_mode((100,100))
 waitforkey = False
 tty.setcbreak(sys.stdin)
-firstkey = False
 while True:
     #port.flushInput()
     #port.flushOutput()
     eventkey = sys.stdin.read(1)
     if '__main__' == __name__ :
-        parser = argparse.ArgumentParser()
-        parser.add_argument("--song",default="Summer_solved_3_midi_4", help="Midi file")
-        args = parser.parse_args()
-        if eventkey == 'f':
+        if AmIPlay == False:
+            parser = argparse.ArgumentParser()
+            args = parser.parse_args()
+            lightinout(False)
+            soundonoff(True)
+            if eventkey == 'f':
+                parser.add_argument("--song",default="Spring_0821_version_3", help="Midi file")
+            elif eventkey == 's':
+                parser.add_argument("--song",default="Summer_solved_3_midi_4", help="Midi file")
+            elif eventkey == 'c':
+                parser.add_argument("--song",default="OTONO_PORTENO_0818version", help="Midi file")
+            elif eventkey == 'd':
+                parser.add_argument("--song",default="Winter_0818version", help="Midi file")
+            mid = MidiFile(args.song + '.mid')
+            thread.start_new_thread(play_midi,())
+        if ord(eventkey) == 27:
             waitforkey = False
-            firstkey = True
-        elif eventkey == 's':
-            waitforkey = False
-            firstkey = False
-        elif eventkey == 'c':
-            waitforkey = False
-            firstkey = False
-        elif eventkey == 'd':
-            waitforkey = False
-            firstkey = False
-        elif ord(eventkey) == 27:
-            if firstkey == True:
-                lightinout(False)
-                soundonoff(True)
-                waitforkey = False
-                mid = MidiFile(args.song + '.mid')
-                thread.start_new_thread(play_midi,())
-                firstkey = False
-            else:
-                waitforkey = False
-                firstkey = False
-                #sys.exit()
+            #sys.exit()
             '''
             midi_suite = unittest.TestSuite()   #Add play midi test function
             all_suite = unittest.TestSuite()
