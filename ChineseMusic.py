@@ -205,12 +205,12 @@ def play_midi():
                     rayv = None
                     if message.velocity > 2:
                         rayv = "144 " + str(message.note) + " " + str(raymap(message.velocity, 0, 127, boundary, 127)) + " "
-                    elif message.velocity == 1 and True == mayIpreload:
+                    elif message.velocity == 1: #and True == mayIpreload:
                         howmanyPreload = howmanyPreload + 1
                         print("preload " + str(howmanyPreload))
                         print datetime.datetime.now()
                         rayv = "224 " + str(message.note) + " " + str(raymap(message.velocity, 0, 127, boundary, 127)) + " "
-                    else:
+                    elif message.velocity == 2:
                         howmanyAA = howmanyAA + 1
                         print("aa " + str(howmanyAA))
                         print datetime.datetime.now()
@@ -392,7 +392,7 @@ while True:
             elif eventkey == 's':
                 parser.add_argument("--song",default="Summer_solved_4-2.mid", help="Midi file")
             elif eventkey == 'c':
-                parser.add_argument("--song",default="Aut_solved_2.mid", help="Midi file")
+                parser.add_argument("--song",default="Aut_solved_2-2.mid", help="Midi file")
             elif eventkey == 'd':
                 parser.add_argument("--song",default="Winter_solved_2.mid", help="Midi file")
             args = parser.parse_args()
