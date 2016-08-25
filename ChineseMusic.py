@@ -19,6 +19,7 @@ import sys
 #import pygame.display
 import thread
 import tty
+import datetime
 mid = None
 debug = False        #Boolean for on/off our debug print 
 isplay = False      #Boolean to judge whether the midi is playing
@@ -126,6 +127,7 @@ def play_midi():
                     pbidx = boidx
                     mayIpreload = True
                     print("pulse")                    
+                    print datetime.datetime.now()
                 elif 5 == message.velocity:
                     soidx = psidx
                     aoidx = paidx
@@ -134,6 +136,7 @@ def play_midi():
                     mayIpreload = False
                     print("resound")
                     waitforkey = True;
+                    print datetime.datetime.now()
                     while True == waitforkey:
                         time.sleep(0.001)
             elif 0 == message.velocity:
@@ -200,8 +203,11 @@ def play_midi():
                         rayv = "144 " + str(message.note) + " " + str(raymap(message.velocity, 0, 127, boundary, 127)) + " "
                     elif message.velocity == 1 and True == mayIpreload:
                         print("preload")
+                        print datetime.datetime.now()
                         rayv = "224 " + str(message.note) + " " + str(raymap(message.velocity, 0, 127, boundary, 127)) + " "
                     else:
+                        print("aa")
+                        print datetime.datetime.now()
                         rayv = "244 " + str(message.note) + " 127 "
                     if False:#message.channel == 7:
                         boidx = checkbound(3,boidx)
@@ -322,7 +328,6 @@ def play_midi():
     
     time.sleep(1.5)
     lightinout(False)
-    soundonoff(False)
     for i in range(1,67):
         if 1 == ST[i]:
             port.sendto("144 60 1", ("192.168.12." + str(i), 5005))
@@ -344,6 +349,8 @@ def play_midi():
         if 1 == BT[i]:
             port.sendto("144 28 0", ("192.168.12." + str(i), 5005))
         time.sleep(0.001)
+    time.sleep(1.5)
+    soundonoff(False)
     AmIPlay = False    
      #0  1  2  3  4  5  6  7  8  9 10 11 12 13 14 15 16 17 18 19 20 21 22 23 24 25 26 27 28 29 30 31 32 33 34 35 36 37 38 39 40 41 42 43 44 45 46 47 48 49 50 51 52 53 54 55 56 57 58 59 60 61 62 63 64 65 66
 ST = [0, 1, 1, 1, 1, 1, 1, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0 ,0 ,0 ,0, 0, 0, 0, 0, 1, 1, 1, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 1, 1, 1, 1, 1, 1]
