@@ -68,11 +68,11 @@ def soundonoff(opensound):
     if opensound == True:
         for i in range(1,67):
             port.sendto("249 3", ("192.168.12." + str(i), 5005) )
-            time.sleep(0.001)
+            time.sleep(0.002)
     else:
         for i in range(1,67):
             port.sendto("249 2" , ("192.168.12." + str(i), 5005))
-            time.sleep(0.001)
+            time.sleep(0.002)
     #time.sleep(4)
 
 def changemusic():
@@ -89,12 +89,12 @@ def lightinout(lightin):
     if lightin == True:
         for i in range(1,67):
             port.sendto("225 0", ("192.168.12." + str(i), 5005) )
-            time.sleep(0.001)
+            time.sleep(0.002)
             #port.sendto("225 0", ("192.168.12." + str(67-i), 5005) )
     else:
         for i in range(66,0,-1):
             port.sendto("225 1", ("192.168.12." + str(i), 5005) )
-            time.sleep(0.001)
+            time.sleep(0.002)
             #port.sendto("225 1", ("192.168.12." + str(67-i), 5005) )
     
 def play_midi():
@@ -138,7 +138,7 @@ def play_midi():
                     waitforkey = True;
                     print datetime.datetime.now()
                     while True == waitforkey:
-                        time.sleep(0.001)
+                        time.sleep(0.002)
             elif 0 == message.velocity:
                 if message.channel == 3:
                     if pickidx[3].has_key(message.note):
@@ -185,7 +185,7 @@ def play_midi():
                         port.sendto("144 " + str(message.note) + " 0 " + str(pickidx[8][message.note]) + "\r")
                         del pickidx[8][message.note]
             else:
-                if message.channel == -4:
+                if message.channel == 4:
                     pixel = (message.velocity << 9)
                     red_value = (pixel & 0xF800) >> 11;
                     green_value = (pixel & 0x7E0) >> 5;
@@ -326,7 +326,7 @@ def play_midi():
                     port.sendto("128 " + str(message.note) + " " + str(message.velocity) + " " + str(pickidx[8][message.note]) , ("192.168.12." + str(pickidx[8][message.note]), 5005) )
                     del pickidx[8][message.note]
     
-    time.sleep(1.5)
+    time.sleep(1.6)
     lightinout(False)
     for i in range(1,67):
         if 1 == ST[i]:
@@ -337,8 +337,8 @@ def play_midi():
             port.sendto("144 38 1", ("192.168.12." + str(i), 5005))
         if 1 == BT[i]:
             port.sendto("144 28 1", ("192.168.12." + str(i), 5005))
-        time.sleep(0.001)
-    time.sleep(1.5);
+        time.sleep(0.002)
+    time.sleep(1.6);
     for i in range(1,67):
         if 1 == ST[i]:
             port.sendto("144 60 0", ("192.168.12." + str(i), 5005))
@@ -348,8 +348,8 @@ def play_midi():
             port.sendto("144 38 0", ("192.168.12." + str(i), 5005))
         if 1 == BT[i]:
             port.sendto("144 28 0", ("192.168.12." + str(i), 5005))
-        time.sleep(0.001)
-    time.sleep(1.5)
+        time.sleep(0.002)
+    time.sleep(1.6)
     soundonoff(False)
     AmIPlay = False    
      #0  1  2  3  4  5  6  7  8  9 10 11 12 13 14 15 16 17 18 19 20 21 22 23 24 25 26 27 28 29 30 31 32 33 34 35 36 37 38 39 40 41 42 43 44 45 46 47 48 49 50 51 52 53 54 55 56 57 58 59 60 61 62 63 64 65 66
@@ -376,19 +376,19 @@ while True:
     eventkey = sys.stdin.read(1)
     if '__main__' == __name__ :
         if AmIPlay == False:
-            lightinout(True)
+            soundonoff(True)
             parser = argparse.ArgumentParser()
             #changemusic()
             args = parser.parse_args()
-            soundonoff(True)
+            lightinout(True)
             if eventkey == 'f':
-                parser.add_argument("--song",default="Spring_solved_1.mid", help="Midi file")
+                parser.add_argument("--song",default="Spring_solved_4.mid", help="Midi file")
             elif eventkey == 's':
-                parser.add_argument("--song",default="Summer_solved_4.mid", help="Midi file")
+                parser.add_argument("--song",default="Summer_solved_4-2.mid", help="Midi file")
             elif eventkey == 'c':
-                parser.add_argument("--song",default="Aut_solved_1.mid", help="Midi file")
+                parser.add_argument("--song",default="Aut_solved_2.mid", help="Midi file")
             elif eventkey == 'd':
-                parser.add_argument("--song",default="Winter_solved_1.mid", help="Midi file")
+                parser.add_argument("--song",default="Winter_solved_2.mid", help="Midi file")
             args = parser.parse_args()
             mid = MidiFile("/home/oem/midi/" + args.song)
             thread.start_new_thread(play_midi,())
@@ -409,4 +409,4 @@ while True:
             '''
     elif False:
         port.sendto("Home", ("192.168.12." + whoami, 5005))
-    #time.sleep(0.001)
+    #time.sleep(0.002)
