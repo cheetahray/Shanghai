@@ -74,9 +74,14 @@ def soundonoff(opensound):
             time.sleep(0.001)
     #time.sleep(4)
 
-def changemusic(mid):
+def changemusic():
+                # 1   2   3   4   5   6   7   8   9  10  11  12  13  14  15  16  17  18  19  20
+    soundtype = [27, 27, 27, 27, 27, 27, 27, 27, 27, 27, 27, 27, 27, 27, 27, 27, 27, 27, 27, 27,
+                 27, 27, 27, 32, 32, 32, 32, 32, 27, 27, 27, 27, 27, 27, 27, 27, 27, 27, 27, 32, 
+                 32, 32, 32, 27, 27, 27, 27, 27, 27, 27, 27, 27, 27, 27, 27, 27, 27, 27, 27, 27, 
+                 27, 27, 27, 27, 27, 27, 27, 27, 27, 27, 27, 27, 27, 32]
     for i in range(1,67):
-        port.sendto("249 1 " + str(mid), ("192.168.12." + str(i), 5005) )
+        port.sendto("249 1 " + str(soundtype[i]), ("192.168.12." + str(i), 5005) )
     #time.sleep(4)
 
 def lightinout(lightin):
@@ -177,7 +182,7 @@ def play_midi():
                         port.sendto("144 " + str(message.note) + " 0 " + str(pickidx[8][message.note]) + "\r")
                         del pickidx[8][message.note]
             else:
-                if message.channel == 4:
+                if message.channel == -4:
                     pixel = (message.velocity << 9)
                     red_value = (pixel & 0xF800) >> 11;
                     green_value = (pixel & 0x7E0) >> 5;
@@ -366,19 +371,25 @@ while True:
         if AmIPlay == False:
             lightinout(True)
             parser = argparse.ArgumentParser()
+            #changemusic()
             args = parser.parse_args()
             soundonoff(True)
             if eventkey == 'f':
-                parser.add_argument("--song",default="Spring_0807_version2", help="Midi file")
+                parser.add_argument("--song",default="Spring_solved_1.mid", help="Midi file")
             elif eventkey == 's':
-                parser.add_argument("--song",default="Summer_solved_3_midi_4", help="Midi file")
+                parser.add_argument("--song",default="Summer_solved_4.mid", help="Midi file")
             elif eventkey == 'c':
-                parser.add_argument("--song",default="OTONO_PORTENO_0818version", help="Midi file")
+                parser.add_argument("--song",default="Aut_solved_1.mid", help="Midi file")
             elif eventkey == 'd':
-                parser.add_argument("--song",default="Winter_0818version", help="Midi file")
+                parser.add_argument("--song",default="Winter_solved_1.mid", help="Midi file")
             args = parser.parse_args()
-            mid = MidiFile("/home/oem/midi/" + args.song + '.mid')
+            mid = MidiFile("/home/oem/midi/" + args.song)
             thread.start_new_thread(play_midi,())
+            #midi_suite = unittest.TestSuite()   #Add play midi test function
+            #all_suite = unittest.TestSuite()
+            #midi_suite.addTest(Tests("test_0"))
+            #all_suite.addTest(midi_suite)
+            #unittest.TextTestRunner(verbosity=1).run(all_suite)
         if ord(eventkey) == 27:
             waitforkey = False
             #sys.exit()

@@ -83,9 +83,9 @@ def play_midi():
         #worksheet.write(i, 0, 0)
     for message in mid.play():  #Next note from midi in this moment
         isplay = False          #To avoid duplicate doorbell button press during midi play
-        if debug:
+        if False:
             print(message)
-        elif 'note_on' == message.type :
+        if 'note_on' == message.type :
             if 0 == message.velocity:
                 if message.channel == 3:
                     if pickidx[3].has_key(message.note):
