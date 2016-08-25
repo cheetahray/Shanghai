@@ -189,7 +189,7 @@ def play_midi():
                         port.sendto("144 " + str(message.note) + " 0 " + str(pickidx[8][message.note]) + "\r")
                         del pickidx[8][message.note]
             else:
-                if message.channel == 4:
+                if message.channel == 4 and message.velocity == 15:
                     pixel = (message.velocity << 9)
                     red_value = (pixel & 0xF800) >> 11;
                     green_value = (pixel & 0x7E0) >> 5;
@@ -390,11 +390,11 @@ while True:
             if eventkey == 'f':
                 parser.add_argument("--song",default="Spring_solved_4.mid", help="Midi file")
             elif eventkey == 's':
-                parser.add_argument("--song",default="Summer_solved_4-2.mid", help="Midi file")
+                parser.add_argument("--song",default="Summer_solved_4-3.mid", help="Midi file")
             elif eventkey == 'c':
-                parser.add_argument("--song",default="Aut_solved_2-2.mid", help="Midi file")
+                parser.add_argument("--song",default="Aut_solved_2-5.mid", help="Midi file")
             elif eventkey == 'd':
-                parser.add_argument("--song",default="Winter_solved_2.mid", help="Midi file")
+                parser.add_argument("--song",default="Winter_solved_2-3.mid", help="Midi file")
             args = parser.parse_args()
             mid = MidiFile("/home/oem/midi/" + args.song)
             thread.start_new_thread(play_midi,())
