@@ -114,6 +114,8 @@ def play_midi():
     paidx = 0
     ptidx = 0
     pbidx = 0
+    howmanyPreload = 0
+    howmanyAA = 0
     mayIpreload = False
     for message in mid.play():  #Next note from midi in this moment
         isplay = False          #To avoid duplicate doorbell button press during midi play
@@ -126,6 +128,7 @@ def play_midi():
                     ptidx = toidx
                     pbidx = boidx
                     mayIpreload = True
+                    howmanyPreload = 0
                     print("pulse")                    
                     print datetime.datetime.now()
                 elif 5 == message.velocity:
@@ -134,6 +137,7 @@ def play_midi():
                     toidx = ptidx
                     boidx = pbidx
                     mayIpreload = False
+                    howmanyAA = 0
                     print("resound")
                     waitforkey = True;
                     print datetime.datetime.now()
@@ -202,11 +206,13 @@ def play_midi():
                     if message.velocity > 2:
                         rayv = "144 " + str(message.note) + " " + str(raymap(message.velocity, 0, 127, boundary, 127)) + " "
                     elif message.velocity == 1 and True == mayIpreload:
-                        print("preload")
+                        howmanyPreload = howmanyPreload + 1
+                        print("preload " + str(howmanyPreload))
                         print datetime.datetime.now()
                         rayv = "224 " + str(message.note) + " " + str(raymap(message.velocity, 0, 127, boundary, 127)) + " "
                     else:
-                        print("aa")
+                        howmanyAA = howmanyAA + 1
+                        print("aa " + str(howmanyAA))
                         print datetime.datetime.now()
                         rayv = "244 " + str(message.note) + " 127 "
                     if False:#message.channel == 7:
