@@ -8,20 +8,21 @@ sock = socket.socket(socket.AF_INET, socket.SOCK_DGRAM)
 server_address = ('0.0.0.0', 9999)
 print >>sys.stderr, 'starting up on %s port %s' % server_address
 sock.bind(server_address)
-red = 0
-blue = 0
+
 while True:
     #print >>sys.stderr, '\nwaiting to receive message'
     data, address = sock.recvfrom(4096)
-    
-    #print >>sys.stderr, 'received %s bytes from %s' % (len(data), address)
-    mylist = address[0].split(".")
-    if data == "@":
-        if int(mylist[3]) % 2 == 1:
-            red += 1
+    mylist = data.split(" ")
+    #print mylist
+    if( mylist[0] == "n" ):
+        if mylist[3] == "1":
+            print "preload"
+        elif mylist[3] == "2":
+            print "aa"
         else:
-            blue += 1
-        print >>sys.stderr, str(red) + ":" + str(blue)
+            print "on"
+    elif( mylist[0] == "f" ):
+        print "off"
     '''
     if data:
         sent = sock.sendto(data, address)
