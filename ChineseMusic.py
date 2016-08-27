@@ -388,7 +388,8 @@ while True:
             args = parser.parse_args()
             lightinout(True)
             if eventkey == 'f':
-                parser.add_argument("--song",default="Spring_solved_4.mid", help="Midi file")
+                #parser.add_argument("--song",default="Spring_solved_4.mid", help="Midi file")
+                parser.add_argument("--song",default="boom.mid", help="Midi file")
             elif eventkey == 's':
                 parser.add_argument("--song",default="Summer_solved_4-3.mid", help="Midi file")
             elif eventkey == 'c':
