@@ -119,6 +119,7 @@ def play_midi():
     mayIpreload = False
     for message in mid.play():  #Next note from midi in this moment
         isplay = False          #To avoid duplicate doorbell button press during midi play
+        msg = ""
         if 'note_on' == message.type :
             if message.channel == 14:
                 if 3 == message.velocity:
@@ -144,6 +145,7 @@ def play_midi():
                     while True == waitforkey:
                         time.sleep(0.002)
             elif 0 == message.velocity:
+                msg = "f "
                 if message.channel == 3:
                     if pickidx[3].has_key(message.note):
                         port.sendto("144 " + str(message.note) + " 0 " + str(pickidx[3][message.note]), ("192.168.12." + str(pickidx[3][message.note]), 5005) )
@@ -202,6 +204,7 @@ def play_midi():
                     for i in range(1,67):
                         port.sendto(BOOM, ("192.168.12." + str(i), 5005))
                 else:
+                    msg = "n "
                     rayv = None
                     if message.velocity > 2:
                         rayv = "144 " + str(message.note) + " " + str(raymap(message.velocity, 0, 127, boundary, 127)) + " "
@@ -287,6 +290,7 @@ def play_midi():
                         pickidx[8][message.note] = soidx
                         soidx += 1
         elif 'note_off' == message.type :
+            msg = "f "
             if message.channel == 3:
                 if pickidx[3].has_key(message.note):
                     port.sendto("128 " + str(message.note) + " " + str(message.velocity) + " " + str(pickidx[3][message.note]) , ("192.168.12." + str(pickidx[3][message.note]), 5005) )
@@ -331,7 +335,8 @@ def play_midi():
                 if pickidx[8].has_key(message.note):
                     port.sendto("128 " + str(message.note) + " " + str(message.velocity) + " " + str(pickidx[8][message.note]) , ("192.168.12." + str(pickidx[8][message.note]), 5005) )
                     del pickidx[8][message.note]
-    
+        msg = msg + str(message.channel) + " " + str(message.note) + " " + str(message.velocity)
+        port.sendto(msg, ("192.168.12.215", 9999) )
     time.sleep(1.6)
     lightinout(False)
     for i in range(1,67):
@@ -381,7 +386,17 @@ while True:
     #port.flushOutput()
     eventkey = sys.stdin.read(1)
     if '__main__' == __name__ :
-        if AmIPlay == False:
+        if ord(eventkey) == 27:
+            waitforkey = False
+            #sys.exit()
+            '''
+            midi_suite = unittest.TestSuite()   #Add play midi test function
+            all_suite = unittest.TestSuite()
+            midi_suite.addTest(Tests("test_0"))
+            all_suite.addTest(midi_suite)
+            unittest.TextTestRunner(verbosity=1).run(all_suite)
+            '''
+        elif AmIPlay == False:
             soundonoff(True)
             parser = argparse.ArgumentParser()
             #changemusic()
@@ -404,16 +419,6 @@ while True:
             #midi_suite.addTest(Tests("test_0"))
             #all_suite.addTest(midi_suite)
             #unittest.TextTestRunner(verbosity=1).run(all_suite)
-        if ord(eventkey) == 27:
-            waitforkey = False
-            #sys.exit()
-            '''
-            midi_suite = unittest.TestSuite()   #Add play midi test function
-            all_suite = unittest.TestSuite()
-            midi_suite.addTest(Tests("test_0"))
-            all_suite.addTest(midi_suite)
-            unittest.TextTestRunner(verbosity=1).run(all_suite)
-            '''
     elif False:
         port.sendto("Home", ("192.168.12." + whoami, 5005))
     #time.sleep(0.002)
