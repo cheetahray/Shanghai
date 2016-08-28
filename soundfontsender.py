@@ -401,6 +401,8 @@ def raylist(mylist):
     global biggestvolume
     global aanote
     global shouldas
+    global whoami
+    global sfid
     notedelay = 1.2
     if mylist[0] == '128':
         if not ( len(mylist) == 4 and mylist[3] != str(whoami+1) ):
@@ -561,7 +563,7 @@ def raylist(mylist):
                 fl = fluidsynth.Synth()
                 fl.start('alsa')
                 sfid = fl.sfload("/home/pi/Shanghai/FluidR3_GM.sf2")
-                fl.program_select(chnl, sfid, 0, 27 )
+                fl.program_select(chnl, sfid, 0, soundtype[whoami] )
         elif '2' == mylist[1]:
             if False == issoundfont and pa is not None:
                 strm.stop_stream()
@@ -634,6 +636,11 @@ rayshift = [60, 60, 60, 60, 60, 60, 48, 48, 48, 48, 48, 48, 48, 48, 48, 48, 48, 
             38, 38, 38, 28, 28, 28, 28, 28, 38, 48, 48, 48, 60, 60, 60, 48, 48, 38, 38, 28, 
             28, 28, 28, 38, 38, 38, 38, 38, 38, 48, 48, 48, 48, 48, 48, 48, 48, 48, 48, 48, 
             60, 60, 60, 60, 60, 60, 60, 48, 38, 60, 60, 48, 38, 28]
+            # 1   2   3   4   5   6   7   8   9  10  11  12  13  14  15  16  17  18  19  20
+soundtype = [27, 27, 27, 27, 27, 27, 27, 27, 27, 27, 27, 27, 27, 27, 27, 27, 27, 32, 32, 32,
+             32, 32, 32, 32, 32, 32, 32, 32, 32, 27, 27, 27, 27, 27, 27, 27, 27, 27, 27, 32, 
+             32, 32, 32, 27, 27, 27, 27, 27, 27, 27, 27, 27, 27, 27, 27, 27, 27, 27, 27, 27, 
+             27, 27, 27, 32, 32, 32, 32, 32, 32, 27, 27, 27, 27, 32]
                # 1   2   3   4   5   6   7   8   9  10  11  12  13  14  15  16  17  18  19  20
 howmanypitch = [20, 20, 20, 20, 20, 20, 20, 20, 20, 20, 20, 20, 20, 20, 20, 20, 20, 20, 20, 20, 
                 20, 20, 20, 20, 20, 20, 20, 20, 20, 20, 20, 20, 20, 20, 20, 20, 20, 20, 20, 20, 
@@ -647,6 +654,7 @@ canweas = [2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2,
            2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 
            2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2,
            2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2]
+
 lastm = 0
 nowm = 0
 tp0 = [0, 2120, 4879, 7575, 10566, 13007, 15121, 17015, 19858, 21518, 23323, 24730, 26738, 27945, 30184, 31591, 32820, 33827, 35629, 36685, 37689]
@@ -675,7 +683,7 @@ while True:
         fl = fluidsynth.Synth()
         fl.start('alsa')
         sfid = fl.sfload("/home/pi/Shanghai/FluidR3_GM.sf2")
-        fl.program_select(chnl, sfid, 0, 27)
+        fl.program_select(chnl, sfid, 0, soundtype[whoami])
     else:    
         pa = pyaudio.PyAudio()
         strm = pa.open(

@@ -14,18 +14,22 @@ def handler(clientsocket, clientaddr):
     global islightout
     global qq50
     global QQ
+    global AmIBoomNow
     while 1:
         data = clientsocket.recv(1024)
-        if ( len(data) == 4  and (data[0:4] == "boom") ):
-            GPIO.output(13, False) #p13.ChangeDutyCycle(0)
+        if True == AmIBoomNow:
+            pass
+        elif ( len(data) > 4 and len(data) < 29 and data[0:4] == "boom" ):
+            AmIBoomNow = True
+            #GPIO.output(13, False) #p13.ChangeDutyCycle(0)
             mylist2 = data[4:].split(" ")
             p38.ChangeDutyCycle(100) #GPIO.output(38, True)
             p40.ChangeDutyCycle(0) #GPIO.output(40, False)
-            anim.rayanim(int(mylist2[0]),int(mylist2[1]),int(mylist2[2]),255,20,0.1)
+            #anim.rayanim(int(mylist2[0]),int(mylist2[1]),int(mylist2[2]),255,20,0.1)
             p31.ChangeDutyCycle(int(mylist2[3]))
             p33.ChangeDutyCycle(int(mylist2[4]))
             p35.ChangeDutyCycle(int(mylist2[5]))
-            Timer(0.333, boom).start()
+            Timer(0.2, boom).start()
         elif ( len(data) == 6  and (data[0:6] == "picker") ):
             GPIO.output(13, False) #p13.ChangeDutyCycle(0)
             if False == QQ:
@@ -127,14 +131,15 @@ def handler(clientsocket, clientaddr):
             p37.ChangeDutyCycle(100)
 
 def boom():
-    GPIO.output(13, True) #p13.ChangeDutyCycle(0)
+    global AmIBoomNow
+    #GPIO.output(13, True) #p13.ChangeDutyCycle(0)
     p38.ChangeDutyCycle(0) #GPIO.output(38, True)
-    #p40.ChangeDutyCycle(0) #GPIO.output(40, False)
-    anim.cleargb()
-    p31.ChangeDutyCycle(100)
-    p33.ChangeDutyCycle(100)
-    p35.ChangeDutyCycle(100)
-            
+    p40.ChangeDutyCycle(100) #GPIO.output(40, False)
+    #anim.cleargb()
+    p31.ChangeDutyCycle(0)
+    p33.ChangeDutyCycle(0)
+    p35.ChangeDutyCycle(0)
+    AmIBoomNow = False        
 def func():
     #global p13
     global qq50
@@ -154,7 +159,7 @@ def musicstart():
     global qq50
     p38.ChangeDutyCycle(0) #GPIO.output(38, False)
     p40.ChangeDutyCycle(qq50) #GPIO.output(40, True)
-    
+AmIBoomNow = False    
 islightout = True
 sock = socket.socket(socket.AF_INET, socket.SOCK_DGRAM) # UDP
 sock.bind(("0.0.0.0", 6454))

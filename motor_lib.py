@@ -333,18 +333,18 @@ class tstepdriver(object):
         
     def set_attrib(self):
         ts_cmd=[]
-        ts_cmd.append('#AAC3')
+        ts_cmd.append('#AAC2')
         ts_cmd.append('#AAR0')
-        ts_cmd.append('#ACG75')
+        ts_cmd.append('#ACG70')
         ts_cmd.append('#ACM0')
-        ts_cmd.append('#AHC1500')
+        ts_cmd.append('#AHC1600')
         ts_cmd.append('#APD1')
         ts_cmd.append('#APL36857')
         ts_cmd.append('#ARC3000')
         ts_cmd.append('#ASL0')
         ts_cmd.append('#ASR10')
         ts_cmd.append('#ASV400')
-        ts_cmd.append('#AVL80000')
+        ts_cmd.append('#AVL78000')
         ts_cmd.append('#ASD')
         ts_cmd.append('#AMA')
         for i, ts_val in enumerate(ts_cmd):

@@ -21,5 +21,5 @@ except:
     laps = 0
 
 motor_lib.io1.wiringPiSetupGpio()
-motor1 = motor_lib.stepperdriver(6400,5,6)
+motor1 = motor_lib.stepperdriver(6400,13,19)
 motor1.rotate(direction, laps,rpm,at,dt)
