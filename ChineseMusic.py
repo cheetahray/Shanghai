@@ -117,6 +117,7 @@ def play_midi():
     howmanyPreload = 0
     howmanyAA = 0
     mayIpreload = False
+    totaltime = 0.0
     for message in mid.play():  #Next note from midi in this moment
         isplay = False          #To avoid duplicate doorbell button press during midi play
         msg = ""
@@ -337,6 +338,8 @@ def play_midi():
                     del pickidx[8][message.note]
         msg = msg + str(message.channel) + " " + str(message.note) + " " + str(message.velocity)
         port.sendto(msg, ("192.168.12.215", 9999) )
+        totaltime = totaltime + message.time
+        #print totaltime
     time.sleep(1.6)
     lightinout(False)
     for i in range(1,67):
