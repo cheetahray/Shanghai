@@ -337,7 +337,7 @@ def play_midi():
                     port.sendto("128 " + str(message.note) + " " + str(message.velocity) + " " + str(pickidx[8][message.note]) , ("192.168.12." + str(pickidx[8][message.note]), 5005) )
                     del pickidx[8][message.note]
         msg = msg + str(message.channel) + " " + str(message.note) + " " + str(message.velocity)
-        port.sendto(msg, ("192.168.12.215", 9999) )
+        port.sendto(msg, ("192.168.11.89", 9999) )
         totaltime = totaltime + message.time
         #print totaltime
     time.sleep(1.6)
@@ -406,8 +406,8 @@ while True:
             args = parser.parse_args()
             lightinout(True)
             if eventkey == 'f':
-                #parser.add_argument("--song",default="Spring_solved_4.mid", help="Midi file")
-                parser.add_argument("--song",default="boom.mid", help="Midi file")
+                parser.add_argument("--song",default="Spring_solved_4.mid", help="Midi file")
+                #parser.add_argument("--song",default="boom.mid", help="Midi file")
             elif eventkey == 's':
                 parser.add_argument("--song",default="Summer_solved_4-3.mid", help="Midi file")
             elif eventkey == 'c':
@@ -415,7 +415,7 @@ while True:
             elif eventkey == 'd':
                 parser.add_argument("--song",default="Winter_solved_2-3.mid", help="Midi file")
             args = parser.parse_args()
-            mid = MidiFile("/home/oem/midi/" + args.song)
+            mid = MidiFile(args.song)
             thread.start_new_thread(play_midi,())
             #midi_suite = unittest.TestSuite()   #Add play midi test function
             #all_suite = unittest.TestSuite()
