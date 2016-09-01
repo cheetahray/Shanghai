@@ -1,5 +1,7 @@
 import socket
 import sys
+import fluidsynth
+import threading
 
 # Create a TCP/IP socket
 sock = socket.socket(socket.AF_INET, socket.SOCK_DGRAM)
@@ -9,20 +11,48 @@ server_address = ('0.0.0.0', 9999)
 print >>sys.stderr, 'starting up on %s port %s' % server_address
 sock.bind(server_address)
 
+fs = fluidsynth.Synth()
+fs.start('coreaudio')
+sfid = fs.sfload("FluidR3_GM.sf2")
+lasttype = 0
+
+def whattype(typestr):
+    global fs
+    global sfid
+    global lasttype
+    chnl = int(typestr)
+    if chnl >= 10:
+        chnl = 32
+    elif chnl >= 8:
+        chnl = 46
+    elif chnl >= 2:
+        chnl = 32
+    else:
+        chnl = 46 
+    if lasttype != chnl:
+        print chnl
+        fs.program_select(0, sfid, 0, chnl)
+        lasttype = chnl
+
+def playtwelve(chnl, note, velo):
+    global fs
+    whattype(chnl)
+    fs.noteon(0, int(note), int(velo))
+
 while True:
     #print >>sys.stderr, '\nwaiting to receive message'
     data, address = sock.recvfrom(4096)
     mylist = data.split(" ")
-    #print mylist
     if( mylist[0] == "n" ):
         if mylist[3] == "1":
             print "preload"
         elif mylist[3] == "2":
-            print "aa"
+            whattype(mylist[1])
+            fs.noteon(0, int(mylist[2]), 127)
         else:
-            print "on"
+            threading.Timer( 1.2, playtwelve, [mylist[1], mylist[2], mylist[3]]).start()
     elif( mylist[0] == "f" ):
-        print "off"
+        threading.Timer( 1.2, fs.noteoff, [0, int(mylist[2])]).start()
     '''
     if data:
         sent = sock.sendto(data, address)
