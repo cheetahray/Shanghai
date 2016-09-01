@@ -118,6 +118,7 @@ def play_midi():
     howmanyAA = 0
     mayIpreload = False
     totaltime = 0.0
+    fontid = ""
     for message in mid.play():  #Next note from midi in this moment
         isplay = False          #To avoid duplicate doorbell button press during midi play
         msg = ""
@@ -235,26 +236,31 @@ def play_midi():
                         slideidx[1][message.note] = aoidx
                         aoidx += 1
                     elif message.channel == 3:
+                        fontid = " 32"
                         boidx = checkbound(3,boidx)
                         port.sendto(rayv + str(boidx) , ("192.168.12." + str(boidx), 5005) )
                         pickidx[3][message.note] = boidx
                         boidx += 1
                     elif message.channel == 2:
+                        fontid = " 32"
                         toidx = checkbound(2,toidx)
                         port.sendto(rayv + str(toidx) , ("192.168.12." + str(toidx), 5005))
                         pickidx[2][message.note] = toidx
                         toidx += 1
                     elif message.channel == 1:
+                        fontid = " 46"
                         aoidx = checkbound(1,aoidx)
                         port.sendto(rayv + str(aoidx) , ("192.168.12." + str(aoidx), 5005))
                         pickidx[1][message.note] = aoidx
                         aoidx += 1
                     elif message.channel == 0:
+                        fontid = " 46"
                         soidx = checkbound(0,soidx)
                         port.sendto(rayv + str(soidx) , ("192.168.12." + str(soidx), 5005))
                         pickidx[0][message.note] = soidx
                         soidx += 1
                     elif message.channel == 11:
+                        fontid = " 32"
                         boidx = checkbound(3,boidx)
                         port.sendto(rayv + str(boidx) , ("192.168.12." + str(boidx), 5005) )
                         pickidx[7][message.note] = boidx
@@ -264,6 +270,7 @@ def play_midi():
                         pickidx[11][message.note] = boidx
                         boidx += 1
                     elif message.channel == 10:
+                        fontid = " 32"
                         toidx = checkbound(2,toidx)
                         port.sendto(rayv + str(toidx) , ("192.168.12." + str(toidx), 5005))
                         pickidx[6][message.note] = toidx
@@ -273,6 +280,7 @@ def play_midi():
                         pickidx[10][message.note] = toidx
                         toidx += 1
                     elif message.channel == 9:
+                        fontid = " 46"
                         aoidx = checkbound(1,aoidx)
                         port.sendto(rayv + str(aoidx) , ("192.168.12." + str(aoidx), 5005))
                         pickidx[5][message.note] = aoidx
@@ -282,6 +290,7 @@ def play_midi():
                         pickidx[9][message.note] = aoidx
                         aoidx += 1
                     elif message.channel == 8:
+                        fontid = " 46"
                         soidx = checkbound(0,soidx)
                         port.sendto(rayv + str(soidx) , ("192.168.12." + str(soidx), 5005))
                         pickidx[4][message.note] = soidx
@@ -336,7 +345,7 @@ def play_midi():
                 if pickidx[8].has_key(message.note):
                     port.sendto("128 " + str(message.note) + " " + str(message.velocity) + " " + str(pickidx[8][message.note]) , ("192.168.12." + str(pickidx[8][message.note]), 5005) )
                     del pickidx[8][message.note]
-        msg = msg + str(message.channel) + " " + str(message.note) + " " + str(message.velocity)
+        msg = msg + str(message.channel) + " " + str(message.note) + " " + str(message.velocity) + fontid
         port.sendto(msg, ("192.168.12.215", 9999) )
         totaltime = totaltime + message.time
         #print totaltime
@@ -406,8 +415,8 @@ while True:
             args = parser.parse_args()
             lightinout(True)
             if eventkey == 'f':
-                #parser.add_argument("--song",default="Spring_solved_4.mid", help="Midi file")
-                parser.add_argument("--song",default="boom.mid", help="Midi file")
+                parser.add_argument("--song",default="Spring_solved_4.mid", help="Midi file")
+                #parser.add_argument("--song",default="boom.mid", help="Midi file")
             elif eventkey == 's':
                 parser.add_argument("--song",default="Summer_solved_4-3.mid", help="Midi file")
             elif eventkey == 'c':
@@ -415,7 +424,7 @@ while True:
             elif eventkey == 'd':
                 parser.add_argument("--song",default="Winter_solved_2-3.mid", help="Midi file")
             args = parser.parse_args()
-            mid = MidiFile("/home/oem/midi/" + args.song)
+            mid = MidiFile(args.song)
             thread.start_new_thread(play_midi,())
             #midi_suite = unittest.TestSuite()   #Add play midi test function
             #all_suite = unittest.TestSuite()
