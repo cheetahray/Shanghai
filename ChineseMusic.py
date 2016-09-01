@@ -346,7 +346,7 @@ def play_midi():
                     port.sendto("128 " + str(message.note) + " " + str(message.velocity) + " " + str(pickidx[8][message.note]) , ("192.168.12." + str(pickidx[8][message.note]), 5005) )
                     del pickidx[8][message.note]
         msg = msg + str(message.channel) + " " + str(message.note) + " " + str(message.velocity) + fontid
-        port.sendto(msg, ("192.168.12.215", 9999) )
+        port.sendto(msg, ("192.168.11.89", 9999) )
         totaltime = totaltime + message.time
         #print totaltime
     time.sleep(1.6)
