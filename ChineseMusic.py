@@ -408,13 +408,13 @@ while True:
             if eventkey == 'f':
                 parser.add_argument("--song",default="Spring_final_3_prv1.mid", help="Midi file")
             elif eventkey == 's':
-                parser.add_argument("--song",default="Summer_solved_4-3.mid", help="Midi file")
+                parser.add_argument("--song",default="Summer_fianl_3_prv1.mid", help="Midi file")
             elif eventkey == 'c':
-                parser.add_argument("--song",default="Aut_solved_2-5.mid", help="Midi file")
+                parser.add_argument("--song",default="Aut_final_3_prv1.mid", help="Midi file")
             elif eventkey == 'd':
-                parser.add_argument("--song",default="Winter_solved_2-3.mid", help="Midi file")
+                parser.add_argument("--song",default="Winter_final_3_prv1.mid", help="Midi file")
             elif eventkey == '1':
-                parser.add_argument("--song",default="mountaindance.mid", help="Midi file")
+                parser.add_argument("--song",default="mountain_spectrum_prv1.mid", help="Midi file")
             elif eventkey == '2':
                 parser.add_argument("--song",default="womensong.mid", help="Midi file")
             elif eventkey == '3':
@@ -422,9 +422,9 @@ while True:
             elif eventkey == '4':
                 parser.add_argument("--song",default="mariad.mid", help="Midi file")
             elif eventkey == '5':
-                parser.add_argument("--song",default="oldtree.mid", help="Midi file")
+                parser.add_argument("--song",default="tree_prv1.mid", help="Midi file")
             elif eventkey == '6':
-                parser.add_argument("--song",default="skyearth.mid", help="Midi file")
+                parser.add_argument("--song",default="SkyEarth_prv1.mid", help="Midi file")
             args = parser.parse_args()
             mid = MidiFile(args.song)
             thread.start_new_thread(play_midi,())
