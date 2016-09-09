@@ -16,7 +16,7 @@ from mido import MidiFile
 #import serial
 import socket
 import sys
-#import pygame.display
+import threading
 import thread
 import tty
 import datetime
@@ -337,9 +337,12 @@ def play_midi():
                     port.sendto("128 " + str(message.note) + " " + str(message.velocity) + " " + str(pickidx[8][message.note]) , ("192.168.12." + str(pickidx[8][message.note]), 5005) )
                     del pickidx[8][message.note]
         msg = msg + str(message.channel) + " " + str(message.note) + " " + str(message.velocity)
-        port.sendto(msg, ("192.168.11.28", 9999) )
+        if message.velocity == 2:
+            threading.Timer( 0.3, port.sendto, [msg, ("192.168.12.204", 9999) ] ).start()
+        else:
+            threading.Timer( 1.2, port.sendto, [msg, ("192.168.12.204", 9999) ] ).start()
         totaltime = totaltime + message.time
-        #print totaltime
+        print msg
     time.sleep(1.6)
     lightinout(False)
     for i in range(1,67):
@@ -408,7 +411,7 @@ while True:
             if eventkey == 'f':
                 parser.add_argument("--song",default="Spring_final_3_prv1.mid", help="Midi file")
             elif eventkey == 's':
-                parser.add_argument("--song",default="Summer_fianl_3_prv1.mid", help="Midi file")
+                parser.add_argument("--song",default="Summer_fianl_3_prv4_part.mid", help="Midi file")
             elif eventkey == 'c':
                 parser.add_argument("--song",default="Aut_final_3_prv1.mid", help="Midi file")
             elif eventkey == 'd':
@@ -435,4 +438,4 @@ while True:
             #unittest.TextTestRunner(verbosity=1).run(all_suite)
     elif False:
         port.sendto("Home", ("192.168.12." + whoami, 5005))
-    #time.sleep(0.002)
+    #time.sleep(1)
