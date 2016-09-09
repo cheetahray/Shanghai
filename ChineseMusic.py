@@ -364,7 +364,8 @@ def play_midi():
                     port.sendto("128 " + str(message.note) + " " + str(message.velocity) + " " + str(pickidx[8][message.note]) , ("192.168.12." + str(pickidx[8][message.note]), 5005) )
                     del pickidx[8][message.note]
         msg = msg + str(message.channel) + " " + str(message.note) + " " + str(message.velocity)
-        mqueue.insert(0,msg)
+        port.sendto(msg, ("192.168.12.100", 9999) )
+        #mqueue.insert(0,msg)
         #totaltime = totaltime + message.time
     time.sleep(1.6)
     lightinout(False)
@@ -439,8 +440,9 @@ mqueue = []
 while True:
     #port.flushInput()
     #port.flushOutput()
-    rlist, _, _ = select([sys.stdin], [], [], 0.001)
-    if rlist:
+    #rlist, _, _ = select([sys.stdin], [], [], 0.001)
+    eventkey = sys.stdin.read(1)
+    if True:
         eventkey = sys.stdin.read(1)
         if ord(eventkey) == 27:
             waitforkey = False
