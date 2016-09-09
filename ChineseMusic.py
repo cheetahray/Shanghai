@@ -252,73 +252,73 @@ def play_midi():
                         boidx = checkbound(3,boidx)
                         port.sendto("224 " + str(message.note) + " " + str(raymap(message.velocity, 0, 127, boundary, 127)) + " " + str(boidx) + "\r")
                         slideidx[3][message.note] = boidx
-                        boidx += 1
+                        #boidx += 1
                     elif False:#message.channel == 6:
                         toidx = checkbound(2,toidx)
                         port.sendto("224 " + str(message.note) + " " + str(raymap(message.velocity, 0, 127, boundary, 127)) + " " + str(toidx) + "\r")
                         slideidx[2][message.note] = toidx
-                        toidx += 1
+                        #toidx += 1
                     elif False:#message.channel == 5:
                         aoidx = checkbound(1,aoidx)
                         port.sendto("224 " + str(message.note) + " " + str(raymap(message.velocity, 0, 127, boundary, 127)) + " " + str(aoidx) + "\r")
                         slideidx[1][message.note] = aoidx
-                        aoidx += 1
+                        #aoidx += 1
                     elif message.channel == 3:
                         boidx = checkbound(3,boidx)
                         port.sendto(rayv + str(boidx) , ("192.168.12." + str(boidx), 5005) )
                         pickidx[3][message.note] = boidx
-                        boidx += 1
+                        #boidx += 1
                     elif message.channel == 2:
                         toidx = checkbound(2,toidx)
                         port.sendto(rayv + str(toidx) , ("192.168.12." + str(toidx), 5005))
                         pickidx[2][message.note] = toidx
-                        toidx += 1
+                        #toidx += 1
                     elif message.channel == 1:
                         aoidx = checkbound(1,aoidx)
                         port.sendto(rayv + str(aoidx) , ("192.168.12." + str(aoidx), 5005))
                         pickidx[1][message.note] = aoidx
-                        aoidx += 1
+                        #aoidx += 1
                     elif message.channel == 0:
                         soidx = checkbound(0,soidx)
                         port.sendto(rayv + str(soidx) , ("192.168.12." + str(soidx), 5005))
                         pickidx[0][message.note] = soidx
-                        soidx += 1
+                        #soidx += 1
                     elif message.channel == 11:
                         boidx = checkbound(3,boidx)
                         port.sendto(rayv + str(boidx) , ("192.168.12." + str(boidx), 5005) )
                         pickidx[7][message.note] = boidx
-                        boidx += 1
+                        #boidx += 1
                         boidx = checkbound(3,boidx)
                         port.sendto(rayv + str(boidx) , ("192.168.12." + str(boidx), 5005) )
                         pickidx[11][message.note] = boidx
-                        boidx += 1
+                        #boidx += 1
                     elif message.channel == 10:
                         toidx = checkbound(2,toidx)
                         port.sendto(rayv + str(toidx) , ("192.168.12." + str(toidx), 5005))
                         pickidx[6][message.note] = toidx
-                        toidx += 1
+                        #toidx += 1
                         toidx = checkbound(2,toidx)
                         port.sendto(rayv + str(toidx) , ("192.168.12." + str(toidx), 5005))
                         pickidx[10][message.note] = toidx
-                        toidx += 1
+                        #toidx += 1
                     elif message.channel == 9:
                         aoidx = checkbound(1,aoidx)
                         port.sendto(rayv + str(aoidx) , ("192.168.12." + str(aoidx), 5005))
                         pickidx[5][message.note] = aoidx
-                        aoidx += 1
+                        #aoidx += 1
                         aoidx = checkbound(1,aoidx)
                         port.sendto(rayv + str(aoidx) , ("192.168.12." + str(aoidx), 5005))
                         pickidx[9][message.note] = aoidx
-                        aoidx += 1
+                        #aoidx += 1
                     elif message.channel == 8:
                         soidx = checkbound(0,soidx)
                         port.sendto(rayv + str(soidx) , ("192.168.12." + str(soidx), 5005))
                         pickidx[4][message.note] = soidx
-                        soidx += 1
+                        #soidx += 1
                         soidx = checkbound(0,soidx)
                         port.sendto(rayv + str(soidx) , ("192.168.12." + str(soidx), 5005))
                         pickidx[8][message.note] = soidx
-                        soidx += 1
+                        #soidx += 1
         elif 'note_off' == message.type :
             msg = "f "
             if message.channel == 3:
@@ -403,10 +403,10 @@ AT = [7, 8, 9, 10, 11, 12, 13, 14, 15, 16, 17, 30, 31, 32, 36, 37, 50, 51, 52, 5
 TT = [18, 19, 20, 21, 22, 23, 29, 38, 39, 44, 45, 46, 47, 48, 49, ]
 #BT = [0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 1 ,1 ,1 ,1 ,1, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 1, 1, 1, 1, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0]
 BT = [24, 25, 26, 27, 28, 40, 41, 42, 43]
-soidx = 0
-aoidx = 0
-toidx = 0
-boidx = 0
+soidx = 1
+aoidx = 7
+toidx = 18
+boidx = 24
 pickidx = [{},{},{},{},{},{},{},{},{},{},{},{}]
 slideidx = [{},{},{},{},{},{},{},{},{},{},{},{}]
 port = socket.socket(socket.AF_INET, socket.SOCK_DGRAM)      
