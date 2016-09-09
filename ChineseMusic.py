@@ -370,6 +370,7 @@ def play_midi():
         #totaltime = totaltime + message.time
     time.sleep(1.6)
     lightinout(False)
+    '''
     for i in range(1,67):
         if 1 == ST[i]:
             port.sendto("144 60 1", ("192.168.12." + str(i), 5005))
@@ -380,7 +381,17 @@ def play_midi():
         if 1 == BT[i]:
             port.sendto("144 28 1", ("192.168.12." + str(i), 5005))
         time.sleep(0.002)
+    '''
+    for i in ST:
+        port.sendto("144 60 1", ("192.168.12." + str(i), 5005))
+    for i in AT:
+        port.sendto("144 48 1", ("192.168.12." + str(i), 5005))
+    for i in TT:
+        port.sendto("144 38 1", ("192.168.12." + str(i), 5005))
+    for i in BT:
+        port.sendto("144 28 1", ("192.168.12." + str(i), 5005))
     time.sleep(1.6);
+    '''
     for i in range(1,67):
         if 1 == ST[i]:
             port.sendto("144 60 0", ("192.168.12." + str(i), 5005))
@@ -391,6 +402,15 @@ def play_midi():
         if 1 == BT[i]:
             port.sendto("144 28 0", ("192.168.12." + str(i), 5005))
         time.sleep(0.002)
+    '''
+    for i in ST:
+        port.sendto("144 60 0", ("192.168.12." + str(i), 5005))
+    for i in AT:
+        port.sendto("144 48 0", ("192.168.12." + str(i), 5005))
+    for i in TT:
+        port.sendto("144 38 0", ("192.168.12." + str(i), 5005))
+    for i in BT:
+        port.sendto("144 28 0", ("192.168.12." + str(i), 5005))
     time.sleep(1.6)
     soundonoff(False)
     AmIPlay = False    
