@@ -149,8 +149,6 @@ def play_midi():
     for message in mid.play():  #Next note from midi in this moment
         msg = ""
         if 'note_on' == message.type :
-            msg = "n "
-        elif 'note_on' == message.type :
             if message.channel == 14:
                 if 3 == message.velocity:
                     psidx = soidx
@@ -430,7 +428,7 @@ boidx = 24
 pickidx = [{},{},{},{},{},{},{},{},{},{},{},{}]
 slideidx = [{},{},{},{},{},{},{},{},{},{},{},{}]
 port = socket.socket(socket.AF_INET, socket.SOCK_DGRAM)      
-port.setsockopt(SOL_SOCKET, SO_SNDBUF, 8192)
+#port.setsockopt(socket.SOL_SOCKET, socket.SO_SNDBUF, 16)
 #port = serial.Serial("\\\\.\\COM7", baudrate=115200)
 AmIPlay = False
 #pygame.display.init()
