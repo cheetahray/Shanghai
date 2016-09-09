@@ -37,28 +37,28 @@ def whattype(typestr):
 def playtwelve(chnl, note, velo):
     global fs
     whattype(chnl)
-    print note, len(note)
+    print note
     fs.noteon(0, int(note), int(velo))
 
 while True:
     #print >>sys.stderr, '\nwaiting to receive message'
     data, address = sock.recvfrom(4096)
-    print data
+    #print data
     mylist = data.split(" ")
     if( mylist[0] == "n" ):
         if mylist[3] == "1":
             print "preload"
         elif mylist[3] == "2":
-            whattype(mylist[1])
-            fs.noteon(0, int(mylist[2]), 127)
-            #threading.Timer( 0.3, playtwelve, [mylist[1], mylist[2], 127]).start()
+            #whattype(mylist[1])
+            #fs.noteon(0, int(mylist[2]), 127)
+            threading.Timer( 0.3, playtwelve, [mylist[1], mylist[2], 127]).start()
         else:
-            whattype(mylist[1])
-            fs.noteon(0, int(mylist[2]), int(mylist[3]))
-            #threading.Timer( 1.2, playtwelve, [mylist[1], mylist[2], mylist[3]]).start()
+            #whattype(mylist[1])
+            #fs.noteon(0, int(mylist[2]), int(mylist[3]))
+            threading.Timer( 1.2, playtwelve, [mylist[1], mylist[2], mylist[3]]).start()
     elif( mylist[0] == "f" ):
-        fs.noteoff(0, int(mylist[2]))
-        #threading.Timer( 1.2, fs.noteoff, [0, int(mylist[2])]).start()
+        #fs.noteoff(0, int(mylist[2]))
+        threading.Timer( 1.2, fs.noteoff, [0, int(mylist[2])]).start()
     '''
     if data:
         sent = sock.sendto(data, address)
