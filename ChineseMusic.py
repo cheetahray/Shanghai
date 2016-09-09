@@ -430,6 +430,7 @@ boidx = 24
 pickidx = [{},{},{},{},{},{},{},{},{},{},{},{}]
 slideidx = [{},{},{},{},{},{},{},{},{},{},{},{}]
 port = socket.socket(socket.AF_INET, socket.SOCK_DGRAM)      
+port.setsockopt(SOL_SOCKET, SO_SNDBUF, 8192)
 #port = serial.Serial("\\\\.\\COM7", baudrate=115200)
 AmIPlay = False
 #pygame.display.init()
