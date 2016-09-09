@@ -20,6 +20,7 @@ import threading
 import thread
 import tty
 import datetime
+from select import select
 mid = None
 debug = False        #Boolean for on/off our debug print 
 isplay = False      #Boolean to judge whether the midi is playing
@@ -118,10 +119,13 @@ def play_midi():
     howmanyAA = 0
     mayIpreload = False
     totaltime = 0.0
+    global mqueue
     for message in mid.play():  #Next note from midi in this moment
         isplay = False          #To avoid duplicate doorbell button press during midi play
         msg = ""
         if 'note_on' == message.type :
+            msg = "n "
+        elif 'note_on' == message.type :
             if message.channel == 14:
                 if 3 == message.velocity:
                     lightinout(False)
@@ -337,12 +341,8 @@ def play_midi():
                     port.sendto("128 " + str(message.note) + " " + str(message.velocity) + " " + str(pickidx[8][message.note]) , ("192.168.12." + str(pickidx[8][message.note]), 5005) )
                     del pickidx[8][message.note]
         msg = msg + str(message.channel) + " " + str(message.note) + " " + str(message.velocity)
-        if message.velocity == 2:
-            threading.Timer( 0.3, port.sendto, [msg, ("192.168.12.204", 9999) ] ).start()
-        else:
-            threading.Timer( 1.2, port.sendto, [msg, ("192.168.12.204", 9999) ] ).start()
+        mqueue.insert(0,msg)
         totaltime = totaltime + message.time
-        print msg
     time.sleep(1.6)
     lightinout(False)
     for i in range(1,67):
@@ -387,11 +387,13 @@ AmIPlay = False
 #pygame.display.set_mode((100,100))
 waitforkey = False
 tty.setcbreak(sys.stdin)
+mqueue = []
 while True:
     #port.flushInput()
     #port.flushOutput()
-    eventkey = sys.stdin.read(1)
-    if '__main__' == __name__ :
+    rlist, _, _ = select([sys.stdin], [], [], 0.001)
+    if rlist:
+        eventkey = sys.stdin.read(1)
         if ord(eventkey) == 27:
             waitforkey = False
             #sys.exit()
@@ -436,6 +438,5 @@ while True:
             #midi_suite.addTest(Tests("test_0"))
             #all_suite.addTest(midi_suite)
             #unittest.TextTestRunner(verbosity=1).run(all_suite)
-    elif False:
-        port.sendto("Home", ("192.168.12." + whoami, 5005))
-    #time.sleep(1)
+    elif AmIPlay == True and len(mqueue) > 0 and len(mqueue[0]) > 0 :
+        port.sendto(mqueue.pop(), ("192.168.12.204", 9999) )    
