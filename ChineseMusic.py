@@ -23,7 +23,6 @@ import datetime
 from select import select
 mid = None
 debug = False        #Boolean for on/off our debug print 
-isplay = False      #Boolean to judge whether the midi is playing
 
 
 class Tests(unittest.TestCase):
@@ -37,32 +36,60 @@ def raymap(value, istart, istop, ostart, ostop):
 
 def checkbound(whattype, oidx):
     global ST,AT,TT,BT
-    if 67 == oidx:
-        oidx = 1
+    #if 67 == oidx:
+    #    oidx = 1
     if 3 == whattype:
+        tmp = BT.index(oidx)
+        if tmp == len(BT) - 1:
+            oidx = BT[0]
+        else:
+            oidx = BT[tmp + 1]
+        '''
         while 0 == BT[oidx]:
             if 66 == oidx:
                 oidx = 1
             else:
                 oidx += 1
+        '''
     elif 2 == whattype:
+        tmp = TT.index(oidx)
+        if tmp == len(TT) - 1:
+            oidx = TT[0]
+        else:
+            oidx = TT[tmp + 1]
+        '''
         while 0 == TT[oidx]:
             if 66 == oidx:
                 oidx = 1
             else:
                 oidx += 1
+        '''
     elif 1 == whattype:
+        tmp = AT.index(oidx)
+        if tmp == len(AT) - 1:
+            oidx = AT[0]
+        else:
+            oidx = AT[tmp + 1]
+        '''
         while 0 == AT[oidx]:
             if 66 == oidx:
                 oidx = 1
             else:
                 oidx += 1
+        '''
     elif 0 == whattype:
+        tmp = ST.index(oidx)
+        if tmp == len(ST) - 1:
+            oidx = ST[0]
+        else:
+            oidx = ST[tmp + 1]
+        '''
         while 0 == ST[oidx]:
             if 66 == oidx:
                 oidx = 1
             else:
                 oidx += 1
+        '''
     return oidx                
 
 def soundonoff(opensound):
@@ -99,7 +126,6 @@ def lightinout(lightin):
             #port.sendto("225 1", ("192.168.12." + str(67-i), 5005) )
     
 def play_midi():
-    global isplay
     global myshift
     global port
     global boidx,toidx,aoidx,soidx
@@ -121,14 +147,12 @@ def play_midi():
     totaltime = 0.0
     global mqueue
     for message in mid.play():  #Next note from midi in this moment
-        isplay = False          #To avoid duplicate doorbell button press during midi play
         msg = ""
         if 'note_on' == message.type :
             msg = "n "
         elif 'note_on' == message.type :
             if message.channel == 14:
                 if 3 == message.velocity:
-                    lightinout(False)
                     psidx = soidx
                     paidx = aoidx
                     ptidx = toidx
@@ -136,7 +160,8 @@ def play_midi():
                     mayIpreload = True
                     howmanyPreload = 0
                     print("pulse")                    
-                    print datetime.datetime.now()
+                    #print datetime.datetime.now()
+                    lightinout(False)
                 elif 5 == message.velocity:
                     soidx = psidx
                     aoidx = paidx
@@ -146,7 +171,7 @@ def play_midi():
                     howmanyAA = 0
                     print("resound")
                     waitforkey = True;
-                    print datetime.datetime.now()
+                    #print datetime.datetime.now()
                     while True == waitforkey:
                         time.sleep(0.002)
             elif 0 == message.velocity:
@@ -216,12 +241,12 @@ def play_midi():
                     elif message.velocity == 1: #and True == mayIpreload:
                         howmanyPreload = howmanyPreload + 1
                         print("preload " + str(howmanyPreload))
-                        print datetime.datetime.now()
+                        #print datetime.datetime.now()
                         rayv = "224 " + str(message.note) + " " + str(raymap(message.velocity, 0, 127, boundary, 127)) + " "
                     elif message.velocity == 2:
                         howmanyAA = howmanyAA + 1
                         print("aa " + str(howmanyAA))
-                        print datetime.datetime.now()
+                        #print datetime.datetime.now()
                         rayv = "244 " + str(message.note) + " 127 "
                     if False:#message.channel == 7:
                         boidx = checkbound(3,boidx)
@@ -342,7 +367,7 @@ def play_midi():
                     del pickidx[8][message.note]
         msg = msg + str(message.channel) + " " + str(message.note) + " " + str(message.velocity)
         mqueue.insert(0,msg)
-        totaltime = totaltime + message.time
+        #totaltime = totaltime + message.time
     time.sleep(1.6)
     lightinout(False)
     for i in range(1,67):
@@ -369,15 +394,19 @@ def play_midi():
     time.sleep(1.6)
     soundonoff(False)
     AmIPlay = False    
-     #0  1  2  3  4  5  6  7  8  9 10 11 12 13 14 15 16 17 18 19 20 21 22 23 24 25 26 27 28 29 30 31 32 33 34 35 36 37 38 39 40 41 42 43 44 45 46 47 48 49 50 51 52 53 54 55 56 57 58 59 60 61 62 63 64 65 66
-ST = [0, 1, 1, 1, 1, 1, 1, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0 ,0 ,0 ,0, 0, 0, 0, 0, 1, 1, 1, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 1, 1, 1, 1, 1, 1]
-AT = [0, 0, 0, 0, 0, 0, 0, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 0, 0, 0, 0, 0, 0, 0, 0 ,0 ,0 ,0, 0, 1, 1, 1, 0, 0, 0, 1, 1, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 0, 0, 0, 0, 0, 0]
-TT = [0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 1, 1, 1, 1, 1, 1, 0, 0 ,0 ,0 ,0, 1, 0, 0, 0, 0, 0, 0, 0, 0, 1, 1, 0, 0, 0, 0, 1, 1, 1, 1, 1, 1, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0]
-BT = [0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 1 ,1 ,1 ,1 ,1, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 1, 1, 1, 1, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0]
-soidx = 1
-aoidx = 1
-toidx = 1
-boidx = 1
+      #0  1  2  3  4  5  6  7  8  9 10 11 12 13 14 15 16 17 18 19 20 21 22 23 24 25 26 27 28 29 30 31 32 33 34 35 36 37 38 39 40 41 42 43 44 45 46 47 48 49 50 51 52 53 54 55 56 57 58 59 60 61 62 63 64 65 66
+#ST = [0, 1, 1, 1, 1, 1, 1, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0 ,0 ,0 ,0, 0, 0, 0, 0, 1, 1, 1, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 1, 1, 1, 1, 1, 1]
+ST = [1, 2, 3, 4, 5, 6, 33, 34, 35, 61, 62, 63, 64, 65, 66]
+#AT = [0, 0, 0, 0, 0, 0, 0, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 0, 0, 0, 0, 0, 0, 0, 0 ,0 ,0 ,0, 0, 1, 1, 1, 0, 0, 0, 1, 1, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 0, 0, 0, 0, 0, 0]
+AT = [7, 8, 9, 10, 11, 12, 13, 14, 15, 16, 17, 30, 31, 32, 36, 37, 50, 51, 52, 53, 54, 55, 56, 57, 58, 59, 60]
+#TT = [0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 1, 1, 1, 1, 1, 1, 0, 0 ,0 ,0 ,0, 1, 0, 0, 0, 0, 0, 0, 0, 0, 1, 1, 0, 0, 0, 0, 1, 1, 1, 1, 1, 1, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0]
+TT = [18, 19, 20, 21, 22, 23, 29, 38, 39, 44, 45, 46, 47, 48, 49, ]
+#BT = [0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 1 ,1 ,1 ,1 ,1, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 1, 1, 1, 1, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0]
+BT = [24, 25, 26, 27, 28, 40, 41, 42, 43]
+soidx = 0
+aoidx = 0
+toidx = 0
+boidx = 0
 pickidx = [{},{},{},{},{},{},{},{},{},{},{},{}]
 slideidx = [{},{},{},{},{},{},{},{},{},{},{},{}]
 port = socket.socket(socket.AF_INET, socket.SOCK_DGRAM)      
@@ -438,5 +467,5 @@ while True:
             #midi_suite.addTest(Tests("test_0"))
             #all_suite.addTest(midi_suite)
             #unittest.TextTestRunner(verbosity=1).run(all_suite)
-    elif AmIPlay == True and len(mqueue) > 0 and len(mqueue[0]) > 0 :
+    elif AmIPlay == True and len(mqueue) > 0 :
         port.sendto(mqueue.pop(), ("192.168.12.204", 9999) )    
