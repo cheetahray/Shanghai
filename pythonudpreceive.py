@@ -37,7 +37,7 @@ def whattype(typestr):
 def playtwelve(chnl, note, velo):
     global fs
     whattype(chnl)
-    print note
+    #print note, velo
     fs.noteon(0, int(note), int(velo))
 
 while True:
@@ -45,6 +45,7 @@ while True:
     data, address = sock.recvfrom(4096)
     #print data
     mylist = data.split(" ")
+    print mylist
     if( mylist[0] == "n" ):
         if mylist[3] == "1":
             print "preload"
