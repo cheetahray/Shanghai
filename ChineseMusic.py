@@ -494,5 +494,8 @@ while True:
             #all_suite.addTest(midi_suite)
             #unittest.TextTestRunner(verbosity=1).run(all_suite)
     elif AmIPlay == True and len(mqueue) > 0 and len(mqueue) % 4 == 0:
-        subprocess.call(['./rayclient', mqueue.pop(), mqueue.pop(), mqueue.pop(), mqueue.pop()])
+        mqueue.insert(0,'./rayclient')
+        #print mqueue
+        subprocess.call(mqueue)
+        del mqueue[:]
         #port.sendto(mqueue.pop(), ("192.168.12.204", 9999) )    
