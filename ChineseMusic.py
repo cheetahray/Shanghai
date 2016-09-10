@@ -174,7 +174,7 @@ def play_midi():
                     while True == waitforkey:
                         time.sleep(0.002)
             elif 0 == message.velocity:
-                msg = "f "
+                msg = "f"
                 if message.channel == 3:
                     if pickidx[3].has_key(message.note):
                         port.sendto("%s%d%s%d", ("144 " , message.note , " 0 " , pickidx[3][message.note]), ("%s%d" % ("192.168.12.", pickidx[3][message.note]), 5005) )
@@ -233,7 +233,7 @@ def play_midi():
                     for i in range(1,67):
                         port.sendto(BOOM, ("%s%d" % ("192.168.12.", i), 5005))
                 else:
-                    msg = "n "
+                    msg = "n"
                     rayv = None
                     if message.velocity > 2:
                         rayv = "%s%d %d " % ("144 " , message.note, raymap(message.velocity, 0, 127, boundary, 127))
@@ -352,6 +352,7 @@ def play_midi():
         msg = "%s %d %d %d " % ( msg, message.channel, message.note, message.velocity)
         #subprocess.call(['./rayclient', msg, str(message.channel), str(message.note), str(message.velocity)])
         #port.sendto(msg, ("192.168.12.100", 9999) )
+        #print msg
         mqueue.insert(0,msg)
         #totaltime = totaltime + message.time
     time.sleep(1.6)
@@ -450,7 +451,8 @@ while True:
             if eventkey == 'f':
                 parser.add_argument("--song",default="Spring_final_3_prv1.mid", help="Midi file")
             elif eventkey == 's':
-                parser.add_argument("--song",default="Summer_fianl_3_prv4_part.mid", help="Midi file")
+                #parser.add_argument("--song",default="Summer_fianl_3_prv4_part.mid", help="Midi file")
+                parser.add_argument("--song",default="Summer_fianl_3_prv4_sp.mid", help="Midi file")
             elif eventkey == 'c':
                 parser.add_argument("--song",default="Aut_final_3_prv1.mid", help="Midi file")
             elif eventkey == 'd':
@@ -475,7 +477,7 @@ while True:
             #midi_suite.addTest(Tests("test_0"))
             #all_suite.addTest(midi_suite)
             #unittest.TextTestRunner(verbosity=1).run(all_suite)
-    elif AmIPlay == True and len(mqueue) > 0 and len(mqueue) % 4 == 0:
+    elif AmIPlay == True and len(mqueue) > 0:
         #mqueue.insert(0,'./rayclient')
         #print mqueue
         #subprocess.call(mqueue)
@@ -483,5 +485,5 @@ while True:
         myword = ""
         while len(mqueue) > 0:
             myword += mqueue.pop()
-        print myword
-        #port.sendto(myword, ("192.168.12.204", 9999) )    
+        #print myword
+        port.sendto(myword[:-1], ("192.168.12.100", 9999) )    
