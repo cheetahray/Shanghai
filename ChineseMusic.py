@@ -22,6 +22,8 @@ import tty
 import datetime
 import subprocess
 from select import select
+import random
+
 mid = None
 debug = False        #Boolean for on/off our debug print 
 
@@ -104,12 +106,12 @@ def soundonoff(opensound):
             time.sleep(0.002)
     #time.sleep(4)
 
-def changemusic():
+def changemusic(tp):
                 # 1   2   3   4   5   6   7   8   9  10  11  12  13  14  15  16  17  18  19  20
-    soundtype = [27, 27, 27, 27, 27, 27, 27, 27, 27, 27, 27, 27, 27, 27, 27, 27, 27, 27, 27, 27,
-                 27, 27, 27, 32, 32, 32, 32, 32, 27, 27, 27, 27, 27, 27, 27, 27, 27, 27, 27, 32, 
-                 32, 32, 32, 27, 27, 27, 27, 27, 27, 27, 27, 27, 27, 27, 27, 27, 27, 27, 27, 27, 
-                 27, 27, 27, 27, 27, 27, 27, 27, 27, 27, 27, 27, 27, 32]
+    soundtype = [tp, tp, tp, tp, tp, tp, tp, tp, tp, tp, tp, tp, tp, tp, tp, tp, tp, 32, 32, 32,
+                 32, 32, 32, 32, 32, 32, 32, 32, 32, tp, tp, tp, tp, tp, tp, tp, tp, tp, tp, 32, 
+                 32, 32, 32, tp, tp, tp, tp, tp, tp, tp, tp, tp, tp, tp, tp, tp, tp, tp, tp, tp, 
+                 tp, tp, tp, 32, 32, 32, 32, 32, 32, tp, tp, tp, tp, 32]
     for i in range(1,67):
         port.sendto("%s%d" % ("249 1 ", soundtype[i]), ("%s%d" % ("192.168.12.", i), 5005) )
     #time.sleep(4)
@@ -125,7 +127,35 @@ def lightinout(lightin):
             port.sendto("225 1", ("%s%d" % ("192.168.12.", i), 5005) )
             time.sleep(0.002)
             #port.sendto("225 1", ("%s%d" % ("192.168.12.", 67-i), 5005) )
-    
+
+def BoomBoom(rayrandom):
+    pixel = (rayrandom << 9)
+    red_value = (pixel & 0xF800) >> 11;
+    green_value = (pixel & 0x7E0) >> 5;
+    blue_value = (pixel & 0x1F);
+    red   = red_value << 3;
+    green = green_value << 2;
+    blue  = blue_value << 3;
+    BOOM = "%s%d %d %d %d %d %d" % ("boom" ,red, green, blue, int(red/2.55), int(green/2.55), int(blue/2.55) )
+    #print BOOM
+    for i in range(1,67):
+        port.sendto(BOOM, ("%s%d" % ("192.168.12.", i), 5005))
+
+def readyplay(midstr):
+    soundonoff(True)
+    parser = argparse.ArgumentParser()
+    args = parser.parse_args()
+    lightinout(True)
+    parser.add_argument("--song",default=midstr, help="Midi file")
+    args = parser.parse_args()
+    mid = MidiFile(args.song)
+    thread.start_new_thread(play_midi,())
+    #midi_suite = unittest.TestSuite()   #Add play midi test function
+    #all_suite = unittest.TestSuite()
+    #midi_suite.addTest(Tests("test_0"))
+    #all_suite.addTest(midi_suite)
+    #unittest.TextTestRunner(verbosity=1).run(all_suite)
+        
 def play_midi():
     global myshift
     global port
@@ -221,17 +251,7 @@ def play_midi():
                         del pickidx[8][message.note]
             else:
                 if message.channel == 4 and message.velocity == 15:
-                    pixel = (message.velocity << 9)
-                    red_value = (pixel & 0xF800) >> 11;
-                    green_value = (pixel & 0x7E0) >> 5;
-                    blue_value = (pixel & 0x1F);
-                    red   = red_value << 3;
-                    green = green_value << 2;
-                    blue  = blue_value << 3;
-                    BOOM = "%s%d %d %d %d %d %d" % ("boom" ,red, green, blue, int(red/2.55), int(green/2.55), int(blue/2.55) )
-                    #print BOOM
-                    for i in range(1,67):
-                        port.sendto(BOOM, ("%s%d" % ("192.168.12.", i), 5005))
+                    BoomBoom(message.velocity)
                 else:
                     msg = "n"
                     rayv = None
@@ -433,7 +453,7 @@ while True:
     eventkey = sys.stdin.read(1)
     if True: #rlist:
         #eventkey = sys.stdin.read(1)
-        if ord(eventkey) == 27:
+        if ord(eventkey) == 13:
             waitforkey = False
             #sys.exit()
             '''
@@ -443,41 +463,36 @@ while True:
             all_suite.addTest(midi_suite)
             unittest.TextTestRunner(verbosity=1).run(all_suite)
             '''
-        elif AmIPlay == False:
-            soundonoff(True)
-            parser = argparse.ArgumentParser()
-            #changemusic()
-            args = parser.parse_args()
+        elif eventkey == '+':
             lightinout(True)
-            if eventkey == 'f':
-                parser.add_argument("--song",default="Spring_final_3_prv1.mid", help="Midi file")
-            elif eventkey == 's':
-                parser.add_argument("--song",default="Summer_fianl_3_prv4_part.mid", help="Midi file")
-                #parser.add_argument("--song",default="Summer_fianl_3_prv4_sp.mid", help="Midi file")
-            elif eventkey == 'c':
-                parser.add_argument("--song",default="Aut_final_3_prv1.mid", help="Midi file")
-            elif eventkey == 'd':
-                parser.add_argument("--song",default="Winter_final_3_prv1.mid", help="Midi file")
+        elif eventkey == '-':
+            lightinout(False)
+        elif eventkey == '*':
+            changemusic(46)
+        elif eventkey == '/':
+            changemusic(27)
+        elif AmIPlay == False:
+            if eventkey == '.':
+                BoomBoom(random.randint(0,128))
             elif eventkey == '1':
-                parser.add_argument("--song",default="mountain_spectrum_prv1.mid", help="Midi file")
+                readyplay("Spring_final_3_prv1.mid")
             elif eventkey == '2':
-                parser.add_argument("--song",default="womensong.mid", help="Midi file")
+                #readyplay("Summer_fianl_3_prv4_part.mid")
+                readyplay("Summer_fianl_3_prv4_sp.mid")
             elif eventkey == '3':
-                parser.add_argument("--song",default="lovesong.mid", help="Midi file")
+                readyplay("Aut_final_3_prv1.mid")
             elif eventkey == '4':
-                parser.add_argument("--song",default="mariad.mid", help="Midi file")
+                readyplay("Winter_final_3_prv1.mid")
             elif eventkey == '5':
-                parser.add_argument("--song",default="tree_prv1.mid", help="Midi file")
+                readyplay("mountain_spectrum_prv1.mid")
             elif eventkey == '6':
-                parser.add_argument("--song",default="SkyEarth_prv1.mid", help="Midi file")
-            args = parser.parse_args()
-            mid = MidiFile(args.song)
-            thread.start_new_thread(play_midi,())
-            #midi_suite = unittest.TestSuite()   #Add play midi test function
-            #all_suite = unittest.TestSuite()
-            #midi_suite.addTest(Tests("test_0"))
-            #all_suite.addTest(midi_suite)
-            #unittest.TextTestRunner(verbosity=1).run(all_suite)
+                readyplay("womensong.mid")
+            elif eventkey == '7':
+                readyplay("lovesong.mid")
+            elif eventkey == '8':
+                readyplay("mariad.mid")
+            elif eventkey == '9':
+                readyplay("tree_prv1.mid")
     elif AmIPlay == True and len(mqueue) > 0:
         #mqueue.insert(0,'./rayclient')
         #print mqueue
