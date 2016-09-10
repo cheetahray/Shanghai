@@ -120,12 +120,10 @@ def lightinout(lightin):
     if lightin == True:
         for i in range(1,67):
             port.sendto("225 0", ("%s%d" % ("192.168.12.", i), 5005) )
-            time.sleep(0.002)
             #port.sendto("225 0", ("%s%d" % ("192.168.12.", 67-i), 5005) )
     else:
         for i in range(66,0,-1):
             port.sendto("225 1", ("%s%d" % ("192.168.12.", i), 5005) )
-            time.sleep(0.002)
             #port.sendto("225 1", ("%s%d" % ("192.168.12.", 67-i), 5005) )
 
 def BoomBoom(rayrandom):
@@ -142,10 +140,11 @@ def BoomBoom(rayrandom):
         port.sendto(BOOM, ("%s%d" % ("192.168.12.", i), 5005))
 
 def readyplay(midstr):
+    global mid
+    lightinout(True)
     soundonoff(True)
     parser = argparse.ArgumentParser()
     args = parser.parse_args()
-    lightinout(True)
     parser.add_argument("--song",default=midstr, help="Midi file")
     args = parser.parse_args()
     mid = MidiFile(args.song)
@@ -453,17 +452,7 @@ while True:
     eventkey = sys.stdin.read(1)
     if True: #rlist:
         #eventkey = sys.stdin.read(1)
-        if ord(eventkey) == 13:
-            waitforkey = False
-            #sys.exit()
-            '''
-            midi_suite = unittest.TestSuite()   #Add play midi test function
-            all_suite = unittest.TestSuite()
-            midi_suite.addTest(Tests("test_0"))
-            all_suite.addTest(midi_suite)
-            unittest.TextTestRunner(verbosity=1).run(all_suite)
-            '''
-        elif eventkey == '+':
+        if eventkey == '+':
             lightinout(True)
         elif eventkey == '-':
             lightinout(False)
@@ -471,10 +460,8 @@ while True:
             changemusic(46)
         elif eventkey == '/':
             changemusic(27)
-        elif AmIPlay == False:
-            if eventkey == '.':
-                BoomBoom(random.randint(0,128))
-            elif eventkey == '1':
+        if AmIPlay == False:
+            if eventkey == '1':
                 readyplay("Spring_final_3_prv1.mid")
             elif eventkey == '2':
                 #readyplay("Summer_fianl_3_prv4_part.mid")
@@ -493,6 +480,13 @@ while True:
                 readyplay("mariad.mid")
             elif eventkey == '9':
                 readyplay("tree_prv1.mid")
+        else:
+            if ord(eventkey) == 10:
+                waitforkey = False
+                #sys.exit()
+            elif eventkey == '.':
+                BoomBoom(random.randint(0,128))
+
     elif AmIPlay == True and len(mqueue) > 0:
         #mqueue.insert(0,'./rayclient')
         #print mqueue
