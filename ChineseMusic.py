@@ -20,6 +20,7 @@ import threading
 import thread
 import tty
 import datetime
+import subprocess
 from select import select
 mid = None
 debug = False        #Boolean for on/off our debug print 
@@ -173,7 +174,7 @@ def play_midi():
                     while True == waitforkey:
                         time.sleep(0.002)
             elif 0 == message.velocity:
-                msg = "f "
+                msg = "f"
                 if message.channel == 3:
                     if pickidx[3].has_key(message.note):
                         port.sendto("144 " + str(message.note) + " 0 " + str(pickidx[3][message.note]), ("192.168.12." + str(pickidx[3][message.note]), 5005) )
@@ -232,7 +233,7 @@ def play_midi():
                     for i in range(1,67):
                         port.sendto(BOOM, ("192.168.12." + str(i), 5005))
                 else:
-                    msg = "n "
+                    msg = "n"
                     rayv = None
                     if message.velocity > 2:
                         rayv = "144 " + str(message.note) + " " + str(raymap(message.velocity, 0, 127, boundary, 127)) + " "
@@ -318,7 +319,7 @@ def play_midi():
                         pickidx[8][message.note] = soidx
                         #soidx += 1
         elif 'note_off' == message.type :
-            msg = "f "
+            msg = "f"
             if message.channel == 3:
                 if pickidx[3].has_key(message.note):
                     port.sendto("128 " + str(message.note) + " " + str(message.velocity) + " " + str(pickidx[3][message.note]) , ("192.168.12." + str(pickidx[3][message.note]), 5005) )
@@ -363,8 +364,9 @@ def play_midi():
                 if pickidx[8].has_key(message.note):
                     port.sendto("128 " + str(message.note) + " " + str(message.velocity) + " " + str(pickidx[8][message.note]) , ("192.168.12." + str(pickidx[8][message.note]), 5005) )
                     del pickidx[8][message.note]
-        msg = msg + str(message.channel) + " " + str(message.note) + " " + str(message.velocity)
-        port.sendto(msg, ("192.168.12.100", 9999) )
+        #msg = msg + " " + str(message.channel) + " " + str(message.note) + " " + str(message.velocity)
+        subprocess.call(['./rayclient', msg, str(message.channel), str(message.note), str(message.velocity)])
+        #port.sendto(msg, ("192.168.12.100", 9999) )
         #mqueue.insert(0,msg)
         #totaltime = totaltime + message.time
     time.sleep(1.6)
@@ -429,7 +431,7 @@ boidx = 24
 pickidx = [{},{},{},{},{},{},{},{},{},{},{},{}]
 slideidx = [{},{},{},{},{},{},{},{},{},{},{},{}]
 port = socket.socket(socket.AF_INET, socket.SOCK_DGRAM)      
-#port.setsockopt(socket.SOL_SOCKET, socket.SO_SNDBUF, 16)
+#port.setsockopt(socket.SOL_SOCKET, socket.SO_SNDBUF, 1)
 #port = serial.Serial("\\\\.\\COM7", baudrate=115200)
 AmIPlay = False
 #pygame.display.init()
@@ -443,7 +445,7 @@ while True:
     #rlist, _, _ = select([sys.stdin], [], [], 0.001)
     eventkey = sys.stdin.read(1)
     if True:
-        eventkey = sys.stdin.read(1)
+        #eventkey = sys.stdin.read(1)
         if ord(eventkey) == 27:
             waitforkey = False
             #sys.exit()
