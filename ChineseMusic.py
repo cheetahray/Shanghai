@@ -173,7 +173,7 @@ def play_midi():
                     #print datetime.datetime.now()
                     while True == waitforkey:
                         time.sleep(0.002)
-            elif 0 == message.velocity:
+            elif False: #0 == message.velocity:
                 msg = "f"
                 if message.channel == 3:
                     if pickidx[3].has_key(message.note):
@@ -241,7 +241,7 @@ def play_midi():
                         howmanyPreload += 1
                         print("%s %d" % ("preload ", howmanyPreload))
                         #print datetime.datetime.now()
-                        rayv = "%s%d %d %d " % ("224 " , message.note, raymap(message.velocity, 0, 127, boundary, 127))
+                        rayv = "%s%d %d " % ("224 " , message.note, raymap(message.velocity, 0, 127, boundary, 127))
                     elif message.velocity == 2:
                         howmanyAA += 1
                         print("%s %d" % ("aa ", howmanyAA))
@@ -303,7 +303,7 @@ def play_midi():
                         port.sendto("%s%d" % (rayv ,soidx) , ("%s%d" % ("192.168.12.", soidx), 5005))
                         pickidx[8][message.note] = soidx
                         #soidx += 1
-        elif 'note_off' == message.type :
+        elif False: #'note_off' == message.type :
             msg = "f"
             if message.channel == 3:
                 if pickidx[3].has_key(message.note):
@@ -351,9 +351,10 @@ def play_midi():
                     del pickidx[8][message.note]
         msg = "%s %d %d %d " % ( msg, message.channel, message.note, message.velocity)
         #subprocess.call(['./rayclient', msg, str(message.channel), str(message.note), str(message.velocity)])
-        #port.sendto(msg, ("192.168.12.100", 9999) )
         #print msg
-        mqueue.insert(0,msg)
+        if msg.startswith("n"):
+            #mqueue.insert(0,msg)
+            port.sendto(msg, ("192.168.12.100", 9999) )
         #totaltime = totaltime + message.time
     time.sleep(1.6)
     lightinout(False)
@@ -428,10 +429,10 @@ mqueue = []
 while True:
     #port.flushInput()
     #port.flushOutput()
-    rlist, _, _ = select([sys.stdin], [], [], 0.001)
-    #eventkey = sys.stdin.read(1)
-    if rlist:
-        eventkey = sys.stdin.read(1)
+    #rlist, _, _ = select([sys.stdin], [], [], 0.001)
+    eventkey = sys.stdin.read(1)
+    if True: #rlist:
+        #eventkey = sys.stdin.read(1)
         if ord(eventkey) == 27:
             waitforkey = False
             #sys.exit()
@@ -451,8 +452,8 @@ while True:
             if eventkey == 'f':
                 parser.add_argument("--song",default="Spring_final_3_prv1.mid", help="Midi file")
             elif eventkey == 's':
-                #parser.add_argument("--song",default="Summer_fianl_3_prv4_part.mid", help="Midi file")
-                parser.add_argument("--song",default="Summer_fianl_3_prv4_sp.mid", help="Midi file")
+                parser.add_argument("--song",default="Summer_fianl_3_prv4_part.mid", help="Midi file")
+                #parser.add_argument("--song",default="Summer_fianl_3_prv4_sp.mid", help="Midi file")
             elif eventkey == 'c':
                 parser.add_argument("--song",default="Aut_final_3_prv1.mid", help="Midi file")
             elif eventkey == 'd':
