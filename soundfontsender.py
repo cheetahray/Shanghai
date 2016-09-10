@@ -9,7 +9,7 @@ import math
 import threading
 import commands
 import wave
-import pitchtools
+#import pitchtools
 
 def raymap(value, istart, istop, ostart, ostop):
     return ostart + (ostop - ostart) * ((value - istart) / (istop - istart));
@@ -403,8 +403,9 @@ def raylist(mylist):
     global shouldas
     global whoami
     global sfid
+    global Chinese
     notedelay = 1.2
-    if mylist[0] == '128':
+    if False: #mylist[0] == '128':
         if not ( len(mylist) == 4 and mylist[3] != str(whoami+1) ):
             noteint = int(mylist[1])
             nowm = noteint - rayshift[whoami]
@@ -422,8 +423,8 @@ def raylist(mylist):
             nowm = noteint - rayshift[whoami]
             if(shouldas != 0):
                 if True == issoundfont:
-                    fl.noteoff(chnl, noteint)
-                AS(noteint)
+                    fl.noteoff(chnl, shouldas)
+                AS(shouldas)
                 shouldas = noteint
             if False == issoundfont:
                 if nowm >= 0 and nowm < howmanypitch[whoami]:
@@ -453,6 +454,9 @@ def raylist(mylist):
                         if False == islightout:
                             clientsock.send("slide{0} {1} {2}".format( tp[whattype[whoami]][nowm] , math.fabs( tp[whattype[whoami]][nowm]-tp[whattype[whoami]][lastm] )*0.025 , whattype[whoami] ) )
                         lastm = nowm
+                        if Chinese:
+                            threading.Timer(notedelay+0.7, fl.noteoff, [chnl, noteint]).start()
+                            threading.Timer(notedelay+1, AS, [noteint]).start()
                 else:
                     threading.Timer(notedelay-0.3, fl.noteoff, [chnl, noteint]).start()
                     threading.Timer(notedelay, AS, [noteint]).start()
@@ -508,8 +512,8 @@ def raylist(mylist):
             nowm = noteint - rayshift[whoami]
             if(shouldas != 0):
                 if True == issoundfont:
-                    fl.noteoff(chnl, noteint)
-                AS(noteint)
+                    fl.noteoff(chnl, shouldas)
+                AS(shouldas)
                 shouldas = noteint
             if False == issoundfont:
                 if nowm >= 0 and nowm < howmanypitch[whoami]:
@@ -564,6 +568,8 @@ def raylist(mylist):
                 fl.start('alsa')
                 sfid = fl.sfload("/home/pi/Shanghai/FluidR3_GM.sf2")
                 fl.program_select(chnl, sfid, 0, soundtype[whoami] )
+                if Chinese:
+                    fl.pitch_bend(0, 512)
         elif '2' == mylist[1]:
             if False == issoundfont and pa is not None:
                 strm.stop_stream()
@@ -582,6 +588,8 @@ def raylist(mylist):
                 fl = fluidsynth.Synth()
                 fl.start('alsa')
                 sfid = fl.sfload("/home/pi/Shanghai/FluidR3_GM.sf2")
+                if Chinese:
+                    fl.pitch_bend(0, 512)
             fl.program_select(chnl, sfid, 0, int(mylist[2]) )
             issoundfont = True
         elif '0' == mylist[1]:
@@ -637,10 +645,10 @@ rayshift = [60, 60, 60, 60, 60, 60, 48, 48, 48, 48, 48, 48, 48, 48, 48, 48, 48, 
             28, 28, 28, 38, 38, 38, 38, 38, 38, 48, 48, 48, 48, 48, 48, 48, 48, 48, 48, 48, 
             60, 60, 60, 60, 60, 60, 60, 48, 38, 60, 60, 48, 38, 28]
             # 1   2   3   4   5   6   7   8   9  10  11  12  13  14  15  16  17  18  19  20
-soundtype = [27, 27, 27, 27, 27, 27, 27, 27, 27, 27, 27, 27, 27, 27, 27, 27, 27, 32, 32, 32,
-             32, 32, 32, 32, 32, 32, 32, 32, 32, 27, 27, 27, 27, 27, 27, 27, 27, 27, 27, 32, 
-             32, 32, 32, 27, 27, 27, 27, 27, 27, 27, 27, 27, 27, 27, 27, 27, 27, 27, 27, 27, 
-             27, 27, 27, 32, 32, 32, 32, 32, 32, 27, 27, 27, 27, 32]
+soundtype = [46, 46, 46, 46, 46, 46, 46, 46, 46, 46, 46, 46, 46, 46, 46, 46, 46, 32, 32, 32,
+             32, 32, 32, 32, 32, 32, 32, 32, 32, 46, 46, 46, 46, 46, 46, 46, 46, 46, 46, 32, 
+             32, 32, 32, 46, 46, 46, 46, 46, 46, 46, 46, 46, 46, 46, 46, 46, 46, 46, 46, 46, 
+             46, 46, 46, 32, 32, 32, 32, 32, 32, 46, 46, 46, 46, 32]
                # 1   2   3   4   5   6   7   8   9  10  11  12  13  14  15  16  17  18  19  20
 howmanypitch = [20, 20, 20, 20, 20, 20, 20, 20, 20, 20, 20, 20, 20, 20, 20, 20, 20, 20, 20, 20, 
                 20, 20, 20, 20, 20, 20, 20, 20, 20, 20, 20, 20, 20, 20, 20, 20, 20, 20, 20, 20, 
@@ -670,6 +678,7 @@ pa = None
 fl = None
 shouldas = 0 #port = serial.Serial("/dev/ttyAMA0", baudrate=115200)#, timeout=0.01)
 aanote = 0
+Chinese = False
 while True:
     for ii in range(0,66):
         canweas[ii] = 2
@@ -684,6 +693,8 @@ while True:
         fl.start('alsa')
         sfid = fl.sfload("/home/pi/Shanghai/FluidR3_GM.sf2")
         fl.program_select(chnl, sfid, 0, soundtype[whoami])
+        if Chinese:
+            fl.pitch_bend(0, 512)
     else:    
         pa = pyaudio.PyAudio()
         strm = pa.open(
