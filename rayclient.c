@@ -35,12 +35,12 @@ int main(int argc, char *argv[])
         exit(1);
     }
 
-    //for (i=0; i<NPACK; i++) {
+    for (i=1; i<=argc; i++) {
         //printf("Sending packet %d\n", i);
-        sprintf(buf, "%s %s %s %s", argv[1], argv[2], argv[3], argv[4]);
+        sprintf(buf, "%s %s %s %s", argv[i], argv[i+1], argv[i+2], argv[i+3]);
         if (sendto(s, buf, strlen(buf), 0, (const struct sockaddr *)&si_other, slen)==-1)
             diep("sendto()");
-    //}
+    }
 
     close(s);
     return 0;

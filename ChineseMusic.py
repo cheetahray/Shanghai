@@ -365,9 +365,12 @@ def play_midi():
                     port.sendto("128 " + str(message.note) + " " + str(message.velocity) + " " + str(pickidx[8][message.note]) , ("192.168.12." + str(pickidx[8][message.note]), 5005) )
                     del pickidx[8][message.note]
         #msg = msg + " " + str(message.channel) + " " + str(message.note) + " " + str(message.velocity)
-        subprocess.call(['./rayclient', msg, str(message.channel), str(message.note), str(message.velocity)])
+        #subprocess.call(['./rayclient', msg, str(message.channel), str(message.note), str(message.velocity)])
         #port.sendto(msg, ("192.168.12.100", 9999) )
-        #mqueue.insert(0,msg)
+        mqueue.insert(0,str(message.velocity))
+        mqueue.insert(0,str(message.note))
+        mqueue.insert(0,str(message.channel))
+        mqueue.insert(0,msg)
         #totaltime = totaltime + message.time
     time.sleep(1.6)
     lightinout(False)
@@ -442,10 +445,10 @@ mqueue = []
 while True:
     #port.flushInput()
     #port.flushOutput()
-    #rlist, _, _ = select([sys.stdin], [], [], 0.001)
-    eventkey = sys.stdin.read(1)
-    if True:
-        #eventkey = sys.stdin.read(1)
+    rlist, _, _ = select([sys.stdin], [], [], 0.001)
+    #eventkey = sys.stdin.read(1)
+    if rlist:
+        eventkey = sys.stdin.read(1)
         if ord(eventkey) == 27:
             waitforkey = False
             #sys.exit()
@@ -490,5 +493,6 @@ while True:
             #midi_suite.addTest(Tests("test_0"))
             #all_suite.addTest(midi_suite)
             #unittest.TextTestRunner(verbosity=1).run(all_suite)
-    elif AmIPlay == True and len(mqueue) > 0 :
-        port.sendto(mqueue.pop(), ("192.168.12.204", 9999) )    
+    elif AmIPlay == True and len(mqueue) > 0 and len(mqueue) % 4 == 0:
+        subprocess.call(['./rayclient', mqueue.pop(), mqueue.pop(), mqueue.pop(), mqueue.pop()])
+        #port.sendto(mqueue.pop(), ("192.168.12.204", 9999) )    
