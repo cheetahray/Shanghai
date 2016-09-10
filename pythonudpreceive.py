@@ -46,20 +46,21 @@ while True:
     #print data
     mylist = data.split(" ")
     print mylist
-    if( mylist[0] == "n" ):
-        if mylist[3] == "1":
-            print "preload"
-        elif mylist[3] == "2":
-            #whattype(mylist[1])
-            #fs.noteon(0, int(mylist[2]), 127)
-            threading.Timer( 0.3, playtwelve, [mylist[1], mylist[2], 127]).start()
-        else:
-            #whattype(mylist[1])
-            #fs.noteon(0, int(mylist[2]), int(mylist[3]))
-            threading.Timer( 1.2, playtwelve, [mylist[1], mylist[2], mylist[3]]).start()
-    elif( mylist[0] == "f" ):
-        #fs.noteoff(0, int(mylist[2]))
-        threading.Timer( 1.2, fs.noteoff, [0, int(mylist[2])]).start()
+    for ii in range(0, len(mylist), 4):
+        if( mylist[ii] == "n" ):
+            if mylist[ii+3] == "1":
+                print "preload"
+            elif mylist[ii+3] == "2":
+                #whattype(mylist[ii+1])
+                #fs.noteon(0, int(mylist[ii+2]), 127)
+                threading.Timer( 0.3, playtwelve, [mylist[ii+1], mylist[ii+2], 127]).start()
+            else:
+                #whattype(mylist[ii+1])
+                #fs.noteon(0, int(mylist[ii+2]), int(mylist[ii+3]))
+                threading.Timer( 1.2, playtwelve, [mylist[ii+1], mylist[ii+2], mylist[ii+3]]).start()
+        elif( mylist[ii] == "f" ):
+            #fs.noteoff(0, int(mylist[ii+2]))
+            threading.Timer( 1.2, fs.noteoff, [0, int(mylist[ii+2])]).start()
     '''
     if data:
         sent = sock.sendto(data, address)

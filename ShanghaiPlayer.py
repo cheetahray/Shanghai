@@ -105,54 +105,34 @@ def play_midi():
                         del pickidx[0][message.note]
                 elif message.channel == 11:
                     if pickidx[7].has_key(message.note):
-                        port.sendto("144 " + str(message.note) + " 0 " + str(pickidx[7][message.note]) + "\r")
+                        port.sendto("144 " + str(message.note) + " 0 " + str(pickidx[7][message.note]), ("192.168.12." + str(pickidx[7][message.note]), 5005) )
                         del pickidx[7][message.note]
                     if pickidx[11].has_key(message.note):
-                        port.sendto("144 " + str(message.note) + " 0 " + str(pickidx[11][message.note]) + "\r")
+                        port.sendto("144 " + str(message.note) + " 0 " + str(pickidx[11][message.note]), ("192.168.12." + str(pickidx[11][message.note]), 5005) )
                         del pickidx[11][message.note]
                 elif message.channel == 10:
                     if pickidx[6].has_key(message.note):
-                        port.sendto("144 " + str(message.note) + " 0 " + str(pickidx[6][message.note]) + "\r")
+                        port.sendto("144 " + str(message.note) + " 0 " + str(pickidx[6][message.note]), ("192.168.12." + str(pickidx[6][message.note]), 5005) )
                         del pickidx[6][message.note]
                     if pickidx[10].has_key(message.note):
-                        port.sendto("144 " + str(message.note) + " 0 " + str(pickidx[10][message.note]) + "\r")
+                        port.sendto("144 " + str(message.note) + " 0 " + str(pickidx[10][message.note]), ("192.168.12." + str(pickidx[10][message.note]), 5005) )
                         del pickidx[10][message.note]
                 elif message.channel == 9:
                     if pickidx[5].has_key(message.note):
-                        port.sendto("144 " + str(message.note) + " 0 " + str(pickidx[5][message.note]) + "\r")
+                        port.sendto("144 " + str(message.note) + " 0 " + str(pickidx[5][message.note]), ("192.168.12." + str(pickidx[5][message.note]), 5005) )
                         del pickidx[5][message.note]
                     if pickidx[9].has_key(message.note):
-                        port.sendto("144 " + str(message.note) + " 0 " + str(pickidx[9][message.note]) + "\r")
+                        port.sendto("144 " + str(message.note) + " 0 " + str(pickidx[9][message.note]), ("192.168.12." + str(pickidx[9][message.note]), 5005) )
                         del pickidx[9][message.note]
                 elif message.channel == 8:
                     if pickidx[4].has_key(message.note):
-                        port.sendto("144 " + str(message.note) + " 0 " + str(pickidx[4][message.note]) + "\r")
+                        port.sendto("144 " + str(message.note) + " 0 " + str(pickidx[4][message.note]), ("192.168.12." + str(pickidx[4][message.note]), 5005) )
                         del pickidx[4][message.note]
                     if pickidx[8].has_key(message.note):
-                        port.sendto("144 " + str(message.note) + " 0 " + str(pickidx[8][message.note]) + "\r")
+                        port.sendto("144 " + str(message.note) + " 0 " + str(pickidx[8][message.note]), ("192.168.12." + str(pickidx[8][message.note]), 5005) )
                         del pickidx[8][message.note]
             else:
-                if False:#message.channel == 7:
-                    boidx = checkbound(3,boidx)
-                    port.sendto("224 " + str(message.note) + " " + str(raymap(message.velocity, 0, 127, boundary, 127)) + " " + str(boidx) + "\r")
-                    slideidx[3][message.note] = boidx
-                    boidx += 1
-                elif False:#message.channel == 6:
-                    toidx = checkbound(2,toidx)
-                    port.sendto("224 " + str(message.note) + " " + str(raymap(message.velocity, 0, 127, boundary, 127)) + " " + str(toidx) + "\r")
-                    slideidx[2][message.note] = toidx
-                    toidx += 1
-                elif False:#message.channel == 5:
-                    aoidx = checkbound(1,aoidx)
-                    port.sendto("224 " + str(message.note) + " " + str(raymap(message.velocity, 0, 127, boundary, 127)) + " " + str(aoidx) + "\r")
-                    slideidx[1][message.note] = aoidx
-                    aoidx += 1
-                elif False:#message.channel == 4:
-                    soidx = checkbound(0,soidx)
-                    port.sendto("224 " + str(message.note) + " " + str(raymap(message.velocity, 0, 127, boundary, 127)) + " " + str(soidx) + "\r")
-                    slideidx[0][message.note] = soidx
-                    soidx += 1
-                elif message.channel == 3:
+                if message.channel == 3:
                     boidx = checkbound(3,boidx)
                     port.sendto("144 " + str(message.note) + " " + str(raymap(message.velocity, 0, 127, boundary, 127)) + " " + str(boidx) , ("192.168.12." + str(boidx), 5005) )
                     pickidx[3][message.note] = boidx
