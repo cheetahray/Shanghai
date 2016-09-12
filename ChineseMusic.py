@@ -373,7 +373,7 @@ def play_midi():
         #print msg
         if msg.startswith("n"):
             #mqueue.insert(0,msg)
-            port.sendto(msg, ("192.168.12.100", 9999) )
+            port.sendto(msg, ("127.0.0.1", 9999) )
         #totaltime = totaltime + message.time
     time.sleep(1.6)
     lightinout(False)
@@ -479,7 +479,7 @@ while True:
             elif eventkey == '8':
                 readyplay("mariad.mid")
             elif eventkey == '9':
-                readyplay("tree_prv1.mid")
+                readyplay("treeV2_maotest.mid")
         else:
             if ord(eventkey) == 10:
                 waitforkey = False
