@@ -403,7 +403,6 @@ def raylist(mylist):
     global shouldas
     global whoami
     global sfid
-    global Chinese
     notedelay = 1.2
     if False: #mylist[0] == '128':
         if not ( len(mylist) == 4 and mylist[3] != str(whoami+1) ):
@@ -454,9 +453,8 @@ def raylist(mylist):
                         if False == islightout:
                             clientsock.send("slide{0} {1} {2}".format( tp[whattype[whoami]][nowm] , math.fabs( tp[whattype[whoami]][nowm]-tp[whattype[whoami]][lastm] )*0.025 , whattype[whoami] ) )
                         lastm = nowm
-                        if Chinese:
-                            threading.Timer(notedelay+0.7, fl.noteoff, [chnl, noteint]).start()
-                            threading.Timer(notedelay+1, AS, [noteint]).start()
+                        threading.Timer(notedelay+0.7, fl.noteoff, [chnl, noteint]).start()
+                        threading.Timer(notedelay+1, AS, [noteint]).start()
                 else:
                     threading.Timer(notedelay-0.3, fl.noteoff, [chnl, noteint]).start()
                     threading.Timer(notedelay, AS, [noteint]).start()
@@ -568,8 +566,7 @@ def raylist(mylist):
                 fl.start('alsa')
                 sfid = fl.sfload("/home/pi/Shanghai/FluidR3_GM.sf2")
                 fl.program_select(chnl, sfid, 0, soundtype[whoami] )
-                if Chinese:
-                    fl.pitch_bend(0, 512)
+                fl.pitch_bend(0, 3456)
         elif '2' == mylist[1]:
             if False == issoundfont and pa is not None:
                 strm.stop_stream()
@@ -588,8 +585,7 @@ def raylist(mylist):
                 fl = fluidsynth.Synth()
                 fl.start('alsa')
                 sfid = fl.sfload("/home/pi/Shanghai/FluidR3_GM.sf2")
-                if Chinese:
-                    fl.pitch_bend(0, 512)
+                fl.pitch_bend(0, 3456)
             fl.program_select(chnl, sfid, 0, int(mylist[2]) )
             issoundfont = True
         elif '0' == mylist[1]:
@@ -678,7 +674,6 @@ pa = None
 fl = None
 shouldas = 0 #port = serial.Serial("/dev/ttyAMA0", baudrate=115200)#, timeout=0.01)
 aanote = 0
-Chinese = False
 while True:
     for ii in range(0,66):
         canweas[ii] = 2
@@ -693,8 +688,7 @@ while True:
         fl.start('alsa')
         sfid = fl.sfload("/home/pi/Shanghai/FluidR3_GM.sf2")
         fl.program_select(chnl, sfid, 0, soundtype[whoami])
-        if Chinese:
-            fl.pitch_bend(0, 512)
+        fl.pitch_bend(0, 3456)
     else:    
         pa = pyaudio.PyAudio()
         strm = pa.open(
