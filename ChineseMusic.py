@@ -462,14 +462,13 @@ while True:
             changemusic(27)
         if AmIPlay == False:
             if eventkey == '1':
-                readyplay("Spring_final_3_prv1.mid")
+                readyplay("Spring_final2_prv1.mid")
             elif eventkey == '2':
-                #readyplay("Summer_fianl_3_prv4_part.mid")
-                readyplay("Summer_fianl_3_prv4_sp.mid")
+                readyplay("Summer_fianl2_prv1.mid")
             elif eventkey == '3':
-                readyplay("Aut_final_3_prv1.mid")
+                readyplay("Aut_final2_prv1.mid")
             elif eventkey == '4':
-                readyplay("Winter_final_3_prv1.mid")
+                readyplay("Winter_final2_prv1.mid")
             elif eventkey == '5':
                 readyplay("mountain_spectrum_prv1.mid")
             elif eventkey == '6':
