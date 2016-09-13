@@ -15,7 +15,7 @@ fs = fluidsynth.Synth()
 fs.start('coreaudio')
 sfid = fs.sfload("FluidR3_GM.sf2")
 lasttype = 0
-fs.pitch_bend(0, 3456)
+#fs.pitch_bend(0, 3456)
 def whattype(typestr):
     global fs
     global sfid
@@ -28,7 +28,7 @@ def whattype(typestr):
     elif chnl >= 2:
         chnl = 32
     else:
-        chnl = 46 
+        chnl = 46
     if lasttype != chnl:
         #print chnl
         fs.program_select(0, sfid, 0, chnl)
@@ -59,8 +59,11 @@ while True:
                 #fs.noteon(0, int(mylist[ii+2]), int(mylist[ii+3]))
                 threading.Timer( 1.2, playtwelve, [mylist[ii+1], mylist[ii+2], mylist[ii+3]]).start()
         elif( mylist[ii] == "f" ):
-            #fs.noteoff(0, int(mylist[ii+2]))
-            threading.Timer( 1.2, fs.noteoff, [0, int(mylist[ii+2])]).start()
+            if mylist[ii+3] == "2":
+                threading.Timer( 0.3, fs.noteoff, [0, int(mylist[ii+2])]).start()
+            else:
+                #fs.noteoff(0, int(mylist[ii+2]))
+                threading.Timer( 1.2, fs.noteoff, [0, int(mylist[ii+2])]).start()
     '''
     if data:
         sent = sock.sendto(data, address)
