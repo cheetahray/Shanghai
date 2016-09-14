@@ -24,11 +24,11 @@ def whattype(typestr):
     if chnl >= 10:
         chnl = 32
     elif chnl >= 8:
-        chnl = 46
+        chnl = 27
     elif chnl >= 2:
         chnl = 32
     else:
-        chnl = 46
+        chnl = 27
     if lasttype != chnl:
         #print chnl
         fs.program_select(0, sfid, 0, chnl)
