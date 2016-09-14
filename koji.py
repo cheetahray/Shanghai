@@ -176,7 +176,6 @@ def play_midi():
     mayIpreload = False
     totaltime = 0.0
     global mqueue
-    noteoffaa = []
     for message in mid.play():  #Next note from midi in this moment
         msg = ""
         if 'note_on' == message.type :
@@ -207,47 +206,47 @@ def play_midi():
                 msg = "f"
                 if message.channel == 3:
                     if pickidx[3].has_key(message.note):
-                        #port.sendto("%s%d%s%d", ("144 " , message.note , " 0 " , pickidx[3][message.note]), ("%s%d" % ("192.168.12.", pickidx[3][message.note]), 5005) )
+                        port.sendto("%s%d%s%d", ("144 " , message.note , " 0 " , pickidx[3][message.note]), ("%s%d" % ("192.168.12.", pickidx[3][message.note]), 5005) )
                         del pickidx[3][message.note]
                 elif message.channel == 2:
                     if pickidx[2].has_key(message.note):
-                        #port.sendto("%s%d%s%d", ("144 " , message.note , " 0 " , pickidx[2][message.note]), ("%s%d" % ("192.168.12.", pickidx[2][message.note]), 5005) )
+                        port.sendto("%s%d%s%d", ("144 " , message.note , " 0 " , pickidx[2][message.note]), ("%s%d" % ("192.168.12.", pickidx[2][message.note]), 5005) )
                         del pickidx[2][message.note]
                 elif message.channel == 1:
                     if pickidx[1].has_key(message.note):
-                        #port.sendto("%s%d%s%d", ("144 " , message.note , " 0 " , pickidx[1][message.note]), ("%s%d" % ("192.168.12.", pickidx[1][message.note]), 5005) )
+                        port.sendto("%s%d%s%d", ("144 " , message.note , " 0 " , pickidx[1][message.note]), ("%s%d" % ("192.168.12.", pickidx[1][message.note]), 5005) )
                         del pickidx[1][message.note]
                 elif message.channel == 0:
                     if pickidx[0].has_key(message.note):
-                        #port.sendto("%s%d%s%d", ("144 " , message.note , " 0 " , pickidx[0][message.note]), ("%s%d" % ("192.168.12.", pickidx[0][message.note]), 5005) )
+                        port.sendto("%s%d%s%d", ("144 " , message.note , " 0 " , pickidx[0][message.note]), ("%s%d" % ("192.168.12.", pickidx[0][message.note]), 5005) )
                         del pickidx[0][message.note]
                 elif message.channel == 11:
                     if pickidx[7].has_key(message.note):
-                        #port.sendto("%s%d%s%d", ("144 " , message.note , " 0 " , pickidx[7][message.note]), ("%s%d" % ("192.168.12.", pickidx[7][message.note]), 5005) )
+                        port.sendto("%s%d%s%d", ("144 " , message.note , " 0 " , pickidx[7][message.note]), ("%s%d" % ("192.168.12.", pickidx[7][message.note]), 5005) )
                         del pickidx[7][message.note]
                     if pickidx[11].has_key(message.note):
-                        #port.sendto("%s%d%s%d", ("144 " , message.note , " 0 " , pickidx[11][message.note]), ("%s%d" % ("192.168.12.", pickidx[11][message.note]), 5005) )
+                        port.sendto("%s%d%s%d", ("144 " , message.note , " 0 " , pickidx[11][message.note]), ("%s%d" % ("192.168.12.", pickidx[11][message.note]), 5005) )
                         del pickidx[11][message.note]
                 elif message.channel == 10:
                     if pickidx[6].has_key(message.note):
-                        #port.sendto("%s%d%s%d", ("144 " , message.note , " 0 " , pickidx[6][message.note]), ("%s%d" % ("192.168.12.", pickidx[6][message.note]), 5005) )
+                        port.sendto("%s%d%s%d", ("144 " , message.note , " 0 " , pickidx[6][message.note]), ("%s%d" % ("192.168.12.", pickidx[6][message.note]), 5005) )
                         del pickidx[6][message.note]
                     if pickidx[10].has_key(message.note):
-                        #port.sendto("%s%d%s%d", ("144 " , message.note , " 0 " , pickidx[10][message.note]), ("%s%d" % ("192.168.12.", pickidx[10][message.note]), 5005) )
+                        port.sendto("%s%d%s%d", ("144 " , message.note , " 0 " , pickidx[10][message.note]), ("%s%d" % ("192.168.12.", pickidx[10][message.note]), 5005) )
                         del pickidx[10][message.note]
                 elif message.channel == 9:
                     if pickidx[5].has_key(message.note):
-                        #port.sendto("%s%d%s%d", ("144 " , message.note , " 0 " , pickidx[5][message.note]), ("%s%d" % ("192.168.12.", pickidx[5][message.note]), 5005) )
+                        port.sendto("%s%d%s%d", ("144 " , message.note , " 0 " , pickidx[5][message.note]), ("%s%d" % ("192.168.12.", pickidx[5][message.note]), 5005) )
                         del pickidx[5][message.note]
                     if pickidx[9].has_key(message.note):
-                        #port.sendto("%s%d%s%d", ("144 " , message.note , " 0 " , pickidx[9][message.note]), ("%s%d" % ("192.168.12.", pickidx[9][message.note]), 5005) )
+                        port.sendto("%s%d%s%d", ("144 " , message.note , " 0 " , pickidx[9][message.note]), ("%s%d" % ("192.168.12.", pickidx[9][message.note]), 5005) )
                         del pickidx[9][message.note]
                 elif message.channel == 8:
                     if pickidx[4].has_key(message.note):
-                        #port.sendto("%s%d%s%d", ("144 " , message.note , " 0 " , pickidx[4][message.note]), ("%s%d" % ("192.168.12.", pickidx[4][message.note]), 5005) )
+                        port.sendto("%s%d%s%d", ("144 " , message.note , " 0 " , pickidx[4][message.note]), ("%s%d" % ("192.168.12.", pickidx[4][message.note]), 5005) )
                         del pickidx[4][message.note]
                     if pickidx[8].has_key(message.note):
-                        #port.sendto("%s%d%s%d", ("144 " , message.note , " 0 " , pickidx[8][message.note]), ("%s%d" % ("192.168.12.", pickidx[8][message.note]), 5005) )
+                        port.sendto("%s%d%s%d", ("144 " , message.note , " 0 " , pickidx[8][message.note]), ("%s%d" % ("192.168.12.", pickidx[8][message.note]), 5005) )
                         del pickidx[8][message.note]
             else:
                 if message.channel == 4 and message.velocity == 15:
@@ -267,8 +266,6 @@ def play_midi():
                         print("%s %d" % ("aa ", howmanyAA))
                         #print datetime.datetime.now()
                         rayv = "%s%d%s" % ("244 ", message.note, " 127 ")
-                        noteoffaa.append(message.note)
-                        print noteoffaa
                     if message.channel == 3:
                         boidx = checkbound(3,boidx)
                         port.sendto("%s%d" % (rayv ,boidx) , ("%s%d" % ("192.168.12.", boidx), 5005) )
@@ -281,12 +278,12 @@ def play_midi():
                         #toidx += 1
                     elif message.channel == 1:
                         aoidx = checkbound(1,aoidx)
-                        #port.sendto("%s%d" % (rayv ,aoidx) , ("%s%d" % ("192.168.12.", aoidx), 5005))
+                        port.sendto("%s%d" % (rayv ,aoidx) , ("%s%d" % ("192.168.12.", aoidx), 5005))
                         pickidx[1][message.note] = aoidx
                         #aoidx += 1
                     elif message.channel == 0:
                         soidx = checkbound(0,soidx)
-                        #port.sendto("%s%d" % (rayv ,soidx) , ("%s%d" % ("192.168.12.", soidx), 5005))
+                        port.sendto("%s%d" % (rayv ,soidx) , ("%s%d" % ("192.168.12.", soidx), 5005))
                         pickidx[0][message.note] = soidx
                         #soidx += 1
                     elif message.channel == 11:
@@ -309,74 +306,69 @@ def play_midi():
                         #toidx += 1
                     elif message.channel == 9:
                         aoidx = checkbound(1,aoidx)
-                        #port.sendto("%s%d" % (rayv ,aoidx) , ("%s%d" % ("192.168.12.", aoidx), 5005))
+                        port.sendto("%s%d" % (rayv ,aoidx) , ("%s%d" % ("192.168.12.", aoidx), 5005))
                         pickidx[5][message.note] = aoidx
                         #aoidx += 1
                         aoidx = checkbound(1,aoidx)
-                        #port.sendto("%s%d" % (rayv ,aoidx) , ("%s%d" % ("192.168.12.", aoidx), 5005))
+                        port.sendto("%s%d" % (rayv ,aoidx) , ("%s%d" % ("192.168.12.", aoidx), 5005))
                         pickidx[9][message.note] = aoidx
                         #aoidx += 1
                     elif message.channel == 8:
                         soidx = checkbound(0,soidx)
-                        #port.sendto("%s%d" % (rayv ,soidx) , ("%s%d" % ("192.168.12.", soidx), 5005))
+                        port.sendto("%s%d" % (rayv ,soidx) , ("%s%d" % ("192.168.12.", soidx), 5005))
                         pickidx[4][message.note] = soidx
                         #soidx += 1
                         soidx = checkbound(0,soidx)
-                        #port.sendto("%s%d" % (rayv ,soidx) , ("%s%d" % ("192.168.12.", soidx), 5005))
+                        port.sendto("%s%d" % (rayv ,soidx) , ("%s%d" % ("192.168.12.", soidx), 5005))
                         pickidx[8][message.note] = soidx
                         #soidx += 1
         elif 'note_off' == message.type :
             msg = "f"
             if message.channel == 3:
                 if pickidx[3].has_key(message.note):
-                    #port.sendto("%s%d %d %d" % ( "128 " , message.note, message.velocity, pickidx[3][message.note]) , ("%s%d" % ("192.168.12.", pickidx[3][message.note]), 5005) )
+                    port.sendto("%s%d %d %d" % ( "128 " , message.note, message.velocity, pickidx[3][message.note]) , ("%s%d" % ("192.168.12.", pickidx[3][message.note]), 5005) )
                     del pickidx[3][message.note]
             elif message.channel == 2:
                 if pickidx[2].has_key(message.note):
-                    #port.sendto("%s%d %d %d" % ( "128 " , message.note, message.velocity, pickidx[2][message.note]) , ("%s%d" % ("192.168.12.", pickidx[2][message.note]), 5005) )
+                    port.sendto("%s%d %d %d" % ( "128 " , message.note, message.velocity, pickidx[2][message.note]) , ("%s%d" % ("192.168.12.", pickidx[2][message.note]), 5005) )
                     del pickidx[2][message.note]
             elif message.channel == 1:
                 if pickidx[1].has_key(message.note):
-                    #port.sendto("%s%d %d %d" % ( "128 " , message.note, message.velocity, pickidx[1][message.note]) , ("%s%d" % ("192.168.12.", pickidx[1][message.note]), 5005) )
+                    port.sendto("%s%d %d %d" % ( "128 " , message.note, message.velocity, pickidx[1][message.note]) , ("%s%d" % ("192.168.12.", pickidx[1][message.note]), 5005) )
                     del pickidx[1][message.note]
             elif message.channel == 0:
                 if pickidx[0].has_key(message.note):
-                    #port.sendto("%s%d %d %d" % ( "128 " , message.note, message.velocity, pickidx[0][message.note]) , ("%s%d" % ("192.168.12.", pickidx[0][message.note]), 5005) )
+                    port.sendto("%s%d %d %d" % ( "128 " , message.note, message.velocity, pickidx[0][message.note]) , ("%s%d" % ("192.168.12.", pickidx[0][message.note]), 5005) )
                     del pickidx[0][message.note]
             elif message.channel == 11:
                 if pickidx[7].has_key(message.note):
-                    #port.sendto("%s%d %d %d" % ( "128 " , message.note, message.velocity, pickidx[7][message.note]) , ("%s%d" % ("192.168.12.", pickidx[7][message.note]), 5005) )
+                    port.sendto("%s%d %d %d" % ( "128 " , message.note, message.velocity, pickidx[7][message.note]) , ("%s%d" % ("192.168.12.", pickidx[7][message.note]), 5005) )
                     del pickidx[7][message.note]
                 if pickidx[11].has_key(message.note):
-                    #port.sendto("%s%d %d %d" % ( "128 " , message.note, message.velocity, pickidx[11][message.note]) , ("%s%d" % ("192.168.12.", pickidx[11][message.note]), 5005) )
+                    port.sendto("%s%d %d %d" % ( "128 " , message.note, message.velocity, pickidx[11][message.note]) , ("%s%d" % ("192.168.12.", pickidx[11][message.note]), 5005) )
                     del pickidx[11][message.note]
             elif message.channel == 10:
                 if pickidx[6].has_key(message.note):
-                    #port.sendto("%s%d %d %d" % ( "128 " , message.note, message.velocity, pickidx[6][message.note]) , ("%s%d" % ("192.168.12.", pickidx[6][message.note]), 5005) )
+                    port.sendto("%s%d %d %d" % ( "128 " , message.note, message.velocity, pickidx[6][message.note]) , ("%s%d" % ("192.168.12.", pickidx[6][message.note]), 5005) )
                     del pickidx[6][message.note]
                 if pickidx[10].has_key(message.note):
-                    #port.sendto("%s%d %d %d" % ( "128 " , message.note, message.velocity, pickidx[10][message.note]) , ("%s%d" % ("192.168.12.", pickidx[10][message.note]), 5005) )
+                    port.sendto("%s%d %d %d" % ( "128 " , message.note, message.velocity, pickidx[10][message.note]) , ("%s%d" % ("192.168.12.", pickidx[10][message.note]), 5005) )
                     del pickidx[10][message.note]
             elif message.channel == 9:
                 if pickidx[5].has_key(message.note):
-                    #port.sendto("%s%d %d %d" % ( "128 " , message.note, message.velocity, pickidx[5][message.note]) , ("%s%d" % ("192.168.12.", pickidx[5][message.note]), 5005) )
+                    port.sendto("%s%d %d %d" % ( "128 " , message.note, message.velocity, pickidx[5][message.note]) , ("%s%d" % ("192.168.12.", pickidx[5][message.note]), 5005) )
                     del pickidx[5][message.note]
                 if pickidx[9].has_key(message.note):
-                    #port.sendto("%s%d %d %d" % ( "128 " , message.note, message.velocity, pickidx[9][message.note]) , ("%s%d" % ("192.168.12.", pickidx[9][message.note]), 5005) )
+                    port.sendto("%s%d %d %d" % ( "128 " , message.note, message.velocity, pickidx[9][message.note]) , ("%s%d" % ("192.168.12.", pickidx[9][message.note]), 5005) )
                     del pickidx[9][message.note]
             elif message.channel == 8:
                 if pickidx[4].has_key(message.note):
-                    #port.sendto("%s%d %d %d" % ( "128 " , message.note, message.velocity, pickidx[4][message.note]) , ("%s%d" % ("192.168.12.", pickidx[4][message.note]), 5005) )
+                    port.sendto("%s%d %d %d" % ( "128 " , message.note, message.velocity, pickidx[4][message.note]) , ("%s%d" % ("192.168.12.", pickidx[4][message.note]), 5005) )
                     del pickidx[4][message.note]
                 if pickidx[8].has_key(message.note):
-                    #port.sendto("%s%d %d %d" % ( "128 " , message.note, message.velocity, pickidx[8][message.note]) , ("%s%d" % ("192.168.12.", pickidx[8][message.note]), 5005) )
+                    port.sendto("%s%d %d %d" % ( "128 " , message.note, message.velocity, pickidx[8][message.note]) , ("%s%d" % ("192.168.12.", pickidx[8][message.note]), 5005) )
                     del pickidx[8][message.note]
-        if msg.startswith("f") and message.note in noteoffaa:
-            msg = "%s %d %d %d " % ( msg, message.channel, message.note, 2)
-            noteoffaa.remove(message.note)
-            print noteoffaa
-        else:
-            msg = "%s %d %d %d " % ( msg, message.channel, message.note, message.velocity)
+        msg = "%s %d %d %d " % ( msg, message.channel, message.note, message.velocity)
         #subprocess.call(['./rayclient', msg, str(message.channel), str(message.note), str(message.velocity)])
         #print msg
         #if msg.startswith("n"):
@@ -472,9 +464,9 @@ while True:
             if eventkey == '1':
                 readyplay("Spring_final2_prv1.mid")
             elif eventkey == '2':
-                readyplay("Summer_midi_3.mid")
+                readyplay("Summer_fianl2_prv1.mid")
             elif eventkey == '3':
-                readyplay("Autumn_midi.mid")
+                readyplay("Aut_final2_prv1.mid")
             elif eventkey == '4':
                 readyplay("Winter_final2_prv1.mid")
             elif eventkey == '5':
