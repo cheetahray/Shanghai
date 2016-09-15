@@ -264,7 +264,7 @@ def play_midi():
                         rayv = "%s%d %d " % ("224 " , message.note, raymap(message.velocity, 0, 127, boundary, 127))
                     elif message.velocity == 2:
                         howmanyAA += 1
-                        print("%s %d" % ("aa ", howmanyAA))
+                        print("%s %d" % ("after ", howmanyAA))
                         #print datetime.datetime.now()
                         rayv = "%s%d%s" % ("244 ", message.note, " 127 ")
                         noteoffaa.append(message.note)
