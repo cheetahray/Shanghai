@@ -268,7 +268,6 @@ def play_midi():
                         #print datetime.datetime.now()
                         rayv = "%s%d%s" % ("244 ", message.note, " 127 ")
                         noteoffaa.append(message.note)
-                        print noteoffaa
                     if message.channel == 3:
                         boidx = checkbound(3,boidx)
                         port.sendto("%s%d" % (rayv ,boidx) , ("%s%d" % ("192.168.12.", boidx), 5005) )
@@ -374,7 +373,6 @@ def play_midi():
         if msg.startswith("f") and message.note in noteoffaa:
             msg = "%s %d %d %d " % ( msg, message.channel, message.note, 2)
             noteoffaa.remove(message.note)
-            print noteoffaa
         else:
             msg = "%s %d %d %d " % ( msg, message.channel, message.note, message.velocity)
         #subprocess.call(['./rayclient', msg, str(message.channel), str(message.note), str(message.velocity)])
