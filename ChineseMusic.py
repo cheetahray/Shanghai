@@ -280,12 +280,12 @@ def play_midi():
                         #toidx += 1
                     elif message.channel == 1:
                         aoidx = checkbound(1,aoidx)
-                        #port.sendto("%s%d" % (rayv ,aoidx) , ("%s%d" % ("192.168.12.", aoidx), 5005))
+                        port.sendto("%s%d" % (rayv ,aoidx) , ("%s%d" % ("192.168.12.", aoidx), 5005))
                         pickidx[1][message.note] = aoidx
                         #aoidx += 1
                     elif message.channel == 0:
                         soidx = checkbound(0,soidx)
-                        #port.sendto("%s%d" % (rayv ,soidx) , ("%s%d" % ("192.168.12.", soidx), 5005))
+                        port.sendto("%s%d" % (rayv ,soidx) , ("%s%d" % ("192.168.12.", soidx), 5005))
                         pickidx[0][message.note] = soidx
                         #soidx += 1
                     elif message.channel == 11:
@@ -308,20 +308,20 @@ def play_midi():
                         #toidx += 1
                     elif message.channel == 9:
                         aoidx = checkbound(1,aoidx)
-                        #port.sendto("%s%d" % (rayv ,aoidx) , ("%s%d" % ("192.168.12.", aoidx), 5005))
+                        port.sendto("%s%d" % (rayv ,aoidx) , ("%s%d" % ("192.168.12.", aoidx), 5005))
                         pickidx[5][message.note] = aoidx
                         #aoidx += 1
                         aoidx = checkbound(1,aoidx)
-                        #port.sendto("%s%d" % (rayv ,aoidx) , ("%s%d" % ("192.168.12.", aoidx), 5005))
+                        port.sendto("%s%d" % (rayv ,aoidx) , ("%s%d" % ("192.168.12.", aoidx), 5005))
                         pickidx[9][message.note] = aoidx
                         #aoidx += 1
                     elif message.channel == 8:
                         soidx = checkbound(0,soidx)
-                        #port.sendto("%s%d" % (rayv ,soidx) , ("%s%d" % ("192.168.12.", soidx), 5005))
+                        port.sendto("%s%d" % (rayv ,soidx) , ("%s%d" % ("192.168.12.", soidx), 5005))
                         pickidx[4][message.note] = soidx
                         #soidx += 1
                         soidx = checkbound(0,soidx)
-                        #port.sendto("%s%d" % (rayv ,soidx) , ("%s%d" % ("192.168.12.", soidx), 5005))
+                        port.sendto("%s%d" % (rayv ,soidx) , ("%s%d" % ("192.168.12.", soidx), 5005))
                         pickidx[8][message.note] = soidx
                         #soidx += 1
         elif 'note_off' == message.type :
@@ -379,7 +379,7 @@ def play_midi():
         #print msg
         #if msg.startswith("n"):
         #mqueue.insert(0,msg)
-        port.sendto(msg, ("192.168.12.101", 9999) )
+        port.sendto(msg, ("192.168.12.100", 9999) )
         #totaltime = totaltime + message.time
     time.sleep(1.6)
     lightinout(False)
