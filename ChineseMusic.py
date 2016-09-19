@@ -23,10 +23,10 @@ import datetime
 import subprocess
 from select import select
 import random
+import commands
 
 mid = None
 debug = False        #Boolean for on/off our debug print 
-
 
 class Tests(unittest.TestCase):
     def test_0(self):   #Test play midi file
@@ -252,6 +252,17 @@ def play_midi():
             else:
                 if message.channel == 4 and message.velocity == 15:
                     BoomBoom(message.velocity)
+                elif message.channel == 5 and message.velocity == 4:
+                    if message.note == 59:
+                        commands.getoutput("./reart.sh video_effect_for_light.mov")
+                    elif message.note == 60:
+                        commands.getoutput("./reart.sh video_effect_for_light.mov")
+                    elif message.note == 61:
+                        commands.getoutput("./reart.sh video_effect_for_light.mov")
+                    elif message.note == 62:
+                        commands.getoutput("./reart.sh video_effect_for_light.mov")
+                    elif message.note == 63:
+                        commands.getoutput("./reart.sh video_effect_for_light.mov")
                 else:
                     msg = "n"
                     rayv = None
