@@ -404,7 +404,8 @@ def raylist(mylist):
     global whoami
     global sfid
     notedelay = 1.2
-    if False: #mylist[0] == '128':
+    autooff = False
+    if False == autooff and mylist[0] == '128':
         if not ( len(mylist) == 4 and mylist[3] != str(whoami+1) ):
             noteint = int(mylist[1])
             nowm = noteint - rayshift[whoami]
@@ -453,8 +454,9 @@ def raylist(mylist):
                         if False == islightout:
                             clientsock.send("slide{0} {1} {2}".format( tp[whattype[whoami]][nowm] , math.fabs( tp[whattype[whoami]][nowm]-tp[whattype[whoami]][lastm] )*0.025 , whattype[whoami] ) )
                         lastm = nowm
-                        threading.Timer(notedelay+0.7, fl.noteoff, [chnl, noteint]).start()
-                        threading.Timer(notedelay+1, AS, [noteint]).start()
+                        if autooff:
+                            threading.Timer(notedelay+0.7, fl.noteoff, [chnl, noteint]).start()
+                            threading.Timer(notedelay+1, AS, [noteint]).start()
                 else:
                     threading.Timer(notedelay-0.3, fl.noteoff, [chnl, noteint]).start()
                     threading.Timer(notedelay, AS, [noteint]).start()
