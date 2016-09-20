@@ -659,7 +659,7 @@ def average_video(filepath, outpath, start=None, end=None, sample_every=1):
                     elif x == 34:
                         sb34 = pack('sBcBcBcBc', "artnet", r, " ", g, " ", b, " ", y, " ")
                     elif x == 35:
-                        sb35 = pack('sBcBcBcBc', "artnet", r, " ", g, " ", b, " ", y, " ")
+                        sb35 = pack('6sBcBcBcBc', "artnet", r, " ", g, " ", b, " ", y, " ")
                     elif x == 36:
                         sb36 = pack('sBcBcBcBc', "artnet", r, " ", g, " ", b, " ", y, " ")
                     elif x == 37:
