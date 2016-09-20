@@ -21,7 +21,7 @@ def whattype(typestr):
     global fs
     global sfid
     global lasttype
-    chnl = ord(typestr)
+    chnl = typestr
     if chnl >= 10:
         chnl = 32
     elif chnl >= 8:
@@ -38,7 +38,7 @@ def whattype(typestr):
 def playtwelve(chnl, note, velo):
     global fs
     whattype(chnl)
-    fs.noteon(0, ord(note), ord(velo))
+    fs.noteon(0, note, velo)
 
 while True:
     #print >>sys.stderr, '\nwaiting to receive message'
@@ -52,10 +52,10 @@ while True:
                 MayI = False
             elif ord(data[ii+3]) == 2:
                 MayI = True
-                threading.Timer( 0.3, playtwelve, [data[ii+1], data[ii+2], 127]).start()
+                threading.Timer( 0.3, playtwelve, [ord(data[ii+1]), ord(data[ii+2]), 127]).start()
             else:
                 MayI = False
-                threading.Timer( 1.2, playtwelve, [data[ii+1], data[ii+2], data[ii+3]]).start()
+                threading.Timer( 1.2, playtwelve, [ord(data[ii+1]), ord(data[ii+2]), ord(data[ii+3])]).start()
         elif( data[ii] == 'f' ):
             if ord(data[ii+3]) == 2:
                 threading.Timer( 0.3, fs.noteoff, [0, ord(data[ii+2])]).start()
