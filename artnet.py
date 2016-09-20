@@ -284,14 +284,14 @@ try:
                 elif data[0:6] == "artnet" and len(data) > 6:
                     mylist = data[6:].split(" ")
                     for ii in range(0, len(mylist), 4):
-                        r = int(mylist[ii])
-                        g = int(mylist[ii+1])
-                        b = int(mylist[ii+2])
-                        y = int(mylist[ii+3])
+                        r = mylist[ii]
+                        g = mylist[ii+1]
+                        b = mylist[ii+2]
+                        y = mylist[ii+3]
                         if 0 == y and False == QQ:
-                            p31.ChangeDutyCycle(int(r/2.55))
-                            p33.ChangeDutyCycle(int(g/2.55))
-                            p35.ChangeDutyCycle(int(b/2.55))
+                            p31.ChangeDutyCycle(r/2.55)
+                            p33.ChangeDutyCycle(g/2.55)
+                            p35.ChangeDutyCycle(b/2.55)
                         else:
                             anim.drawone(0, y, r, g, b)
                             anim.drawone(1, y, r, g, b)
