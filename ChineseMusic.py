@@ -24,7 +24,7 @@ import subprocess
 from select import select
 import random
 import commands
-
+from struct import *
 mid = None
 debug = False        #Boolean for on/off our debug print 
 
@@ -98,11 +98,11 @@ def checkbound(whattype, oidx):
 def soundonoff(opensound):
     if opensound == True:
         for i in range(1,67):
-            port.sendto("249 3", ("%s%d" % ("192.168.12.", i), 5005) )
+            port.sendto(pack('BB', 249, 3), ("%s%d" % ("192.168.12.", i), 5005) )
             time.sleep(0.002)
     else:
         for i in range(1,67):
-            port.sendto("249 2" , ("%s%d" % ("192.168.12.", i), 5005))
+            port.sendto(pack('BB', 249, 2), ("%s%d" % ("192.168.12.", i), 5005))
             time.sleep(0.002)
     #time.sleep(4)
 
@@ -113,17 +113,17 @@ def changemusic(tp):
                  32, 32, 32, tp, tp, tp, tp, tp, tp, tp, tp, tp, tp, tp, tp, tp, tp, tp, tp, tp, 
                  tp, tp, tp, 32, 32, 32, 32, 32, 32, tp, tp, tp, tp, 32]
     for i in range(1,67):
-        port.sendto("%s%d" % ("249 1 ", soundtype[i]), ("%s%d" % ("192.168.12.", i), 5005) )
+        port.sendto( pack('BBB', 249, 1, soundtype[i]), ("%s%d" % ("192.168.12.", i), 5005) )
     #time.sleep(4)
 
 def lightinout(lightin):
     if lightin == True:
         for i in range(1,67):
-            port.sendto("225 0", ("%s%d" % ("192.168.12.", i), 5005) )
+            port.sendto( pack('BB', 225, 0), ("%s%d" % ("192.168.12.", i), 5005) )
             #port.sendto("225 0", ("%s%d" % ("192.168.12.", 67-i), 5005) )
     else:
         for i in range(66,0,-1):
-            port.sendto("225 1", ("%s%d" % ("192.168.12.", i), 5005) )
+            port.sendto( pack('BB', 225, 1), ("%s%d" % ("192.168.12.", i), 5005) )
             #port.sendto("225 1", ("%s%d" % ("192.168.12.", 67-i), 5005) )
 
 def BoomBoom(rayrandom):
@@ -134,10 +134,10 @@ def BoomBoom(rayrandom):
     red   = red_value << 3;
     green = green_value << 2;
     blue  = blue_value << 3;
-    BOOM = "%s%d %d %d %d %d %d" % ("boom" ,red, green, blue, int(red/2.55), int(green/2.55), int(blue/2.55) )
+    BOOM = pack('4sBBBBBB', "boom" ,red, green, blue, int(red/2.55), int(green/2.55), int(blue/2.55) )
     #print BOOM
     for i in range(1,67):
-        port.sendto(BOOM, ("%s%d" % ("192.168.12.", i), 5005))
+        port.sendto(BOOM, ("%s%d" % ("192.168.12.", i), 6454))
 
 def readyplay(midstr):
     global mid
@@ -267,72 +267,72 @@ def play_midi():
                     msg = "n"
                     rayv = None
                     if message.velocity > 2:
-                        rayv = "%s%d %d " % ("144 " , message.note, raymap(message.velocity, 0, 127, boundary, 127))
+                        rayv = pack('BBB', 144, message.note, raymap(message.velocity, 0, 127, boundary, 127))
                     elif message.velocity == 1: #and True == mayIpreload:
                         howmanyPreload += 1
                         print("%s %d" % ("preload ", howmanyPreload))
                         #print datetime.datetime.now()
-                        rayv = "%s%d %d " % ("224 " , message.note, raymap(message.velocity, 0, 127, boundary, 127))
+                        rayv = pack('BBB', 224, message.note, raymap(message.velocity, 0, 127, boundary, 127))
                     elif message.velocity == 2:
                         howmanyAA += 1
                         print("%s %d" % ("after ", howmanyAA))
                         #print datetime.datetime.now()
-                        rayv = "%s%d%s" % ("244 ", message.note, " 127 ")
+                        rayv = pack('BBB', 244, message.note, 127)
                         noteoffaa.append(message.note)
                     if message.channel == 3:
                         boidx = checkbound(3,boidx)
-                        port.sendto("%s%d" % (rayv ,boidx) , ("%s%d" % ("192.168.12.", boidx), 5005) )
+                        port.sendto(rayv, ("%s%d" % ("192.168.12.", boidx), 5005) )
                         pickidx[3][message.note] = boidx
                         #boidx += 1
                     elif message.channel == 2:
                         toidx = checkbound(2,toidx)
-                        port.sendto("%s%d" % (rayv ,toidx) , ("%s%d" % ("192.168.12.", toidx), 5005))
+                        port.sendto(rayv, ("%s%d" % ("192.168.12.", toidx), 5005))
                         pickidx[2][message.note] = toidx
                         #toidx += 1
                     elif message.channel == 1:
                         aoidx = checkbound(1,aoidx)
-                        port.sendto("%s%d" % (rayv ,aoidx) , ("%s%d" % ("192.168.12.", aoidx), 5005))
+                        port.sendto(rayv, ("%s%d" % ("192.168.12.", aoidx), 5005))
                         pickidx[1][message.note] = aoidx
                         #aoidx += 1
                     elif message.channel == 0:
                         soidx = checkbound(0,soidx)
-                        port.sendto("%s%d" % (rayv ,soidx) , ("%s%d" % ("192.168.12.", soidx), 5005))
+                        port.sendto(rayv, ("%s%d" % ("192.168.12.", soidx), 5005))
                         pickidx[0][message.note] = soidx
                         #soidx += 1
                     elif message.channel == 11:
                         boidx = checkbound(3,boidx)
-                        port.sendto("%s%d" % (rayv ,boidx) , ("%s%d" % ("192.168.12.", boidx), 5005) )
+                        port.sendto(rayv, ("%s%d" % ("192.168.12.", boidx), 5005) )
                         pickidx[7][message.note] = boidx
                         #boidx += 1
                         boidx = checkbound(3,boidx)
-                        port.sendto("%s%d" % (rayv ,boidx) , ("%s%d" % ("192.168.12.", boidx), 5005) )
+                        port.sendto(rayv, ("%s%d" % ("192.168.12.", boidx), 5005) )
                         pickidx[11][message.note] = boidx
                         #boidx += 1
                     elif message.channel == 10:
                         toidx = checkbound(2,toidx)
-                        port.sendto("%s%d" % (rayv ,toidx) , ("%s%d" % ("192.168.12.", toidx), 5005))
+                        port.sendto(rayv, ("%s%d" % ("192.168.12.", toidx), 5005))
                         pickidx[6][message.note] = toidx
                         #toidx += 1
                         toidx = checkbound(2,toidx)
-                        port.sendto("%s%d" % (rayv ,toidx) , ("%s%d" % ("192.168.12.", toidx), 5005))
+                        port.sendto(rayv, ("%s%d" % ("192.168.12.", toidx), 5005))
                         pickidx[10][message.note] = toidx
                         #toidx += 1
                     elif message.channel == 9:
                         aoidx = checkbound(1,aoidx)
-                        port.sendto("%s%d" % (rayv ,aoidx) , ("%s%d" % ("192.168.12.", aoidx), 5005))
+                        port.sendto(rayv, ("%s%d" % ("192.168.12.", aoidx), 5005))
                         pickidx[5][message.note] = aoidx
                         #aoidx += 1
                         aoidx = checkbound(1,aoidx)
-                        port.sendto("%s%d" % (rayv ,aoidx) , ("%s%d" % ("192.168.12.", aoidx), 5005))
+                        port.sendto(rayv, ("%s%d" % ("192.168.12.", aoidx), 5005))
                         pickidx[9][message.note] = aoidx
                         #aoidx += 1
                     elif message.channel == 8:
                         soidx = checkbound(0,soidx)
-                        port.sendto("%s%d" % (rayv ,soidx) , ("%s%d" % ("192.168.12.", soidx), 5005))
+                        port.sendto(rayv, ("%s%d" % ("192.168.12.", soidx), 5005))
                         pickidx[4][message.note] = soidx
                         #soidx += 1
                         soidx = checkbound(0,soidx)
-                        port.sendto("%s%d" % (rayv ,soidx) , ("%s%d" % ("192.168.12.", soidx), 5005))
+                        port.sendto(rayv, ("%s%d" % ("192.168.12.", soidx), 5005))
                         pickidx[8][message.note] = soidx
                         #soidx += 1
         elif 'note_off' == message.type :
@@ -382,10 +382,10 @@ def play_midi():
                     #port.sendto("%s%d %d %d" % ( "128 " , message.note, message.velocity, pickidx[8][message.note]) , ("%s%d" % ("192.168.12.", pickidx[8][message.note]), 5005) )
                     del pickidx[8][message.note]
         if msg.startswith("f") and message.note in noteoffaa:
-            msg = "%s %d %d %d " % ( msg, message.channel, message.note, 2)
+            msg = pack('sBBB', msg, message.channel, message.note, 2)
             noteoffaa.remove(message.note)
         else:
-            msg = "%s %d %d %d " % ( msg, message.channel, message.note, message.velocity)
+            msg = pack('sBBB', msg, message.channel, message.note, message.velocity)
         #subprocess.call(['./rayclient', msg, str(message.channel), str(message.note), str(message.velocity)])
         #print msg
         #if msg.startswith("n"):
@@ -407,13 +407,13 @@ def play_midi():
         time.sleep(0.002)
     '''
     for i in ST:
-        port.sendto("144 60 1", ("%s%d" % ("192.168.12.", i), 5005))
+        port.sendto(pack('BBB', 144, 60, 1), ("%s%d" % ("192.168.12.", i), 5005))
     for i in AT:
-        port.sendto("144 48 1", ("%s%d" % ("192.168.12.", i), 5005))
+        port.sendto(pack('BBB', 144, 48, 1), ("%s%d" % ("192.168.12.", i), 5005))
     for i in TT:
-        port.sendto("144 38 1", ("%s%d" % ("192.168.12.", i), 5005))
+        port.sendto(pack('BBB', 144, 38, 1), ("%s%d" % ("192.168.12.", i), 5005))
     for i in BT:
-        port.sendto("144 28 1", ("%s%d" % ("192.168.12.", i), 5005))
+        port.sendto(pack('BBB', 144, 28, 1), ("%s%d" % ("192.168.12.", i), 5005))
     time.sleep(1.6);
     '''
     for i in range(1,67):
@@ -428,13 +428,13 @@ def play_midi():
         time.sleep(0.002)
     '''
     for i in ST:
-        port.sendto("144 60 0", ("%s%d" % ("192.168.12.", i), 5005))
+        port.sendto(pack('BBB', 144, 60, 0), ("%s%d" % ("192.168.12.", i), 5005))
     for i in AT:
-        port.sendto("144 48 0", ("%s%d" % ("192.168.12.", i), 5005))
+        port.sendto(pack('BBB', 144, 48, 0), ("%s%d" % ("192.168.12.", i), 5005))
     for i in TT:
-        port.sendto("144 38 0", ("%s%d" % ("192.168.12.", i), 5005))
+        port.sendto(pack('BBB', 144, 38, 0), ("%s%d" % ("192.168.12.", i), 5005))
     for i in BT:
-        port.sendto("144 28 0", ("%s%d" % ("192.168.12.", i), 5005))
+        port.sendto(pack('BBB', 144, 28, 0), ("%s%d" % ("192.168.12.", i), 5005))
     time.sleep(1.6)
     soundonoff(False)
     AmIPlay = False    

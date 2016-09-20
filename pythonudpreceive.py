@@ -21,7 +21,7 @@ def whattype(typestr):
     global fs
     global sfid
     global lasttype
-    chnl = int(typestr)
+    chnl = ord(typestr)
     if chnl >= 10:
         chnl = 32
     elif chnl >= 8:
@@ -38,29 +38,29 @@ def whattype(typestr):
 def playtwelve(chnl, note, velo):
     global fs
     whattype(chnl)
-    fs.noteon(0, int(note), int(velo))
+    fs.noteon(0, ord(note), ord(velo))
 
 while True:
     #print >>sys.stderr, '\nwaiting to receive message'
     data, address = sock.recvfrom(4096)
     #print data
-    mylist = data.split(" ")
-    for ii in range(0, len(mylist), 4):
-        if( mylist[ii] == "n" ):
-            if mylist[ii+3] == "1":
+    #mylist = data.split(" ")
+    for ii in range(0, len(data), 4):
+        if( data[ii] == 'n' ):
+            if ord(mylist[ii+3]) == 1:
                 print "preload"
                 MayI = False
-            elif mylist[ii+3] == "2":
+            elif ord(mylist[ii+3]) == 2:
                 MayI = True
                 threading.Timer( 0.3, playtwelve, [mylist[ii+1], mylist[ii+2], 127]).start()
             else:
                 MayI = False
                 threading.Timer( 1.2, playtwelve, [mylist[ii+1], mylist[ii+2], mylist[ii+3]]).start()
-        elif( mylist[ii] == "f" ):
-            if mylist[ii+3] == "2":
-                threading.Timer( 0.25, fs.noteoff, [0, int(mylist[ii+2])]).start()
+        elif( mylist[ii] == 'f' ):
+            if ord(mylist[ii+3]) == 2:
+                threading.Timer( 0.3, fs.noteoff, [0, ord(mylist[ii+2])]).start()
             else:
-                threading.Timer( 1.2, fs.noteoff, [0, int(mylist[ii+2])]).start()
+                threading.Timer( 1.2, fs.noteoff, [0, ord(mylist[ii+2])]).start()
     '''
     if data:
         sent = sock.sendto(data, address)

@@ -11,7 +11,7 @@ import random
 import threading
 import datetime
 from openpyxl import load_workbook
-
+from struct import *
 def raymap(value, istart, istop, ostart, ostop):
     #wierd = ostart + (ostop - ostart) * (value - istart) / (istop - istart); 
     #print wierd
@@ -93,12 +93,12 @@ def play_midi():
     #port.flush()
         
     for i in range(1,67):
-        raysendto("249 3", str(i) )
+        raysendto(pack('BB', 249, 3), str(i) )
         time.sleep(0.01)
     time.sleep(4)
     for i in range(34,67):
-        raysendto("225 0", str(i) )
-        raysendto("225 0", str(67-i) )
+        raysendto(pack('BB', 225, 0), str(i) )
+        raysendto(pack('BB', 225, 0), str(67-i) )
         time.sleep(0.02)
         #f.append(0)
         #worksheet.write(i, 0, 0)
@@ -106,77 +106,59 @@ def play_midi():
         isplay = False          #To avoid duplicate doorbell button press during midi play
         if False:
             print(message)
-        elif 'note_on' == message.type :
+        if 'note_on' == message.type :
             if 0 == message.velocity:
+                rayv = pack('BBB', 144, message.note, 0)
                 if message.channel == 3:
                     if pickidx[3].has_key(message.note):
-                        raysendto("144 " + str(message.note) + " 0 " + str(pickidx[3][message.note]), str(pickidx[3][message.note]) )
+                        raysendto(rayv, str(pickidx[3][message.note]) )
                         del pickidx[3][message.note]
                 elif message.channel == 2:
                     if pickidx[2].has_key(message.note):
-                        raysendto("144 " + str(message.note) + " 0 " + str(pickidx[2][message.note]), str(pickidx[2][message.note]) )
+                        raysendto(rayv, str(pickidx[2][message.note]) )
                         del pickidx[2][message.note]
                 elif message.channel == 1:
                     if pickidx[1].has_key(message.note):
-                        raysendto("144 " + str(message.note) + " 0 " + str(pickidx[1][message.note]), str(pickidx[1][message.note]) )
+                        raysendto(rayv, str(pickidx[1][message.note]) )
                         del pickidx[1][message.note]
                 elif message.channel == 0:
                     if pickidx[0].has_key(message.note):
-                        raysendto("144 " + str(message.note) + " 0 " + str(pickidx[0][message.note]), str(pickidx[0][message.note]) )
+                        raysendto(rayv, str(pickidx[0][message.note]) )
                         del pickidx[0][message.note]
                 elif message.channel == 11:
                     if pickidx[7].has_key(message.note):
-                        raysendto("144 " + str(message.note) + " 0 " + str(pickidx[7][message.note]) , str(pickidx[7][message.note]) )
+                        raysendto(rayv, str(pickidx[7][message.note]) )
                         del pickidx[7][message.note]
                     if pickidx[11].has_key(message.note):
-                        raysendto("144 " + str(message.note) + " 0 " + str(pickidx[11][message.note]) , str(pickidx[11][message.note]) )
+                        raysendto(rayv, str(pickidx[11][message.note]) )
                         del pickidx[11][message.note]
                 elif message.channel == 10:
                     if pickidx[6].has_key(message.note):
-                        raysendto("144 " + str(message.note) + " 0 " + str(pickidx[6][message.note]) , str(pickidx[6][message.note]) )
+                        raysendto(rayv, str(pickidx[6][message.note]) )
                         del pickidx[6][message.note]
                     if pickidx[10].has_key(message.note):
-                        raysendto("144 " + str(message.note) + " 0 " + str(pickidx[10][message.note]) , str(pickidx[10][message.note]) )
+                        raysendto(rayv, str(pickidx[10][message.note]) )
                         del pickidx[10][message.note]
                 elif message.channel == 9:
                     if pickidx[5].has_key(message.note):
-                        raysendto("144 " + str(message.note) + " 0 " + str(pickidx[5][message.note]) , str(pickidx[5][message.note]) )
+                        raysendto(rayv, str(pickidx[5][message.note]) )
                         del pickidx[5][message.note]
                     if pickidx[9].has_key(message.note):
-                        raysendto("144 " + str(message.note) + " 0 " + str(pickidx[9][message.note]) , str(pickidx[9][message.note]) )
+                        raysendto(rayv, str(pickidx[9][message.note]) )
                         del pickidx[9][message.note]
                 elif message.channel == 8:
                     if pickidx[4].has_key(message.note):
-                        raysendto("144 " + str(message.note) + " 0 " + str(pickidx[4][message.note]) , str(pickidx[4][message.note]) )
+                        raysendto(rayv, str(pickidx[4][message.note]) )
                         del pickidx[4][message.note]
                     if pickidx[8].has_key(message.note):
-                        raysendto("144 " + str(message.note) + " 0 " + str(pickidx[8][message.note]) , str(pickidx[8][message.note]) )
+                        raysendto(rayv, str(pickidx[8][message.note]) )
                         del pickidx[8][message.note]
             else:
-                if False:#message.channel == 7:
-                    boidx = checkbound(3,boidx)
-                    raysendto("224 " + str(message.note) + " " + str(raymap(message.velocity, 0, 127, boundary, 127)) + " " + str(boidx) + "\r")
-                    slideidx[3][message.note] = boidx
-                    boidx += 1
-                elif False:#message.channel == 6:
-                    toidx = checkbound(2,toidx)
-                    raysendto("224 " + str(message.note) + " " + str(raymap(message.velocity, 0, 127, boundary, 127)) + " " + str(toidx) + "\r")
-                    slideidx[2][message.note] = toidx
-                    toidx += 1
-                elif False:#message.channel == 5:
-                    aoidx = checkbound(1,aoidx)
-                    raysendto("224 " + str(message.note) + " " + str(raymap(message.velocity, 0, 127, boundary, 127)) + " " + str(aoidx) + "\r")
-                    slideidx[1][message.note] = aoidx
-                    aoidx += 1
-                elif False:#message.channel == 4:
-                    soidx = checkbound(0,soidx)
-                    raysendto("224 " + str(message.note) + " " + str(raymap(message.velocity, 0, 127, boundary, 127)) + " " + str(soidx) + "\r")
-                    slideidx[0][message.note] = soidx
-                    soidx += 1
-                elif message.channel == 3:
+                rayv = pack('BBB', 224, message.note, raymap(message.velocity, 0, 127, boundary, 127))
+                if message.channel == 3:
                     boidx = checkbound(3,boidx)
                     if True == rayiii(boidx, message.note):
-                        raysendto("224 " + str(message.note) + " " + str(raymap(message.velocity, 0, 127, boundary, 127)) + " " + str(boidx) , str(boidx) )
+                        raysendto(rayv, str(boidx) )
                     else:
                         pass#raysendto("144 " + str(message.note) + " 1 " + str(boidx) , str(boidx) )
                     pickidx[3][message.note] = boidx
@@ -184,7 +166,7 @@ def play_midi():
                 elif message.channel == 2:
                     toidx = checkbound(2,toidx)
                     if True == rayiii(toidx, message.note):
-                        raysendto("224 " + str(message.note) + " " + str(raymap(message.velocity, 0, 127, boundary, 127)) + " " + str(toidx) , str(toidx))
+                        raysendto(rayv, str(toidx))
                     else:
                         pass#raysendto("144 " + str(message.note) + " 1 " + str(toidx) , str(toidx))
                     pickidx[2][message.note] = toidx
@@ -192,7 +174,7 @@ def play_midi():
                 elif message.channel == 1:
                     aoidx = checkbound(1,aoidx)
                     if True == rayiii(aoidx, message.note):
-                        raysendto("224 " + str(message.note) + " " + str(raymap(message.velocity, 0, 127, boundary, 127)) + " " + str(aoidx) , str(aoidx))
+                        raysendto(rayv, str(aoidx))
                     else:
                         pass#raysendto("144 " + str(message.note) + " 1 " + str(aoidx) , str(aoidx))
                     pickidx[1][message.note] = aoidx
@@ -200,150 +182,147 @@ def play_midi():
                 elif message.channel == 0:
                     soidx = checkbound(0,soidx)
                     if True == rayiii(soidx, message.note):
-                        raysendto("224 " + str(message.note) + " " + str(raymap(message.velocity, 0, 127, boundary, 127)) + " " + str(soidx) , str(soidx))
+                        raysendto(rayv, str(soidx))
                     else:
                         pass#raysendto("144 " + str(message.note) + " 1 " + str(soidx) , str(soidx))
                     pickidx[0][message.note] = soidx
                     soidx += 1
                 elif message.channel == 11:
-                    rayv = raymap(message.velocity, 0, 127, boundary, 127)
                     boidx = checkbound(3,boidx)
                     if True == rayiii(boidx, message.note):
-                        raysendto("224 " + str(message.note) + " " + str(rayv) + " " + str(boidx) , str(boidx) )
+                        raysendto(rayv, str(boidx) )
                     else:
                         pass#raysendto("144 " + str(message.note) + " 1 " + str(boidx) , str(boidx) )
                     pickidx[7][message.note] = boidx
                     boidx += 1
                     boidx = checkbound(3,boidx)
                     if True == rayiii(boidx, message.note):
-                        raysendto("224 " + str(message.note) + " " + str(rayv) + " " + str(boidx) , str(boidx) )
+                        raysendto(rayv, str(boidx) )
                     else:
                         pass#raysendto("144 " + str(message.note) + " 1 " + str(boidx) , str(boidx) )
                     pickidx[11][message.note] = boidx
                     boidx += 1
                 elif message.channel == 10:
-                    rayv = raymap(message.velocity, 0, 127, boundary, 127)
                     toidx = checkbound(2,toidx)
                     if True == rayiii(toidx, message.note):
-                        raysendto("224 " + str(message.note) + " " + str(rayv) + " " + str(toidx) , str(toidx))
+                        raysendto(rayv, str(toidx))
                     else:
                         pass#raysendto("144 " + str(message.note) + " 1 " + str(toidx) , str(toidx))
                     pickidx[6][message.note] = toidx
                     toidx += 1
                     toidx = checkbound(2,toidx)
                     if True == rayiii(toidx, message.note):
-                        raysendto("224 " + str(message.note) + " " + str(rayv) + " " + str(toidx) , str(toidx))
+                        raysendto(rayv, str(toidx))
                     else:
                         pass#raysendto("144 " + str(message.note) + " 1 " + str(toidx) , str(toidx))
                     pickidx[10][message.note] = toidx
                     toidx += 1
                 elif message.channel == 9:
-                    rayv = raymap(message.velocity, 0, 127, boundary, 127)
                     aoidx = checkbound(1,aoidx)
                     if True == rayiii(aoidx, message.note):
-                        raysendto("224 " + str(message.note) + " " + str(rayv) + " " + str(aoidx) , str(aoidx))
+                        raysendto(rayv, str(aoidx))
                     else:
                         pass#raysendto("144 " + str(message.note) + " 1 " + str(aoidx) , str(aoidx))
                     pickidx[5][message.note] = aoidx
                     aoidx += 1
                     aoidx = checkbound(1,aoidx)
                     if True == rayiii(aoidx, message.note):
-                        raysendto("224 " + str(message.note) + " " + str(rayv) + " " + str(aoidx) , str(aoidx))
+                        raysendto(rayv, str(aoidx))
                     else:
                         pass#raysendto("144 " + str(message.note) + " 1 " + str(aoidx) , str(aoidx))
                     pickidx[9][message.note] = aoidx
                     aoidx += 1
                 elif message.channel == 8:
-                    rayv = raymap(message.velocity, 0, 127, boundary, 127)
                     soidx = checkbound(0,soidx)
                     if True == rayiii(soidx, message.note):
-                        raysendto("224 " + str(message.note) + " " + str(rayv) + " " + str(soidx) , str(soidx))
+                        raysendto(rayv, str(soidx))
                     else:
                         pass#raysendto("144 " + str(message.note) + " 1 " + str(soidx) , str(soidx))
                     pickidx[4][message.note] = soidx
                     soidx += 1
                     soidx = checkbound(0,soidx)
                     if True == rayiii(soidx, message.note):
-                        raysendto("224 " + str(message.note) + " " + str(rayv) + " " + str(soidx) , str(soidx))
+                        raysendto(rayv, str(soidx))
                     else:
                         pass#raysendto("144 " + str(message.note) + " 1 " + str(soidx) , str(soidx))
                     pickidx[8][message.note] = soidx
                     soidx += 1
         elif 'note_off' == message.type :
+            rayv = pack('BBB', 128, message.note, message.velocity)
             if message.channel == 3:
                 if pickidx[3].has_key(message.note):
-                    raysendto("128 " + str(message.note) + " " + str(message.velocity) + " " + str(pickidx[3][message.note]) , str(pickidx[3][message.note]) )
+                    raysendto(rayv, str(pickidx[3][message.note]) )
                     del pickidx[3][message.note]
             elif message.channel == 2:
                 if pickidx[2].has_key(message.note):
-                    raysendto("128 " + str(message.note) + " " + str(message.velocity) + " " + str(pickidx[2][message.note]) , str(pickidx[2][message.note]) )
+                    raysendto(rayv, str(pickidx[2][message.note]) )
                     del pickidx[2][message.note]
             elif message.channel == 1:
                 if pickidx[1].has_key(message.note):
-                    raysendto("128 " + str(message.note) + " " + str(message.velocity) + " " + str(pickidx[1][message.note]) , str(pickidx[1][message.note]) )
+                    raysendto(rayv, str(pickidx[1][message.note]) )
                     del pickidx[1][message.note]
             elif message.channel == 0:
                 if pickidx[0].has_key(message.note):
-                    raysendto("128 " + str(message.note) + " " + str(message.velocity) + " " + str(pickidx[0][message.note]) , str(pickidx[0][message.note]) )
+                    raysendto(rayv, str(pickidx[0][message.note]) )
                     del pickidx[0][message.note]
             elif message.channel == 11:
                 if pickidx[7].has_key(message.note):
-                    raysendto("128 " + str(message.note) + " " + str(message.velocity) + " " + str(pickidx[7][message.note]) , str(pickidx[7][message.note]) )
+                    raysendto(rayv, str(pickidx[7][message.note]) )
                     del pickidx[7][message.note]
                 if pickidx[11].has_key(message.note):
-                    raysendto("128 " + str(message.note) + " " + str(message.velocity) + " " + str(pickidx[11][message.note]) , str(pickidx[11][message.note]) )
+                    raysendto(rayv, str(pickidx[11][message.note]) )
                     del pickidx[11][message.note]
             elif message.channel == 10:
                 if pickidx[6].has_key(message.note):
-                    raysendto("128 " + str(message.note) + " " + str(message.velocity) + " " + str(pickidx[6][message.note]) , str(pickidx[6][message.note]) )
+                    raysendto(rayv, str(pickidx[6][message.note]) )
                     del pickidx[6][message.note]
                 if pickidx[10].has_key(message.note):
-                    raysendto("128 " + str(message.note) + " " + str(message.velocity) + " " + str(pickidx[10][message.note]) , str(pickidx[10][message.note]) )
+                    raysendto(rayv, str(pickidx[10][message.note]) )
                     del pickidx[10][message.note]
             elif message.channel == 9:
                 if pickidx[5].has_key(message.note):
-                    raysendto("128 " + str(message.note) + " " + str(message.velocity) + " " + str(pickidx[5][message.note]) , str(pickidx[5][message.note]) )
+                    raysendto(rayv, str(pickidx[5][message.note]) )
                     del pickidx[5][message.note]
                 if pickidx[9].has_key(message.note):
-                    raysendto("128 " + str(message.note) + " " + str(message.velocity) + " " + str(pickidx[9][message.note]) , str(pickidx[9][message.note]) )
+                    raysendto(rayv, str(pickidx[9][message.note]) )
                     del pickidx[9][message.note]
             elif message.channel == 8:
                 if pickidx[4].has_key(message.note):
-                    raysendto("128 " + str(message.note) + " " + str(message.velocity) + " " + str(pickidx[4][message.note]) , str(pickidx[4][message.note]) )
+                    raysendto(rayv, str(pickidx[4][message.note]) )
                     del pickidx[4][message.note]
                 if pickidx[8].has_key(message.note):
-                    raysendto("128 " + str(message.note) + " " + str(message.velocity) + " " + str(pickidx[8][message.note]) , str(pickidx[8][message.note]) )
+                    raysendto(rayv, str(pickidx[8][message.note]) )
                     del pickidx[8][message.note]
     raysendto("EndofGame", "202", 12345 )
     time.sleep(6);
     for i in range(66,33,-1):
-        raysendto("225 1", str(i) )
-        raysendto("225 1", str(67-i) )
+        raysendto(pack('BB', 225, 1), str(i) )
+        raysendto(pack('BB', 225, 1), str(67-i) )
         time.sleep(0.02)
     for i in range(1,67):
         if 1 == ST[i]:
-            raysendto("144 60 1 " + str(i) , str(i) )
+            raysendto(pack('BBB', 144, 60, 1), str(i) )
         if 1 == AT[i]:
-            raysendto("144 48 1 " + str(i) , str(i) )
+            raysendto(pack('BBB', 144, 48, 1), str(i) )
         if 1 == TT[i]:
-            raysendto("144 38 1 " + str(i) , str(i) )
+            raysendto(pack('BBB', 144, 38, 1), str(i) )
         if 1 == BT[i]:
-            raysendto("144 28 1 " + str(i) , str(i) )
+            raysendto(pack('BBB', 144, 28, 1), str(i) )
         time.sleep(0.02)
     time.sleep(3);
     for i in range(1,67):
         if 1 == ST[i]:
-            raysendto("144 60 0 " + str(i), str(i))
+            raysendto(pack('BBB', 144, 60, 0), str(i))
         if 1 == AT[i]:
-            raysendto("144 48 0 " + str(i), str(i))
+            raysendto(pack('BBB', 144, 48, 0), str(i))
         if 1 == TT[i]:
-            raysendto("144 38 0 " + str(i), str(i))
+            raysendto(pack('BBB', 144, 38, 0), str(i))
         if 1 == BT[i]:
-            raysendto("144 28 0 " + str(i), str(i))
+            raysendto(pack('BBB', 144, 28, 0), str(i))
         time.sleep(0.02)
     time.sleep(3);
     for i in range(1,67):
-        raysendto("249 2" , str(i))
+        raysendto(pack('BB', 249, 2), str(i))
         time.sleep(0.01)
     change3(False)
     

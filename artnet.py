@@ -14,23 +14,9 @@ def handler(clientsocket, clientaddr):
     global islightout
     global qq50
     global QQ
-    global AmIBoomNow
     while 1:
         data = clientsocket.recv(1024)
-        if True == AmIBoomNow:
-            pass
-        elif ( len(data) > 4 and len(data) < 29 and data[0:4] == "boom" ):
-            AmIBoomNow = True
-            #GPIO.output(13, False) #p13.ChangeDutyCycle(0)
-            mylist2 = data[4:].split(" ")
-            p38.ChangeDutyCycle(100) #GPIO.output(38, True)
-            p40.ChangeDutyCycle(0) #GPIO.output(40, False)
-            #anim.rayanim(int(mylist2[0]),int(mylist2[1]),int(mylist2[2]),255,20,0.1)
-            p31.ChangeDutyCycle(int(mylist2[3]))
-            p33.ChangeDutyCycle(int(mylist2[4]))
-            p35.ChangeDutyCycle(int(mylist2[5]))
-            Timer(0.2, boom).start()
-        elif ( len(data) == 6  and (data[0:6] == "picker") ):
+        if ( len(data) == 6  and (data[0:6] == "picker") ):
             GPIO.output(13, False) #p13.ChangeDutyCycle(0)
             if False == QQ:
                 p38.ChangeDutyCycle(100) #GPIO.output(38, True)
@@ -73,25 +59,25 @@ def handler(clientsocket, clientaddr):
             p40.ChangeDutyCycle(0) #GPIO.output(40, False)
             Timer(0.333, func).start()
             if False == islightout:
-                mylist2 = data[6:].split(" ")
+                mylist2 = data[6:]#.split(" ")
                 #print(mylist2)
-                if '0' == mylist2[1] : 
-                    anim.rayanim(0,255,0,255,int(mylist2[0])+1,0.1)
+                if 0 == ord(mylist2[1]) : 
+                    anim.rayanim(0,255,0,255,ord(mylist2[0])+1,0.1)
                     p31.ChangeDutyCycle(0)
                     p33.ChangeDutyCycle(100)
                     p35.ChangeDutyCycle(0)
-                elif '1' == mylist2[1] : 
-                    anim.rayanim(255,255,255,255,int(mylist2[0])+1,0.1)
+                elif 1 == ord(mylist2[1] : 
+                    anim.rayanim(255,255,255,255,ord(mylist2[0])+1,0.1)
                     p31.ChangeDutyCycle(100)
                     p33.ChangeDutyCycle(100)
                     p35.ChangeDutyCycle(100)
-                elif '2' == mylist2[1] : 
-                    anim.rayanim(255,112,0,255,int(mylist2[0])+1,0.1)
+                elif 2 == ord(mylist2[1] : 
+                    anim.rayanim(255,112,0,255,ord(mylist2[0])+1,0.1)
                     p31.ChangeDutyCycle(100)
                     p33.ChangeDutyCycle(50)
                     p35.ChangeDutyCycle(0)
-                elif '3' == mylist2[1] : 
-                    anim.rayanim(255,0,0,255,int(mylist2[0])+1,0.1)
+                elif 3 == ord(mylist2[1] : 
+                    anim.rayanim(255,0,0,255,ord(mylist2[0])+1,0.1)
                     p31.ChangeDutyCycle(100)
                     p33.ChangeDutyCycle(0)
                     p35.ChangeDutyCycle(0)
@@ -222,7 +208,20 @@ try:
     while True:
         try:
             data, addr = sock.recvfrom(1024)
-            if False == islightout:
+            if True == AmIBoomNow:
+                pass
+            elif ( len(data) > 4 and len(data) < 7 and data[0:4] == "boom" ):
+                AmIBoomNow = True
+                #GPIO.output(13, False) #p13.ChangeDutyCycle(0)
+                #mylist2 = data[4:].split(" ")
+                p38.ChangeDutyCycle(100) #GPIO.output(38, True)
+                p40.ChangeDutyCycle(0) #GPIO.output(40, False)
+                #anim.rayanim(int(mylist2[0]),int(mylist2[1]),int(mylist2[2]),255,20,0.1)
+                p31.ChangeDutyCycle(ord(data[4]))
+                p33.ChangeDutyCycle(ord(data[5]))
+                p35.ChangeDutyCycle(ord(data[6]))
+                Timer(0.2, boom).start()
+            elif False == islightout:
                 if data[0:4] == "RGBW":
                     mylist = data[4:].split(" ")
                     p31.ChangeDutyCycle(int(mylist[0])/2.55)
@@ -283,17 +282,15 @@ try:
                             #    y += 1
                 elif data[0:6] == "artnet" and len(data) > 6:
                     #mylist = data[6:].split(" ")
-                    mylist = unpack("BBBB", data[6:])
-                    print mylist
-                    for ii in range(0, len(mylist), 4):
-                        r = mylist[ii]
-                        g = mylist[ii+1]
-                        b = mylist[ii+2]
-                        y = mylist[ii+3]
+                    for ii in range(6, len(data), 4):
+                        r = ord(data[ii])
+                        g = ord(data[ii+1])
+                        b = ord(data[ii+2])
+                        y = ord(data[ii+3])
                         if 0 == y and False == QQ:
-                            p31.ChangeDutyCycle(r/2.55)
-                            p33.ChangeDutyCycle(g/2.55)
-                            p35.ChangeDutyCycle(b/2.55)
+                            p31.ChangeDutyCycle(int(r/2.55))
+                            p33.ChangeDutyCycle(int(g/2.55))
+                            p35.ChangeDutyCycle(int(b/2.55))
                         else:
                             anim.drawone(0, y, r, g, b)
                             anim.drawone(1, y, r, g, b)
