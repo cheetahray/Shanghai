@@ -137,7 +137,7 @@ def BoomBoom(rayrandom):
     BOOM = pack('4sBBBBBB', "boom" ,red, green, blue, int(red/2.55), int(green/2.55), int(blue/2.55) )
     #print BOOM
     for i in range(1,67):
-        port.sendto(BOOM, ("%s%d" % ("192.168.12.", i), 6454))
+        port.sendto(BOOM, ("%s%d" % ("192.168.12.", i), 9999))
 
 def readyplay(midstr):
     global mid
@@ -390,7 +390,7 @@ def play_midi():
         #print msg
         #if msg.startswith("n"):
         #mqueue.insert(0,msg)
-        port.sendto(msg, ("192.168.12.100", 9999) )
+        port.sendto(msg, ("192.168.12.102", 8888) )
         #totaltime = totaltime + message.time
     time.sleep(1.6)
     lightinout(False)
