@@ -138,6 +138,7 @@ def BoomBoom(rayrandom):
     #print BOOM
     for i in range(1,67):
         port.sendto(BOOM, ("%s%d" % ("192.168.12.", i), 9999))
+        print BOOM
 
 def readyplay(midstr):
     global mid
