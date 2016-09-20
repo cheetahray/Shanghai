@@ -32,22 +32,22 @@ def Threadfun1(string1, string2, string3, string4, string5, string6, *args):
         end6 = len(sb6)
         if end1 > 6:
             s1.sendto(sb1, s1tuple)
-            #sb1 = "artnet"
+            sb1 = "artnet"
         if end2 > 6:
             s2.sendto(sb2, s2tuple)
-            #sb2 = "artnet"
+            sb2 = "artnet"
         if end3 > 6:
             s3.sendto(sb3, s3tuple)
-            #sb3 = "artnet"
+            sb3 = "artnet"
         if end4 > 6:
             s4.sendto(sb4, s4tuple)
-            #sb4 = "artnet"
+            sb4 = "artnet"
         if end5 > 6:
             s5.sendto(sb5, s5tuple)
-            #sb5 = "artnet"
+            sb5 = "artnet"
         if end6 > 6:
             s6.sendto(sb6, s6tuple)
-            #sb6 = "artnet"
+            sb6 = "artnet"
         time.sleep(sleeptime)
 
 def Threadfun2(string1, string2, string3, string4, string5, string6, *args):
@@ -74,22 +74,22 @@ def Threadfun2(string1, string2, string3, string4, string5, string6, *args):
         end6 = len(sb12)
         if end1 > 6:
             s1.sendto(sb7, s1tuple)
-            #sb7 = "artnet"
+            sb7 = "artnet"
         if end2 > 6:
             s2.sendto(sb8, s2tuple)
-            #sb8 = "artnet"
+            sb8 = "artnet"
         if end3 > 6:
             s3.sendto(sb9, s3tuple)
-            #sb9 = "artnet"
+            sb9 = "artnet"
         if end4 > 6:
             s4.sendto(sb10, s4tuple)
-            #sb10 = "artnet"
+            sb10 = "artnet"
         if end5 > 6:
             s5.sendto(sb11, s5tuple)
-            #sb11 = "artnet"
+            sb11 = "artnet"
         if end6 > 6:
             s6.sendto(sb12, s6tuple)
-            #sb12 = "artnet"
+            sb12 = "artnet"
         time.sleep(sleeptime)
 
 def Threadfun3(string1, string2, string3, string4, string5, string6, *args):
@@ -116,22 +116,22 @@ def Threadfun3(string1, string2, string3, string4, string5, string6, *args):
         end6 = len(sb18)
         if end1 > 6:
             s1.sendto(sb13, s1tuple)
-            #sb13 = "artnet"
+            sb13 = "artnet"
         if end2 > 6:
             s2.sendto(sb14, s2tuple)
-            #sb14 = "artnet"
+            sb14 = "artnet"
         if end3 > 6:
             s3.sendto(sb15, s3tuple)
-            #sb15 = "artnet"
+            sb15 = "artnet"
         if end4 > 6:
             s4.sendto(sb16, s4tuple)
-            #sb16 = "artnet"
+            sb16 = "artnet"
         if end5 > 6:
             s5.sendto(sb17, s5tuple)
-            #sb17 = "artnet"
+            sb17 = "artnet"
         if end6 > 6:
             s6.sendto(sb18, s6tuple)
-            #sb18 = "artnet"
+            sb18 = "artnet"
         time.sleep(sleeptime)
 
 def Threadfun4(string1, string2, string3, string4, string5, string6, *args):
@@ -158,22 +158,22 @@ def Threadfun4(string1, string2, string3, string4, string5, string6, *args):
         end6 = len(sb24)
         if end1 > 6:
             s1.sendto(sb19, s1tuple)
-            #sb19 = "artnet"
+            sb19 = "artnet"
         if end2 > 6:
             s2.sendto(sb20, s2tuple)
-            #sb20 = "artnet"
+            sb20 = "artnet"
         if end3 > 6:
             s3.sendto(sb21, s3tuple)
-            #sb21 = "artnet"
+            sb21 = "artnet"
         if end4 > 6:
             s4.sendto(sb22, s4tuple)
-            #sb22 = "artnet"
+            sb22 = "artnet"
         if end5 > 6:
             s5.sendto(sb23, s5tuple)
-            #sb23 = "artnet"
+            sb23 = "artnet"
         if end6 > 6:
             s6.sendto(sb24, s6tuple)
-            #sb24 = "artnet"
+            sb24 = "artnet"
         time.sleep(sleeptime)
 
 def Threadfun5(string1, string2, string3, string4, string5, string6, *args):
@@ -200,22 +200,22 @@ def Threadfun5(string1, string2, string3, string4, string5, string6, *args):
         end6 = len(sb30)
         if end1 > 6:
             s1.sendto(sb25, s1tuple)
-            #sb25 = "artnet"
+            sb25 = "artnet"
         if end2 > 6:
             s2.sendto(sb26, s2tuple)
-            #sb26 = "artnet"
+            sb26 = "artnet"
         if end3 > 6:
             s3.sendto(sb27, s3tuple)
-            #sb27 = "artnet"
+            sb27 = "artnet"
         if end4 > 6:
             s4.sendto(sb28, s4tuple)
-            #sb28 = "artnet"
+            sb28 = "artnet"
         if end5 > 6:
             s5.sendto(sb29, s5tuple)
-            #sb29 = "artnet"
+            sb29 = "artnet"
         if end6 > 6:
             s6.sendto(sb30, s6tuple)
-            #sb30 = "artnet"
+            sb30 = "artnet"
         time.sleep(sleeptime)
 
 def Threadfun6(string1, string2, string3, string4, string5, string6, *args):
@@ -242,22 +242,22 @@ def Threadfun6(string1, string2, string3, string4, string5, string6, *args):
         end6 = len(sb36)
         if end1 > 6:
             s1.sendto(sb31, s1tuple)
-            #sb31 = "artnet"
+            sb31 = "artnet"
         if end2 > 6:
             s2.sendto(sb32, s2tuple)
-            #sb32 = "artnet"
+            sb32 = "artnet"
         if end3 > 6:
             s3.sendto(sb33, s3tuple)
-            #sb33 = "artnet"
+            sb33 = "artnet"
         if end4 > 6:
             s4.sendto(sb34, s4tuple)
-            #sb34 = "artnet"
+            sb34 = "artnet"
         if end5 > 6:
             s5.sendto(sb35, s5tuple)
-            #sb35 = "artnet"
+            sb35 = "artnet"
         if end6 > 6:
             s6.sendto(sb36, s6tuple)
-            #sb36 = "artnet"
+            sb36 = "artnet"
         time.sleep(sleeptime)
 
 def Threadfun7(string1, string2, string3, string4, string5, string6, *args):
@@ -284,22 +284,22 @@ def Threadfun7(string1, string2, string3, string4, string5, string6, *args):
         end6 = len(sb42)
         if end1 > 6:
             s1.sendto(sb37, s1tuple)
-            #sb37 = "artnet"
+            sb37 = "artnet"
         if end2 > 6:
             s2.sendto(sb38, s2tuple)
-            #sb38 = "artnet"
+            sb38 = "artnet"
         if end3 > 6:
             s3.sendto(sb39, s3tuple)
-            #sb39 = "artnet"
+            sb39 = "artnet"
         if end4 > 6:
             s4.sendto(sb40, s4tuple)
-            #sb40 = "artnet"
+            sb40 = "artnet"
         if end5 > 6:
             s5.sendto(sb41, s5tuple)
-            #sb41 = "artnet"
+            sb41 = "artnet"
         if end6 > 6:
             s6.sendto(sb42, s6tuple)
-            #sb42 = "artnet"
+            sb42 = "artnet"
         time.sleep(sleeptime)
 
 def Threadfun8(string1, string2, string3, string4, string5, string6, *args):
@@ -326,22 +326,22 @@ def Threadfun8(string1, string2, string3, string4, string5, string6, *args):
         end6 = len(sb48)
         if end1 > 6:
             s1.sendto(sb43, s1tuple)
-            #sb43 = "artnet"
+            sb43 = "artnet"
         if end2 > 6:
             s2.sendto(sb44, s2tuple)
-            #sb44 = "artnet"
+            sb44 = "artnet"
         if end3 > 6:
             s3.sendto(sb45, s3tuple)
-            #sb45 = "artnet"
+            sb45 = "artnet"
         if end4 > 6:
             s4.sendto(sb46, s4tuple)
-            #sb46 = "artnet"
+            sb46 = "artnet"
         if end5 > 6:
             s5.sendto(sb47, s5tuple)
-            #sb47 = "artnet"
+            sb47 = "artnet"
         if end6 > 6:
             s6.sendto(sb48, s6tuple)
-            #sb48 = "artnet"
+            sb48 = "artnet"
         time.sleep(sleeptime)
 
 def Threadfun9(string1, string2, string3, string4, string5, string6, *args):
@@ -368,22 +368,22 @@ def Threadfun9(string1, string2, string3, string4, string5, string6, *args):
         end6 = len(sb54)
         if end1 > 6:
             s1.sendto(sb49, s1tuple)
-            #sb49 = "artnet"
+            sb49 = "artnet"
         if end2 > 6:
             s2.sendto(sb50, s2tuple)
-            #sb50 = "artnet"
+            sb50 = "artnet"
         if end3 > 6:
             s3.sendto(sb51, s3tuple)
-            #sb51 = "artnet"
+            sb51 = "artnet"
         if end4 > 6:
             s4.sendto(sb52, s4tuple)
-            #sb52 = "artnet"
+            sb52 = "artnet"
         if end5 > 6:
             s5.sendto(sb53, s5tuple)
-            #sb53 = "artnet"
+            sb53 = "artnet"
         if end6 > 6:
             s6.sendto(sb54, s6tuple)
-            #sb54 = "artnet"
+            sb54 = "artnet"
         time.sleep(sleeptime)
 
 def Threadfun10(string1, string2, string3, string4, string5, string6, *args):
@@ -410,22 +410,22 @@ def Threadfun10(string1, string2, string3, string4, string5, string6, *args):
         end6 = len(sb60)
         if end1 > 6:
             s1.sendto(sb55, s1tuple)
-            #sb55 = "artnet"
+            sb55 = "artnet"
         if end2 > 6:
             s2.sendto(sb56, s2tuple)
-            #sb56 = "artnet"
+            sb56 = "artnet"
         if end3 > 6:
             s3.sendto(sb57, s3tuple)
-            #sb57 = "artnet"
+            sb57 = "artnet"
         if end4 > 6:
             s4.sendto(sb58, s4tuple)
-            #sb58 = "artnet"
+            sb58 = "artnet"
         if end5 > 6:
             s5.sendto(sb59, s5tuple)
-            #sb59 = "artnet"
+            sb59 = "artnet"
         if end6 > 6:
             s6.sendto(sb60, s6tuple)
-            #sb60 = "artnet"
+            sb60 = "artnet"
         time.sleep(sleeptime)
 
 def Threadfun11(string1, string2, string3, string4, string5, string6, *args):
@@ -452,22 +452,22 @@ def Threadfun11(string1, string2, string3, string4, string5, string6, *args):
         end6 = len(sb66)
         if end1 > 6:
             s1.sendto(sb61, s1tuple)
-            #sb61 = "artnet"
+            sb61 = "artnet"
         if end2 > 6:
             s2.sendto(sb62, s2tuple)
-            #sb62 = "artnet"
+            sb62 = "artnet"
         if end3 > 6:
             s3.sendto(sb63, s3tuple)
-            #sb63 = "artnet"
+            sb63 = "artnet"
         if end4 > 6:
             s4.sendto(sb64, s4tuple)
-            #sb64 = "artnet"
+            sb64 = "artnet"
         if end5 > 6:
             s5.sendto(sb65, s5tuple)
-            #sb65 = "artnet"
+            sb65 = "artnet"
         if end6 > 6:
             s6.sendto(sb66, s6tuple)
-            #sb66 = "artnet"
+            sb66 = "artnet"
         time.sleep(sleeptime)
 
 def frange(x, y, inc):
@@ -591,137 +591,137 @@ def average_video(filepath, outpath, start=None, end=None, sample_every=1):
                     g = f[y][x-1][1]
                     b = f[y][x-1][2]
                     if x == 1:
-                        sb1 = pack('6sBBBB', "artnet", r, g, b, y)
+                        sb1 += pack('BBBB', r, g, b, y)
                     elif x == 2:
-                        sb2 = pack('6sBBBB', "artnet", r, g, b, y)
+                        sb2 += pack('BBBB', r, g, b, y)
                     elif x == 3:
-                        sb3 = pack('6sBBBB', "artnet", r, g, b, y)
+                        sb3 += pack('BBBB', r, g, b, y)
                     elif x == 4:
-                        sb4 = pack('6sBBBB', "artnet", r, g, b, y)
+                        sb4 += pack('BBBB', r, g, b, y)
                     elif x == 5:
-                        sb5 = pack('6sBBBB', "artnet", r, g, b, y)
+                        sb5 += pack('BBBB', r, g, b, y)
                     elif x == 6:
-                        sb6 = pack('6sBBBB', "artnet", r, g, b, y)
+                        sb6 += pack('BBBB', r, g, b, y)
                     elif x == 7:
-                        sb7 = pack('6sBBBB', "artnet", r, g, b, y)
+                        sb7 += pack('BBBB', r, g, b, y)
                     elif x == 8:
-                        sb8 = pack('6sBBBB', "artnet", r, g, b, y)
+                        sb8 += pack('BBBB', r, g, b, y)
                     elif x == 9:
-                        sb9 = pack('6sBBBB', "artnet", r, g, b, y)
+                        sb9 += pack('BBBB', r, g, b, y)
                     elif x == 10:
-                        sb10 = pack('6sBBBB', "artnet", r, g, b, y)
+                        sb10 += pack('BBBB', r, g, b, y)
                     elif x == 11:
-                        sb11 = pack('6sBBBB', "artnet", r, g, b, y)
+                        sb11 += pack('BBBB', r, g, b, y)
                     elif x == 12:
-                        sb12 = pack('6sBBBB', "artnet", r, g, b, y)
+                        sb12 += pack('BBBB', r, g, b, y)
                     elif x == 13:
-                        sb13 = pack('6sBBBB', "artnet", r, g, b, y)
+                        sb13 += pack('BBBB', r, g, b, y)
                     elif x == 14:
-                        sb14 = pack('6sBBBB', "artnet", r, g, b, y)
+                        sb14 += pack('BBBB', r, g, b, y)
                     elif x == 15:
-                        sb15 = pack('6sBBBB', "artnet", r, g, b, y)
+                        sb15 += pack('BBBB', r, g, b, y)
                     elif x == 16:
-                        sb16 = pack('6sBBBB', "artnet", r, g, b, y)
+                        sb16 += pack('BBBB', r, g, b, y)
                     elif x == 17:
-                        sb17 = pack('6sBBBB', "artnet", r, g, b, y)
+                        sb17 += pack('BBBB', r, g, b, y)
                     elif x == 18:
-                        sb18 = pack('6sBBBB', "artnet", r, g, b, y)
+                        sb18 += pack('BBBB', r, g, b, y)
                     elif x == 19:
-                        sb19 = pack('6sBBBB', "artnet", r, g, b, y)
+                        sb19 += pack('BBBB', r, g, b, y)
                     elif x == 20:
-                        sb20 = pack('6sBBBB', "artnet", r, g, b, y)
+                        sb20 += pack('BBBB', r, g, b, y)
                     elif x == 21:
-                        sb21 = pack('6sBBBB', "artnet", r, g, b, y)
+                        sb21 += pack('BBBB', r, g, b, y)
                     elif x == 22:
-                        sb22 = pack('6sBBBB', "artnet", r, g, b, y)
+                        sb22 += pack('BBBB', r, g, b, y)
                     elif x == 23:
-                        sb23 = pack('6sBBBB', "artnet", r, g, b, y)
+                        sb23 += pack('BBBB', r, g, b, y)
                     elif x == 24:
-                        sb24 = pack('6sBBBB', "artnet", r, g, b, y)
+                        sb24 += pack('BBBB', r, g, b, y)
                     elif x == 25:
-                        sb25 = pack('6sBBBB', "artnet", r, g, b, y)
+                        sb25 += pack('BBBB', r, g, b, y)
                     elif x == 26:
-                        sb26 = pack('6sBBBB', "artnet", r, g, b, y)
+                        sb26 += pack('BBBB', r, g, b, y)
                     elif x == 27:
-                        sb27 = pack('6sBBBB', "artnet", r, g, b, y)
+                        sb27 += pack('BBBB', r, g, b, y)
                     elif x == 28:
-                        sb28 = pack('6sBBBB', "artnet", r, g, b, y)
+                        sb28 += pack('BBBB', r, g, b, y)
                     elif x == 29:
-                        sb29 = pack('6sBBBB', "artnet", r, g, b, y)
+                        sb29 += pack('BBBB', r, g, b, y)
                     elif x == 30:
-                        sb30 = pack('6sBBBB', "artnet", r, g, b, y)
+                        sb30 += pack('BBBB', r, g, b, y)
                     elif x == 31:
-                        sb31 = pack('6sBBBB', "artnet", r, g, b, y)
+                        sb31 += pack('BBBB', r, g, b, y)
                     elif x == 32:
-                        sb32 = pack('6sBBBB', "artnet", r, g, b, y)
+                        sb32 += pack('BBBB', r, g, b, y)
                     elif x == 33:
-                        sb33 = pack('6sBBBB', "artnet", r, g, b, y)
+                        sb33 += pack('BBBB', r, g, b, y)
                     elif x == 34:
-                        sb34 = pack('6sBBBB', "artnet", r, g, b, y)
+                        sb34 += pack('BBBB', r, g, b, y)
                     elif x == 35:
-                        sb35 = pack('6sBBBB', "artnet", r, g, b, y)
+                        sb35 += pack('BBBB', r, g, b, y)
                     elif x == 36:
-                        sb36 = pack('6sBBBB', "artnet", r, g, b, y)
+                        sb36 += pack('BBBB', r, g, b, y)
                     elif x == 37:
-                        sb37 = pack('6sBBBB', "artnet", r, g, b, y)
+                        sb37 += pack('BBBB', r, g, b, y)
                     elif x == 38:
-                        sb38 = pack('6sBBBB', "artnet", r, g, b, y)
+                        sb38 += pack('BBBB', r, g, b, y)
                     elif x == 39:
-                        sb39 = pack('6sBBBB', "artnet", r, g, b, y)
+                        sb39 += pack('BBBB', r, g, b, y)
                     elif x == 40:
-                        sb40 = pack('6sBBBB', "artnet", r, g, b, y)
+                        sb40 += pack('BBBB', r, g, b, y)
                     elif x == 41:
-                        sb41 = pack('6sBBBB', "artnet", r, g, b, y)
+                        sb41 += pack('BBBB', r, g, b, y)
                     elif x == 42:
-                        sb42 = pack('6sBBBB', "artnet", r, g, b, y)
+                        sb42 += pack('BBBB', r, g, b, y)
                     elif x == 43:
-                        sb43 = pack('6sBBBB', "artnet", r, g, b, y)
+                        sb43 += pack('BBBB', r, g, b, y)
                     elif x == 44:
-                        sb44 = pack('6sBBBB', "artnet", r, g, b, y)
+                        sb44 += pack('BBBB', r, g, b, y)
                     elif x == 45:
-                        sb45 = pack('6sBBBB', "artnet", r, g, b, y)
+                        sb45 += pack('BBBB', r, g, b, y)
                     elif x == 46:
-                        sb46 = pack('6sBBBB', "artnet", r, g, b, y)
+                        sb46 += pack('BBBB', r, g, b, y)
                     elif x == 47:
-                        sb47 = pack('6sBBBB', "artnet", r, g, b, y)
+                        sb47 += pack('BBBB', r, g, b, y)
                     elif x == 48:
-                        sb48 = pack('6sBBBB', "artnet", r, g, b, y)
+                        sb48 += pack('BBBB', r, g, b, y)
                     elif x == 49:
-                        sb49 = pack('6sBBBB', "artnet", r, g, b, y)
+                        sb49 += pack('BBBB', r, g, b, y)
                     elif x == 50:
-                        sb50 = pack('6sBBBB', "artnet", r, g, b, y)
+                        sb50 += pack('BBBB', r, g, b, y)
                     elif x == 51:
-                        sb51 = pack('6sBBBB', "artnet", r, g, b, y)
+                        sb51 += pack('BBBB', r, g, b, y)
                     elif x == 52:
-                        sb52 = pack('6sBBBB', "artnet", r, g, b, y)
+                        sb52 += pack('BBBB', r, g, b, y)
                     elif x == 53:
-                        sb53 = pack('6sBBBB', "artnet", r, g, b, y)
+                        sb53 += pack('BBBB', r, g, b, y)
                     elif x == 54:
-                        sb54 = pack('6sBBBB', "artnet", r, g, b, y)
+                        sb54 += pack('BBBB', r, g, b, y)
                     elif x == 55:
-                        sb55 = pack('6sBBBB', "artnet", r, g, b, y)
+                        sb55 += pack('BBBB', r, g, b, y)
                     elif x == 56:
-                        sb56 = pack('6sBBBB', "artnet", r, g, b, y)
+                        sb56 += pack('BBBB', r, g, b, y)
                     elif x == 57:
-                        sb57 = pack('6sBBBB', "artnet", r, g, b, y)
+                        sb57 += pack('BBBB', r, g, b, y)
                     elif x == 58:
-                        sb58 = pack('6sBBBB', "artnet", r, g, b, y)
+                        sb58 += pack('BBBB', r, g, b, y)
                     elif x == 59:
-                        sb59 = pack('6sBBBB', "artnet", r, g, b, y)
+                        sb59 += pack('BBBB', r, g, b, y)
                     elif x == 60:
-                        sb60 = pack('6sBBBB', "artnet", r, g, b, y)
+                        sb60 += pack('BBBB', r, g, b, y)
                     elif x == 61:
-                        sb61 = pack('6sBBBB', "artnet", r, g, b, y)
+                        sb61 += pack('BBBB', r, g, b, y)
                     elif x == 62:
-                        sb62 = pack('6sBBBB', "artnet", r, g, b, y)
+                        sb62 += pack('BBBB', r, g, b, y)
                     elif x == 63:
-                        sb63 = pack('6sBBBB', "artnet", r, g, b, y)
+                        sb63 += pack('BBBB', r, g, b, y)
                     elif x == 64:
-                        sb64 = pack('6sBBBB', "artnet", r, g, b, y)
+                        sb64 += pack('BBBB', r, g, b, y)
                     elif x == 65:
-                        sb65 = pack('6sBBBB', "artnet", r, g, b, y)
+                        sb65 += pack('BBBB', r, g, b, y)
                     elif x == 66:
-                        sb66 = pack('6sBBBB', "artnet", r, g, b, y)
+                        sb66 += pack('BBBB', r, g, b, y)
                                 
         time.sleep(1.0/float(sample_every))
 
