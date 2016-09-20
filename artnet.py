@@ -14,9 +14,23 @@ def handler(clientsocket, clientaddr):
     global islightout
     global qq50
     global QQ
+    global AmIBoomNow
     while 1:
         data = clientsocket.recv(1024)
-        if ( len(data) == 6  and (data[0:6] == "picker") ):
+        if True == AmIBoomNow:
+            pass
+        elif ( len(data) == 10 and data[0:4] == "boom" ):
+            AmIBoomNow = True
+            #GPIO.output(13, False) #p13.ChangeDutyCycle(0)
+            mylist2 = data[4:].split(" ")
+            p38.ChangeDutyCycle(100) #GPIO.output(38, True)
+            p40.ChangeDutyCycle(0) #GPIO.output(40, False)
+            #anim.rayanim(int(mylist2[0]),int(mylist2[1]),int(mylist2[2]),255,20,0.1)
+            p31.ChangeDutyCycle(int(mylist2[3]))
+            p33.ChangeDutyCycle(int(mylist2[4]))
+            p35.ChangeDutyCycle(int(mylist2[5]))
+            Timer(0.2, boom).start()
+        elif ( len(data) == 6  and (data[0:6] == "picker") ):
             GPIO.output(13, False) #p13.ChangeDutyCycle(0)
             if False == QQ:
                 p38.ChangeDutyCycle(100) #GPIO.output(38, True)
@@ -208,20 +222,7 @@ try:
     while True:
         try:
             data, addr = sock.recvfrom(1024)
-            if True == AmIBoomNow:
-                pass
-            elif ( len(data) > 4 and len(data) < 7 and data[0:4] == "boom" ):
-                AmIBoomNow = True
-                #GPIO.output(13, False) #p13.ChangeDutyCycle(0)
-                #mylist2 = data[4:].split(" ")
-                p38.ChangeDutyCycle(100) #GPIO.output(38, True)
-                p40.ChangeDutyCycle(0) #GPIO.output(40, False)
-                #anim.rayanim(int(mylist2[0]),int(mylist2[1]),int(mylist2[2]),255,20,0.1)
-                p31.ChangeDutyCycle(ord(data[4]))
-                p33.ChangeDutyCycle(ord(data[5]))
-                p35.ChangeDutyCycle(ord(data[6]))
-                Timer(0.2, boom).start()
-            elif False == islightout:
+            if False == islightout:
                 if data[0:4] == "RGBW":
                     mylist = data[4:].split(" ")
                     p31.ChangeDutyCycle(int(mylist[0])/2.55)

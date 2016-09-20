@@ -744,9 +744,9 @@ while True:
                         fl.delete()
                     break
                 '''
-                #if rcv.startswith("boom"):
-                #    clientsock.send(rcv)
-                if rcv == '100' and addr[0].endswith("202"):
+                if rcv.startswith("boom"):
+                    clientsock.send(rcv)
+                elif rcv == '100' and addr[0].endswith("202"):
                     #if aanote > 0:
                     fluidnoteon(0, aanote, 127)
                     threading.Timer(0.1, AR, [aanote, 127]).start()
