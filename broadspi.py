@@ -591,137 +591,137 @@ def average_video(filepath, outpath, start=None, end=None, sample_every=1):
                     g = f[y][x-1][1]
                     b = f[y][x-1][2]
                     if x == 1:
-                        sb1 = pack('sBcBcBcBc', "artnet", r, " ", g, " ", b, " ", y, " ")
+                        sb1 = pack('6sBBBB', "artnet", r, g, b, y)
                     elif x == 2:
-                        sb2 = pack('sBcBcBcBc', "artnet", r, " ", g, " ", b, " ", y, " ")
+                        sb2 = pack('6sBBBB', "artnet", r, g, b, y)
                     elif x == 3:
-                        sb3 = pack('sBcBcBcBc', "artnet", r, " ", g, " ", b, " ", y, " ")
+                        sb3 = pack('6sBBBB', "artnet", r, g, b, y)
                     elif x == 4:
-                        sb4 = pack('sBcBcBcBc', "artnet", r, " ", g, " ", b, " ", y, " ")
+                        sb4 = pack('6sBBBB', "artnet", r, g, b, y)
                     elif x == 5:
-                        sb5 = pack('sBcBcBcBc', "artnet", r, " ", g, " ", b, " ", y, " ")
+                        sb5 = pack('6sBBBB', "artnet", r, g, b, y)
                     elif x == 6:
-                        sb6 = pack('sBcBcBcBc', "artnet", r, " ", g, " ", b, " ", y, " ")
+                        sb6 = pack('6sBBBB', "artnet", r, g, b, y)
                     elif x == 7:
-                        sb7 = pack('sBcBcBcBc', "artnet", r, " ", g, " ", b, " ", y, " ")
+                        sb7 = pack('6sBBBB', "artnet", r, g, b, y)
                     elif x == 8:
-                        sb8 = pack('sBcBcBcBc', "artnet", r, " ", g, " ", b, " ", y, " ")
+                        sb8 = pack('6sBBBB', "artnet", r, g, b, y)
                     elif x == 9:
-                        sb9 = pack('sBcBcBcBc', "artnet", r, " ", g, " ", b, " ", y, " ")
+                        sb9 = pack('6sBBBB', "artnet", r, g, b, y)
                     elif x == 10:
-                        sb10 = pack('sBcBcBcBc', "artnet", r, " ", g, " ", b, " ", y, " ")
+                        sb10 = pack('6sBBBB', "artnet", r, g, b, y)
                     elif x == 11:
-                        sb11 = pack('sBcBcBcBc', "artnet", r, " ", g, " ", b, " ", y, " ")
+                        sb11 = pack('6sBBBB', "artnet", r, g, b, y)
                     elif x == 12:
-                        sb12 = pack('sBcBcBcBc', "artnet", r, " ", g, " ", b, " ", y, " ")
+                        sb12 = pack('6sBBBB', "artnet", r, g, b, y)
                     elif x == 13:
-                        sb13 = pack('sBcBcBcBc', "artnet", r, " ", g, " ", b, " ", y, " ")
+                        sb13 = pack('6sBBBB', "artnet", r, g, b, y)
                     elif x == 14:
-                        sb14 = pack('sBcBcBcBc', "artnet", r, " ", g, " ", b, " ", y, " ")
+                        sb14 = pack('6sBBBB', "artnet", r, g, b, y)
                     elif x == 15:
-                        sb15 = pack('sBcBcBcBc', "artnet", r, " ", g, " ", b, " ", y, " ")
+                        sb15 = pack('6sBBBB', "artnet", r, g, b, y)
                     elif x == 16:
-                        sb16 = pack('sBcBcBcBc', "artnet", r, " ", g, " ", b, " ", y, " ")
+                        sb16 = pack('6sBBBB', "artnet", r, g, b, y)
                     elif x == 17:
-                        sb17 = pack('sBcBcBcBc', "artnet", r, " ", g, " ", b, " ", y, " ")
+                        sb17 = pack('6sBBBB', "artnet", r, g, b, y)
                     elif x == 18:
-                        sb18 = pack('sBcBcBcBc', "artnet", r, " ", g, " ", b, " ", y, " ")
+                        sb18 = pack('6sBBBB', "artnet", r, g, b, y)
                     elif x == 19:
-                        sb19 = pack('sBcBcBcBc', "artnet", r, " ", g, " ", b, " ", y, " ")
+                        sb19 = pack('6sBBBB', "artnet", r, g, b, y)
                     elif x == 20:
-                        sb20 = pack('sBcBcBcBc', "artnet", r, " ", g, " ", b, " ", y, " ")
+                        sb20 = pack('6sBBBB', "artnet", r, g, b, y)
                     elif x == 21:
-                        sb21 = pack('sBcBcBcBc', "artnet", r, " ", g, " ", b, " ", y, " ")
+                        sb21 = pack('6sBBBB', "artnet", r, g, b, y)
                     elif x == 22:
-                        sb22 = pack('sBcBcBcBc', "artnet", r, " ", g, " ", b, " ", y, " ")
+                        sb22 = pack('6sBBBB', "artnet", r, g, b, y)
                     elif x == 23:
-                        sb23 = pack('sBcBcBcBc', "artnet", r, " ", g, " ", b, " ", y, " ")
+                        sb23 = pack('6sBBBB', "artnet", r, g, b, y)
                     elif x == 24:
-                        sb24 = pack('sBcBcBcBc', "artnet", r, " ", g, " ", b, " ", y, " ")
+                        sb24 = pack('6sBBBB', "artnet", r, g, b, y)
                     elif x == 25:
-                        sb25 = pack('sBcBcBcBc', "artnet", r, " ", g, " ", b, " ", y, " ")
+                        sb25 = pack('6sBBBB', "artnet", r, g, b, y)
                     elif x == 26:
-                        sb26 = pack('sBcBcBcBc', "artnet", r, " ", g, " ", b, " ", y, " ")
+                        sb26 = pack('6sBBBB', "artnet", r, g, b, y)
                     elif x == 27:
-                        sb27 = pack('sBcBcBcBc', "artnet", r, " ", g, " ", b, " ", y, " ")
+                        sb27 = pack('6sBBBB', "artnet", r, g, b, y)
                     elif x == 28:
-                        sb28 = pack('sBcBcBcBc', "artnet", r, " ", g, " ", b, " ", y, " ")
+                        sb28 = pack('6sBBBB', "artnet", r, g, b, y)
                     elif x == 29:
-                        sb29 = pack('sBcBcBcBc', "artnet", r, " ", g, " ", b, " ", y, " ")
+                        sb29 = pack('6sBBBB', "artnet", r, g, b, y)
                     elif x == 30:
-                        sb30 = pack('sBcBcBcBc', "artnet", r, " ", g, " ", b, " ", y, " ")
+                        sb30 = pack('6sBBBB', "artnet", r, g, b, y)
                     elif x == 31:
-                        sb31 = pack('sBcBcBcBc', "artnet", r, " ", g, " ", b, " ", y, " ")
+                        sb31 = pack('6sBBBB', "artnet", r, g, b, y)
                     elif x == 32:
-                        sb32 = pack('sBcBcBcBc', "artnet", r, " ", g, " ", b, " ", y, " ")
+                        sb32 = pack('6sBBBB', "artnet", r, g, b, y)
                     elif x == 33:
-                        sb33 = pack('sBcBcBcBc', "artnet", r, " ", g, " ", b, " ", y, " ")
+                        sb33 = pack('6sBBBB', "artnet", r, g, b, y)
                     elif x == 34:
-                        sb34 = pack('sBcBcBcBc', "artnet", r, " ", g, " ", b, " ", y, " ")
+                        sb34 = pack('6sBBBB', "artnet", r, g, b, y)
                     elif x == 35:
-                        sb35 = pack('6sBcBcBcBc', "artnet", r, " ", g, " ", b, " ", y, " ")
+                        sb35 = pack('6sBBBB', "artnet", r, g, b, y)
                     elif x == 36:
-                        sb36 = pack('sBcBcBcBc', "artnet", r, " ", g, " ", b, " ", y, " ")
+                        sb36 = pack('6sBBBB', "artnet", r, g, b, y)
                     elif x == 37:
-                        sb37 = pack('sBcBcBcBc', "artnet", r, " ", g, " ", b, " ", y, " ")
+                        sb37 = pack('6sBBBB', "artnet", r, g, b, y)
                     elif x == 38:
-                        sb38 = pack('sBcBcBcBc', "artnet", r, " ", g, " ", b, " ", y, " ")
+                        sb38 = pack('6sBBBB', "artnet", r, g, b, y)
                     elif x == 39:
-                        sb39 = pack('sBcBcBcBc', "artnet", r, " ", g, " ", b, " ", y, " ")
+                        sb39 = pack('6sBBBB', "artnet", r, g, b, y)
                     elif x == 40:
-                        sb40 = pack('sBcBcBcBc', "artnet", r, " ", g, " ", b, " ", y, " ")
+                        sb40 = pack('6sBBBB', "artnet", r, g, b, y)
                     elif x == 41:
-                        sb41 = pack('sBcBcBcBc', "artnet", r, " ", g, " ", b, " ", y, " ")
+                        sb41 = pack('6sBBBB', "artnet", r, g, b, y)
                     elif x == 42:
-                        sb42 = pack('sBcBcBcBc', "artnet", r, " ", g, " ", b, " ", y, " ")
+                        sb42 = pack('6sBBBB', "artnet", r, g, b, y)
                     elif x == 43:
-                        sb43 = pack('sBcBcBcBc', "artnet", r, " ", g, " ", b, " ", y, " ")
+                        sb43 = pack('6sBBBB', "artnet", r, g, b, y)
                     elif x == 44:
-                        sb44 = pack('sBcBcBcBc', "artnet", r, " ", g, " ", b, " ", y, " ")
+                        sb44 = pack('6sBBBB', "artnet", r, g, b, y)
                     elif x == 45:
-                        sb45 = pack('sBcBcBcBc', "artnet", r, " ", g, " ", b, " ", y, " ")
+                        sb45 = pack('6sBBBB', "artnet", r, g, b, y)
                     elif x == 46:
-                        sb46 = pack('sBcBcBcBc', "artnet", r, " ", g, " ", b, " ", y, " ")
+                        sb46 = pack('6sBBBB', "artnet", r, g, b, y)
                     elif x == 47:
-                        sb47 = pack('sBcBcBcBc', "artnet", r, " ", g, " ", b, " ", y, " ")
+                        sb47 = pack('6sBBBB', "artnet", r, g, b, y)
                     elif x == 48:
-                        sb48 = pack('sBcBcBcBc', "artnet", r, " ", g, " ", b, " ", y, " ")
+                        sb48 = pack('6sBBBB', "artnet", r, g, b, y)
                     elif x == 49:
-                        sb49 = pack('sBcBcBcBc', "artnet", r, " ", g, " ", b, " ", y, " ")
+                        sb49 = pack('6sBBBB', "artnet", r, g, b, y)
                     elif x == 50:
-                        sb50 = pack('sBcBcBcBc', "artnet", r, " ", g, " ", b, " ", y, " ")
+                        sb50 = pack('6sBBBB', "artnet", r, g, b, y)
                     elif x == 51:
-                        sb51 = pack('sBcBcBcBc', "artnet", r, " ", g, " ", b, " ", y, " ")
+                        sb51 = pack('6sBBBB', "artnet", r, g, b, y)
                     elif x == 52:
-                        sb52 = pack('sBcBcBcBc', "artnet", r, " ", g, " ", b, " ", y, " ")
+                        sb52 = pack('6sBBBB', "artnet", r, g, b, y)
                     elif x == 53:
-                        sb53 = pack('sBcBcBcBc', "artnet", r, " ", g, " ", b, " ", y, " ")
+                        sb53 = pack('6sBBBB', "artnet", r, g, b, y)
                     elif x == 54:
-                        sb54 = pack('sBcBcBcBc', "artnet", r, " ", g, " ", b, " ", y, " ")
+                        sb54 = pack('6sBBBB', "artnet", r, g, b, y)
                     elif x == 55:
-                        sb55 = pack('sBcBcBcBc', "artnet", r, " ", g, " ", b, " ", y, " ")
+                        sb55 = pack('6sBBBB', "artnet", r, g, b, y)
                     elif x == 56:
-                        sb56 = pack('sBcBcBcBc', "artnet", r, " ", g, " ", b, " ", y, " ")
+                        sb56 = pack('6sBBBB', "artnet", r, g, b, y)
                     elif x == 57:
-                        sb57 = pack('sBcBcBcBc', "artnet", r, " ", g, " ", b, " ", y, " ")
+                        sb57 = pack('6sBBBB', "artnet", r, g, b, y)
                     elif x == 58:
-                        sb58 = pack('sBcBcBcBc', "artnet", r, " ", g, " ", b, " ", y, " ")
+                        sb58 = pack('6sBBBB', "artnet", r, g, b, y)
                     elif x == 59:
-                        sb59 = pack('sBcBcBcBc', "artnet", r, " ", g, " ", b, " ", y, " ")
+                        sb59 = pack('6sBBBB', "artnet", r, g, b, y)
                     elif x == 60:
-                        sb60 = pack('sBcBcBcBc', "artnet", r, " ", g, " ", b, " ", y, " ")
+                        sb60 = pack('6sBBBB', "artnet", r, g, b, y)
                     elif x == 61:
-                        sb61 = pack('sBcBcBcBc', "artnet", r, " ", g, " ", b, " ", y, " ")
+                        sb61 = pack('6sBBBB', "artnet", r, g, b, y)
                     elif x == 62:
-                        sb62 = pack('sBcBcBcBc', "artnet", r, " ", g, " ", b, " ", y, " ")
+                        sb62 = pack('6sBBBB', "artnet", r, g, b, y)
                     elif x == 63:
-                        sb63 = pack('sBcBcBcBc', "artnet", r, " ", g, " ", b, " ", y, " ")
+                        sb63 = pack('6sBBBB', "artnet", r, g, b, y)
                     elif x == 64:
-                        sb64 = pack('sBcBcBcBc', "artnet", r, " ", g, " ", b, " ", y, " ")
+                        sb64 = pack('6sBBBB', "artnet", r, g, b, y)
                     elif x == 65:
-                        sb65 = pack('sBcBcBcBc', "artnet", r, " ", g, " ", b, " ", y, " ")
+                        sb65 = pack('6sBBBB', "artnet", r, g, b, y)
                     elif x == 66:
-                        sb66 = pack('sBcBcBcBc', "artnet", r, " ", g, " ", b, " ", y, " ")
+                        sb66 = pack('6sBBBB', "artnet", r, g, b, y)
                                 
         time.sleep(1.0/float(sample_every))
 

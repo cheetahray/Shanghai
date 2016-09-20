@@ -9,7 +9,7 @@ import ledmatrix as rayled
 from threading import * 
 import sys
 import thread
-
+from struct import *
 def handler(clientsocket, clientaddr):
     global islightout
     global qq50
@@ -282,7 +282,9 @@ try:
                             #    x = 0
                             #    y += 1
                 elif data[0:6] == "artnet" and len(data) > 6:
-                    mylist = data[6:].split(" ")
+                    #mylist = data[6:].split(" ")
+                    mylist = unpack("BBBB", data[6:])
+                    print mylist
                     for ii in range(0, len(mylist), 4):
                         r = mylist[ii]
                         g = mylist[ii+1]
