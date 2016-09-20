@@ -61,22 +61,22 @@ def handler(clientsocket, clientaddr):
             if False == islightout:
                 mylist2 = data[6:]#.split(" ")
                 #print(mylist2)
-                if 0 == ord(mylist2[1]) : 
+                if 0 == ord(mylist2[1]): 
                     anim.rayanim(0,255,0,255,ord(mylist2[0])+1,0.1)
                     p31.ChangeDutyCycle(0)
                     p33.ChangeDutyCycle(100)
                     p35.ChangeDutyCycle(0)
-                elif 1 == ord(mylist2[1] : 
+                elif 1 == ord(mylist2[1]): 
                     anim.rayanim(255,255,255,255,ord(mylist2[0])+1,0.1)
                     p31.ChangeDutyCycle(100)
                     p33.ChangeDutyCycle(100)
                     p35.ChangeDutyCycle(100)
-                elif 2 == ord(mylist2[1] : 
+                elif 2 == ord(mylist2[1]): 
                     anim.rayanim(255,112,0,255,ord(mylist2[0])+1,0.1)
                     p31.ChangeDutyCycle(100)
                     p33.ChangeDutyCycle(50)
                     p35.ChangeDutyCycle(0)
-                elif 3 == ord(mylist2[1] : 
+                elif 3 == ord(mylist2[1]): 
                     anim.rayanim(255,0,0,255,ord(mylist2[0])+1,0.1)
                     p31.ChangeDutyCycle(100)
                     p33.ChangeDutyCycle(0)

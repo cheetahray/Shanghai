@@ -47,20 +47,20 @@ while True:
     #mylist = data.split(" ")
     for ii in range(0, len(data), 4):
         if( data[ii] == 'n' ):
-            if ord(mylist[ii+3]) == 1:
+            if ord(data[ii+3]) == 1:
                 print "preload"
                 MayI = False
-            elif ord(mylist[ii+3]) == 2:
+            elif ord(data[ii+3]) == 2:
                 MayI = True
-                threading.Timer( 0.3, playtwelve, [mylist[ii+1], mylist[ii+2], 127]).start()
+                threading.Timer( 0.3, playtwelve, [data[ii+1], data[ii+2], 127]).start()
             else:
                 MayI = False
-                threading.Timer( 1.2, playtwelve, [mylist[ii+1], mylist[ii+2], mylist[ii+3]]).start()
-        elif( mylist[ii] == 'f' ):
-            if ord(mylist[ii+3]) == 2:
-                threading.Timer( 0.3, fs.noteoff, [0, ord(mylist[ii+2])]).start()
+                threading.Timer( 1.2, playtwelve, [data[ii+1], data[ii+2], data[ii+3]]).start()
+        elif( data[ii] == 'f' ):
+            if ord(data[ii+3]) == 2:
+                threading.Timer( 0.3, fs.noteoff, [0, ord(data[ii+2])]).start()
             else:
-                threading.Timer( 1.2, fs.noteoff, [0, ord(mylist[ii+2])]).start()
+                threading.Timer( 1.2, fs.noteoff, [0, ord(data[ii+2])]).start()
     '''
     if data:
         sent = sock.sendto(data, address)
