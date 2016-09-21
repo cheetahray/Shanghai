@@ -15,7 +15,7 @@ from mido import MidiFile
 #import xlsxwriter
 #import serial
 import socket
-
+from struct import *
 mid = None
 debug = False        #Boolean for on/off our debug print 
 isplay = False      #Boolean to judge whether the midi is playing
@@ -311,50 +311,50 @@ try:
     #port.flushInput()
     #port.flushOutput()
 
-    whoami = "67"
+    whoami = "11"
     #Register the door bl button GPIO input call back function
-    port.sendto("253 " + whoami + " 100", ("192.168.12." + whoami, 5005) )
+    port.sendto(pack('BBB', 253, int(whoami),100), ("192.168.12." + whoami, 5005) )
     time.sleep(0.01)
-    port.sendto("225 0", ("192.168.12." + whoami, 5005) )
+    port.sendto(pack('BB', 225, 0), ("192.168.12." + whoami, 5005) )
     time.sleep(0.01)
-    whattype = 'S'
-    if False:
+    whattype = 'A'
+    if True:
         for i in range(1,7):
             if whattype == 'S':
-                port.sendto("144 79 127", ("192.168.12." + whoami, 5005))
+                port.sendto(pack('BBB', 144, 79, 127), ("192.168.12." + whoami, 5005))
             elif whattype == 'A':
-                port.sendto("144 67 127", ("192.168.12." + whoami, 5005))
+                port.sendto(pack('BBB', 144, 67, 127), ("192.168.12." + whoami, 5005))
             elif whattype == 'T':
-                port.sendto("144 57 127", ("192.168.12." + whoami, 5005))
+                port.sendto(pack('BBB', 144, 57, 127), ("192.168.12." + whoami, 5005))
             elif whattype == 'B':
-                port.sendto("144 47 127", ("192.168.12." + whoami, 5005))
+                port.sendto(pack('BBB', 144, 47, 127), ("192.168.12." + whoami, 5005))
             time.sleep(2.5);
             if whattype == 'S':
-                port.sendto("144 79 0", ("192.168.12." + whoami, 5005))
+                port.sendto(pack('BBB', 144, 79, 0), ("192.168.12." + whoami, 5005))
             elif whattype == 'A':
-                port.sendto("144 67 0", ("192.168.12." + whoami, 5005))
+                port.sendto(pack('BBB', 144, 67, 0), ("192.168.12." + whoami, 5005))
             elif whattype == 'T':
-                port.sendto("144 57 0", ("192.168.12." + whoami, 5005))
+                port.sendto(pack('BBB', 144, 57, 0), ("192.168.12." + whoami, 5005))
             elif whattype == 'B':
-                port.sendto("144 47 0", ("192.168.12." + whoami, 5005))
+                port.sendto(pack('BBB', 144, 47, 0), ("192.168.12." + whoami, 5005))
             time.sleep(0.5);
             if whattype == 'S':
-                port.sendto("144 60 127", ("192.168.12." + whoami, 5005))
+                port.sendto(pack('BBB', 144, 60, 127), ("192.168.12." + whoami, 5005))
             elif whattype == 'A':
-                port.sendto("144 48 127", ("192.168.12." + whoami, 5005))
+                port.sendto(pack('BBB', 144, 48, 127), ("192.168.12." + whoami, 5005))
             elif whattype == 'T':
-                port.sendto("144 38 127", ("192.168.12." + whoami, 5005))
+                port.sendto(pack('BBB', 144, 38, 127), ("192.168.12." + whoami, 5005))
             elif whattype == 'B':
-                port.sendto("144 28 127", ("192.168.12." + whoami, 5005))
+                port.sendto(pack('BBB', 144, 28, 127), ("192.168.12." + whoami, 5005))
             time.sleep(2.5);
             if whattype == 'S':
-                port.sendto("144 60 0", ("192.168.12." + whoami, 5005))
+                port.sendto(pack('BBB', 144, 60, 0), ("192.168.12." + whoami, 5005))
             elif whattype == 'A':
-                port.sendto("144 48 0", ("192.168.12." + whoami, 5005))
+                port.sendto(pack('BBB', 144, 48, 0), ("192.168.12." + whoami, 5005))
             elif whattype == 'T':
-                port.sendto("144 38 0", ("192.168.12." + whoami, 5005))
+                port.sendto(pack('BBB', 144, 38, 0), ("192.168.12." + whoami, 5005))
             elif whattype == 'B':
-                port.sendto("144 28 0", ("192.168.12." + whoami, 5005))
+                port.sendto(pack('BBB', 144, 28, 0), ("192.168.12." + whoami, 5005))
             time.sleep(0.5);
     elif True:
         multi = True
@@ -362,71 +362,71 @@ try:
             if multi:
                 for jj in range(1,2):
                     for ii in range(28,48):
-                        port.sendto("144 " + str(ii) + " 127 " + whoami, ("192.168.12." + whoami, 5005))
+                        port.sendto(pack('BBB', 144, ii, 127), ("192.168.12." + whoami, 5005))
                         time.sleep(2)
-                        port.sendto("128 " + str(ii) + " 127 " + whoami, ("192.168.12." + whoami, 5005))
+                        port.sendto(pack('BBB', 128, ii, 127), ("192.168.12." + whoami, 5005))
                         time.sleep(0.3)
             
             for jj in range(1):
                     
                 if True:
-                    port.sendto("144 28 127 " + whoami, ("192.168.12." + whoami, 5005))
+                    port.sendto(pack('BBB', 144, 28, 127), ("192.168.12." + whoami, 5005))
                     time.sleep(2)
-                    port.sendto("128 28 127 " + whoami, ("192.168.12." + whoami, 5005))
+                    port.sendto(pack('BBB', 128, 28, 127), ("192.168.12." + whoami, 5005))
                     time.sleep(0.3)
         elif whattype == 'S':
             if multi:
                 for jj in range(1,2):
                     for ii in range(60,80):
-                        port.sendto("144 " + str(ii) + " 127 " + whoami, ("192.168.12." + whoami, 5005))
+                        port.sendto(pack('BBB', 144, ii, 127), ("192.168.12." + whoami, 5005))
                         time.sleep(2)
-                        port.sendto("128 " + str(ii) + " 127 " + whoami, ("192.168.12." + whoami, 5005))
+                        port.sendto(pack('BBB', 128, ii, 127), ("192.168.12." + whoami, 5005))
                         time.sleep(0.3)
             
             for jj in range(1):
                     
                 if True:
-                    port.sendto("144 60 127 " + whoami, ("192.168.12." + whoami, 5005))
+                    port.sendto(pack('BBB', 144, 60, 127), ("192.168.12." + whoami, 5005))
                     time.sleep(2)
-                    port.sendto("128 60 127 " + whoami, ("192.168.12." + whoami, 5005))
+                    port.sendto(pack('BBB', 128, 60, 127), ("192.168.12." + whoami, 5005))
                     time.sleep(0.3)
         elif whattype == 'A':
             if multi:
                 for jj in range(1,2):
                     for ii in range(48,68):
-                        port.sendto("144 " + str(ii) + " 127 " + whoami, ("192.168.12." + whoami, 5005))
+                        port.sendto(pack('BBB', 144, ii, 127), ("192.168.12." + whoami, 5005))
                         time.sleep(2)
-                        port.sendto("128 " + str(ii) + " 127 " + whoami, ("192.168.12." + whoami, 5005))
+                        port.sendto(pack('BBB', 128, ii, 127), ("192.168.12." + whoami, 5005))
                         time.sleep(0.3)
             
             for jj in range(1):
                     
                 if True:
-                    port.sendto("144 48 127 " + whoami, ("192.168.12." + whoami, 5005))
+                    port.sendto(pack('BBB', 144, 48, 127), ("192.168.12." + whoami, 5005))
                     time.sleep(2)
-                    port.sendto("128 48 127 " + whoami, ("192.168.12." + whoami, 5005))
+                    port.sendto(pack('BBB', 128, 48, 127), ("192.168.12." + whoami, 5005))
                     time.sleep(0.3)
         elif whattype == 'T':
             if multi:
                 for jj in range(1,2):
                     for ii in range(38,58):
-                        port.sendto("144 " + str(ii) + " 127 " + whoami, ("192.168.12." + whoami, 5005))
+                        port.sendto(pack('BBB', 144, ii, 127), ("192.168.12." + whoami, 5005))
                         time.sleep(2)
-                        port.sendto("128 " + str(ii) + " 127 " + whoami, ("192.168.12." + whoami, 5005))
+                        port.sendto(pack('BBB', 128, ii, 127), ("192.168.12." + whoami, 5005))
                         time.sleep(0.3)
             
             for jj in range(1):
                     
                 if True:
-                    port.sendto("144 38 127 " + whoami, ("192.168.12." + whoami, 5005))
+                    port.sendto(pack('BBB', 144, 38, 127), ("192.168.12." + whoami, 5005))
                     time.sleep(2)
-                    port.sendto("128 38 127 " + whoami, ("192.168.12." + whoami, 5005))
+                    port.sendto(pack('BBB', 128, 38, 127), ("192.168.12." + whoami, 5005))
                     time.sleep(0.3)
             
         time.sleep(1)
     elif True:    
         for i in range(1,67):
-            port.sendto("225 0", ("192.168.12." + str(i), 5005) )
+            port.sendto(pack('BB', 225, 0), ("192.168.12." + str(i), 5005) )
             time.sleep(0.001)
     elif True:
         parser = argparse.ArgumentParser()
@@ -436,7 +436,7 @@ try:
         mid = MidiFile(args.song + '.mid')
         play_midi()
     
-    port.sendto("225 1", ("192.168.12." + whoami, 5005) )
+    port.sendto(pack('BB', 225, 1), ("192.168.12." + whoami, 5005) )
     #port.flush()
     
 except KeyboardInterrupt:
