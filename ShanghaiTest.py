@@ -311,15 +311,15 @@ try:
     #port.flushInput()
     #port.flushOutput()
 
-    whoami = "68"
+    whoami = "27"
     #Register the door bl button GPIO input call back function
     port.sendto("253 " + whoami + " 100", ("192.168.12." + whoami, 5005) )
     time.sleep(0.01)
     port.sendto("225 0", ("192.168.12." + whoami, 5005) )
     time.sleep(0.01)
-    whattype = 'A'
-    if False:
-        for i in range(1,10):
+    whattype = 'B'
+    if True:
+        for i in range(1,7):
             if whattype == 'S':
                 port.sendto("144 79 127", ("192.168.12." + whoami, 5005))
             elif whattype == 'A':

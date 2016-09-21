@@ -25,8 +25,18 @@ from select import select
 import random
 import commands
 from struct import *
+import OSC
 mid = None
 debug = False        #Boolean for on/off our debug print 
+cc = OSC.OSCClient()
+cc.connect(('192.168.12.212', 7777))   # localhost, port 57120
+
+def click(mmsg):
+    global cc
+    oscmsg = OSC.OSCMessage()
+    oscmsg.setAddress("/startup")
+    oscmsg.append(mmsg)
+    cc.send(oscmsg)
 
 class Tests(unittest.TestCase):
     def test_0(self):   #Test play midi file
