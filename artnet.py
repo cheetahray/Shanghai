@@ -22,13 +22,13 @@ def handler(clientsocket, clientaddr):
         elif ( len(data) == 10 and data[0:4] == "boom" ):
             AmIBoomNow = True
             #GPIO.output(13, False) #p13.ChangeDutyCycle(0)
-            mylist2 = data[4:].split(" ")
+            mylist2 = data[4:]#.split(" ")
             p38.ChangeDutyCycle(100) #GPIO.output(38, True)
             p40.ChangeDutyCycle(0) #GPIO.output(40, False)
             #anim.rayanim(int(mylist2[0]),int(mylist2[1]),int(mylist2[2]),255,20,0.1)
-            p31.ChangeDutyCycle(int(mylist2[3]))
-            p33.ChangeDutyCycle(int(mylist2[4]))
-            p35.ChangeDutyCycle(int(mylist2[5]))
+            p31.ChangeDutyCycle(ord(mylist2[3]))
+            p33.ChangeDutyCycle(ord(mylist2[4]))
+            p35.ChangeDutyCycle(ord(mylist2[5]))
             Timer(0.2, boom).start()
         elif ( len(data) == 6  and (data[0:6] == "picker") ):
             GPIO.output(13, False) #p13.ChangeDutyCycle(0)
