@@ -98,11 +98,11 @@ def checkbound(whattype, oidx):
 def soundonoff(opensound):
     if opensound == True:
         for i in range(1,67):
-            port.sendto(pack('BB', 249, 3), ("%s%d" % ("192.168.12.", i), 5005) )
+            port2.sendto(pack('BB', 249, 3), ("%s%d" % ("192.168.12.", i), 5005) )
             time.sleep(0.002)
     else:
         for i in range(1,67):
-            port.sendto(pack('BB', 249, 2), ("%s%d" % ("192.168.12.", i), 5005))
+            port2.sendto(pack('BB', 249, 2), ("%s%d" % ("192.168.12.", i), 5005))
             time.sleep(0.002)
     #time.sleep(4)
 
@@ -113,17 +113,17 @@ def changemusic(tp):
                  32, 32, 32, tp, tp, tp, tp, tp, tp, tp, tp, tp, tp, tp, tp, tp, tp, tp, tp, tp, 
                  tp, tp, tp, 32, 32, 32, 32, 32, 32, tp, tp, tp, tp, 32]
     for i in range(1,67):
-        port.sendto( pack('BBB', 249, 1, soundtype[i]), ("%s%d" % ("192.168.12.", i), 5005) )
+        port2.sendto( pack('BBB', 249, 1, soundtype[i]), ("%s%d" % ("192.168.12.", i), 5005) )
     #time.sleep(4)
 
 def lightinout(lightin):
     if lightin == True:
         for i in range(1,67):
-            port.sendto( pack('BB', 225, 0), ("%s%d" % ("192.168.12.", i), 5005) )
+            port2.sendto( pack('BB', 225, 0), ("%s%d" % ("192.168.12.", i), 5005) )
             #port.sendto("225 0", ("%s%d" % ("192.168.12.", 67-i), 5005) )
     else:
         for i in range(66,0,-1):
-            port.sendto( pack('BB', 225, 1), ("%s%d" % ("192.168.12.", i), 5005) )
+            port2.sendto( pack('BB', 225, 1), ("%s%d" % ("192.168.12.", i), 5005) )
             #port.sendto("225 1", ("%s%d" % ("192.168.12.", 67-i), 5005) )
 
 def BoomBoom(rayrandom):
@@ -137,7 +137,7 @@ def BoomBoom(rayrandom):
     BOOM = pack('4sBBBBBB', "boom" ,red, green, blue, int(red/2.55), int(green/2.55), int(blue/2.55) )
     #print BOOM
     for i in range(1,67):
-        port.sendto(BOOM, ("%s%d" % ("192.168.12.", i), 5005))
+        port4.sendto(BOOM, ("%s%d" % ("192.168.12.", i), 5005))
 
 def readyplay(midstr):
     global mid
@@ -390,20 +390,20 @@ def play_midi():
         #print msg
         #if msg.startswith("n"):
         #mqueue.insert(0,msg)
-        port.sendto(msg, ("192.168.12.102", 8888) )
+        port3.sendto(msg, ("192.168.12.211", 8888) )
         #totaltime = totaltime + message.time
     time.sleep(1.6)
     lightinout(False)
     '''
     for i in range(1,67):
         if 1 == ST[i]:
-            port.sendto("144 60 1", ("%s%d" % ("192.168.12.", i), 5005))
+            port2.sendto("144 60 1", ("%s%d" % ("192.168.12.", i), 5005))
         if 1 == AT[i]:
-            port.sendto("144 48 1", ("%s%d" % ("192.168.12.", i), 5005))
+            port2.sendto("144 48 1", ("%s%d" % ("192.168.12.", i), 5005))
         if 1 == TT[i]:
-            port.sendto("144 38 1", ("%s%d" % ("192.168.12.", i), 5005))
+            port2.sendto("144 38 1", ("%s%d" % ("192.168.12.", i), 5005))
         if 1 == BT[i]:
-            port.sendto("144 28 1", ("%s%d" % ("192.168.12.", i), 5005))
+            port2.sendto("144 28 1", ("%s%d" % ("192.168.12.", i), 5005))
         time.sleep(0.002)
     '''
     for i in ST:
@@ -418,13 +418,13 @@ def play_midi():
     '''
     for i in range(1,67):
         if 1 == ST[i]:
-            port.sendto("144 60 0", ("%s%d" % ("192.168.12.", i), 5005))
+            port2.sendto("144 60 0", ("%s%d" % ("192.168.12.", i), 5005))
         if 1 == AT[i]:
-            port.sendto("144 48 0", ("%s%d" % ("192.168.12.", i), 5005))
+            port2.sendto("144 48 0", ("%s%d" % ("192.168.12.", i), 5005))
         if 1 == TT[i]:
-            port.sendto("144 38 0", ("%s%d" % ("192.168.12.", i), 5005))
+            port2.sendto("144 38 0", ("%s%d" % ("192.168.12.", i), 5005))
         if 1 == BT[i]:
-            port.sendto("144 28 0", ("%s%d" % ("192.168.12.", i), 5005))
+            port2.sendto("144 28 0", ("%s%d" % ("192.168.12.", i), 5005))
         time.sleep(0.002)
     '''
     for i in ST:
@@ -454,6 +454,9 @@ boidx = 24
 pickidx = [{},{},{},{},{},{},{},{},{},{},{},{}]
 slideidx = [{},{},{},{},{},{},{},{},{},{},{},{}]
 port = socket.socket(socket.AF_INET, socket.SOCK_DGRAM)      
+port2 = socket.socket(socket.AF_INET, socket.SOCK_DGRAM)
+port3 = socket.socket(socket.AF_INET, socket.SOCK_DGRAM)
+port4 = socket.socket(socket.AF_INET, socket.SOCK_DGRAM)
 #port.setsockopt(socket.SOL_SOCKET, socket.SO_SNDBUF, 1)
 #port = serial.Serial("\\\\.\\COM7", baudrate=115200)
 AmIPlay = False

@@ -311,7 +311,7 @@ try:
     #port.flushInput()
     #port.flushOutput()
 
-    whoami = "31"
+    whoami = "68"
     #Register the door bl button GPIO input call back function
     port.sendto("253 " + whoami + " 100", ("192.168.12." + whoami, 5005) )
     time.sleep(0.01)
