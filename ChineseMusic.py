@@ -127,14 +127,16 @@ def changemusic(tp):
     #time.sleep(4)
 
 def lightinout(lightin):
-    if lightin == True:
+    global nowisin
+    if nowisin == False and lightin == True:
         for i in range(1,67):
             port2.sendto( pack('BB', 225, 0), ("%s%d" % ("192.168.12.", i), 5005) )
             #port.sendto("225 0", ("%s%d" % ("192.168.12.", 67-i), 5005) )
-    else:
+    elif nowisin == True and lightin == False:
         for i in range(66,0,-1):
             port2.sendto( pack('BB', 225, 1), ("%s%d" % ("192.168.12.", i), 5005) )
             #port.sendto("225 1", ("%s%d" % ("192.168.12.", 67-i), 5005) )
+    nowisin = lightin
 
 def BoomBoom(rayrandom):
     pixel = (rayrandom << 9)
@@ -260,19 +262,26 @@ def play_midi():
                         #port.sendto("%s%d%s%d", ("144 " , message.note , " 0 " , pickidx[8][message.note]), ("%s%d" % ("192.168.12.", pickidx[8][message.note]), 5005) )
                         del pickidx[8][message.note]
             else:
-                if message.channel == 4 and message.velocity == 15:
+                if message.channel == 4:
                     BoomBoom(message.velocity)
-                elif message.channel == 5 and message.velocity == 4:
+                elif message.channel == 5:
+                    if message.note == 57:
+                        click("oh")
+                    elif message.note == 69:
+                        click("no")
+                elif message.channel == 6:
                     if message.note == 59:
-                        commands.getoutput("./reart.sh video_effect_for_light.mov")
-                    elif message.note == 60:
-                        commands.getoutput("./reart.sh video_effect_for_light.mov")
-                    elif message.note == 61:
-                        commands.getoutput("./reart.sh video_effect_for_light.mov")
-                    elif message.note == 62:
-                        commands.getoutput("./reart.sh video_effect_for_light.mov")
-                    elif message.note == 63:
-                        commands.getoutput("./reart.sh video_effect_for_light.mov")
+                        lightinout(True)
+                    else:
+                        lightinout(False)
+                        if message.note == 60:
+                            commands.getoutput("./reart.sh video_effect_for_light.mov")
+                        elif message.note == 61:
+                            commands.getoutput("./reart.sh video_effect_for_light.mov")
+                        elif message.note == 62:
+                            commands.getoutput("./reart.sh video_effect_for_light.mov")
+                        elif message.note == 63:
+                            commands.getoutput("./reart.sh video_effect_for_light.mov")
                 else:
                     msg = "n"
                     rayv = None
@@ -475,6 +484,7 @@ AmIPlay = False
 waitforkey = False
 tty.setcbreak(sys.stdin)
 mqueue = []
+nowisin = False
 while True:
     #port.flushInput()
     #port.flushOutput()
@@ -483,9 +493,9 @@ while True:
     if True: #rlist:
         #eventkey = sys.stdin.read(1)
         if eventkey == '+':
-            lightinout(True)
+            pass
         elif eventkey == '-':
-            lightinout(False)
+            pass
         elif eventkey == '*':
             changemusic(46)
         elif eventkey == '/':
