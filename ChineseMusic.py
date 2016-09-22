@@ -26,6 +26,7 @@ import random
 import commands
 from struct import *
 import OSC
+import threading
 mid = None
 debug = False        #Boolean for on/off our debug print 
 cc = OSC.OSCClient()
@@ -267,10 +268,33 @@ def play_midi():
                 if message.channel == 4:
                     BoomBoom(message.velocity)
                 elif message.channel == 5:
-                    if message.note == 57:
-                        click("a","start")
+                    oscdelay = 0
+                    if message.velocity == 2:
+                        oscdelay = 0.3
+                    else:
+                        oscdelay = 1.2
+                    if message.note == 45:
+                        threading.Timer(oscdelay, click, ["A1","start"]).start()
+                    elif message.note == 57:
+                        threading.Timer(oscdelay, click, ["A2","start"]).start()
                     elif message.note == 69:
-                        click("b","start")
+                        threading.Timer(oscdelay, click, ["A3","start"]).start()
+                    elif message.note == 47:
+                        threading.Timer(oscdelay, click, ["B1","start"]).start()
+                    elif message.note == 59:
+                        threading.Timer(oscdelay, click, ["B2","start"]).start()
+                    elif message.note == 36:
+                        threading.Timer(oscdelay, click, ["C1","start"]).start()
+                    elif message.note == 48:
+                        threading.Timer(oscdelay, click, ["C2","start"]).start()
+                    elif message.note == 60:
+                        threading.Timer(oscdelay, click, ["C3","start"]).start()
+                    elif message.note == 72:
+                        threading.Timer(oscdelay, click, ["C4","start"]).start()
+                    elif message.note == 38:
+                        threading.Timer(oscdelay, click, ["D1","start"]).start()
+                    elif message.note == 50:
+                        threading.Timer(oscdelay, click, ["D2","start"]).start()
                 elif message.channel == 6:
                     if message.note == 59:
                         lightinout(True)
