@@ -29,13 +29,14 @@ import OSC
 mid = None
 debug = False        #Boolean for on/off our debug print 
 cc = OSC.OSCClient()
-cc.connect(('192.168.12.212', 7777))   # localhost, port 57120
+cc.connect(('192.168.12.212', 53000))   # localhost, port 57120
 
-def click(mmsg):
+def click(mmsg,msg2):
     global cc
     oscmsg = OSC.OSCMessage()
-    oscmsg.setAddress("/startup")
-    oscmsg.append(mmsg)
+    print "%s%s%c%s" % ("/cue/", mmsg, '/', msg2)
+    oscmsg.setAddress("%s%s%c%s" % ("/cue/", mmsg, '/', msg2) )
+    #oscmsg.append(mmsg)
     cc.send(oscmsg)
 
 class Tests(unittest.TestCase):
@@ -266,9 +267,9 @@ def play_midi():
                     BoomBoom(message.velocity)
                 elif message.channel == 5:
                     if message.note == 57:
-                        click("oh")
+                        click("a","start")
                     elif message.note == 69:
-                        click("no")
+                        click("b","start")
                 elif message.channel == 6:
                     if message.note == 59:
                         lightinout(True)
@@ -535,4 +536,4 @@ while True:
         while len(mqueue) > 0:
             myword += mqueue.pop()
         #print myword
-        port.sendto(myword[:-1], ("192.168.12.100", 9999) )    
+        port.sendto(myword[:-1], ("127.0.0.1", 8888) )    
