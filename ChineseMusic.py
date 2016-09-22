@@ -156,6 +156,7 @@ def readyplay(midstr):
     global mid
     lightinout(True)
     soundonoff(True)
+    time.sleep(0.5)
     parser = argparse.ArgumentParser()
     args = parser.parse_args()
     parser.add_argument("--song",default=midstr, help="Midi file")
@@ -410,7 +411,7 @@ def play_midi():
         #print msg
         #if msg.startswith("n"):
         #mqueue.insert(0,msg)
-        port3.sendto(msg, ("192.168.12.211", 8888) )
+        port3.sendto(msg, ("127.0.0.1", 8888) )
         #totaltime = totaltime + message.time
     time.sleep(1.6)
     lightinout(False)
