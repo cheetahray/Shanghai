@@ -528,13 +528,13 @@ while True:
             changemusic(27)
         if AmIPlay == False:
             if eventkey == '1':
-                readyplay("Spring_final2_prv1.mid")
+                readyplay("Spring.mid")
             elif eventkey == '2':
-                readyplay("Summer_midi_3.mid")
+                readyplay("Summer.mid")
             elif eventkey == '3':
-                readyplay("Autumn_midi.mid")
+                readyplay("Autumn.mid")
             elif eventkey == '4':
-                readyplay("Winter_final2_prv1.mid")
+                readyplay("Winter_0922.mid")
             elif eventkey == '5':
                 readyplay("mountain_spectrum_prv1.mid")
             elif eventkey == '6':
