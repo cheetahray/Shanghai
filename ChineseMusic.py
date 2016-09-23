@@ -161,22 +161,22 @@ def BoomBoom(rayrandom, myType):
                 port4.sendto(BOOM, ("%s%d" % ("192.168.12.", i), 6454))
         elif myType == 1:
             for i in range(1,67):
-                threading.Timer(0.01*i, port4.sendto, [BOOM, ("%s%d" % ("192.168.12.", i), 6454) ])
+                threading.Timer(0.01*i, port4.sendto, [BOOM, ("%s%d" % ("192.168.12.", i), 6454) ]).start()
         elif myType == 2:
             for i in range(67,1):
-                threading.Timer(0.01*i, port4.sendto, [BOOM, ("%s%d" % ("192.168.12.", i), 6454) ])
+                threading.Timer(0.01*i, port4.sendto, [BOOM, ("%s%d" % ("192.168.12.", i), 6454) ]).start()
         elif myType == 3:
             for i in range(34,67):
-                threading.Timer(0.02*i, port4.sendto, [BOOM, ("%s%d" % ("192.168.12.", i), 6454) ])
-                threading.Timer(0.02*i, port4.sendto, [BOOM, ("%s%d" % ("192.168.12.", 67-i), 6454) ])
+                threading.Timer(0.02*i, port4.sendto, [BOOM, ("%s%d" % ("192.168.12.", i), 6454) ]).start()
+                threading.Timer(0.02*i, port4.sendto, [BOOM, ("%s%d" % ("192.168.12.", 67-i), 6454) ]).start()
         elif myType == 4:
             for i in range(34,67):
-                threading.Timer(0.02*i, port4.sendto, [BOOM, ("%s%d" % ("192.168.12.", i), 6454) ])
-                threading.Timer(0.02*i, port4.sendto, [BOOM, ("%s%d" % ("192.168.12.", 67-i), 6454) ])
+                threading.Timer(0.02*i, port4.sendto, [BOOM, ("%s%d" % ("192.168.12.", i), 6454) ]).start()
+                threading.Timer(0.02*i, port4.sendto, [BOOM, ("%s%d" % ("192.168.12.", 67-i), 6454) ]).start()
         elif myType == 5:
             for i in range(66,33,-1):
-                threading.Timer(0.02*i, port4.sendto, [BOOM, ("%s%d" % ("192.168.12.", i), 6454) ])
-                threading.Timer(0.02*i, port4.sendto, [BOOM, ("%s%d" % ("192.168.12.", 67-i), 6454) ])
+                threading.Timer(0.02*i, port4.sendto, [BOOM, ("%s%d" % ("192.168.12.", i), 6454) ]).start()
+                threading.Timer(0.02*i, port4.sendto, [BOOM, ("%s%d" % ("192.168.12.", 67-i), 6454) ]).start()
         nowisboom = False
 
 def readyplay(midstr):
