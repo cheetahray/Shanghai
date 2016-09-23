@@ -155,7 +155,7 @@ def BoomBoom(rayrandom):
 
 def readyplay(midstr):
     global mid
-    lightinout(True)
+    #lightinout(True)
     soundonoff(True)
     #time.sleep(0.5)
     parser = argparse.ArgumentParser()
@@ -205,7 +205,7 @@ def play_midi():
                     howmanyPreload = 0
                     print("pulse")                    
                     #print datetime.datetime.now()
-                    lightinout(False)
+                    #lightinout(False)
                 elif 5 == message.velocity:
                     soidx = psidx
                     aoidx = paidx
@@ -438,7 +438,7 @@ def play_midi():
         port3.sendto(msg, ("192.168.12.203", 8888) )
         #totaltime = totaltime + message.time
     time.sleep(1.6)
-    lightinout(False)
+    #lightinout(False)
     '''
     for i in range(1,67):
         if 1 == ST[i]:
