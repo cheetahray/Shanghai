@@ -518,11 +518,11 @@ while True:
         #eventkey = sys.stdin.read(1)
         if AmIPlay == False:
             if eventkey == '1':
-                readyplay("SpringRay.mid")
+                readyplay("Spring.mid")
             elif eventkey == '2':
                 readyplay("SummerRay.mid")
             elif eventkey == '3':
-                readyplay("AutRay.mid")
+                readyplay("Autumn.mid")
             elif eventkey == '4':
                 readyplay("WinterRay.mid")
             elif eventkey == '5':
@@ -539,7 +539,8 @@ while True:
             if ord(eventkey) == 10:
                 waitforkey = False
                 #sys.exit()
-            elif eventkey == '.':
+        if True:
+            if eventkey == '.':
                 BoomBoom(random.randint(0,128),0)
             elif eventkey == '/':
                 BoomBoom(random.randint(0,128),1)
