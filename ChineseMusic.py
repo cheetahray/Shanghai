@@ -326,14 +326,7 @@ def play_midi():
                         lightinout(True)
                     else:
                         lightinout(False)
-                        if message.note == 61:
-                            print subprocess.call('./reart.sh w1.mov&', shell=True)
-                        elif message.note == 62:
-                            print subprocess.call('./reart.sh w2.mov&', shell=True)
-                        elif message.note == 63:
-                            print subprocess.call('./reart.sh w3.mov&', shell=True)
-                        elif message.note == 64:
-                            print subprocess.call('./reart.sh w4.mov&', shell=True)
+                        port.sendto(pack('B',message.note), ("127.0.0.1",11111) )
                 else:
                     msg = "n"
                     rayv = None
