@@ -167,8 +167,8 @@ def BoomBoom(rayrandom, myType):
                 threading.Timer(0.67-0.01*i, port4.sendto, [BOOM, ("%s%d" % ("192.168.12.", i), 6454) ]).start()
         elif myType == 3:
             for i in range(34,67):
-                threading.Timer(0.02*i, port4.sendto, [BOOM, ("%s%d" % ("192.168.12.", i), 6454) ]).start()
-                threading.Timer(0.02*i, port4.sendto, [BOOM, ("%s%d" % ("192.168.12.", 67-i), 6454) ]).start()
+                threading.Timer(0.02*i-0.67, port4.sendto, [BOOM, ("%s%d" % ("192.168.12.", i), 6454) ]).start()
+                threading.Timer(0.02*i-0.67, port4.sendto, [BOOM, ("%s%d" % ("192.168.12.", 67-i), 6454) ]).start()
         elif myType == 4:
             for i in range(34,67):
                 threading.Timer(1.33-0.02*i, port4.sendto, [BOOM, ("%s%d" % ("192.168.12.", i), 6454) ]).start()
