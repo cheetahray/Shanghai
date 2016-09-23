@@ -141,18 +141,43 @@ def lightinout(lightin):
             #port.sendto("225 1", ("%s%d" % ("192.168.12.", 67-i), 5005) )
     nowisin = lightin
 
-def BoomBoom(rayrandom):
-    pixel = (rayrandom << 9)
-    red_value = (pixel & 0xF800) >> 11;
-    green_value = (pixel & 0x7E0) >> 5;
-    blue_value = (pixel & 0x1F);
-    red   = red_value << 3;
-    green = green_value << 2;
-    blue  = blue_value << 3;
-    BOOM = pack('4sBBBBBB', "boom" ,red, green, blue, int(red/2.55), int(green/2.55), int(blue/2.55) )
-    #print BOOM
-    for i in range(1,67):
-        port4.sendto(BOOM, ("%s%d" % ("192.168.12.", i), 6454))
+def BoomBoom(rayrandom, myType = 0):
+    global nowisboom
+    if True == nowisboom:
+        pass
+    else:
+        nowisboom = True
+        pixel = (rayrandom << 9)
+        red_value = (pixel & 0xF800) >> 11;
+        green_value = (pixel & 0x7E0) >> 5;
+        blue_value = (pixel & 0x1F);
+        red   = red_value << 3;
+        green = green_value << 2;
+        blue  = blue_value << 3;
+        BOOM = pack('4sBBBBBB', "boom" ,red, green, blue, int(red/2.55), int(green/2.55), int(blue/2.55) )
+        #print BOOM
+        if myType == 0:
+            for i in range(1,67):
+                port4.sendto(BOOM, ("%s%d" % ("192.168.12.", i), 6454))
+        elif myType == 1:
+            for i in range(1,67):
+                threading.Timer(0.01*i, port4.sendto, [BOOM, ("%s%d" % ("192.168.12.", i), 6454) ])
+        elif myType == 2:
+            for i in range(67,1):
+                threading.Timer(0.01*i, port4.sendto, [BOOM, ("%s%d" % ("192.168.12.", i), 6454) ])
+        elif myType == 3:
+            for i in range(34,67):
+                threading.Timer(0.02*i, port4.sendto, [BOOM, ("%s%d" % ("192.168.12.", i), 6454) ])
+                threading.Timer(0.02*i, port4.sendto, [BOOM, ("%s%d" % ("192.168.12.", 67-i), 6454) ])
+        elif myType == 4:
+            for i in range(34,67):
+                threading.Timer(0.02*i, port4.sendto, [BOOM, ("%s%d" % ("192.168.12.", i), 6454) ])
+                threading.Timer(0.02*i, port4.sendto, [BOOM, ("%s%d" % ("192.168.12.", 67-i), 6454) ])
+        elif myType == 5:
+            for i in range(66,33,-1):
+                threading.Timer(0.02*i, port4.sendto, [BOOM, ("%s%d" % ("192.168.12.", i), 6454) ])
+                threading.Timer(0.02*i, port4.sendto, [BOOM, ("%s%d" % ("192.168.12.", 67-i), 6454) ])
+        nowisboom = False
 
 def readyplay(midstr):
     global mid
@@ -488,6 +513,7 @@ waitforkey = False
 tty.setcbreak(sys.stdin)
 mqueue = []
 nowisin = False
+nowisboom = False
 while True:
     #port.flushInput()
     #port.flushOutput()
@@ -495,14 +521,6 @@ while True:
     eventkey = sys.stdin.read(1)
     if True: #rlist:
         #eventkey = sys.stdin.read(1)
-        if eventkey == '+':
-            pass
-        elif eventkey == '-':
-            pass
-        elif eventkey == '*':
-            changemusic(46)
-        elif eventkey == '/':
-            changemusic(27)
         if AmIPlay == False:
             if eventkey == '1':
                 readyplay("Spring.mid")
@@ -528,6 +546,14 @@ while True:
                 #sys.exit()
             elif eventkey == '.':
                 BoomBoom(random.randint(0,128))
+            elif eventkey == '/':
+                BoomBoom(random.randint(0,128),1)
+            elif eventkey == '*':
+                BoomBoom(random.randint(0,128),2)
+            elif eventkey == '-':
+                BoomBoom(random.randint(0,128),3)
+            elif eventkey == '+':
+                BoomBoom(random.randint(0,128),4)
 
     elif AmIPlay == True and len(mqueue) > 0:
         #mqueue.insert(0,'./rayclient')
