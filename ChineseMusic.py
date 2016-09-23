@@ -133,6 +133,7 @@ def lightinout(lightin):
     if nowisin == False and lightin == True:
         for i in range(1,67):
             port2.sendto( pack('BB', 225, 0), ("%s%d" % ("192.168.12.", i), 5005) )
+            subprocess.call('./closeart.sh', shell=True)
             #port.sendto("225 0", ("%s%d" % ("192.168.12.", 67-i), 5005) )
     elif nowisin == True and lightin == False:
         for i in range(66,0,-1):
@@ -300,14 +301,14 @@ def play_midi():
                         lightinout(True)
                     else:
                         lightinout(False)
-                        if message.note == 60:
-                            subprocess.call(["./reart.sh", "w1.mov"]) 
-                        elif message.note == 61:
-                            subprocess.call(["./reart.sh", "w2.mov"])
+                        if message.note == 61:
+                            print subprocess.call('./reart.sh w1.mov&', shell=True)
                         elif message.note == 62:
-                            subprocess.call(["./reart.sh", "w3.mov"])
+                            print subprocess.call('./reart.sh w2.mov&', shell=True)
                         elif message.note == 63:
-                            subprocess.call(["./reart.sh", "w4.mov"]) 
+                            print subprocess.call('./reart.sh w3.mov&', shell=True)
+                        elif message.note == 64:
+                            print subprocess.call('./reart.sh w4.mov&', shell=True)
                 else:
                     msg = "n"
                     rayv = None
