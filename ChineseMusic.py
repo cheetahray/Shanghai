@@ -301,13 +301,13 @@ def play_midi():
                     else:
                         lightinout(False)
                         if message.note == 60:
-                            print subprocess.call(["./reart.sh", "w1.mov"]) 
+                            subprocess.call(["./reart.sh", "w1.mov"]) 
                         elif message.note == 61:
-                            print subprocess.call(["./reart.sh", "w2.mov"])
+                            subprocess.call(["./reart.sh", "w2.mov"])
                         elif message.note == 62:
-                            print subprocess.call(["./reart.sh", "w3.mov"])
+                            subprocess.call(["./reart.sh", "w3.mov"])
                         elif message.note == 63:
-                            print subprocess.call(["./reart.sh", "w4.mov"]) 
+                            subprocess.call(["./reart.sh", "w4.mov"]) 
                 else:
                     msg = "n"
                     rayv = None
