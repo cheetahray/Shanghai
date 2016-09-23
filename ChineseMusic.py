@@ -440,18 +440,6 @@ def play_midi():
         #totaltime = totaltime + message.time
     time.sleep(1.6)
     #lightinout(False)
-    '''
-    for i in range(1,67):
-        if 1 == ST[i]:
-            port2.sendto("144 60 1", ("%s%d" % ("192.168.12.", i), 5005))
-        if 1 == AT[i]:
-            port2.sendto("144 48 1", ("%s%d" % ("192.168.12.", i), 5005))
-        if 1 == TT[i]:
-            port2.sendto("144 38 1", ("%s%d" % ("192.168.12.", i), 5005))
-        if 1 == BT[i]:
-            port2.sendto("144 28 1", ("%s%d" % ("192.168.12.", i), 5005))
-        time.sleep(0.002)
-    '''
     for i in ST:
         port.sendto(pack('BBB', 144, 60, 1), ("%s%d" % ("192.168.12.", i), 5005))
     for i in AT:
@@ -461,18 +449,6 @@ def play_midi():
     for i in BT:
         port.sendto(pack('BBB', 144, 28, 1), ("%s%d" % ("192.168.12.", i), 5005))
     time.sleep(1.6);
-    '''
-    for i in range(1,67):
-        if 1 == ST[i]:
-            port2.sendto("144 60 0", ("%s%d" % ("192.168.12.", i), 5005))
-        if 1 == AT[i]:
-            port2.sendto("144 48 0", ("%s%d" % ("192.168.12.", i), 5005))
-        if 1 == TT[i]:
-            port2.sendto("144 38 0", ("%s%d" % ("192.168.12.", i), 5005))
-        if 1 == BT[i]:
-            port2.sendto("144 28 0", ("%s%d" % ("192.168.12.", i), 5005))
-        time.sleep(0.002)
-    '''
     for i in ST:
         port.sendto(pack('BBB', 144, 60, 0), ("%s%d" % ("192.168.12.", i), 5005))
     for i in AT:
