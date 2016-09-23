@@ -141,7 +141,7 @@ def lightinout(lightin):
             #port.sendto("225 1", ("%s%d" % ("192.168.12.", 67-i), 5005) )
     nowisin = lightin
 
-def BoomBoom(rayrandom, myType = 0):
+def BoomBoom(rayrandom, myType):
     global nowisboom
     if True == nowisboom:
         pass
@@ -291,9 +291,9 @@ def play_midi():
                         #port.sendto("%s%d%s%d", ("144 " , message.note , " 0 " , pickidx[8][message.note]), ("%s%d" % ("192.168.12.", pickidx[8][message.note]), 5005) )
                         del pickidx[8][message.note]
             else:
-                if message.channel == 4:
-                    BoomBoom(message.velocity)
-                elif message.channel == 5:
+                #if message.channel == 4:
+                #    BoomBoom(message.velocity)
+                if message.channel == 5:
                     oscdelay = 0
                     if message.velocity == 2:
                         oscdelay = 0.3
@@ -538,7 +538,7 @@ while True:
                 waitforkey = False
                 #sys.exit()
             elif eventkey == '.':
-                BoomBoom(random.randint(0,128))
+                BoomBoom(random.randint(0,128),0)
             elif eventkey == '/':
                 BoomBoom(random.randint(0,128),1)
             elif eventkey == '*':
