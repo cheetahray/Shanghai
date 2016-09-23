@@ -512,11 +512,11 @@ while True:
         #eventkey = sys.stdin.read(1)
         if AmIPlay == False:
             if eventkey == '1':
-                readyplay("Spring.mid")
+                readyplay("SpringRay.mid")
             elif eventkey == '2':
-                readyplay("summer_correct.mid")
+                readyplay("SummerRay.mid")
             elif eventkey == '3':
-                readyplay("Autumn.mid")
+                readyplay("AutRay.mid")
             elif eventkey == '4':
                 readyplay("WinterRay.mid")
             elif eventkey == '5':

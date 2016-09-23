@@ -14,7 +14,6 @@ while True:
         subprocess.call('./reart.sh w3.mov&', shell=True)
     elif(mydata == 64):
         subprocess.call('./reart.sh w4.mov&', shell=True)
-    time.sleep(0.1)
 
     
 
