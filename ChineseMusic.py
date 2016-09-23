@@ -530,7 +530,7 @@ while True:
             if eventkey == '1':
                 readyplay("Spring.mid")
             elif eventkey == '2':
-                readyplay("Summer.mid")
+                readyplay("summer_correct.mid")
             elif eventkey == '3':
                 readyplay("Autumn.mid")
             elif eventkey == '4':
