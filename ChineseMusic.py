@@ -301,13 +301,13 @@ def play_midi():
                     else:
                         lightinout(False)
                         if message.note == 60:
-                            commands.getoutput("./reart.sh video_effect_for_light.mov")
+                            print commands.getoutput("./reart.sh w1.mov")
                         elif message.note == 61:
-                            commands.getoutput("./reart.sh video_effect_for_light.mov")
+                            print commands.getoutput("./reart.sh w2.mov")
                         elif message.note == 62:
-                            commands.getoutput("./reart.sh video_effect_for_light.mov")
+                            print commands.getoutput("./reart.sh w3.mov")
                         elif message.note == 63:
-                            commands.getoutput("./reart.sh video_effect_for_light.mov")
+                            print commands.getoutput("./reart.sh w4.mov")
                 else:
                     msg = "n"
                     rayv = None
