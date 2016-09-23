@@ -111,11 +111,11 @@ def soundonoff(opensound):
     if opensound == True:
         for i in range(1,67):
             port2.sendto(pack('BB', 249, 3), ("%s%d" % ("192.168.12.", i), 5005) )
-            time.sleep(0.002)
+            #time.sleep(0.002)
     else:
         for i in range(1,67):
             port2.sendto(pack('BB', 249, 2), ("%s%d" % ("192.168.12.", i), 5005))
-            time.sleep(0.002)
+            #time.sleep(0.002)
     #time.sleep(4)
 
 def changemusic(tp):
@@ -157,7 +157,7 @@ def readyplay(midstr):
     global mid
     lightinout(True)
     soundonoff(True)
-    time.sleep(0.5)
+    #time.sleep(0.5)
     parser = argparse.ArgumentParser()
     args = parser.parse_args()
     parser.add_argument("--song",default=midstr, help="Midi file")
