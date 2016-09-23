@@ -319,7 +319,7 @@ try:
     port.sendto(pack('BB', 225, 0), ("192.168.12." + whoami, 5005) )
     time.sleep(0.01)
     whattype = 'B'
-    if False:
+    if True:
         for i in range(1,7):
             if whattype == 'S':
                 port.sendto(pack('BBB', 144, 79, 127), ("192.168.12." + whoami, 5005))
