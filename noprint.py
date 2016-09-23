@@ -6,7 +6,9 @@ sock.bind(("0.0.0.0", 11111))
 while True:
     data, addr = sock.recvfrom(1024)
     mydata = ord(data)
-    if(mydata == 61):
+    if(mydata == 60):
+        subprocess.call('./reart.sh Sp1.mov&', shell=True)
+    elif(mydata == 61):
         subprocess.call('./reart.sh w1.mov&', shell=True)
     elif(mydata == 62):
         subprocess.call('./reart.sh w2.mov&', shell=True)
@@ -14,6 +16,12 @@ while True:
         subprocess.call('./reart.sh w3.mov&', shell=True)
     elif(mydata == 64):
         subprocess.call('./reart.sh w4.mov&', shell=True)
-
+    elif(mydata == 65):
+        subprocess.call('./reart.sh At1.mov&', shell=True)
+    elif(mydata == 66):
+        subprocess.call('./reart.sh At2.mov&', shell=True)
+    elif(mydata == 67):
+        subprocess.call('./reart.sh At3.mov&', shell=True)
+    
     
 
