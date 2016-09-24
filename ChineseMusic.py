@@ -466,6 +466,7 @@ def play_midi():
         #mqueue.insert(0,msg)
         port3.sendto(msg, ("192.168.12.203", 8888) )
         #totaltime = totaltime + message.time
+    print "Done!!"
     '''
     time.sleep(1.6)
     #subprocess.call('./closeart.sh', shell=True)
