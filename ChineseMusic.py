@@ -301,6 +301,14 @@ def play_midi():
                         threading.Timer(oscdelay, click, ["A2","start"]).start()
                     elif message.note == 69:
                         threading.Timer(oscdelay, click, ["A3","start"]).start()
+                    elif message.note == 81:
+                        threading.Timer(oscdelay, click, ["A4","start"]).start()
+                    elif message.note == 93:
+                        threading.Timer(oscdelay, click, ["A5","start"]).start()
+                    elif message.note == 105:
+                        threading.Timer(oscdelay, click, ["A6","start"]).start()
+                    elif message.note == 117:
+                        threading.Timer(oscdelay, click, ["A7","start"]).start()
                     elif message.note == 47:
                         threading.Timer(oscdelay, click, ["B1","start"]).start()
                     elif message.note == 59:
@@ -548,7 +556,15 @@ while True:
             elif eventkey == '8':
                 readyplay("TEST_1.mid")
             elif eventkey == '9':
-                readyplay("TEST_2.mid")
+                for i in ST:
+                    port.sendto(pack('BBB', 224, 60, 1), ("%s%d" % ("192.168.12.", i), 5005))
+                for i in AT:
+                    port.sendto(pack('BBB', 224, 48, 1), ("%s%d" % ("192.168.12.", i), 5005))
+                for i in TT:
+                    port.sendto(pack('BBB', 224, 38, 1), ("%s%d" % ("192.168.12.", i), 5005))
+                for i in BT:
+                    port.sendto(pack('BBB', 224, 28, 1), ("%s%d" % ("192.168.12.", i), 5005))
+            print eventkey
         else:
             if ord(eventkey) == 10:
                 waitforkey = False
@@ -562,9 +578,13 @@ while True:
                 BoomBoom(random.randint(0,128),2)
             elif eventkey == '-':
                 BoomBoom(random.randint(0,128),3)
+                #print "HighHighLowLow"
+                #lightinout(1)
             elif eventkey == '+':
                 BoomBoom(random.randint(0,128),4)
-
+                #print "Animation"
+                #lightinout(0)
+                #port.sendto(pack('B',message.note), ("127.0.0.1",11111) )
     elif AmIPlay == True and len(mqueue) > 0:
         #mqueue.insert(0,'./rayclient')
         #print mqueue
