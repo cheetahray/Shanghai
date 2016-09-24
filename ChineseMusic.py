@@ -130,12 +130,12 @@ def changemusic(tp):
 
 def lightinout(lightin):
     global nowisin
-    if nowisin == False and lightin == True:
+    if lightin == True:
         subprocess.call('./closeart.sh', shell=True)
         for i in range(1,67):
             port2.sendto( pack('BB', 225, 0), ("%s%d" % ("192.168.12.", i), 5005) )
             #port.sendto("225 0", ("%s%d" % ("192.168.12.", 67-i), 5005) )
-    elif nowisin == True and lightin == False:
+    elif lightin == False:
         for i in range(66,0,-1):
             port2.sendto( pack('BB', 225, 1), ("%s%d" % ("192.168.12.", i), 5005) )
             #port.sendto("225 1", ("%s%d" % ("192.168.12.", 67-i), 5005) )
@@ -461,7 +461,7 @@ def play_midi():
         port3.sendto(msg, ("192.168.12.203", 8888) )
         #totaltime = totaltime + message.time
     time.sleep(1.6)
-    subprocess.call('./closeart.sh', shell=True)
+    #subprocess.call('./closeart.sh', shell=True)
     for i in ST:
         port.sendto(pack('BBB', 144, 60, 1), ("%s%d" % ("192.168.12.", i), 5005))
     for i in AT:
