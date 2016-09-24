@@ -6,22 +6,24 @@ sock.bind(("0.0.0.0", 11111))
 while True:
     data, addr = sock.recvfrom(1024)
     mydata = ord(data)
+    playwhat = ""
     if(mydata == 60):
-        subprocess.call('./reart.sh Sp1.mov&', shell=True)
+        playwhat = "Sp1"
     elif(mydata == 61):
-        subprocess.call('./reart.sh w1.mov&', shell=True)
+        playwhat =  "w1"
     elif(mydata == 62):
-        subprocess.call('./reart.sh w2.mov&', shell=True)
+        playwhat =  "w2"
     elif(mydata == 63):
-        subprocess.call('./reart.sh w3.mov&', shell=True)
+        playwhat =  "w3"
     elif(mydata == 64):
-        subprocess.call('./reart.sh w4.mov&', shell=True)
+        playwhat =  "w4"
     elif(mydata == 65):
-        subprocess.call('./reart.sh At1.mov&', shell=True)
+        playwhat = "At1"
     elif(mydata == 66):
-        subprocess.call('./reart.sh At2.mov&', shell=True)
+        playwhat = "At2"
     elif(mydata == 67):
-        subprocess.call('./reart.sh At3.mov&', shell=True)
+        playwhat = "At3"
+    if len(playwhat) > 0:
+        subprocess.call('./reart.sh ' + playwhat + '.mov&', shell=True)
+        print "==>", playwhat
     
-    
-

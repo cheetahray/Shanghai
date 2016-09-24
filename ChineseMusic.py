@@ -30,7 +30,7 @@ import threading
 mid = None
 debug = False        #Boolean for on/off our debug print 
 cc = OSC.OSCClient()
-cc.connect(('192.168.12.212', 53000))   # localhost, port 57120
+cc.connect(('192.168.12.203', 53000))   # localhost, port 57120
 
 def click(mmsg,msg2):
     global cc
@@ -131,9 +131,9 @@ def changemusic(tp):
 def lightinout(lightin):
     global nowisin
     if nowisin == False and lightin == True:
+        subprocess.call('./closeart.sh', shell=True)
         for i in range(1,67):
             port2.sendto( pack('BB', 225, 0), ("%s%d" % ("192.168.12.", i), 5005) )
-            subprocess.call('./closeart.sh', shell=True)
             #port.sendto("225 0", ("%s%d" % ("192.168.12.", 67-i), 5005) )
     elif nowisin == True and lightin == False:
         for i in range(66,0,-1):
@@ -325,8 +325,10 @@ def play_midi():
                         threading.Timer(oscdelay, click, ["D2","start"]).start()
                 elif message.channel == 6:
                     if message.note == 59:
+                        print "HighHighLowLow"
                         lightinout(True)
                     else:
+                        print "Animation"
                         lightinout(False)
                         port.sendto(pack('B',message.note), ("127.0.0.1",11111) )
                 else:
@@ -517,7 +519,9 @@ while True:
     if True: #rlist:
         #eventkey = sys.stdin.read(1)
         if AmIPlay == False:
-            if eventkey == '1':
+            if eventkey == '0':
+                readyplay("Intro.mid")
+            elif eventkey == '1':
                 readyplay("SpringRay.mid")
             elif eventkey == '2':
                 readyplay("SummerRay.mid")
