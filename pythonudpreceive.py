@@ -15,7 +15,7 @@ fs = fluidsynth.Synth()
 fs.start('coreaudio')
 sfid = fs.sfload("FluidR3_GM.sf2")
 lasttype = 0
-fs.pitch_bend(0, 3456)
+fs.pitch_bend(0, 512)
 MayI = False
 def whattype(typestr):
     global fs
