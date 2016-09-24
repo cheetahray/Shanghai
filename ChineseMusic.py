@@ -30,7 +30,7 @@ import threading
 mid = None
 debug = False        #Boolean for on/off our debug print 
 cc = OSC.OSCClient()
-cc.connect(('192.168.12.203', 53000))   # localhost, port 57120
+cc.connect(('192.168.12.212', 53000))   # localhost, port 57120
 
 def click(mmsg,msg2):
     global cc
