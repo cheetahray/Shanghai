@@ -12,24 +12,27 @@ while True:
     elif(mydata == 61):
         playwhat =  "w1"
     elif(mydata == 62):
-        playwhat =  "w2"
+        playwhat =  "w1"
     elif(mydata == 63):
         playwhat =  "w3"
     elif(mydata == 64):
         playwhat =  "w4"
     elif(mydata == 65):
-        playwhat = "At1"
+        playwhat = "C1"
     elif(mydata == 66):
-        playwhat = "At2"
+        playwhat = "C2"
     elif(mydata == 67):
-        playwhat = "At3"
+        playwhat = "C3"
     elif(mydata == 68):
         playwhat = "Sm1"
     elif(mydata == 69):
         playwhat = "Sm2"
     elif(mydata == 70):
         playwhat = "Sm3"
-
+    elif(mydata == 71):
+        playwhat = "B3"
+    elif(mydata == 72):
+        playwhat = "W5"
     if len(playwhat) > 0:
         subprocess.call('./reart.sh ' + playwhat + '.mov&', shell=True)
         print "==>", playwhat
