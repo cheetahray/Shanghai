@@ -23,6 +23,13 @@ while True:
         playwhat = "At2"
     elif(mydata == 67):
         playwhat = "At3"
+    elif(mydata == 68):
+        playwhat = "Sm1"
+    elif(mydata == 69):
+        playwhat = "Sm2"
+    elif(mydata == 70):
+        playwhat = "Sm3"
+
     if len(playwhat) > 0:
         subprocess.call('./reart.sh ' + playwhat + '.mov&', shell=True)
         print "==>", playwhat
