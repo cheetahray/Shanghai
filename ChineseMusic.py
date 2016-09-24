@@ -311,6 +311,12 @@ def play_midi():
                         threading.Timer(oscdelay, click, ["B4","start"]).start()
                     elif message.note == 95:
                         threading.Timer(oscdelay, click, ["B5","start"]).start()
+                    elif message.note == 107:
+                        threading.Timer(oscdelay, click, ["B6","start"]).start()
+                    elif message.note == 119:
+                        threading.Timer(oscdelay, click, ["B7","start"]).start()
+                    elif message.note == 35:
+                        threading.Timer(oscdelay, click, ["B0","start"]).start()
                     elif message.note == 36:
                         threading.Timer(oscdelay, click, ["C1","start"]).start()
                     elif message.note == 48:
