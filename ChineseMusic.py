@@ -555,7 +555,7 @@ while True:
                 readyplay("lovesong.mid")
             elif eventkey == '8':
                 readyplay("TEST_1.mid")
-            elif eventkey == '9':
+            elif eventkey == 'q':
                 for i in ST:
                     port.sendto(pack('BBB', 224, 60, 1), ("%s%d" % ("192.168.12.", i), 5005))
                 for i in AT:
