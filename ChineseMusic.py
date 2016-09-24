@@ -553,6 +553,7 @@ while True:
             elif eventkey == '7':
                 readyplay("lovesong.mid")
             elif eventkey == '8':
+                lightinout(0)
                 port.sendto(pack('B',65), ("127.0.0.1",11111) )
             elif eventkey == '9':
                 for i in ST:
