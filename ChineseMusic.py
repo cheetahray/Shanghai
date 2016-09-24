@@ -130,12 +130,12 @@ def changemusic(tp):
 
 def lightinout(lightin):
     global nowisin
-    if lightin == True:
+    if nowisin != 1 and lightin == 1:
         subprocess.call('./closeart.sh', shell=True)
         for i in range(1,67):
             port2.sendto( pack('BB', 225, 0), ("%s%d" % ("192.168.12.", i), 5005) )
             #port.sendto("225 0", ("%s%d" % ("192.168.12.", 67-i), 5005) )
-    elif lightin == False:
+    elif nowisin != 0 and lightin == 0:
         for i in range(66,0,-1):
             port2.sendto( pack('BB', 225, 1), ("%s%d" % ("192.168.12.", i), 5005) )
             #port.sendto("225 1", ("%s%d" % ("192.168.12.", 67-i), 5005) )
@@ -177,7 +177,6 @@ def BoomBoom(rayrandom, myType):
 
 def readyplay(midstr):
     global mid
-    #lightinout(True)
     soundonoff(True)
     #time.sleep(0.5)
     parser = argparse.ArgumentParser()
@@ -227,7 +226,6 @@ def play_midi():
                     howmanyPreload = 0
                     print("pulse")                    
                     #print datetime.datetime.now()
-                    #lightinout(False)
                 elif 5 == message.velocity:
                     soidx = psidx
                     aoidx = paidx
@@ -326,10 +324,10 @@ def play_midi():
                 elif message.channel == 6:
                     if message.note == 59:
                         print "HighHighLowLow"
-                        lightinout(True)
+                        lightinout(1)
                     else:
                         print "Animation"
-                        lightinout(False)
+                        lightinout(0)
                         port.sendto(pack('B',message.note), ("127.0.0.1",11111) )
                 else:
                     msg = "n"
@@ -511,7 +509,7 @@ AmIPlay = False
 waitforkey = False
 tty.setcbreak(sys.stdin)
 mqueue = []
-nowisin = False
+nowisin = 2
 nowisboom = False
 while True:
     #port.flushInput()
@@ -521,6 +519,7 @@ while True:
     if True: #rlist:
         #eventkey = sys.stdin.read(1)
         if AmIPlay == False:
+            nowisin = 2
             if eventkey == '0':
                 readyplay("Intro.mid")
             elif eventkey == '1':
