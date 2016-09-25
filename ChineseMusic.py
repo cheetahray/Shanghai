@@ -474,7 +474,7 @@ def play_midi():
         #mqueue.insert(0,msg)
         port3.sendto(msg, ("192.168.12.203", 8888) )
         #totaltime = totaltime + message.time
-    time.sleep(1.6)
+    time.sleep(2)
     print "Done!!"
     '''
     for i in ST:
