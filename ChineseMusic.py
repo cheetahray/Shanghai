@@ -586,9 +586,9 @@ while True:
             elif eventkey == '4':
                 readyplay("WinterRay.mid")
             elif eventkey == '5':
-                readyplay("mountain_spectrum_prv1.mid")
+                readyplay("MIM_2.mid")
             elif eventkey == '6':
-                readyplay("womensong.mid")
+                readyplay("SMD.mid")
             elif eventkey == '7':
                 readyplay("lovesong.mid")
             elif eventkey == '8':
