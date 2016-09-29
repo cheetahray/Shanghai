@@ -308,7 +308,9 @@ def play_midi():
                         duration = 20 #raymap(message.velocity, 0, 127, 20, 64)
                         threading.Timer( DELAY-float(duration)/1000, port.sendto, [pack('BH', 207, duration), ("192.168.12.241", 6666)]).start() #42 snare side 20~64
                     elif message.note == 43:
-                        threading.Timer( DELAY, port.sendto, [pack('B', 143), ("192.168.13.247", 6666)]).start()
+                        duration = 17 #raymap(message.velocity, 0, 127, 17, 30)
+                        threading.Timer( DELAY-0.25+float(duration)/1000, port.sendto, [pack('BH', 223, duration), ("192.168.12.243", 6666)]).start() #45 Hi-Hat 17~30
+                        threading.Timer( DELAY-0.3, port.sendto, [pack('BH', 239, 300), ("192.168.12.243", 6666)]).start() #44 Hi-Hat
                     elif message.note == 44:
                         threading.Timer( DELAY-0.3, port.sendto, [pack('BH', 239, 300), ("192.168.12.243", 6666)]).start() #44 Pedal Hi-Hat
                     elif message.note == 45:
