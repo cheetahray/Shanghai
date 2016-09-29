@@ -134,11 +134,13 @@ def lightinout(lightin):
         print "67"
         subprocess.call('./closeart.sh', shell=True)
         for i in range(1,67):
-            threading.Timer(0.01*i, port2.sendto, [pack('BB', 225, 0), ("%s%d" % ("192.168.12.", i), 5005) ]).start()
+            port2.sendto( pack('BB', 225, 0), ("%s%d" % ("192.168.12.", i), 5005) )
+            threading.Timer(0.01, port2.sendto, [pack('BB', 225, 0), ("%s%d" % ("192.168.12.", i), 5005) ]).start()
     elif nowisin != 0 and lightin == 0:
         print "67"
         for i in range(1,67):
-            threading.Timer(0.01*i, port2.sendto, [pack('BB', 225, 1), ("%s%d" % ("192.168.12.", i), 5005) ]).start()
+            port2.sendto( pack('BB', 225, 1), ("%s%d" % ("192.168.12.", i), 5005) )
+            threading.Timer(0.01, port2.sendto, [pack('BB', 225, 1), ("%s%d" % ("192.168.12.", i), 5005) ]).start()
     nowisin = lightin
 
 def WaveWave():
@@ -150,9 +152,9 @@ def WaveWave():
     else:
         openwave = True
         for i in range(1,67):
-            threading.Timer(0.01*i, port4.sendto, [pack('4sBB',"wave",0,0), ("%s%d" % ("192.168.12.", i), 6454) ]).start()
-            threading.Timer(0.7 + 0.01*i, port4.sendto, [pack('4sBB',"wave",0,0), ("%s%d" % ("192.168.12.", i), 6454) ]).start()
-
+            port4.sendto( pack('4sBB',"wave",0,0), ("%s%d" % ("192.168.12.", i), 6454) )
+            threading.Timer(0.01, port4.sendto, [pack('4sBB',"wave",0,0), ("%s%d" % ("192.168.12.", i), 6454) ]).start()
+            
 def BoomBoom(rayrandom, myType):
     global nowisboom
     if True == nowisboom:
