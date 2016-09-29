@@ -161,7 +161,7 @@ def rgbWave():
     if openwave == False:
         if openrgbw:
             openrgbw = False
-			red, green, blue = rgbrandom(random.randint(0,128))
+            red, green, blue = rgbrandom(random.randint(0,128))
             for i in range(1,67):
                 threading.Timer(0.1*i, port4.sendto, [pack('4sBB',"wrgb",100,10, int(red/2.55), int(green/2.55), int(blue/2.55) ), ("%s%d" % ("192.168.12.", i), 6454) ]).start()
         else:
