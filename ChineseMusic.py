@@ -46,7 +46,7 @@ class Tests(unittest.TestCase):
 
 def raymap(value, istart, istop, ostart, ostop):
     wierd = ostart + (ostop - ostart) * (value - istart) / (istop - istart); 
-    print wierd
+    #print wierd
     return wierd
 
 def checkbound(whattype, oidx):
@@ -289,45 +289,46 @@ def play_midi():
                 #    BoomBoom(message.velocity)
                 if message.channel == 13:
                     DELAY = 1.2
+                    velocity = 1 #message.velocity
                     if message.note == 36:
-                        duration = 40 #raymap(message.velocity, 0, 127, 40, 300)
-                        threading.Timer( DELAY-float(duration)/1000, port.sendto, [pack('BH', 239, duration), ("192.168.12.241", 6666)]).start() #36 Bass drum 40~300
+                        duration = raymap(velocity, 0, 127, 40, 300)
+                        threading.Timer( DELAY-0.04, port.sendto, [pack('BH', 239, duration), ("192.168.12.241", 6666)]).start() #36 Bass drum 40~300
                     elif message.note == 38:
-                        duration = 15 #raymap(message.velocity, 0, 127, 15, 100)
-                        threading.Timer( DELAY-float(duration)/1000, port.sendto, [pack('BH', 159, duration), ("192.168.12.241", 6666)]).start() #38 midtom 15~100
+                        duration = raymap(velocity, 0, 127, 15, 100)
+                        threading.Timer( DELAY-0.015, port.sendto, [pack('BH', 159, duration), ("192.168.12.241", 6666)]).start() #38 midtom 15~100
                     elif message.note == 39:
-                        duration = 15 #raymap(message.velocity, 0, 127, 15, 100)
-                        threading.Timer( DELAY-float(duration)/1000, port.sendto, [pack('BH', 175, duration), ("192.168.12.241", 6666)]).start() #39 lowtom 15~100
+                        duration = raymap(velocity, 0, 127, 15, 100)
+                        threading.Timer( DELAY-0.015, port.sendto, [pack('BH', 175, duration), ("192.168.12.241", 6666)]).start() #39 lowtom 15~100
                     elif message.note == 40:
-                        duration = 15 #raymap(message.velocity, 0, 127, 15, 100)
-                        threading.Timer( DELAY-float(duration)/1000, port.sendto, [pack('BH', 143, duration), ("192.168.12.243", 6666)]).start() #40 Floor tom 15~100
+                        duration = raymap(velocity, 0, 127, 15, 100)
+                        threading.Timer( DELAY-0.015, port.sendto, [pack('BH', 143, duration), ("192.168.12.243", 6666)]).start() #40 Floor tom 15~100
                     elif message.note == 41:
-                        duration = 13 #raymap(message.velocity, 0, 127, 13, 25)
-                        threading.Timer( DELAY-float(duration)/1000, port.sendto, [pack('BH', 223, duration), ("192.168.12.241", 6666)]).start() #41 snare 13~25
+                        duration = raymap(velocity, 0, 127, 13, 25)
+                        threading.Timer( DELAY-0.013, port.sendto, [pack('BH', 223, duration), ("192.168.12.241", 6666)]).start() #41 snare 13~25
                     elif message.note == 42:
-                        duration = 20 #raymap(message.velocity, 0, 127, 20, 64)
-                        threading.Timer( DELAY-float(duration)/1000, port.sendto, [pack('BH', 207, duration), ("192.168.12.241", 6666)]).start() #42 snare side 20~64
+                        duration = raymap(velocity, 0, 127, 20, 64)
+                        threading.Timer( DELAY-0.02, port.sendto, [pack('BH', 207, duration), ("192.168.12.241", 6666)]).start() #42 snare side 20~64
                     elif message.note == 43:
-                        duration = 17 #raymap(message.velocity, 0, 127, 17, 30)
-                        threading.Timer( DELAY-0.25+float(duration)/1000, port.sendto, [pack('BH', 223, duration), ("192.168.12.243", 6666)]).start() #45 Hi-Hat 17~30
+                        duration = raymap(velocity, 0, 127, 17, 30)
+                        threading.Timer( DELAY-0.267, port.sendto, [pack('BH', 223, duration), ("192.168.12.243", 6666)]).start() #45 Hi-Hat 17~30
                         threading.Timer( DELAY-0.3, port.sendto, [pack('BH', 239, 300), ("192.168.12.243", 6666)]).start() #44 Hi-Hat
                     elif message.note == 44:
                         threading.Timer( DELAY-0.3, port.sendto, [pack('BH', 239, 300), ("192.168.12.243", 6666)]).start() #44 Pedal Hi-Hat
                     elif message.note == 45:
-                        duration = 17 #raymap(message.velocity, 0, 127, 17, 30)
-                        threading.Timer( DELAY-float(duration)/1000, port.sendto, [pack('BH', 223, duration), ("192.168.12.243", 6666)]).start() #45 Open Hi-Hat 17~30
+                        duration = raymap(velocity, 0, 127, 17, 30)
+                        threading.Timer( DELAY-0.017, port.sendto, [pack('BH', 223, duration), ("192.168.12.243", 6666)]).start() #45 Open Hi-Hat 17~30
                     elif message.note == 46:
-                        duration = 13 #raymap(message.velocity, 0, 127, 13, 30)
-                        threading.Timer( DELAY-float(duration)/1000, port.sendto, [pack('BH', 191, duration), ("192.168.12.243", 6666)]).start() #46 Crush side 13~30
+                        duration = raymap(velocity, 0, 127, 13, 30)
+                        threading.Timer( DELAY-0.013, port.sendto, [pack('BH', 191, duration), ("192.168.12.243", 6666)]).start() #46 Crush side 13~30
                     elif message.note == 47:
-                        duration = 10 #raymap(message.velocity, 0, 127, 10, 64)
-                        threading.Timer( DELAY-float(duration)/1000, port.sendto, [pack('BH', 207, duration), ("192.168.12.243", 6666)]).start() #47 Crush 10~64
+                        duration = raymap(velocity, 0, 127, 10, 64)
+                        threading.Timer( DELAY-0.01, port.sendto, [pack('BH', 207, duration), ("192.168.12.243", 6666)]).start() #47 Crush 10~64
                     elif message.note == 48:
-                        duration = 17 #raymap(message.velocity, 0, 127, 17, 70)
-                        threading.Timer( DELAY-float(duration)/1000, port.sendto, [pack('BH', 175, duration), ("192.168.12.243", 6666)]).start() #48 Ride Side 17~70
+                        duration = raymap(velocity, 0, 127, 17, 70)
+                        threading.Timer( DELAY-0.017, port.sendto, [pack('BH', 175, duration), ("192.168.12.243", 6666)]).start() #48 Ride Side 17~70
                     elif message.note == 49:
-                        duration = 13 #raymap(message.velocity, 0, 127, 13, 50)
-                        threading.Timer( DELAY-float(duration)/1000, port.sendto, [pack('BH', 159, duration), ("192.168.12.243", 6666)]).start() #49 Ride 13~50
+                        duration = raymap(velocity, 0, 127, 13, 50)
+                        threading.Timer( DELAY-0.013, port.sendto, [pack('BH', 159, duration), ("192.168.12.243", 6666)]).start() #49 Ride 13~50
                 elif message.channel == 5:
                     oscdelay = 0
                     if message.velocity == 2:
