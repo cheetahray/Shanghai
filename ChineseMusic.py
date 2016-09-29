@@ -146,30 +146,30 @@ def lightinout(lightin):
 def WaveWave():
     global openwave, openrgbw
     if openrgbw == False:
-        if openwave:
-            openwave = False
+        if openwave == False:
             for i in range(1,67):
                 threading.Timer(0.1*i, port4.sendto, [pack('4sBB',"wave",100,10), ("%s%d" % ("192.168.12.", i), 6454) ]).start()
-        else:
             openwave = True
+        else:
             for i in range(1,67):
                 port4.sendto( pack('4sBB',"wave",0,0), ("%s%d" % ("192.168.12.", i), 6454) )
                 threading.Timer(0.1, port4.sendto, [pack('4sBB',"wave",0,0), ("%s%d" % ("192.168.12.", i), 6454) ]).start()
-
+            openwave = False
+            
 def rgbWave():
     global openwave, openrgbw
     if openwave == False:
-        if openrgbw:
-            openrgbw = False
+        if openrgbw == False:
             red, green, blue = rgbrandom(random.randint(0,128))
             for i in range(1,67):
                 threading.Timer(0.1*i, port4.sendto, [pack('4sBB',"wrgb",100,10, int(red/2.55), int(green/2.55), int(blue/2.55) ), ("%s%d" % ("192.168.12.", i), 6454) ]).start()
+            openrgbw = True            
         else:
-            openrgbw = True
             for i in range(1,67):
                 port4.sendto( pack('4sBB',"wave",0,0), ("%s%d" % ("192.168.12.", i), 6454) )
                 threading.Timer(0.1, port4.sendto, [pack('4sBB',"wave",0,0), ("%s%d" % ("192.168.12.", i), 6454) ]).start()
-
+            openrgbw = False
+            
 def rgbrandom(rayrandom):
     pixel = (rayrandom << 9)
     red_value = (pixel & 0xF800) >> 11;
