@@ -600,8 +600,8 @@ tty.setcbreak(sys.stdin)
 mqueue = []
 nowisin = 2
 nowisboom = False
-openwave = True
-openrgbw = True
+openwave = False
+openrgbw = False
 while True:
     #port.flushInput()
     #port.flushOutput()
