@@ -141,6 +141,17 @@ def lightinout(lightin):
             threading.Timer(0.01*i, port2.sendto, [pack('BB', 225, 1), ("%s%d" % ("192.168.12.", i), 5005) ]).start()
     nowisin = lightin
 
+def WaveWave():
+    global openwave
+    if openwave:
+        for i in range(1,67):
+            threading.Timer(0.1*i, port4.sendto, [pack('4sB',"wave",10), ("%s%d" % ("192.168.12.", i), 6454) ]).start()
+        openwave = False
+    else:
+        for i in range(1,67):
+            threading.Timer(0.1*i, port4.sendto, [pack('4sB',"wave",0), ("%s%d" % ("192.168.12.", i), 6454) ]).start()
+        openwave = True
+
 def BoomBoom(rayrandom, myType):
     global nowisboom
     if True == nowisboom:
@@ -311,9 +322,9 @@ def play_midi():
                     elif message.note == 43:
                         duration = raymap(velocity, 0, 127, 17, 30)
                         threading.Timer( DELAY-0.267, port.sendto, [pack('BH', 223, duration), ("192.168.12.243", 6666)]).start() #45 Hi-Hat 17~30
-                        threading.Timer( DELAY-0.3, port.sendto, [pack('BH', 239, 300), ("192.168.12.243", 6666)]).start() #44 Hi-Hat
+                        threading.Timer( DELAY-0.3, port.sendto, [pack('BH', 207, 300), ("192.168.12.242", 6666)]).start() #44 Hi-Hat
                     elif message.note == 44:
-                        threading.Timer( DELAY-0.3, port.sendto, [pack('BH', 239, 300), ("192.168.12.243", 6666)]).start() #44 Pedal Hi-Hat
+                        threading.Timer( DELAY-0.3, port.sendto, [pack('BH', 207, 300), ("192.168.12.242", 6666)]).start() #44 Pedal Hi-Hat
                     elif message.note == 45:
                         duration = raymap(velocity, 0, 127, 17, 30)
                         threading.Timer( DELAY-0.017, port.sendto, [pack('BH', 223, duration), ("192.168.12.243", 6666)]).start() #45 Open Hi-Hat 17~30
@@ -567,6 +578,7 @@ tty.setcbreak(sys.stdin)
 mqueue = []
 nowisin = 2
 nowisboom = False
+openwave = True
 while True:
     #port.flushInput()
     #port.flushOutput()
@@ -591,7 +603,7 @@ while True:
             elif eventkey == '6':
                 readyplay("SMD.mid")
             elif eventkey == '7':
-                readyplay("lovesong.mid")
+                WaveWave()
             elif eventkey == '8':
                 lightinout(0)
                 port.sendto(pack('B',65), ("127.0.0.1",11111) )
