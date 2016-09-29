@@ -144,13 +144,14 @@ def lightinout(lightin):
 def WaveWave():
     global openwave
     if openwave:
-        for i in range(1,67):
-            threading.Timer(0.1*i, port4.sendto, [pack('4sB',"wave",10), ("%s%d" % ("192.168.12.", i), 6454) ]).start()
         openwave = False
-    else:
         for i in range(1,67):
-            threading.Timer(0.1*i, port4.sendto, [pack('4sB',"wave",0), ("%s%d" % ("192.168.12.", i), 6454) ]).start()
+            threading.Timer(0.1*i, port4.sendto, [pack('4sBB',"wave",100,10), ("%s%d" % ("192.168.12.", i), 6454) ]).start()
+    else:
         openwave = True
+        for i in range(1,67):
+            threading.Timer(0.01*i, port4.sendto, [pack('4sBB',"wave",0,0), ("%s%d" % ("192.168.12.", i), 6454) ]).start()
+            threading.Timer(0.7 + 0.01*i, port4.sendto, [pack('4sBB',"wave",0,0), ("%s%d" % ("192.168.12.", i), 6454) ]).start()
 
 def BoomBoom(rayrandom, myType):
     global nowisboom
@@ -300,7 +301,7 @@ def play_midi():
                 #    BoomBoom(message.velocity)
                 if message.channel == 13:
                     DELAY = 1.2
-                    velocity = 1 #message.velocity
+                    velocity = message.velocity
                     if message.note == 36:
                         duration = raymap(velocity, 0, 127, 40, 300)
                         threading.Timer( DELAY-0.04, port.sendto, [pack('BH', 239, duration), ("192.168.12.241", 6666)]).start() #36 Bass drum 40~300
@@ -321,13 +322,13 @@ def play_midi():
                         threading.Timer( DELAY-0.02, port.sendto, [pack('BH', 207, duration), ("192.168.12.241", 6666)]).start() #42 snare side 20~64
                     elif message.note == 43:
                         duration = raymap(velocity, 0, 127, 17, 30)
-                        threading.Timer( DELAY-0.267, port.sendto, [pack('BH', 223, duration), ("192.168.12.243", 6666)]).start() #45 Hi-Hat 17~30
+                        threading.Timer( DELAY-0.267, port.sendto, [pack('BH', 223, duration), ("192.168.12.242", 6666)]).start() #45 Hi-Hat 17~30
                         threading.Timer( DELAY-0.3, port.sendto, [pack('BH', 207, 300), ("192.168.12.242", 6666)]).start() #44 Hi-Hat
                     elif message.note == 44:
                         threading.Timer( DELAY-0.3, port.sendto, [pack('BH', 207, 300), ("192.168.12.242", 6666)]).start() #44 Pedal Hi-Hat
                     elif message.note == 45:
                         duration = raymap(velocity, 0, 127, 17, 30)
-                        threading.Timer( DELAY-0.017, port.sendto, [pack('BH', 223, duration), ("192.168.12.243", 6666)]).start() #45 Open Hi-Hat 17~30
+                        threading.Timer( DELAY-0.017, port.sendto, [pack('BH', 223, duration), ("192.168.12.242", 6666)]).start() #45 Open Hi-Hat 17~30
                     elif message.note == 46:
                         duration = raymap(velocity, 0, 127, 13, 30)
                         threading.Timer( DELAY-0.013, port.sendto, [pack('BH', 191, duration), ("192.168.12.243", 6666)]).start() #46 Crush side 13~30
