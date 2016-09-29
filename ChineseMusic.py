@@ -144,30 +144,49 @@ def lightinout(lightin):
     nowisin = lightin
 
 def WaveWave():
-    global openwave
-    if openwave:
-        openwave = False
-        for i in range(1,67):
-            threading.Timer(0.1*i, port4.sendto, [pack('4sBB',"wave",100,10), ("%s%d" % ("192.168.12.", i), 6454) ]).start()
-    else:
-        openwave = True
-        for i in range(1,67):
-            port4.sendto( pack('4sBB',"wave",0,0), ("%s%d" % ("192.168.12.", i), 6454) )
-            threading.Timer(0.1, port4.sendto, [pack('4sBB',"wave",0,0), ("%s%d" % ("192.168.12.", i), 6454) ]).start()
-            
+    global openwave, openrgbw
+    if openrgbw == False:
+        if openwave:
+            openwave = False
+            for i in range(1,67):
+                threading.Timer(0.1*i, port4.sendto, [pack('4sBB',"wave",100,10), ("%s%d" % ("192.168.12.", i), 6454) ]).start()
+        else:
+            openwave = True
+            for i in range(1,67):
+                port4.sendto( pack('4sBB',"wave",0,0), ("%s%d" % ("192.168.12.", i), 6454) )
+                threading.Timer(0.1, port4.sendto, [pack('4sBB',"wave",0,0), ("%s%d" % ("192.168.12.", i), 6454) ]).start()
+
+def rgbWave():
+    global openwave, openrgbw
+    if openwave == False:
+        if openrgbw:
+            openrgbw = False
+			red, green, blue = rgbrandom(random.randint(0,128))
+            for i in range(1,67):
+                threading.Timer(0.1*i, port4.sendto, [pack('4sBB',"wrgb",100,10, int(red/2.55), int(green/2.55), int(blue/2.55) ), ("%s%d" % ("192.168.12.", i), 6454) ]).start()
+        else:
+            openrgbw = True
+            for i in range(1,67):
+                port4.sendto( pack('4sBB',"wave",0,0), ("%s%d" % ("192.168.12.", i), 6454) )
+                threading.Timer(0.1, port4.sendto, [pack('4sBB',"wave",0,0), ("%s%d" % ("192.168.12.", i), 6454) ]).start()
+
+def rgbrandom(rayrandom):
+    pixel = (rayrandom << 9)
+    red_value = (pixel & 0xF800) >> 11;
+    green_value = (pixel & 0x7E0) >> 5;
+    blue_value = (pixel & 0x1F);
+    red   = red_value << 3;
+    green = green_value << 2;
+    blue  = blue_value << 3;
+    return red, green, blue
+                
 def BoomBoom(rayrandom, myType):
     global nowisboom
     if True == nowisboom:
         pass
     else:
         nowisboom = True
-        pixel = (rayrandom << 9)
-        red_value = (pixel & 0xF800) >> 11;
-        green_value = (pixel & 0x7E0) >> 5;
-        blue_value = (pixel & 0x1F);
-        red   = red_value << 3;
-        green = green_value << 2;
-        blue  = blue_value << 3;
+        red, green, blue = rgbrandom(rayrandom)
         BOOM = pack('4sBBBBBB', "boom" ,red, green, blue, int(red/2.55), int(green/2.55), int(blue/2.55) )
         #print BOOM
         if myType == 0:
@@ -582,6 +601,7 @@ mqueue = []
 nowisin = 2
 nowisboom = False
 openwave = True
+openrgbw = True
 while True:
     #port.flushInput()
     #port.flushOutput()
@@ -591,7 +611,11 @@ while True:
         #eventkey = sys.stdin.read(1)
         if AmIPlay == False:
             nowisin = 2
-            if eventkey == '0':
+            if eventkey == 'M':
+                readyplay("MIM_2.mid")
+            elif eventkey == 'S':
+                readyplay("SMD.mid")
+            elif eventkey == '0':
                 readyplay("Intro.mid")
             elif eventkey == '1':
                 readyplay("SpringRay.mid")
@@ -604,7 +628,7 @@ while True:
             elif eventkey == '5':
                 readyplay("MIM_2.mid")
             elif eventkey == '6':
-                readyplay("SMD.mid")
+                rgbWave()
             elif eventkey == '7':
                 WaveWave()
             elif eventkey == '8':
