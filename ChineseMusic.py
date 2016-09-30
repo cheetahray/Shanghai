@@ -173,15 +173,19 @@ def rgbWave(mytype):
     if openwave == False:
         if openrgbw == False:
             red, green, blue = rgbrandom(random.randint(0,128))
-            for i in range(1,67):
-                if mytype == 2:
-                    port4.sendto( pack('4sBBBBB',"wrgb", 100,10, int(red/2.55), int(green/2.55), int(blue/2.55) ), ("%s%d" % ("192.168.12.", i), 6454) )
-                    #threading.Timer(0.1*i, port4.sendto, [pack('4sBBBBB',"wrgb",100,10, int(red/2.55), int(green/2.55), int(blue/2.55) ), ("%s%d" % ("192.168.12.", i), 6454) ]).start()
+            if mytype == 2:
+                for i in range(1,67):
+                    port4.sendto( pack('4sBBBBBB',"wrgb", 100,10, int(red/2.55), int(green/2.55), int(blue/2.55), 0 ), ("%s%d" % ("192.168.12.", i), 6454) )
+            elif mytype == 3:
+                nums = [i for i in range(1,67)]
+                random.shuffle(nums)
+                for i in nums:
+                    threading.Timer(0.1*i, port4.sendto, [pack('4sBBBBBB',"wrgb", 100,10, int(red/2.55), int(green/2.55), int(blue/2.55), 1 ), ("%s%d" % ("192.168.12.", i), 6454) ]).start()
             openrgbw = True            
         else:
             for i in range(1,67):
-                port4.sendto( pack('4sBBBBB',"wrgb",0,0,0,0,0), ("%s%d" % ("192.168.12.", i), 6454) )
-                threading.Timer(0.1, port4.sendto, [pack('4sBBBBB',"wrgb",0,0,0,0,0), ("%s%d" % ("192.168.12.", i), 6454) ]).start()
+                port4.sendto( pack('4sBBBBBB',"wrgb",0,0,0,0,0,0), ("%s%d" % ("192.168.12.", i), 6454) )
+                threading.Timer(0.1, port4.sendto, [pack('4sBBBBBB',"wrgb",0,0,0,0,0,0), ("%s%d" % ("192.168.12.", i), 6454) ]).start()
             openrgbw = False
             
 def rgbrandom(rayrandom):
