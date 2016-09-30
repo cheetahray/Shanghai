@@ -7,7 +7,9 @@ while True:
     data, addr = sock.recvfrom(1024)
     mydata = ord(data)
     playwhat = ""
-    if(mydata == 60):
+    if(mydata == 57):
+        playwhat = "green"
+    elif(mydata == 60):
         playwhat = "Sp1"
     elif(mydata == 61):
         playwhat =  "w1"

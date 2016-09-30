@@ -642,6 +642,8 @@ while True:
                 readyplay("MIM_2.mid")
             elif eventkey == 's':
                 readyplay("SMD.mid")
+            elif eventkey == 't':
+                readyplay("tree.mid")
             elif eventkey == '0':
                 readyplay("Intro.mid")
             elif eventkey == '1':
