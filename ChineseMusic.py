@@ -143,12 +143,15 @@ def lightinout(lightin):
             threading.Timer(0.1, port2.sendto, [pack('BB', 225, 1), ("%s%d" % ("192.168.12.", i), 5005) ]).start()
     nowisin = lightin
 
-def WaveWave():
+def WaveWave(mytype):
     global openwave, openrgbw
     if openrgbw == False:
         if openwave == False:
             for i in range(1,67):
-                threading.Timer(0.1*i, port4.sendto, [pack('4sBB',"wave",100,10), ("%s%d" % ("192.168.12.", i), 6454) ]).start()
+                if(mytype == 4):
+                    threading.Timer(0.1*i, port4.sendto, [pack('4sBB',"wave",100,10), ("%s%d" % ("192.168.12.", i), 6454) ]).start()
+                elif(mytype == 1):
+                    port4.sendto( pack('4sBB',"wave",100,10), ("%s%d" % ("192.168.12.", i), 6454) )
             openwave = True
         else:
             for i in range(1,67):
@@ -156,13 +159,15 @@ def WaveWave():
                 threading.Timer(0.1, port4.sendto, [pack('4sBB',"wave",0,0), ("%s%d" % ("192.168.12.", i), 6454) ]).start()
             openwave = False
             
-def rgbWave():
+def rgbWave(mytype):
     global openwave, openrgbw
     if openwave == False:
         if openrgbw == False:
             red, green, blue = rgbrandom(random.randint(0,128))
             for i in range(1,67):
-                threading.Timer(0.1*i, port4.sendto, [pack('4sBBBBB',"wrgb",100,10, int(red/2.55), int(green/2.55), int(blue/2.55) ), ("%s%d" % ("192.168.12.", i), 6454) ]).start()
+                if mytype == 2:
+                    port4.sendto( pack('4sBBBBB',"wrgb", 100,10, int(red/2.55), int(green/2.55), int(blue/2.55) ), ("%s%d" % ("192.168.12.", i), 6454) )
+                    #threading.Timer(0.1*i, port4.sendto, [pack('4sBBBBB',"wrgb",100,10, int(red/2.55), int(green/2.55), int(blue/2.55) ), ("%s%d" % ("192.168.12.", i), 6454) ]).start()
             openrgbw = True            
         else:
             for i in range(1,67):
@@ -322,7 +327,7 @@ def play_midi():
                 #    BoomBoom(message.velocity)
                 if message.channel == 13:
                     DELAY = 1.2
-                    velocity = message.velocity
+                    velocity = 1 #message.velocity
                     if message.note == 36:
                         duration = raymap(velocity, 0, 127, 40, 300)
                         threading.Timer( DELAY-0.04, port.sendto, [pack('BH', 239, duration), ("192.168.12.241", 6666)]).start() #36 Bass drum 40~300
@@ -334,7 +339,7 @@ def play_midi():
                         threading.Timer( DELAY-0.015, port.sendto, [pack('BH', 175, duration), ("192.168.12.241", 6666)]).start() #39 lowtom 15~100
                     elif message.note == 40:
                         duration = raymap(velocity, 0, 127, 15, 100)
-                        threading.Timer( DELAY-0.015, port.sendto, [pack('BH', 143, duration), ("192.168.12.243", 6666)]).start() #40 Floor tom 15~100
+                        threading.Timer( DELAY-0.015, port.sendto, [pack('BH', 239, duration), ("192.168.12.242", 6666)]).start() #40 Floor tom 15~100
                     elif message.note == 41:
                         duration = raymap(velocity, 0, 127, 13, 25)
                         threading.Timer( DELAY-0.013, port.sendto, [pack('BH', 223, duration), ("192.168.12.241", 6666)]).start() #41 snare 13~25
@@ -618,19 +623,19 @@ while True:
             elif eventkey == '0':
                 readyplay("Intro.mid")
             elif eventkey == '1':
-                readyplay("SpringRay.mid")
+                WaveWave(1)
             elif eventkey == '2':
-                readyplay("SummerRay.mid")
+                rgbWave(2)
             elif eventkey == '3':
-                readyplay("AutRay.mid")
+                rgbWave(3)
             elif eventkey == '4':
-                readyplay("WinterRay.mid")
+                WaveWave(4)
             elif eventkey == '5':
                 readyplay("MIM_2.mid")
             elif eventkey == '6':
-                rgbWave()
+                pass
             elif eventkey == '7':
-                WaveWave()
+                pass
             elif eventkey == '8':
                 lightinout(0)
                 port.sendto(pack('B',65), ("127.0.0.1",11111) )

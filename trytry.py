@@ -27,18 +27,18 @@ def raymap(value, istart, istop, ostart, ostop):
 #threading.Timer( 7, port.sendto, [pack('BH', 159, 13), ("192.168.12.242", 6666)]).start()
 #threading.Timer( 8, port.sendto, [pack('BH', 175, 17), ("192.168.12.242", 6666)]).start() 
 #threading.Timer( 9, port.sendto, [pack('BH', 191, 13), ("192.168.12.242", 6666)]).start() 
-threading.Timer( 0.1, port.sendto, [pack('BH', 207, 300), ("192.168.12.242", 6666)]).start() #44 Pedal Hi-Hat
-#threading.Timer( 11, port.sendto, [pack('BH', 223, 17), ("192.168.12.242", 6666)]).start() 
-#threading.Timer( 12, port.sendto, [pack('BH', 239, 300), ("192.168.12.242", 6666)]).start() 
+#threading.Timer( 0.1, port.sendto, [pack('BH', 207, 300), ("192.168.12.242", 6666)]).start() #44 Pedal Hi-Hat
+#threading.Timer( 11, port.sendto, [pack('BH', 223, 17), ("192.168.12.242", 6666)]).start() #45 Open Hi-Hat 17~30
+threading.Timer( 0.1, port.sendto, [pack('BH', 239, 15), ("192.168.12.242", 6666)]).start() #40 Floor tom 15~100
 
 #243
 #threading.Timer( 0.11, port.sendto, [pack('BH', 127, 23), ("192.168.12.243", 6666)]).start()
-#threading.Timer( 6, port.sendto, [pack('BH', 143, 15), ("192.168.12.243", 6666)]).start() #40 Floor tom 15~100
+#threading.Timer( 6, port.sendto, [pack('BH', 143, 15), ("192.168.12.243", 6666)]).start() 
 #threading.Timer( 7, port.sendto, [pack('BH', 159, 13), ("192.168.12.243", 6666)]).start() #49 Ride 13~50
 #threading.Timer( 8, port.sendto, [pack('BH', 175, 17), ("192.168.12.243", 6666)]).start() #48 Ride Side 17~70
 #threading.Timer( 9, port.sendto, [pack('BH', 191, 13), ("192.168.12.243", 6666)]).start() #46 Crush side 13~30
 #threading.Timer( 10, port.sendto, [pack('BH', 207, 10), ("192.168.12.243", 6666)]).start() #47 Crush 10~64
-#threading.Timer( 11, port.sendto, [pack('BH', 223, 17), ("192.168.12.243", 6666)]).start() #45 Open Hi-Hat 17~30
+#threading.Timer( 11, port.sendto, [pack('BH', 223, 17), ("192.168.12.243", 6666)]).start() 
 #threading.Timer( 12, port.sendto, [pack('BH', 239, 300), ("192.168.12.243", 6666)]).start() 
 
 time.sleep(2)
