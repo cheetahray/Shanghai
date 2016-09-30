@@ -175,13 +175,13 @@ def rgbWave(mytype):
             red, green, blue = rgbrandom(random.randint(0,128))
             if mytype == 2:
                 for i in range(1,67):
-                    port4.sendto( pack('4sBBBBBB',"wrgb", 100,10, int(red/2.55), int(green/2.55), int(blue/2.55), 0 ), ("%s%d" % ("192.168.12.", i), 6454) )
+                    port4.sendto( pack('4sBBBBBB',"wrgb", 100,10, int(red/2.55), int(green/2.55), int(blue/2.55), 1 ), ("%s%d" % ("192.168.12.", i), 6454) )
             elif mytype == 3:
                 nums = [i for i in range(67)]
                 random.shuffle(nums)
                 for i in range(1,67):
                     #print nums[i-1]
-                    threading.Timer(0.1*nums[i-1], port4.sendto, [pack('4sBBBBBB',"wrgb", 100,10, int(red/2.55), int(green/2.55), int(blue/2.55), 1 ), ("%s%d" % ("192.168.12.", i), 6454) ]).start()
+                    threading.Timer(0.1*nums[i-1], port4.sendto, [pack('4sBBBBBB',"wrgb", 100,10, int(red/2.55), int(green/2.55), int(blue/2.55), 2 ), ("%s%d" % ("192.168.12.", i), 6454) ]).start()
             openrgbw = True            
         else:
             for i in range(1,67):
@@ -343,8 +343,8 @@ def play_midi():
                     DELAY = 1.2
                     velocity = message.velocity
                     if message.note == 36:
-                        duration = raymap(velocity, 0, 127, 40, 300)
-                        threading.Timer( DELAY-0.04, port.sendto, [pack('BH', 239, duration), ("192.168.12.241", 6666)]).start() #36 Bass drum 40~300
+                        duration = raymap(velocity, 0, 127, 40, 200)
+                        threading.Timer( DELAY-0.04, port.sendto, [pack('BH', 239, duration), ("192.168.12.241", 6666)]).start() #36 Bass drum 40~200
                     elif message.note == 38:
                         duration = raymap(velocity, 0, 127, 15, 100)
                         threading.Timer( DELAY-0.015, port.sendto, [pack('BH', 159, duration), ("192.168.12.241", 6666)]).start() #38 midtom 15~100
