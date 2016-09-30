@@ -31,7 +31,8 @@ mid = None
 debug = False        #Boolean for on/off our debug print 
 cc = OSC.OSCClient()
 cc.connect(('192.168.12.212', 53000))   # localhost, port 57120
-
+dd = OSC.OSCClient()
+dd.connect(('192.168.12.203', 53000))   # localhost, port 57120
 def click(mmsg,msg2):
     global cc
     oscmsg = OSC.OSCMessage()
@@ -39,6 +40,14 @@ def click(mmsg,msg2):
     oscmsg.setAddress("%s%s%c%s" % ("/cue/", mmsg, '/', msg2) )
     #oscmsg.append(mmsg)
     cc.send(oscmsg)
+
+def mp3(mmsg,msg2):
+    global dd
+    oscmsg = OSC.OSCMessage()
+    print "%s%s%c%s" % ("/cue/", mmsg, '/', msg2)
+    oscmsg.setAddress("%s%s%c%s" % ("/cue/", mmsg, '/', msg2) )
+    #oscmsg.append(mmsg)
+    dd.send(oscmsg)
 
 class Tests(unittest.TestCase):
     def test_0(self):   #Test play midi file
@@ -367,6 +376,14 @@ def play_midi():
                     elif message.note == 49:
                         duration = raymap(velocity, 0, 127, 13, 50)
                         threading.Timer( DELAY-0.013, port.sendto, [pack('BH', 159, duration), ("192.168.12.243", 6666)]).start() #49 Ride 13~50
+                elif message.channel == 7:
+                    oscdelay = 0
+                    if message.velocity == 2:
+                        oscdelay = 0.3
+                    else:
+                        oscdelay = 1.2
+                    if message.note == 36:
+                        threading.Timer(oscdelay, mp3, ["C1","start"]).start()              
                 elif message.channel == 5:
                     oscdelay = 0
                     if message.velocity == 2:
@@ -616,9 +633,9 @@ while True:
         #eventkey = sys.stdin.read(1)
         if AmIPlay == False:
             nowisin = 2
-            if eventkey == 'M':
+            if eventkey == 'm':
                 readyplay("MIM_2.mid")
-            elif eventkey == 'S':
+            elif eventkey == 's':
                 readyplay("SMD.mid")
             elif eventkey == '0':
                 readyplay("Intro.mid")
