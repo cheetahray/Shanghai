@@ -177,10 +177,11 @@ def rgbWave(mytype):
                 for i in range(1,67):
                     port4.sendto( pack('4sBBBBBB',"wrgb", 100,10, int(red/2.55), int(green/2.55), int(blue/2.55), 0 ), ("%s%d" % ("192.168.12.", i), 6454) )
             elif mytype == 3:
-                nums = [i for i in range(1,67)]
+                nums = [i for i in range(67)]
                 random.shuffle(nums)
-                for i in nums:
-                    threading.Timer(0.1*i, port4.sendto, [pack('4sBBBBBB',"wrgb", 100,10, int(red/2.55), int(green/2.55), int(blue/2.55), 1 ), ("%s%d" % ("192.168.12.", i), 6454) ]).start()
+                for i in range(1,67):
+                    #print nums[i-1]
+                    threading.Timer(0.1*nums[i-1], port4.sendto, [pack('4sBBBBBB',"wrgb", 100,10, int(red/2.55), int(green/2.55), int(blue/2.55), 1 ), ("%s%d" % ("192.168.12.", i), 6454) ]).start()
             openrgbw = True            
         else:
             for i in range(1,67):
@@ -340,7 +341,7 @@ def play_midi():
                 #    BoomBoom(message.velocity)
                 if message.channel == 13:
                     DELAY = 1.2
-                    velocity = 1 #message.velocity
+                    velocity = message.velocity
                     if message.note == 36:
                         duration = raymap(velocity, 0, 127, 40, 300)
                         threading.Timer( DELAY-0.04, port.sendto, [pack('BH', 239, duration), ("192.168.12.241", 6666)]).start() #36 Bass drum 40~300
@@ -352,7 +353,7 @@ def play_midi():
                         threading.Timer( DELAY-0.015, port.sendto, [pack('BH', 175, duration), ("192.168.12.241", 6666)]).start() #39 lowtom 15~100
                     elif message.note == 40:
                         duration = raymap(velocity, 0, 127, 15, 100)
-                        threading.Timer( DELAY-0.015, port.sendto, [pack('BH', 239, duration), ("192.168.12.242", 6666)]).start() #40 Floor tom 15~100
+                        threading.Timer( DELAY-0.015, port.sendto, [pack('BH', 191, duration), ("192.168.12.242", 6666)]).start() #40 Floor tom 15~100
                     elif message.note == 41:
                         duration = raymap(velocity, 0, 127, 13, 25)
                         threading.Timer( DELAY-0.013, port.sendto, [pack('BH', 223, duration), ("192.168.12.241", 6666)]).start() #41 snare 13~25
