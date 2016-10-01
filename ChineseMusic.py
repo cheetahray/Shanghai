@@ -30,7 +30,7 @@ import threading
 mid = None
 debug = False        #Boolean for on/off our debug print 
 cc = OSC.OSCClient()
-cc.connect(('192.168.12.212', 53000))   # localhost, port 57120
+cc.connect(('192.168.12.203', 53000))   # localhost, port 57120
 dd = OSC.OSCClient()
 dd.connect(('192.168.12.203', 53000))   # localhost, port 57120
 def click(mmsg,msg2):
@@ -54,7 +54,10 @@ class Tests(unittest.TestCase):
         play_midi();
 
 def raymap(value, istart, istop, ostart, ostop):
-    wierd = ostart + (ostop - ostart) * (value - istart) / (istop - istart); 
+    if value <= 6:
+        wierd = 1
+    else:
+        wierd = ostart + (ostop - ostart) * (value - istart) / (istop - istart); 
     #print wierd
     return wierd
 
@@ -338,7 +341,7 @@ def play_midi():
                         del pickidx[8][message.note]
             else:
                 #if message.channel == 4:
-                #    BoomBoom(message.velocity)
+                #    threading.Timer( DELAY, BoomBoom, [message.velocity, 0] ).start()
                 if message.channel == 13:
                     DELAY = 1.2
                     velocity = message.velocity
