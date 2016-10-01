@@ -30,7 +30,7 @@ import threading
 mid = None
 debug = False        #Boolean for on/off our debug print 
 cc = OSC.OSCClient()
-cc.connect(('192.168.12.203', 53000))   # localhost, port 57120
+cc.connect(('192.168.12.212', 53000))   # localhost, port 57120
 dd = OSC.OSCClient()
 dd.connect(('192.168.12.203', 53000))   # localhost, port 57120
 def click(mmsg,msg2):
@@ -156,41 +156,46 @@ def lightinout(lightin):
     nowisin = lightin
 
 def WaveWave(mytype):
-    global openwave, openrgbw
-    if openrgbw == False:
-        if openwave == False:
-            for i in range(1,67):
-                if(mytype == 4):
-                    threading.Timer(0.1*i, port4.sendto, [pack('4sBB',"wave",100,10), ("%s%d" % ("192.168.12.", i), 6454) ]).start()
-                elif(mytype == 1):
-                    port4.sendto( pack('4sBB',"wave",100,10), ("%s%d" % ("192.168.12.", i), 6454) )
-            openwave = True
-        else:
-            for i in range(1,67):
-                port4.sendto( pack('4sBB',"wave",0,0), ("%s%d" % ("192.168.12.", i), 6454) )
-                threading.Timer(0.1, port4.sendto, [pack('4sBB',"wave",0,0), ("%s%d" % ("192.168.12.", i), 6454) ]).start()
-            openwave = False
+    #global openwave, openrgbw
+    #if openrgbw == False:
+    #    if openwave == False:
+    nomatterwhat()
+    for i in range(1,67):
+        if(mytype == 4):
+            threading.Timer(0.1*i, port4.sendto, [pack('4sBB',"wave",100,10), ("%s%d" % ("192.168.12.", i), 6454) ]).start()
+        elif(mytype == 1):
+            port4.sendto( pack('4sBB',"wave",100,10), ("%s%d" % ("192.168.12.", i), 6454) )
+    #        openwave = True
+    #    else:
+    #        for i in range(1,67):
+    #            port4.sendto( pack('4sBB',"wave",0,0), ("%s%d" % ("192.168.12.", i), 6454) )
+    #            threading.Timer(0.1, port4.sendto, [pack('4sBB',"wave",0,0), ("%s%d" % ("192.168.12.", i), 6454) ]).start()
+    #        openwave = False
             
 def rgbWave(mytype):
-    global openwave, openrgbw
-    if openwave == False:
-        if openrgbw == False:
-            red, green, blue = rgbrandom(random.randint(0,128))
-            if mytype == 2:
-                for i in range(1,67):
-                    port4.sendto( pack('4sBBBBBB',"wrgb", 100,10, int(red/2.55), int(green/2.55), int(blue/2.55), 1 ), ("%s%d" % ("192.168.12.", i), 6454) )
-            elif mytype == 3:
-                nums = [i for i in range(67)]
-                random.shuffle(nums)
-                for i in range(1,67):
-                    #print nums[i-1]
-                    threading.Timer(0.1*nums[i-1], port4.sendto, [pack('4sBBBBBB',"wrgb", 100,10, int(red/2.55), int(green/2.55), int(blue/2.55), 2 ), ("%s%d" % ("192.168.12.", i), 6454) ]).start()
-            openrgbw = True            
-        else:
-            for i in range(1,67):
-                port4.sendto( pack('4sBBBBBB',"wrgb",0,0,0,0,0,0), ("%s%d" % ("192.168.12.", i), 6454) )
-                threading.Timer(0.1, port4.sendto, [pack('4sBBBBBB',"wrgb",0,0,0,0,0,0), ("%s%d" % ("192.168.12.", i), 6454) ]).start()
-            openrgbw = False
+    #global openwave, openrgbw
+    #if openwave == False:
+    #    if openrgbw == False:
+    nomatterwhat()
+    red, green, blue = rgbrandom(random.randint(0,128))
+    if mytype == 2:
+        for i in range(1,67):
+            port4.sendto( pack('4sBBBBBB',"wrgb", 100,10, int(red/2.55), int(green/2.55), int(blue/2.55), 1 ), ("%s%d" % ("192.168.12.", i), 6454) )
+    elif mytype == 3:
+        nums = [i for i in range(67)]
+        random.shuffle(nums)
+        for i in range(1,67):
+            threading.Timer(0.1*nums[i-1], port4.sendto, [pack('4sBBBBBB',"wrgb", 100,10, int(red/2.55), int(green/2.55), int(blue/2.55), 2 ), ("%s%d" % ("192.168.12.", i), 6454) ]).start()
+    #        openrgbw = True            
+    #    else:
+    #        for i in range(1,67):
+    #            port4.sendto( pack('4sBBBBBB',"wrgb",0,0,0,0,0,0), ("%s%d" % ("192.168.12.", i), 6454) )
+    #            threading.Timer(0.1, port4.sendto, [pack('4sBBBBBB',"wrgb",0,0,0,0,0,0), ("%s%d" % ("192.168.12.", i), 6454) ]).start()
+    #        openrgbw = False
+
+def nomatterwhat():
+    for i in range(1,67):
+        port4.sendto( pack('4sBBBBBB',"wrgb",0,0,0,0,0,0), ("%s%d" % ("192.168.12.", i), 6454) )
             
 def rgbrandom(rayrandom):
     pixel = (rayrandom << 9)
@@ -207,6 +212,8 @@ def BoomBoom(rayrandom, myType):
     if True == nowisboom:
         pass
     else:
+        for i in range(1,67):
+            port4.sendto( pack('4sBBBBBB',"wrgb",0,0,0,0,0,0), ("%s%d" % ("192.168.12.", i), 6454) )
         nowisboom = True
         red, green, blue = rgbrandom(rayrandom)
         BOOM = pack('4sBBBBBB', "boom" ,red, green, blue, int(red/2.55), int(green/2.55), int(blue/2.55) )
@@ -232,7 +239,7 @@ def BoomBoom(rayrandom, myType):
 
 def readyplay(midstr):
     global mid
-    soundonoff(True)
+    #soundonoff(True)
     #time.sleep(0.5)
     parser = argparse.ArgumentParser()
     args = parser.parse_args()
@@ -347,43 +354,43 @@ def play_midi():
                     velocity = message.velocity
                     if message.note == 36:
                         duration = raymap(velocity, 0, 127, 40, 200)
-                        threading.Timer( DELAY-0.04, port.sendto, [pack('BH', 239, duration), ("192.168.12.241", 6666)]).start() #36 Bass drum 40~200
+                        threading.Timer( DELAY-0.04, port3.sendto, [pack('BH', 239, duration), ("192.168.12.241", 6666)]).start() #36 Bass drum 40~200
                     elif message.note == 38:
                         duration = raymap(velocity, 0, 127, 15, 100)
-                        threading.Timer( DELAY-0.015, port.sendto, [pack('BH', 159, duration), ("192.168.12.241", 6666)]).start() #38 midtom 15~100
+                        threading.Timer( DELAY-0.015, port3.sendto, [pack('BH', 159, duration), ("192.168.12.241", 6666)]).start() #38 midtom 15~100
                     elif message.note == 39:
                         duration = raymap(velocity, 0, 127, 15, 100)
-                        threading.Timer( DELAY-0.015, port.sendto, [pack('BH', 175, duration), ("192.168.12.241", 6666)]).start() #39 lowtom 15~100
+                        threading.Timer( DELAY-0.015, port3.sendto, [pack('BH', 175, duration), ("192.168.12.241", 6666)]).start() #39 lowtom 15~100
                     elif message.note == 40:
                         duration = raymap(velocity, 0, 127, 15, 100)
-                        threading.Timer( DELAY-0.015, port.sendto, [pack('BH', 191, duration), ("192.168.12.242", 6666)]).start() #40 Floor tom 15~100
+                        threading.Timer( DELAY-0.015, port3.sendto, [pack('BH', 191, duration), ("192.168.12.242", 6666)]).start() #40 Floor tom 15~100
                     elif message.note == 41:
                         duration = raymap(velocity, 0, 127, 13, 25)
-                        threading.Timer( DELAY-0.013, port.sendto, [pack('BH', 223, duration), ("192.168.12.241", 6666)]).start() #41 snare 13~25
+                        threading.Timer( DELAY-0.013, port3.sendto, [pack('BH', 223, duration), ("192.168.12.241", 6666)]).start() #41 snare 13~25
                     elif message.note == 42:
                         duration = raymap(velocity, 0, 127, 20, 64)
-                        threading.Timer( DELAY-0.02, port.sendto, [pack('BH', 207, duration), ("192.168.12.241", 6666)]).start() #42 snare side 20~64
+                        threading.Timer( DELAY-0.02, port3.sendto, [pack('BH', 207, duration), ("192.168.12.241", 6666)]).start() #42 snare side 20~64
                     elif message.note == 43:
                         duration = raymap(velocity, 0, 127, 17, 30)
-                        threading.Timer( DELAY-0.267, port.sendto, [pack('BH', 223, duration), ("192.168.12.242", 6666)]).start() #45 Hi-Hat 17~30
-                        threading.Timer( DELAY-0.3, port.sendto, [pack('BH', 207, 300), ("192.168.12.242", 6666)]).start() #44 Hi-Hat
+                        threading.Timer( DELAY-0.267, port3.sendto, [pack('BH', 223, duration), ("192.168.12.242", 6666)]).start() #45 Hi-Hat 17~30
+                        threading.Timer( DELAY-0.3, port3.sendto, [pack('BH', 207, 300), ("192.168.12.242", 6666)]).start() #44 Hi-Hat
                     elif message.note == 44:
-                        threading.Timer( DELAY-0.3, port.sendto, [pack('BH', 207, 300), ("192.168.12.242", 6666)]).start() #44 Pedal Hi-Hat
+                        threading.Timer( DELAY-0.3, port3.sendto, [pack('BH', 207, 300), ("192.168.12.242", 6666)]).start() #44 Pedal Hi-Hat
                     elif message.note == 45:
                         duration = raymap(velocity, 0, 127, 17, 30)
-                        threading.Timer( DELAY-0.017, port.sendto, [pack('BH', 223, duration), ("192.168.12.242", 6666)]).start() #45 Open Hi-Hat 17~30
+                        threading.Timer( DELAY-0.017, port3.sendto, [pack('BH', 223, duration), ("192.168.12.242", 6666)]).start() #45 Open Hi-Hat 17~30
                     elif message.note == 46:
                         duration = raymap(velocity, 0, 127, 13, 30)
-                        threading.Timer( DELAY-0.013, port.sendto, [pack('BH', 191, duration), ("192.168.12.243", 6666)]).start() #46 Crush side 13~30
+                        threading.Timer( DELAY-0.013, port3.sendto, [pack('BH', 191, duration), ("192.168.12.243", 6666)]).start() #46 Crush side 13~30
                     elif message.note == 47:
                         duration = raymap(velocity, 0, 127, 10, 64)
-                        threading.Timer( DELAY-0.01, port.sendto, [pack('BH', 207, duration), ("192.168.12.243", 6666)]).start() #47 Crush 10~64
+                        threading.Timer( DELAY-0.01, port3.sendto, [pack('BH', 207, duration), ("192.168.12.243", 6666)]).start() #47 Crush 10~64
                     elif message.note == 48:
                         duration = raymap(velocity, 0, 127, 17, 70)
-                        threading.Timer( DELAY-0.017, port.sendto, [pack('BH', 175, duration), ("192.168.12.243", 6666)]).start() #48 Ride Side 17~70
+                        threading.Timer( DELAY-0.017, port3.sendto, [pack('BH', 175, duration), ("192.168.12.243", 6666)]).start() #48 Ride Side 17~70
                     elif message.note == 49:
                         duration = raymap(velocity, 0, 127, 13, 50)
-                        threading.Timer( DELAY-0.013, port.sendto, [pack('BH', 159, duration), ("192.168.12.243", 6666)]).start() #49 Ride 13~50
+                        threading.Timer( DELAY-0.013, port3.sendto, [pack('BH', 159, duration), ("192.168.12.243", 6666)]).start() #49 Ride 13~50
                 elif message.channel == 7:
                     oscdelay = 0
                     if message.velocity == 2:
@@ -440,6 +447,18 @@ def play_midi():
                         threading.Timer(oscdelay, click, ["D1","start"]).start()
                     elif message.note == 50:
                         threading.Timer(oscdelay, click, ["D2","start"]).start()
+                    elif message.note == 62:
+                        threading.Timer(oscdelay, click, ["D3","start"]).start()
+                    elif message.note == 74:
+                        threading.Timer(oscdelay, click, ["D4","start"]).start()
+                    elif message.note == 86:
+                        threading.Timer(oscdelay, click, ["D5","start"]).start()
+                    elif message.note == 98:
+                        threading.Timer(oscdelay, click, ["D6","start"]).start()
+                    elif message.note == 110:
+                        threading.Timer(oscdelay, click, ["D7","start"]).start()
+                    elif message.note == 26:
+                        threading.Timer(oscdelay, click, ["D0","start"]).start()
                 elif message.channel == 6:
                     if message.note == 59:
                         print "HighHighLowLow"
@@ -599,7 +618,7 @@ def play_midi():
         port.sendto(pack('BBB', 144, 28, 0), ("%s%d" % ("192.168.12.", i), 5005))
     time.sleep(1.6)
     '''
-    soundonoff(False)
+    #soundonoff(False)
     AmIPlay = False    
       #0  1  2  3  4  5  6  7  8  9 10 11 12 13 14 15 16 17 18 19 20 21 22 23 24 25 26 27 28 29 30 31 32 33 34 35 36 37 38 39 40 41 42 43 44 45 46 47 48 49 50 51 52 53 54 55 56 57 58 59 60 61 62 63 64 65 66
 #ST = [0, 1, 1, 1, 1, 1, 1, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0 ,0 ,0 ,0, 0, 0, 0, 0, 1, 1, 1, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 1, 1, 1, 1, 1, 1]
@@ -641,32 +660,33 @@ while True:
         #eventkey = sys.stdin.read(1)
         if AmIPlay == False:
             nowisin = 2
-            if eventkey == 'm':
+            if eventkey == '1':
+                readyplay("LoveSong.mid")
+            elif eventkey == '2':
+                readyplay("women.mid")
+            elif eventkey == '3':
+                readyplay("Dnm.mid")
+            elif eventkey == '4':
                 readyplay("MIM_2.mid")
             elif eventkey == 's':
                 readyplay("SMD.mid")
-            elif eventkey == 't':
-                readyplay("tree.mid")
-            elif eventkey == '0':
-                readyplay("Intro.mid")
-            elif eventkey == '1':
-                WaveWave(1)
-            elif eventkey == '2':
-                rgbWave(2)
-            elif eventkey == '3':
-                rgbWave(3)
-            elif eventkey == '4':
-                WaveWave(4)
-            elif eventkey == '5':
-                readyplay("MIM_2.mid")
-            elif eventkey == '6':
-                pass
-            elif eventkey == '7':
-                pass
-            elif eventkey == '8':
+            elif eventkey == 'g':
+                port.sendto(pack('B',57), ("127.0.0.1",11111) )
+            elif eventkey == 'b':
+                port.sendto(pack('B',1), ("127.0.0.1",11111) )
+            elif eventkey == 'a':
                 lightinout(0)
                 port.sendto(pack('B',65), ("127.0.0.1",11111) )
-            elif eventkey == '9':
+            elif eventkey == 'o':
+                for i in ST:
+                    port.sendto(pack('BBB', 224, 60, 1), ("%s%d" % ("192.168.12.", i), 5005))
+                for i in AT:
+                    port.sendto(pack('BBB', 224, 48, 1), ("%s%d" % ("192.168.12.", i), 5005))
+                for i in TT:
+                    port.sendto(pack('BBB', 224, 38, 1), ("%s%d" % ("192.168.12.", i), 5005))
+                for i in BT:
+                    port.sendto(pack('BBB', 224, 28, 1), ("%s%d" % ("192.168.12.", i), 5005))
+            elif eventkey == 'u':
                 for i in ST:
                     port.sendto(pack('BBB', 224, 60, 1), ("%s%d" % ("192.168.12.", i), 5005))
                 for i in AT:
@@ -697,6 +717,16 @@ while True:
                 #print "Animation"
                 #lightinout(0)
                 #port.sendto(pack('B',message.note), ("127.0.0.1",11111) )
+            elif eventkey == '5':
+                nomatterwhat()
+            elif eventkey == '6':
+                WaveWave(1)
+            elif eventkey == '7':
+                rgbWave(2)
+            elif eventkey == '8':
+                rgbWave(3)
+            elif eventkey == '9':
+                WaveWave(4)
     elif AmIPlay == True and len(mqueue) > 0:
         #mqueue.insert(0,'./rayclient')
         #print mqueue
