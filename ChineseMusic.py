@@ -651,6 +651,7 @@ nowisin = 2
 nowisboom = False
 openwave = False
 openrgbw = False
+soundonoff(True)
 while True:
     #port.flushInput()
     #port.flushOutput()
