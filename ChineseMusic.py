@@ -652,89 +652,92 @@ nowisboom = False
 openwave = False
 openrgbw = False
 soundonoff(True)
-while True:
-    #port.flushInput()
-    #port.flushOutput()
-    #rlist, _, _ = select([sys.stdin], [], [], 0.001)
-    eventkey = sys.stdin.read(1)
-    if True: #rlist:
-        #eventkey = sys.stdin.read(1)
-        if AmIPlay == False:
-            nowisin = 2
-            if eventkey == '1':
-                readyplay("LoveSong.mid")
-            elif eventkey == '2':
-                readyplay("women.mid")
-            elif eventkey == '3':
-                readyplay("Dnm.mid")
-            elif eventkey == '4':
-                readyplay("MIM_2.mid")
-            elif eventkey == 's':
-                readyplay("SMD.mid")
-            elif eventkey == 'g':
-                port.sendto(pack('B',57), ("127.0.0.1",11111) )
-            elif eventkey == 'b':
-                port.sendto(pack('B',1), ("127.0.0.1",11111) )
-            elif eventkey == 'a':
-                lightinout(0)
-                port.sendto(pack('B',65), ("127.0.0.1",11111) )
-            elif eventkey == 'o':
-                for i in ST:
-                    port.sendto(pack('BBB', 224, 60, 1), ("%s%d" % ("192.168.12.", i), 5005))
-                for i in AT:
-                    port.sendto(pack('BBB', 224, 48, 1), ("%s%d" % ("192.168.12.", i), 5005))
-                for i in TT:
-                    port.sendto(pack('BBB', 224, 38, 1), ("%s%d" % ("192.168.12.", i), 5005))
-                for i in BT:
-                    port.sendto(pack('BBB', 224, 28, 1), ("%s%d" % ("192.168.12.", i), 5005))
-            elif eventkey == 'u':
-                for i in ST:
-                    port.sendto(pack('BBB', 224, 60, 1), ("%s%d" % ("192.168.12.", i), 5005))
-                for i in AT:
-                    port.sendto(pack('BBB', 224, 48, 1), ("%s%d" % ("192.168.12.", i), 5005))
-                for i in TT:
-                    port.sendto(pack('BBB', 224, 38, 1), ("%s%d" % ("192.168.12.", i), 5005))
-                for i in BT:
-                    port.sendto(pack('BBB', 224, 28, 1), ("%s%d" % ("192.168.12.", i), 5005))
-                threading.Timer(1,lightinout,[1]).start()
-            print eventkey
-        else:
-            if ord(eventkey) == 10:
-                waitforkey = False
-                #sys.exit()
-        if True:
-            if eventkey == '.':
-                BoomBoom(random.randint(0,128),0)
-            elif eventkey == '/':
-                BoomBoom(random.randint(0,128),1)
-            elif eventkey == '*':
-                BoomBoom(random.randint(0,128),2)
-            elif eventkey == '-':
-                BoomBoom(random.randint(0,128),3)
-                #print "HighHighLowLow"
-                #lightinout(1)
-            elif eventkey == '+':
-                BoomBoom(random.randint(0,128),4)
-                #print "Animation"
-                #lightinout(0)
-                #port.sendto(pack('B',message.note), ("127.0.0.1",11111) )
-            elif eventkey == '5':
-                nomatterwhat()
-            elif eventkey == '6':
-                WaveWave(1)
-            elif eventkey == '7':
-                rgbWave(2)
-            elif eventkey == '8':
-                rgbWave(3)
-            elif eventkey == '9':
-                WaveWave(4)
-    elif AmIPlay == True and len(mqueue) > 0:
-        #mqueue.insert(0,'./rayclient')
-        #print mqueue
-        #subprocess.call(mqueue)
-        #del mqueue[:]
-        myword = ""
-        while len(mqueue) > 0:
-            myword += mqueue.pop()
-        #print myword
-        port.sendto(myword[:-1], ("127.0.0.1", 8888) )    
+try:
+	while True:
+		#port.flushInput()
+		#port.flushOutput()
+		#rlist, _, _ = select([sys.stdin], [], [], 0.001)
+		eventkey = sys.stdin.read(1)
+		if True: #rlist:
+			#eventkey = sys.stdin.read(1)
+			if AmIPlay == False:
+				nowisin = 2
+				if eventkey == '1':
+					readyplay("LoveSong.mid")
+				elif eventkey == '2':
+					readyplay("women.mid")
+				elif eventkey == '3':
+					readyplay("Dnm.mid")
+				elif eventkey == '4':
+					readyplay("MIM_2.mid")
+				elif eventkey == 's':
+					readyplay("SMD.mid")
+				elif eventkey == 'g':
+					port.sendto(pack('B',57), ("127.0.0.1",11111) )
+				elif eventkey == 'b':
+					port.sendto(pack('B',1), ("127.0.0.1",11111) )
+				elif eventkey == 'a':
+					lightinout(0)
+					port.sendto(pack('B',65), ("127.0.0.1",11111) )
+				elif eventkey == 'o':
+					for i in ST:
+						port.sendto(pack('BBB', 224, 60, 1), ("%s%d" % ("192.168.12.", i), 5005))
+					for i in AT:
+						port.sendto(pack('BBB', 224, 48, 1), ("%s%d" % ("192.168.12.", i), 5005))
+					for i in TT:
+						port.sendto(pack('BBB', 224, 38, 1), ("%s%d" % ("192.168.12.", i), 5005))
+					for i in BT:
+						port.sendto(pack('BBB', 224, 28, 1), ("%s%d" % ("192.168.12.", i), 5005))
+				elif eventkey == 'u':
+					for i in ST:
+						port.sendto(pack('BBB', 224, 60, 1), ("%s%d" % ("192.168.12.", i), 5005))
+					for i in AT:
+						port.sendto(pack('BBB', 224, 48, 1), ("%s%d" % ("192.168.12.", i), 5005))
+					for i in TT:
+						port.sendto(pack('BBB', 224, 38, 1), ("%s%d" % ("192.168.12.", i), 5005))
+					for i in BT:
+						port.sendto(pack('BBB', 224, 28, 1), ("%s%d" % ("192.168.12.", i), 5005))
+					threading.Timer(1,lightinout,[1]).start()
+				print eventkey
+			else:
+				if ord(eventkey) == 10:
+					waitforkey = False
+					#sys.exit()
+			if True:
+				if eventkey == '.':
+					BoomBoom(random.randint(0,128),0)
+				elif eventkey == '/':
+					BoomBoom(random.randint(0,128),1)
+				elif eventkey == '*':
+					BoomBoom(random.randint(0,128),2)
+				elif eventkey == '-':
+					BoomBoom(random.randint(0,128),3)
+					#print "HighHighLowLow"
+					#lightinout(1)
+				elif eventkey == '+':
+					BoomBoom(random.randint(0,128),4)
+					#print "Animation"
+					#lightinout(0)
+					#port.sendto(pack('B',message.note), ("127.0.0.1",11111) )
+				elif eventkey == '5':
+					nomatterwhat()
+				elif eventkey == '6':
+					WaveWave(1)
+				elif eventkey == '7':
+					rgbWave(2)
+				elif eventkey == '8':
+					rgbWave(3)
+				elif eventkey == '9':
+					WaveWave(4)
+		elif AmIPlay == True and len(mqueue) > 0:
+			#mqueue.insert(0,'./rayclient')
+			#print mqueue
+			#subprocess.call(mqueue)
+			#del mqueue[:]
+			myword = ""
+			while len(mqueue) > 0:
+				myword += mqueue.pop()
+			#print myword
+			port.sendto(myword[:-1], ("127.0.0.1", 8888) )    
+except KeyboardInterrupt:
+    mp3("C1","stop")
