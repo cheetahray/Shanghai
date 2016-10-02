@@ -678,15 +678,13 @@ try:
                     readyplay("SpringRay.mid")
                 elif eventkey == '4':
                     readyplay("SMD.mid")
-                elif eventkey == 'y':
-                    port.sendto(pack('B',4), ("127.0.0.1",11111) )
-                elif eventkey == 'g':
-                    port.sendto(pack('B',57), ("127.0.0.1",11111) )
-                elif eventkey == 'b':
-                    port.sendto(pack('B',1), ("127.0.0.1",11111) )
                 elif eventkey == 'a':
                     lightinout(0)
                     port.sendto(pack('B',65), ("127.0.0.1",11111) )
+                elif eventkey == 'b':
+                    port.sendto(pack('B',1), ("127.0.0.1",11111) )
+                elif eventkey == 'g':
+                    port.sendto(pack('B',57), ("127.0.0.1",11111) )
                 elif eventkey == 'o':
                     for i in ST:
                         port.sendto(pack('BBB', 224, 60, 1), ("%s%d" % ("192.168.12.", i), 5005))
@@ -706,6 +704,8 @@ try:
                     for i in BT:
                         port.sendto(pack('BBB', 224, 28, 1), ("%s%d" % ("192.168.12.", i), 5005))
                     threading.Timer(1,lightinout,[1]).start()
+                elif eventkey == 'y':
+                    port.sendto(pack('B',4), ("127.0.0.1",11111) )
                 print eventkey
             else:
                 if ord(eventkey) == 10:
@@ -727,7 +727,7 @@ try:
                     #print "Animation"
                     #lightinout(0)
                     #port.sendto(pack('B',message.note), ("127.0.0.1",11111) )
-                elif eventkey == '5':
+                elif eventkey == '0':
                     nomatterwhat()
                 elif eventkey == '6':
                     WaveWave(1)
