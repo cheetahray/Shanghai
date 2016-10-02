@@ -9,6 +9,8 @@ while True:
     playwhat = ""
     if(mydata == 1):
         playwhat = "back"
+    elif(mydata == 4):
+        playwhat = "y"
     elif(mydata == 31):
         playwhat = "m0"
     elif(mydata == 36):
@@ -22,7 +24,7 @@ while True:
     elif(mydata == 55):
         playwhat = "m1"
     elif(mydata == 57):
-        playwhat = "green"
+        playwhat = "green_2"
     elif(mydata == 58):
         playwhat = "red"
     elif(mydata == 60):
@@ -54,6 +56,8 @@ while True:
         playwhat = "W5"
     elif(mydata == 79):
         playwhat = "m4"
+    elif(mydata == 110):
+        playwhat = "p"
     if len(playwhat) > 0:
         subprocess.call('./reart.sh ' + playwhat + '.mov&', shell=True)
         print "==>", playwhat

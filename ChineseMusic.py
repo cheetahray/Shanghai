@@ -459,6 +459,14 @@ def play_midi():
                         threading.Timer(oscdelay, click, ["D7","start"]).start()
                     elif message.note == 26:
                         threading.Timer(oscdelay, click, ["D0","start"]).start()
+                    elif message.note == 41:
+                        threading.Timer(oscdelay, click, ["F1","start"]).start()
+                    elif message.note == 53:
+                        threading.Timer(oscdelay, click, ["F2","start"]).start()
+                    elif message.note == 65:
+                        threading.Timer(oscdelay, click, ["F3","start"]).start()
+                    elif message.note == 77:
+                        threading.Timer(oscdelay, click, ["F4","start"]).start()
                 elif message.channel == 6:
                     if message.note == 59:
                         print "HighHighLowLow"
@@ -663,15 +671,15 @@ try:
 			if AmIPlay == False:
 				nowisin = 2
 				if eventkey == '1':
-					readyplay("LoveSong.mid")
+					readyplay("sky.mid")
 				elif eventkey == '2':
-					readyplay("women.mid")
+					readyplay("tree.mid")
 				elif eventkey == '3':
-					readyplay("Dnm.mid")
+					readyplay("SpringRay.mid")
 				elif eventkey == '4':
-					readyplay("MIM_2.mid")
-				elif eventkey == 's':
 					readyplay("SMD.mid")
+                                elif eventkey == 'y':
+                                        port.sendto(pack('B',4), ("127.0.0.1",11111) )
 				elif eventkey == 'g':
 					port.sendto(pack('B',57), ("127.0.0.1",11111) )
 				elif eventkey == 'b':
