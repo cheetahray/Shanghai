@@ -467,6 +467,14 @@ def play_midi():
                         threading.Timer(oscdelay, click, ["F3","start"]).start()
                     elif message.note == 77:
                         threading.Timer(oscdelay, click, ["F4","start"]).start()
+                    elif message.note == 89:
+                        threading.Timer(oscdelay, click, ["F5","start"]).start()
+                    elif message.note == 101:
+                        threading.Timer(oscdelay, click, ["F6","start"]).start()
+                    elif message.note == 113:
+                        threading.Timer(oscdelay, click, ["F7","start"]).start()
+                    elif message.note == 29:
+                        threading.Timer(oscdelay, click, ["F0","start"]).start()
                 elif message.channel == 6:
                     if message.note == 59:
                         print "HighHighLowLow"
