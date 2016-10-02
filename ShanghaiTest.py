@@ -312,13 +312,13 @@ try:
     #port.flushInput()
     #port.flushOutput()
 
-    whoami = "6"
+    whoami = "53"
     #Register the door bl button GPIO input call back function
     #port.sendto(pack('BBB', 253, int(whoami),100), ("192.168.12." + whoami, 5005) )
     time.sleep(0.01)
     port.sendto(pack('BB', 225, 0), ("192.168.12." + whoami, 5005) )
     time.sleep(0.01)
-    whattype = 'S'
+    whattype = 'A'
     if False:
         for i in range(1,7):
             if whattype == 'S':
