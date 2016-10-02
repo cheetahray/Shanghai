@@ -23,11 +23,11 @@ def whattype(typestr):
     global lasttype
     chnl = typestr
     if chnl >= 10:
-        chnl = 46
+        chnl = 32
     elif chnl >= 8:
         chnl = 46
     elif chnl >= 2:
-        chnl = 46 
+        chnl = 32
     else:
         chnl = 46
     if lasttype != chnl:
