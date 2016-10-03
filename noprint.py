@@ -28,15 +28,15 @@ while True:
     elif(mydata == 58):
         playwhat = "red"
     elif(mydata == 60):
-        playwhat = "Sp1"
+        playwhat = "sky02"
     elif(mydata == 61):
         playwhat =  "w1"
     elif(mydata == 62):
-        playwhat =  "w1"
-    elif(mydata == 63):
         playwhat =  "w3"
-    elif(mydata == 64):
+    elif(mydata == 63):
         playwhat =  "w4"
+    elif(mydata == 64):
+        playwhat =  "W5"
     elif(mydata == 65):
         playwhat = "C1"
     elif(mydata == 66):

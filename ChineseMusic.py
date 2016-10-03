@@ -350,7 +350,7 @@ def play_midi():
                 #if message.channel == 4:
                 #    threading.Timer( DELAY, BoomBoom, [message.velocity, 0] ).start()
                 if message.channel == 13:
-                    DELAY = 1.2
+                    DELAY = 1.17
                     velocity = message.velocity
                     if message.note == 36:
                         duration = raymap(velocity, 0, 127, 40, 200)
@@ -601,16 +601,16 @@ def play_midi():
                 if pickidx[8].has_key(message.note):
                     #port.sendto("%s%d %d %d" % ( "128 " , message.note, message.velocity, pickidx[8][message.note]) , ("%s%d" % ("192.168.12.", pickidx[8][message.note]), 5005) )
                     del pickidx[8][message.note]
-        if msg.startswith("f") and message.note in noteoffaa:
-            msg = pack('sBBB', msg, message.channel, message.note, 2)
-            noteoffaa.remove(message.note)
-        else:
-            msg = pack('sBBB', msg, message.channel, message.note, message.velocity)
+        if message.channel != 13:
+            if msg.startswith("f") and message.note in noteoffaa:
+                msg = pack('sBBB', msg, message.channel, message.note, 2)
+                noteoffaa.remove(message.note)
+            else:
+                msg = pack('sBBB', msg, message.channel, message.note, message.velocity)
+            port3.sendto(msg, ("192.168.12.203", 8888) )
         #subprocess.call(['./rayclient', msg, str(message.channel), str(message.note), str(message.velocity)])
         #print msg
-        #if msg.startswith("n"):
         #mqueue.insert(0,msg)
-        port3.sendto(msg, ("192.168.12.203", 8888) )
         #totaltime = totaltime + message.time
     time.sleep(2)
     print "Done!!"
@@ -686,11 +686,6 @@ try:
                     readyplay("SpringRay.mid")
                 elif eventkey == '4':
                     readyplay("SMD.mid")
-                elif eventkey == 'a':
-                    lightinout(0)
-                    port.sendto(pack('B',65), ("127.0.0.1",11111) )
-                elif eventkey == 'b':
-                    port.sendto(pack('B',1), ("127.0.0.1",11111) )
                 elif eventkey == 'g':
                     port.sendto(pack('B',57), ("127.0.0.1",11111) )
                 elif eventkey == 'o':
@@ -702,6 +697,8 @@ try:
                         port.sendto(pack('BBB', 224, 38, 1), ("%s%d" % ("192.168.12.", i), 5005))
                     for i in BT:
                         port.sendto(pack('BBB', 224, 28, 1), ("%s%d" % ("192.168.12.", i), 5005))
+                elif eventkey == 's':
+                    port.sendto(pack('B',48), ("127.0.0.1",11111) )
                 elif eventkey == 'u':
                     for i in ST:
                         port.sendto(pack('BBB', 224, 60, 1), ("%s%d" % ("192.168.12.", i), 5005))
@@ -712,6 +709,9 @@ try:
                     for i in BT:
                         port.sendto(pack('BBB', 224, 28, 1), ("%s%d" % ("192.168.12.", i), 5005))
                     threading.Timer(1,lightinout,[1]).start()
+                elif eventkey == 'w':
+                    #lightinout(0)
+                    port.sendto(pack('B',63), ("127.0.0.1",11111) )
                 elif eventkey == 'y':
                     port.sendto(pack('B',4), ("127.0.0.1",11111) )
                 print eventkey
