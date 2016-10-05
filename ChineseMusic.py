@@ -756,4 +756,5 @@ try:
             #print myword
             port.sendto(myword[:-1], ("127.0.0.1", 8888) )    
 except KeyboardInterrupt:
+    #soundonoff(False)
     mp3("C1","stop")
