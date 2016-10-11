@@ -32,9 +32,12 @@ class ColorWipe(BaseMatrixAnim, Thread):
 
     def step(self, amt = 1):
         pass
-	
+    
     def cleargb(self):
-        self._led.all_off()
+        #self._led.all_off()
+        self._color = colors.color_scale((0,0,0), 0)
+        #for i in range(40):
+        self._led.drawRect(0,0,self.__width,40, self._color)
         self._led.update()
 
     def drawone(self,x,y,r,g,b):

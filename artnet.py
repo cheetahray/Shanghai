@@ -15,24 +15,12 @@ def handler(clientsocket, clientaddr):
     global qq50
     global QQ
     global AmIBoomNow
+    global threeight
     while 1:
         data = clientsocket.recv(1024)
-        if True == AmIBoomNow:
-            pass
-        elif ( len(data) == 10 and data[0:4] == "boom" ):
-            AmIBoomNow = True
-            #GPIO.output(13, False) #p13.ChangeDutyCycle(0)
-            mylist2 = data[4:]#.split(" ")
-            p38.ChangeDutyCycle(100) #GPIO.output(38, True)
-            p40.ChangeDutyCycle(0) #GPIO.output(40, False)
-            #anim.rayanim(int(mylist2[0]),int(mylist2[1]),int(mylist2[2]),255,20,0.1)
-            p31.ChangeDutyCycle(ord(mylist2[3]))
-            p33.ChangeDutyCycle(ord(mylist2[4]))
-            p35.ChangeDutyCycle(ord(mylist2[5]))
-            Timer(0.2, boom).start()
-        elif ( len(data) == 6  and (data[0:6] == "picker") ):
+        if ( len(data) == 6  and (data[0:6] == "picker") ):
             GPIO.output(13, False) #p13.ChangeDutyCycle(0)
-            if False == QQ:
+            if threeight == 0 and False == QQ:
                 p38.ChangeDutyCycle(100) #GPIO.output(38, True)
                 p40.ChangeDutyCycle(0) #GPIO.output(40, False)
             Timer(0.333, func).start()
@@ -45,25 +33,25 @@ def handler(clientsocket, clientaddr):
                 #print(mylist2)
                 if '0' == mylist2[2] : 
                     anim.rayanim(0,255,0,255,int(mylist2[0])+1,float(mylist2[1]))
-                    if False == QQ:
+                    if threeight == 0 and False == QQ:
                         p31.ChangeDutyCycle(0)
                         p33.ChangeDutyCycle(100)
                         p35.ChangeDutyCycle(0)
                 elif '1' == mylist2[2] : 
                     anim.rayanim(255,255,255,255,int(mylist2[0])+1,float(mylist2[1]))
-                    if False == QQ:
+                    if threeight == 0 and False == QQ:
                         p31.ChangeDutyCycle(100)
                         p33.ChangeDutyCycle(100)
                         p35.ChangeDutyCycle(100)
                 elif '2' == mylist2[2] : 
                     anim.rayanim(255,112,0,255,int(mylist2[0])+1,float(mylist2[1]))
-                    if False == QQ:
+                    if threeight == 0 and False == QQ:
                         p31.ChangeDutyCycle(100)
                         p33.ChangeDutyCycle(50)
                         p35.ChangeDutyCycle(0)
                 elif '3' == mylist2[2] : 
                     anim.rayanim(255,0,0,255,int(mylist2[0])+1,float(mylist2[1]))
-                    if False == QQ:
+                    if threeight == 0 and False == QQ:
                         p31.ChangeDutyCycle(100)
                         p33.ChangeDutyCycle(0)
                         p35.ChangeDutyCycle(0)
@@ -97,13 +85,13 @@ def handler(clientsocket, clientaddr):
                     p35.ChangeDutyCycle(0)
         elif len(data) == 3  and (data[0:3] == "out"):
             QQ = False
-            qq50 = 50
+            qq50 = 0
             Timer(5, musicend).start()
             islightout = True
             anim.cleargb()
         elif len(data) == 2  and (data[0:2] == "in"):
             QQ = False
-            qq50 = 50
+            qq50 = 0
             musicstart()
             islightout = False
             anim.cleargb()
@@ -115,6 +103,7 @@ def handler(clientsocket, clientaddr):
             musicstart()
             islightout = False
             anim.cleargb()
+        '''
         elif len(data) == 4  and (data[0:4] == "rgbw"):
             p31.ChangeDutyCycle(100)
             p33.ChangeDutyCycle(0)
@@ -129,12 +118,12 @@ def handler(clientsocket, clientaddr):
             time.sleep(1)
             p35.ChangeDutyCycle(0)
             p37.ChangeDutyCycle(100)
-
+        '''
 def boom():
     global AmIBoomNow
     #GPIO.output(13, True) #p13.ChangeDutyCycle(0)
     p38.ChangeDutyCycle(0) #GPIO.output(38, True)
-    p40.ChangeDutyCycle(100) #GPIO.output(40, False)
+    p40.ChangeDutyCycle(0) #GPIO.output(40, False)
     #anim.cleargb()
     p31.ChangeDutyCycle(0)
     p33.ChangeDutyCycle(0)
@@ -159,6 +148,50 @@ def musicstart():
     global qq50
     p38.ChangeDutyCycle(0) #GPIO.output(38, False)
     p40.ChangeDutyCycle(qq50) #GPIO.output(40, True)
+    
+def twohuwave(mydelay, myduty):
+    global direction
+    global nowduty
+    if nowduty == 100:
+        direction = -1
+    elif nowduty == 0:
+        direction = 1    
+    if direction == 1:
+        nowduty += myduty
+    elif direction == -1:
+        nowduty -= myduty
+    if(direction != 0):
+        p38.ChangeDutyCycle(nowduty)
+        Timer(float(mydelay)/1000, twohuwave, [mydelay, myduty]).start()
+    else:
+        nowduty = 0
+        p38.ChangeDutyCycle(nowduty)
+
+def rgbwave(mydelay, myduty, red, green, blue):
+    global direction
+    global nowduty
+    global threeight
+    if nowduty == 100:
+        direction = -1
+    elif nowduty == 0:
+        direction = 1    
+    if direction == 1:
+        nowduty += myduty
+    elif direction == -1:
+        nowduty -= myduty
+    if(direction != 0):
+        p31.ChangeDutyCycle(red*nowduty/100)
+        p33.ChangeDutyCycle(green*nowduty/100)
+        p35.ChangeDutyCycle(blue*nowduty/100)
+        if threeight == 2:
+            p38.ChangeDutyCycle(nowduty)
+        Timer(float(mydelay)/1000, rgbwave, [mydelay, myduty, red, green, blue]).start()
+    else:
+        nowduty = 0
+        p31.ChangeDutyCycle(nowduty)
+        p33.ChangeDutyCycle(nowduty)
+        p35.ChangeDutyCycle(nowduty)
+    
 AmIBoomNow = False    
 islightout = True
 sock = socket.socket(socket.AF_INET, socket.SOCK_DGRAM) # UDP
@@ -197,7 +230,7 @@ coords = [
 [17,70],[16,71],[15,72],[14,73],[13,74],[12,75],[11,76],[10,77],[9,78],[8,79],[7,80],[6,81],[5,82],[4,83],
 [0,1],[2,3]
 ]
-qq50 = 50
+qq50 = 0
 #coords = [
 #[10,9],[11,8],[12,7],[13,6],[14,5],[15,4],[16,3],[17,2],[18,1],[19,0]
 #]
@@ -213,7 +246,9 @@ anim = rayled.ColorWipe(led, width = len(coords[0]))
 
 timer = None  
 sparksock = socket.socket(socket.AF_INET, socket.SOCK_STREAM)
-
+direction = 0
+nowduty = 0
+threeight = 0
 try:        
     sparksock.bind(("0.0.0.0",9999))
     sparksock.listen(2)
@@ -222,28 +257,37 @@ try:
     while True:
         try:
             data, addr = sock.recvfrom(1024)
-            if False == islightout:
-                if data[0:4] == "RGBW":
-                    mylist = data[4:].split(" ")
-                    p31.ChangeDutyCycle(int(mylist[0])/2.55)
-                    p33.ChangeDutyCycle(int(mylist[1])/2.55)
-                    p35.ChangeDutyCycle(int(mylist[2])/2.55)
-                    #for ii in range (0,160,4):
-                    #    y = int(mylist[ii+3])
-                    #    r = int(mylist[ii])
-                    #    g = int(mylist[ii+1])
-                    #    b = int(mylist[ii+2])
-                    #    anim.drawone(0, y, r, g, b)
-                    #    anim.drawone(1, y, r, g, b)
-                elif data[0:4] == "COLD":
-                    mylist = data[4:].split(" ")
-                    p38.ChangeDutyCycle(int(mylist[0])/2.55) #GPIO.output(38, True)
-                elif data[0:4] == "WARM":
-                    mylist = data[4:].split(" ")
-                    p40.ChangeDutyCycle(int(mylist[0])/2.55) #GPIO.output(40, False)
-                    #if int(mylist[164]) > 0:
-                    #    GPIO.output(13, False) #p13.ChangeDutyCycle(0)
-                    #    Timer(0.333, qq).start()
+            if True == AmIBoomNow:
+                pass
+            elif ( len(data) == 10 and data[0:4] == "boom" ):
+                AmIBoomNow = True
+                #GPIO.output(13, False) #p13.ChangeDutyCycle(0)
+                mylist2 = data[4:]#.split(" ")
+                p38.ChangeDutyCycle(100) #GPIO.output(38, True)
+                p40.ChangeDutyCycle(0) #GPIO.output(40, False)
+                #anim.rayanim(int(mylist2[0]),int(mylist2[1]),int(mylist2[2]),255,20,0.1)
+                p31.ChangeDutyCycle(ord(mylist2[3]))
+                p33.ChangeDutyCycle(ord(mylist2[4]))
+                p35.ChangeDutyCycle(ord(mylist2[5]))
+                Timer(0.1, boom).start()
+            elif ( len(data) == 6 and data[0:4] == "wave" ):
+                if(ord(data[4]) == 0):
+                    direction = 0
+                else:
+                    direction = 1
+                    twohuwave(ord(data[4]), ord(data[5]))
+            elif ( len(data) == 10 and data[0:4] == "wrgb" ):
+                if(ord(data[4]) == 0):
+                    direction = 0
+                    threeight = ord(data[9])
+                    if threeight == 0:
+                        p38.ChangeDutyCycle(0)
+                else:
+                    direction = 1
+                    threeight = ord(data[9])
+                    if threeight == 1:
+                        p38.ChangeDutyCycle(100)
+                    rgbwave(ord(data[4]), ord(data[5]), ord(data[6]), ord(data[7]), ord(data[8]))
             else:    
                 if (len(data) > 8) and (data[0:8] == "Art-Net\x00"):
                     rawbytes = map(ord, data)
@@ -288,15 +332,38 @@ try:
                         g = ord(data[ii+1])
                         b = ord(data[ii+2])
                         y = ord(data[ii+3])
-                        if 0 == y and False == QQ:
+                        if threeight == 0 and 0 == y and False == QQ:
                             p31.ChangeDutyCycle(int(r/2.55))
                             p33.ChangeDutyCycle(int(g/2.55))
                             p35.ChangeDutyCycle(int(b/2.55))
                         else:
                             anim.drawone(0, y, r, g, b)
-                            anim.drawone(1, y, r, g, b)
-                    
-
+                            anim.drawone(1, y, r, g, b)        
+            '''
+            elif False == islightout:
+                if data[0:4] == "RGBW":
+                    mylist = data[4:].split(" ")
+                    p31.ChangeDutyCycle(int(mylist[0])/2.55)
+                    p33.ChangeDutyCycle(int(mylist[1])/2.55)
+                    p35.ChangeDutyCycle(int(mylist[2])/2.55)
+                    #for ii in range (0,160,4):
+                    #    y = int(mylist[ii+3])
+                    #    r = int(mylist[ii])
+                    #    g = int(mylist[ii+1])
+                    #    b = int(mylist[ii+2])
+                    #    anim.drawone(0, y, r, g, b)
+                    #    anim.drawone(1, y, r, g, b)
+                elif data[0:4] == "COLD":
+                    mylist = data[4:].split(" ")
+                    p38.ChangeDutyCycle(int(mylist[0])/2.55) #GPIO.output(38, True)
+                elif data[0:4] == "WARM":
+                    mylist = data[4:].split(" ")
+                    p40.ChangeDutyCycle(int(mylist[0])/2.55) #GPIO.output(40, False)
+                    #if int(mylist[164]) > 0:
+                    #    GPIO.output(13, False) #p13.ChangeDutyCycle(0)
+                    #    Timer(0.333, qq).start()
+            '''
+            
         except ValueError:
             pass    
         except IndexError:

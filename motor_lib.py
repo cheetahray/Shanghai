@@ -329,8 +329,8 @@ class pwmMotorDriver(object):
 
 class tstepdriver(object):
     def __init__(self):
-        self.port = serial.Serial("/dev/ttyAMA0", baudrate=57600, timeout=3.0)
-        
+        #self.port = serial.Serial("/dev/ttyAMA0", baudrate=57600, timeout=3.0)
+        self.port = serial.Serial("/dev/ttyAMA0", baudrate=19200, timeout=3.0)
     def set_attrib(self):
         ts_cmd=[]
         ts_cmd.append('#AAC2')
@@ -345,14 +345,16 @@ class tstepdriver(object):
         ts_cmd.append('#ASR10')
         ts_cmd.append('#ASV400')
         ts_cmd.append('#AVL78000')
+        #ts_cmd.append('#BR0')
         ts_cmd.append('#ASD')
-        ts_cmd.append('#AMA')
+        #ts_cmd.append('#AMA')
+        '''
         for i, ts_val in enumerate(ts_cmd):
             print 'Send to T-Step--> ' + ts_val
             self.port.write(ts_val + "\r\n")
             rcv=self.readline(self.port)
             print rcv
-
+        '''
         self.port.flush()
 
     def readline(self,port):
@@ -426,8 +428,8 @@ class tstepdriver(object):
         return True
     def mv(self, target_pitch):
         self.port.write("#ATA" + repr(target_pitch) + "\r\n")
-        io1.delayMicroseconds(8000)
-        self.port.flush()
+        #io1.delayMicroseconds(8000)
+        #self.port.flush()
         return True
 
     def mr(self, pitch_index):
