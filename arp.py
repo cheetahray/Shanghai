@@ -9,19 +9,34 @@ args = parser.parse_args()
  
 m = PyMouse()
 k = PyKeyboard()
+
+def ktype_string(god,rest):
+    global k
+    k.type_string(god)
+    k.tap_key(k.enter_key)
+    time.sleep(rest)
+
 #39 24 23 14
-for ii in range(14,13,-1):
+for ii in range(31,36):
     time.sleep(1)
-    k.type_string('ssh pi@192.168.12.' + str(ii) + "\n")
-    time.sleep(6)
-    k.type_string('raspberry\n')
-    time.sleep(2)
-    k.type_string('sudo chmod 777 /etc/ethers\n')
-    time.sleep(1)
-    k.type_string('arp -n | grep eth0 | awk {\'print $1, $3\'} > /etc/ethers\n')
-    time.sleep(1)
-    k.type_string('cat /etc/ethers\n')
-    time.sleep(1)
-    k.type_string('sudo arp -f\n')
-    time.sleep(1)
-    k.type_string('exit\n')
+    ktype_string('ssh pi@192.168.12.' + str(ii),6)
+    ktype_string('raspberry',2)
+    ktype_string('amixer cset numid=6 75% 75%', 1)
+    '''
+    ktype_string('cd ShanghaiB',1)
+    ktype_string('sudo sftp albert@192.168.12.95', 2)
+    ktype_string('chu67925', 2)
+    ktype_string('cd Shanghai',1)
+    ktype_string('get soundfontsender.py',1)
+    ktype_string('get artnet.py', 1)
+    ktype_string('get ledmatrix.py', 1)
+    ktype_string('get fourty.py', 1)
+    ktype_string('exit',1)
+    '''
+    '''
+    ktype_string('sudo chmod 777 /etc/ethers',1)
+    ktype_string('arp -n | grep eth0 | awk {\'print $1, $3\'} > /etc/ethers',1)
+    ktype_string('cat /etc/ethers',1)
+    ktype_string('sudo arp -f',1)
+    '''
+    ktype_string('exit',1)

@@ -12,7 +12,7 @@ print >>sys.stderr, 'starting up on %s port %s' % server_address
 sock.bind(server_address)
 
 fs = fluidsynth.Synth()
-fs.start('coreaudio')
+fs.start('alsa')
 sfid = fs.sfload("FluidR3_GM.sf2")
 lasttype = 0
 fs.pitch_bend(0, 512)

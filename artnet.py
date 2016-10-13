@@ -288,7 +288,7 @@ try:
                     if threeight == 1:
                         p38.ChangeDutyCycle(100)
                     rgbwave(ord(data[4]), ord(data[5]), ord(data[6]), ord(data[7]), ord(data[8]))
-            else:    
+            elif islightout == True:    
                 if (len(data) > 8) and (data[0:8] == "Art-Net\x00"):
                     rawbytes = map(ord, data)
                     opcode = rawbytes[8] + (rawbytes[9] << 8)

@@ -239,7 +239,7 @@ def BoomBoom(rayrandom, myType):
 
 def readyplay(midstr):
     global mid
-    #soundonoff(True)
+    lightinout(1)
     #time.sleep(0.5)
     parser = argparse.ArgumentParser()
     args = parser.parse_args()
@@ -607,12 +607,13 @@ def play_midi():
                 noteoffaa.remove(message.note)
             else:
                 msg = pack('sBBB', msg, message.channel, message.note, message.velocity)
-            port3.sendto(msg, ("192.168.12.203", 8888) )
+            port3.sendto(msg, ("192.168.12.95", 8888) )
         #subprocess.call(['./rayclient', msg, str(message.channel), str(message.note), str(message.velocity)])
         #print msg
         #mqueue.insert(0,msg)
         #totaltime = totaltime + message.time
     time.sleep(2)
+    lightinout(0)
     print "Done!!"
     '''
     for i in ST:
@@ -686,6 +687,8 @@ try:
                     readyplay("SpringRay.mid")
                 elif eventkey == '4':
                     readyplay("SMD.mid")
+                elif eventkey == '5':
+                    readyplay("/home/albert/midi/Ry.mid")
                 elif eventkey == 'g':
                     port.sendto(pack('B',57), ("127.0.0.1",11111) )
                 elif eventkey == 'o':
