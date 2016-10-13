@@ -10,7 +10,7 @@ def readlineCR(port):
                         return rv
                 rv += ch
 
-port = serial.Serial("/dev/ttyAMA0", baudrate=57600, timeout=3.0)
+port = serial.Serial("/dev/ttyAMA0", baudrate=19200, timeout=3.0)
 
 while True:
     ts_cmd = raw_input('Send to T-Step--> ')
