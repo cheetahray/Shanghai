@@ -142,7 +142,7 @@ def changemusic(tp):
 
 def lightinout(lightin):
     global nowisin
-    if nowisin != 1 and lightin == 1:
+    if False: #nowisin != 1 and lightin == 1:
         print "67"
         subprocess.call('./closeart.sh', shell=True)
         for i in range(1,67):
@@ -239,7 +239,7 @@ def BoomBoom(rayrandom, myType):
 
 def readyplay(midstr):
     global mid
-    lightinout(1)
+    lightinout(0)
     #time.sleep(0.5)
     parser = argparse.ArgumentParser()
     args = parser.parse_args()
@@ -688,7 +688,7 @@ try:
                 elif eventkey == '4':
                     readyplay("SMD.mid")
                 elif eventkey == '5':
-                    readyplay("/home/albert/midi/Ry.mid")
+                    readyplay("/home/albert/midi/bee.mid")
                 elif eventkey == 'g':
                     port.sendto(pack('B',57), ("127.0.0.1",11111) )
                 elif eventkey == 'o':

@@ -17,11 +17,23 @@ def ktype_string(god,rest):
     time.sleep(rest)
 
 #39 24 23 14
-for ii in range(31,36):
+while True: 
+#for ii in range(31,36):
+#for ii in range(136,137):
     time.sleep(1)
+    ktype_string('5',73)
+    '''
     ktype_string('ssh pi@192.168.12.' + str(ii),6)
+    ktype_string('chu67925',2)
+    ktype_string('sudo kill -9 $(ps -ef | grep hl | awk \'{print $2}\')', 1)
+    ktype_string('exit',1)
+    '''
+    '''
+    ktype_string('ssh pi@192.168.12.' + str(ii),1)
     ktype_string('raspberry',2)
-    ktype_string('amixer cset numid=6 75% 75%', 1)
+    ktype_string('amixer cset numid=6 70% 70%', 1)
+    ktype_string('exit',1)
+    '''
     '''
     ktype_string('cd ShanghaiB',1)
     ktype_string('sudo sftp albert@192.168.12.95', 2)
@@ -34,9 +46,13 @@ for ii in range(31,36):
     ktype_string('exit',1)
     '''
     '''
+    ktype_string('ssh pi@192.168.12.' + str(ii),1)
+    ktype_string('chu67925',2)
+    ktype_string('sudo touch /etc/ethers',1)
+    ktype_string('chu67925',2)
     ktype_string('sudo chmod 777 /etc/ethers',1)
     ktype_string('arp -n | grep eth0 | awk {\'print $1, $3\'} > /etc/ethers',1)
     ktype_string('cat /etc/ethers',1)
     ktype_string('sudo arp -f',1)
-    '''
     ktype_string('exit',1)
+    '''
