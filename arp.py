@@ -10,6 +10,13 @@ args = parser.parse_args()
 m = PyMouse()
 k = PyKeyboard()
 
+def combine(god):
+    global k
+    k.press_key(k.control_key)
+    k.type_string(god)
+    k.release_key(k.control_key)
+    time.sleep(1)
+
 def ktype_string(god,rest):
     global k
     k.type_string(god)
@@ -17,11 +24,16 @@ def ktype_string(god,rest):
     time.sleep(rest)
 
 #39 24 23 14
-while True: 
+#while True: 
 #for ii in range(31,36):
-#for ii in range(136,137):
+time.sleep(1.5)
+for ii in range(1,67):
+    '''
     time.sleep(1)
     ktype_string('5',73)
+    '''
+    ktype_string('ping 192.168.12.' + str(ii),3)
+    combine('c')
     '''
     ktype_string('ssh pi@192.168.12.' + str(ii),6)
     ktype_string('chu67925',2)
