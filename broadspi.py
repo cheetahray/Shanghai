@@ -95,6 +95,12 @@ def Threadfun2(string1, string2, string3, string4, string5, string6, *args):
     s4 = socket.socket(socket.AF_INET, socket.SOCK_STREAM)
     s5 = socket.socket(socket.AF_INET, socket.SOCK_STREAM)
     s6 = socket.socket(socket.AF_INET, socket.SOCK_STREAM)
+    B1 = False
+    B2 = False
+    B3 = False
+    B4 = False
+    B5 = False
+    B6 = False
     while(True):
         if False == B1:
             try:
@@ -167,6 +173,12 @@ def Threadfun3(string1, string2, string3, string4, string5, string6, *args):
     s4 = socket.socket(socket.AF_INET, socket.SOCK_STREAM)
     s5 = socket.socket(socket.AF_INET, socket.SOCK_STREAM)
     s6 = socket.socket(socket.AF_INET, socket.SOCK_STREAM)
+    B1 = False
+    B2 = False
+    B3 = False
+    B4 = False
+    B5 = False
+    B6 = False
     while(True):
         if False == B1:
             try:
@@ -239,6 +251,12 @@ def Threadfun4(string1, string2, string3, string4, string5, string6, *args):
     s4 = socket.socket(socket.AF_INET, socket.SOCK_STREAM)
     s5 = socket.socket(socket.AF_INET, socket.SOCK_STREAM)
     s6 = socket.socket(socket.AF_INET, socket.SOCK_STREAM)
+    B1 = False
+    B2 = False
+    B3 = False
+    B4 = False
+    B5 = False
+    B6 = False
     while(True):
         if False == B1:
             try:
@@ -311,6 +329,12 @@ def Threadfun5(string1, string2, string3, string4, string5, string6, *args):
     s4 = socket.socket(socket.AF_INET, socket.SOCK_STREAM)
     s5 = socket.socket(socket.AF_INET, socket.SOCK_STREAM)
     s6 = socket.socket(socket.AF_INET, socket.SOCK_STREAM)
+    B1 = False
+    B2 = False
+    B3 = False
+    B4 = False
+    B5 = False
+    B6 = False
     while(True):
         if False == B1:
             try:
@@ -383,6 +407,12 @@ def Threadfun6(string1, string2, string3, string4, string5, string6, *args):
     s4 = socket.socket(socket.AF_INET, socket.SOCK_STREAM)
     s5 = socket.socket(socket.AF_INET, socket.SOCK_STREAM)
     s6 = socket.socket(socket.AF_INET, socket.SOCK_STREAM)
+    B1 = False
+    B2 = False
+    B3 = False
+    B4 = False
+    B5 = False
+    B6 = False
     while(True):
         if False == B1:
             try:
@@ -455,6 +485,12 @@ def Threadfun7(string1, string2, string3, string4, string5, string6, *args):
     s4 = socket.socket(socket.AF_INET, socket.SOCK_STREAM)
     s5 = socket.socket(socket.AF_INET, socket.SOCK_STREAM)
     s6 = socket.socket(socket.AF_INET, socket.SOCK_STREAM)
+    B1 = False
+    B2 = False
+    B3 = False
+    B4 = False
+    B5 = False
+    B6 = False
     while(True):
         if False == B1:
             try:
@@ -527,6 +563,12 @@ def Threadfun8(string1, string2, string3, string4, string5, string6, *args):
     s4 = socket.socket(socket.AF_INET, socket.SOCK_STREAM)
     s5 = socket.socket(socket.AF_INET, socket.SOCK_STREAM)
     s6 = socket.socket(socket.AF_INET, socket.SOCK_STREAM)
+    B1 = False
+    B2 = False
+    B3 = False
+    B4 = False
+    B5 = False
+    B6 = False
     while(True):
         if False == B1:
             try:
@@ -599,6 +641,12 @@ def Threadfun9(string1, string2, string3, string4, string5, string6, *args):
     s4 = socket.socket(socket.AF_INET, socket.SOCK_STREAM)
     s5 = socket.socket(socket.AF_INET, socket.SOCK_STREAM)
     s6 = socket.socket(socket.AF_INET, socket.SOCK_STREAM)
+    B1 = False
+    B2 = False
+    B3 = False
+    B4 = False
+    B5 = False
+    B6 = False
     while(True):
         if False == B1:
             try:
@@ -671,6 +719,12 @@ def Threadfun10(string1, string2, string3, string4, string5, string6, *args):
     s4 = socket.socket(socket.AF_INET, socket.SOCK_STREAM)
     s5 = socket.socket(socket.AF_INET, socket.SOCK_STREAM)
     s6 = socket.socket(socket.AF_INET, socket.SOCK_STREAM)
+    B1 = False
+    B2 = False
+    B3 = False
+    B4 = False
+    B5 = False
+    B6 = False
     while(True):
         if False == B1:
             try:
@@ -743,6 +797,12 @@ def Threadfun11(string1, string2, string3, string4, string5, string6, *args):
     s4 = socket.socket(socket.AF_INET, socket.SOCK_STREAM)
     s5 = socket.socket(socket.AF_INET, socket.SOCK_STREAM)
     s6 = socket.socket(socket.AF_INET, socket.SOCK_STREAM)
+    B1 = False
+    B2 = False
+    B3 = False
+    B4 = False
+    B5 = False
+    B6 = False
     while(True):
         if False == B1:
             try:
