@@ -194,7 +194,7 @@ def Threadfun3(string1, string2, string3, string4, string5, string6, *args):
     B5 = False
     B6 = False
     while(True):
-                if False == B1:
+        if False == B1:
             try:
                 s1.connect((string1, 6454))
                 B1 = True
