@@ -196,8 +196,6 @@ AmIBoomNow = False
 islightout = True
 tcpsock = socket.socket(socket.AF_INET, socket.SOCK_STREAM) # UDP
 tcpsock.bind(("0.0.0.0", 6454))
-tcpsock.listen(1)
-sock, sockaddr = sparksock.accept()
 ips = commands.getoutput("/sbin/ifconfig | grep -iA2 \"eth0\" | grep -i \"inet\" | grep -iv \"inet6\" | " +
                          "awk {'print $2'} | sed -ne 's/addr\://p'")
 mylist = ips.split(".")
@@ -256,6 +254,8 @@ try:
     sparksock.listen(1)
     clientsocket, clientaddr = sparksock.accept()
     thread.start_new_thread(handler, (clientsocket, clientaddr))
+    tcpsock.listen(1)
+    sock, sockaddr = tcpsock.accept()
     while True:
         try:
             data = sock.recv(1024)
@@ -329,7 +329,7 @@ try:
                             #    y += 1
                 elif data[0:6] == "artnet" and len(data) > 6:
                     #mylist = data[6:].split(" ")
-                    for ii in range(6, len(data), 4):
+                    for ii in range(6, len(data), 5):
                         r = ord(data[ii])
                         g = ord(data[ii+1])
                         b = ord(data[ii+2])
@@ -374,8 +374,9 @@ try:
             pass
                 
 except (KeyboardInterrupt):
-    sock.close()
-    sparksock.shutdown(2)
+    tcpsock.shutdown(1)
+    tcpsock.close()
+    sparksock.shutdown(1)
     sparksock.close()
     p31.stop()
     #p13.stop()
