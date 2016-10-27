@@ -194,8 +194,10 @@ def rgbwave(mydelay, myduty, red, green, blue):
     
 AmIBoomNow = False    
 islightout = True
-sock = socket.socket(socket.AF_INET, socket.SOCK_DGRAM) # UDP
-sock.bind(("0.0.0.0", 6454))
+tcpsock = socket.socket(socket.AF_INET, socket.SOCK_STREAM) # UDP
+tcpsock.bind(("0.0.0.0", 6454))
+tcpsock.listen(1)
+sock, sockaddr = sparksock.accept()
 ips = commands.getoutput("/sbin/ifconfig | grep -iA2 \"eth0\" | grep -i \"inet\" | grep -iv \"inet6\" | " +
                          "awk {'print $2'} | sed -ne 's/addr\://p'")
 mylist = ips.split(".")
@@ -251,12 +253,12 @@ nowduty = 0
 threeight = 0
 try:        
     sparksock.bind(("0.0.0.0",9999))
-    sparksock.listen(2)
+    sparksock.listen(1)
     clientsocket, clientaddr = sparksock.accept()
     thread.start_new_thread(handler, (clientsocket, clientaddr))
     while True:
         try:
-            data, addr = sock.recvfrom(1024)
+            data = sock.recv(1024)
             if True == AmIBoomNow:
                 pass
             elif ( len(data) == 10 and data[0:4] == "boom" ):
@@ -332,13 +334,15 @@ try:
                         g = ord(data[ii+1])
                         b = ord(data[ii+2])
                         y = ord(data[ii+3])
-                        if threeight == 0 and 0 == y and False == QQ:
-                            p31.ChangeDutyCycle(int(r/2.55))
-                            p33.ChangeDutyCycle(int(g/2.55))
-                            p35.ChangeDutyCycle(int(b/2.55))
-                        else:
-                            anim.drawone(0, y, r, g, b)
-                            anim.drawone(1, y, r, g, b)        
+                        x = ord(data[ii+4])
+                        if x == whoami:
+                            if threeight == 0 and 0 == y and False == QQ:
+                                p31.ChangeDutyCycle(int(r/2.55))
+                                p33.ChangeDutyCycle(int(g/2.55))
+                                p35.ChangeDutyCycle(int(b/2.55))
+                            else:
+                                anim.drawone(0, y, r, g, b)
+                                anim.drawone(1, y, r, g, b)        
             '''
             elif False == islightout:
                 if data[0:4] == "RGBW":

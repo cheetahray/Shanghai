@@ -11,18 +11,18 @@ from struct import *
 def Threadfun1(string1, string2, string3, string4, string5, string6, *args):
     global sleeptime
     global sb1,sb2,sb3,sb4,sb5,sb6
-    s1 = socket.socket(socket.AF_INET, socket.SOCK_DGRAM)
-    s2 = socket.socket(socket.AF_INET, socket.SOCK_DGRAM)
-    s3 = socket.socket(socket.AF_INET, socket.SOCK_DGRAM)
-    s4 = socket.socket(socket.AF_INET, socket.SOCK_DGRAM)
-    s5 = socket.socket(socket.AF_INET, socket.SOCK_DGRAM)
-    s6 = socket.socket(socket.AF_INET, socket.SOCK_DGRAM)
-    s1tuple = (string1 ,6454)
-    s2tuple = (string2 ,6454)
-    s3tuple = (string3 ,6454)
-    s4tuple = (string4 ,6454)
-    s5tuple = (string5 ,6454)
-    s6tuple = (string6 ,6454)
+    s1 = socket.socket(socket.AF_INET, socket.SOCK_STREAM)
+    s2 = socket.socket(socket.AF_INET, socket.SOCK_STREAM)
+    s3 = socket.socket(socket.AF_INET, socket.SOCK_STREAM)
+    s4 = socket.socket(socket.AF_INET, socket.SOCK_STREAM)
+    s5 = socket.socket(socket.AF_INET, socket.SOCK_STREAM)
+    s6 = socket.socket(socket.AF_INET, socket.SOCK_STREAM)
+    s1.connect((string1, 6454))
+    s2.connect((string2, 6454))
+    s3.connect((string3, 6454))
+    s4.connect((string4, 6454))
+    s5.connect((string5, 6454))
+    s6.connect((string6, 6454))
     while(True):
         end1 = len(sb1)
         end2 = len(sb2)
@@ -31,40 +31,40 @@ def Threadfun1(string1, string2, string3, string4, string5, string6, *args):
         end5 = len(sb5)
         end6 = len(sb6)
         if end1 > 6:
-            s1.sendto(sb1, s1tuple)
+            s1.send(sb1)
             sb1 = "artnet"
         if end2 > 6:
-            s2.sendto(sb2, s2tuple)
+            s2.send(sb2)
             sb2 = "artnet"
         if end3 > 6:
-            s3.sendto(sb3, s3tuple)
+            s3.send(sb3)
             sb3 = "artnet"
         if end4 > 6:
-            s4.sendto(sb4, s4tuple)
+            s4.send(sb4)
             sb4 = "artnet"
         if end5 > 6:
-            s5.sendto(sb5, s5tuple)
+            s5.send(sb5)
             sb5 = "artnet"
         if end6 > 6:
-            s6.sendto(sb6, s6tuple)
+            s6.send(sb6)
             sb6 = "artnet"
         time.sleep(sleeptime)
 
 def Threadfun2(string1, string2, string3, string4, string5, string6, *args):
     global sleeptime
     global sb7,sb8,sb9,sb10,sb11,sb12
-    s1 = socket.socket(socket.AF_INET, socket.SOCK_DGRAM)
-    s2 = socket.socket(socket.AF_INET, socket.SOCK_DGRAM)
-    s3 = socket.socket(socket.AF_INET, socket.SOCK_DGRAM)
-    s4 = socket.socket(socket.AF_INET, socket.SOCK_DGRAM)
-    s5 = socket.socket(socket.AF_INET, socket.SOCK_DGRAM)
-    s6 = socket.socket(socket.AF_INET, socket.SOCK_DGRAM)
-    s1tuple = (string1 ,6454)
-    s2tuple = (string2 ,6454)
-    s3tuple = (string3 ,6454)
-    s4tuple = (string4 ,6454)
-    s5tuple = (string5 ,6454)
-    s6tuple = (string6 ,6454)
+    s1 = socket.socket(socket.AF_INET, socket.SOCK_STREAM)
+    s2 = socket.socket(socket.AF_INET, socket.SOCK_STREAM)
+    s3 = socket.socket(socket.AF_INET, socket.SOCK_STREAM)
+    s4 = socket.socket(socket.AF_INET, socket.SOCK_STREAM)
+    s5 = socket.socket(socket.AF_INET, socket.SOCK_STREAM)
+    s6 = socket.socket(socket.AF_INET, socket.SOCK_STREAM)
+    s1.connect((string1, 6454))
+    s2.connect((string2, 6454))
+    s3.connect((string3, 6454))
+    s4.connect((string4, 6454))
+    s5.connect((string5, 6454))
+    s6.connect((string6, 6454))
     while(True):
         end1 = len(sb7)
         end2 = len(sb8)
@@ -73,40 +73,40 @@ def Threadfun2(string1, string2, string3, string4, string5, string6, *args):
         end5 = len(sb11)
         end6 = len(sb12)
         if end1 > 6:
-            s1.sendto(sb7, s1tuple)
+            s1.send(sb7)
             sb7 = "artnet"
         if end2 > 6:
-            s2.sendto(sb8, s2tuple)
+            s2.send(sb8)
             sb8 = "artnet"
         if end3 > 6:
-            s3.sendto(sb9, s3tuple)
+            s3.send(sb9)
             sb9 = "artnet"
         if end4 > 6:
-            s4.sendto(sb10, s4tuple)
+            s4.send(sb10)
             sb10 = "artnet"
         if end5 > 6:
-            s5.sendto(sb11, s5tuple)
+            s5.send(sb11)
             sb11 = "artnet"
         if end6 > 6:
-            s6.sendto(sb12, s6tuple)
+            s6.send(sb12)
             sb12 = "artnet"
         time.sleep(sleeptime)
 
 def Threadfun3(string1, string2, string3, string4, string5, string6, *args):
     global sleeptime
     global sb13,sb14,sb15,sb16,sb17,sb18
-    s1 = socket.socket(socket.AF_INET, socket.SOCK_DGRAM)
-    s2 = socket.socket(socket.AF_INET, socket.SOCK_DGRAM)
-    s3 = socket.socket(socket.AF_INET, socket.SOCK_DGRAM)
-    s4 = socket.socket(socket.AF_INET, socket.SOCK_DGRAM)
-    s5 = socket.socket(socket.AF_INET, socket.SOCK_DGRAM)
-    s6 = socket.socket(socket.AF_INET, socket.SOCK_DGRAM)
-    s1tuple = (string1 ,6454)
-    s2tuple = (string2 ,6454)
-    s3tuple = (string3 ,6454)
-    s4tuple = (string4 ,6454)
-    s5tuple = (string5 ,6454)
-    s6tuple = (string6 ,6454)
+    s1 = socket.socket(socket.AF_INET, socket.SOCK_STREAM)
+    s2 = socket.socket(socket.AF_INET, socket.SOCK_STREAM)
+    s3 = socket.socket(socket.AF_INET, socket.SOCK_STREAM)
+    s4 = socket.socket(socket.AF_INET, socket.SOCK_STREAM)
+    s5 = socket.socket(socket.AF_INET, socket.SOCK_STREAM)
+    s6 = socket.socket(socket.AF_INET, socket.SOCK_STREAM)
+    s1.connect((string1, 6454))
+    s2.connect((string2, 6454))
+    s3.connect((string3, 6454))
+    s4.connect((string4, 6454))
+    s5.connect((string5, 6454))
+    s6.connect((string6, 6454))
     while(True):
         end1 = len(sb13)
         end2 = len(sb14)
@@ -115,40 +115,40 @@ def Threadfun3(string1, string2, string3, string4, string5, string6, *args):
         end5 = len(sb17)
         end6 = len(sb18)
         if end1 > 6:
-            s1.sendto(sb13, s1tuple)
+            s1.send(sb13)
             sb13 = "artnet"
         if end2 > 6:
-            s2.sendto(sb14, s2tuple)
+            s2.send(sb14)
             sb14 = "artnet"
         if end3 > 6:
-            s3.sendto(sb15, s3tuple)
+            s3.send(sb15)
             sb15 = "artnet"
         if end4 > 6:
-            s4.sendto(sb16, s4tuple)
+            s4.send(sb16)
             sb16 = "artnet"
         if end5 > 6:
-            s5.sendto(sb17, s5tuple)
+            s5.send(sb17)
             sb17 = "artnet"
         if end6 > 6:
-            s6.sendto(sb18, s6tuple)
+            s6.send(sb18)
             sb18 = "artnet"
         time.sleep(sleeptime)
 
 def Threadfun4(string1, string2, string3, string4, string5, string6, *args):
     global sleeptime
     global sb19,sb20,sb21,sb22,sb23,sb24
-    s1 = socket.socket(socket.AF_INET, socket.SOCK_DGRAM)
-    s2 = socket.socket(socket.AF_INET, socket.SOCK_DGRAM)
-    s3 = socket.socket(socket.AF_INET, socket.SOCK_DGRAM)
-    s4 = socket.socket(socket.AF_INET, socket.SOCK_DGRAM)
-    s5 = socket.socket(socket.AF_INET, socket.SOCK_DGRAM)
-    s6 = socket.socket(socket.AF_INET, socket.SOCK_DGRAM)
-    s1tuple = (string1 ,6454)
-    s2tuple = (string2 ,6454)
-    s3tuple = (string3 ,6454)
-    s4tuple = (string4 ,6454)
-    s5tuple = (string5 ,6454)
-    s6tuple = (string6 ,6454)
+    s1 = socket.socket(socket.AF_INET, socket.SOCK_STREAM)
+    s2 = socket.socket(socket.AF_INET, socket.SOCK_STREAM)
+    s3 = socket.socket(socket.AF_INET, socket.SOCK_STREAM)
+    s4 = socket.socket(socket.AF_INET, socket.SOCK_STREAM)
+    s5 = socket.socket(socket.AF_INET, socket.SOCK_STREAM)
+    s6 = socket.socket(socket.AF_INET, socket.SOCK_STREAM)
+    s1.connect((string1, 6454))
+    s2.connect((string2, 6454))
+    s3.connect((string3, 6454))
+    s4.connect((string4, 6454))
+    s5.connect((string5, 6454))
+    s6.connect((string6, 6454))
     while(True):
         end1 = len(sb19)
         end2 = len(sb20)
@@ -157,40 +157,40 @@ def Threadfun4(string1, string2, string3, string4, string5, string6, *args):
         end5 = len(sb23)
         end6 = len(sb24)
         if end1 > 6:
-            s1.sendto(sb19, s1tuple)
+            s1.send(sb19)
             sb19 = "artnet"
         if end2 > 6:
-            s2.sendto(sb20, s2tuple)
+            s2.send(sb20)
             sb20 = "artnet"
         if end3 > 6:
-            s3.sendto(sb21, s3tuple)
+            s3.send(sb21)
             sb21 = "artnet"
         if end4 > 6:
-            s4.sendto(sb22, s4tuple)
+            s4.send(sb22)
             sb22 = "artnet"
         if end5 > 6:
-            s5.sendto(sb23, s5tuple)
+            s5.send(sb23)
             sb23 = "artnet"
         if end6 > 6:
-            s6.sendto(sb24, s6tuple)
+            s6.send(sb24)
             sb24 = "artnet"
         time.sleep(sleeptime)
 
 def Threadfun5(string1, string2, string3, string4, string5, string6, *args):
     global sleeptime
     global sb25,sb26,sb27,sb28,sb29,sb30
-    s1 = socket.socket(socket.AF_INET, socket.SOCK_DGRAM)
-    s2 = socket.socket(socket.AF_INET, socket.SOCK_DGRAM)
-    s3 = socket.socket(socket.AF_INET, socket.SOCK_DGRAM)
-    s4 = socket.socket(socket.AF_INET, socket.SOCK_DGRAM)
-    s5 = socket.socket(socket.AF_INET, socket.SOCK_DGRAM)
-    s6 = socket.socket(socket.AF_INET, socket.SOCK_DGRAM)
-    s1tuple = (string1 ,6454)
-    s2tuple = (string2 ,6454)
-    s3tuple = (string3 ,6454)
-    s4tuple = (string4 ,6454)
-    s5tuple = (string5 ,6454)
-    s6tuple = (string6 ,6454)
+    s1 = socket.socket(socket.AF_INET, socket.SOCK_STREAM)
+    s2 = socket.socket(socket.AF_INET, socket.SOCK_STREAM)
+    s3 = socket.socket(socket.AF_INET, socket.SOCK_STREAM)
+    s4 = socket.socket(socket.AF_INET, socket.SOCK_STREAM)
+    s5 = socket.socket(socket.AF_INET, socket.SOCK_STREAM)
+    s6 = socket.socket(socket.AF_INET, socket.SOCK_STREAM)
+    s1.connect((string1, 6454))
+    s2.connect((string2, 6454))
+    s3.connect((string3, 6454))
+    s4.connect((string4, 6454))
+    s5.connect((string5, 6454))
+    s6.connect((string6, 6454))
     while(True):
         end1 = len(sb25)
         end2 = len(sb26)
@@ -199,40 +199,40 @@ def Threadfun5(string1, string2, string3, string4, string5, string6, *args):
         end5 = len(sb29)
         end6 = len(sb30)
         if end1 > 6:
-            s1.sendto(sb25, s1tuple)
+            s1.send(sb25)
             sb25 = "artnet"
         if end2 > 6:
-            s2.sendto(sb26, s2tuple)
+            s2.send(sb26)
             sb26 = "artnet"
         if end3 > 6:
-            s3.sendto(sb27, s3tuple)
+            s3.send(sb27)
             sb27 = "artnet"
         if end4 > 6:
-            s4.sendto(sb28, s4tuple)
+            s4.send(sb28)
             sb28 = "artnet"
         if end5 > 6:
-            s5.sendto(sb29, s5tuple)
+            s5.send(sb29)
             sb29 = "artnet"
         if end6 > 6:
-            s6.sendto(sb30, s6tuple)
+            s6.send(sb30)
             sb30 = "artnet"
         time.sleep(sleeptime)
 
 def Threadfun6(string1, string2, string3, string4, string5, string6, *args):
     global sleeptime
     global sb31,sb32,sb33,sb34,sb35,sb36
-    s1 = socket.socket(socket.AF_INET, socket.SOCK_DGRAM)
-    s2 = socket.socket(socket.AF_INET, socket.SOCK_DGRAM)
-    s3 = socket.socket(socket.AF_INET, socket.SOCK_DGRAM)
-    s4 = socket.socket(socket.AF_INET, socket.SOCK_DGRAM)
-    s5 = socket.socket(socket.AF_INET, socket.SOCK_DGRAM)
-    s6 = socket.socket(socket.AF_INET, socket.SOCK_DGRAM)
-    s1tuple = (string1 ,6454)
-    s2tuple = (string2 ,6454)
-    s3tuple = (string3 ,6454)
-    s4tuple = (string4 ,6454)
-    s5tuple = (string5 ,6454)
-    s6tuple = (string6 ,6454)
+    s1 = socket.socket(socket.AF_INET, socket.SOCK_STREAM)
+    s2 = socket.socket(socket.AF_INET, socket.SOCK_STREAM)
+    s3 = socket.socket(socket.AF_INET, socket.SOCK_STREAM)
+    s4 = socket.socket(socket.AF_INET, socket.SOCK_STREAM)
+    s5 = socket.socket(socket.AF_INET, socket.SOCK_STREAM)
+    s6 = socket.socket(socket.AF_INET, socket.SOCK_STREAM)
+    s1.connect((string1, 6454))
+    s2.connect((string2, 6454))
+    s3.connect((string3, 6454))
+    s4.connect((string4, 6454))
+    s5.connect((string5, 6454))
+    s6.connect((string6, 6454))
     while(True):
         end1 = len(sb31)
         end2 = len(sb32)
@@ -241,40 +241,40 @@ def Threadfun6(string1, string2, string3, string4, string5, string6, *args):
         end5 = len(sb35)
         end6 = len(sb36)
         if end1 > 6:
-            s1.sendto(sb31, s1tuple)
+            s1.send(sb31)
             sb31 = "artnet"
         if end2 > 6:
-            s2.sendto(sb32, s2tuple)
+            s2.send(sb32)
             sb32 = "artnet"
         if end3 > 6:
-            s3.sendto(sb33, s3tuple)
+            s3.send(sb33)
             sb33 = "artnet"
         if end4 > 6:
-            s4.sendto(sb34, s4tuple)
+            s4.send(sb34)
             sb34 = "artnet"
         if end5 > 6:
-            s5.sendto(sb35, s5tuple)
+            s5.send(sb35)
             sb35 = "artnet"
         if end6 > 6:
-            s6.sendto(sb36, s6tuple)
+            s6.send(sb36)
             sb36 = "artnet"
         time.sleep(sleeptime)
 
 def Threadfun7(string1, string2, string3, string4, string5, string6, *args):
     global sleeptime
     global sb37,sb38,sb39,sb40,sb41,sb42
-    s1 = socket.socket(socket.AF_INET, socket.SOCK_DGRAM)
-    s2 = socket.socket(socket.AF_INET, socket.SOCK_DGRAM)
-    s3 = socket.socket(socket.AF_INET, socket.SOCK_DGRAM)
-    s4 = socket.socket(socket.AF_INET, socket.SOCK_DGRAM)
-    s5 = socket.socket(socket.AF_INET, socket.SOCK_DGRAM)
-    s6 = socket.socket(socket.AF_INET, socket.SOCK_DGRAM)
-    s1tuple = (string1 ,6454)
-    s2tuple = (string2 ,6454)
-    s3tuple = (string3 ,6454)
-    s4tuple = (string4 ,6454)
-    s5tuple = (string5 ,6454)
-    s6tuple = (string6 ,6454)
+    s1 = socket.socket(socket.AF_INET, socket.SOCK_STREAM)
+    s2 = socket.socket(socket.AF_INET, socket.SOCK_STREAM)
+    s3 = socket.socket(socket.AF_INET, socket.SOCK_STREAM)
+    s4 = socket.socket(socket.AF_INET, socket.SOCK_STREAM)
+    s5 = socket.socket(socket.AF_INET, socket.SOCK_STREAM)
+    s6 = socket.socket(socket.AF_INET, socket.SOCK_STREAM)
+    s1.connect((string1, 6454))
+    s2.connect((string2, 6454))
+    s3.connect((string3, 6454))
+    s4.connect((string4, 6454))
+    s5.connect((string5, 6454))
+    s6.connect((string6, 6454))
     while(True):
         end1 = len(sb37)
         end2 = len(sb38)
@@ -283,40 +283,40 @@ def Threadfun7(string1, string2, string3, string4, string5, string6, *args):
         end5 = len(sb41)
         end6 = len(sb42)
         if end1 > 6:
-            s1.sendto(sb37, s1tuple)
+            s1.send(sb37)
             sb37 = "artnet"
         if end2 > 6:
-            s2.sendto(sb38, s2tuple)
+            s2.send(sb38)
             sb38 = "artnet"
         if end3 > 6:
-            s3.sendto(sb39, s3tuple)
+            s3.send(sb39)
             sb39 = "artnet"
         if end4 > 6:
-            s4.sendto(sb40, s4tuple)
+            s4.send(sb40)
             sb40 = "artnet"
         if end5 > 6:
-            s5.sendto(sb41, s5tuple)
+            s5.send(sb41)
             sb41 = "artnet"
         if end6 > 6:
-            s6.sendto(sb42, s6tuple)
+            s6.send(sb42)
             sb42 = "artnet"
         time.sleep(sleeptime)
 
 def Threadfun8(string1, string2, string3, string4, string5, string6, *args):
     global sleeptime
     global sb43,sb44,sb45,sb46,sb47,sb48
-    s1 = socket.socket(socket.AF_INET, socket.SOCK_DGRAM)
-    s2 = socket.socket(socket.AF_INET, socket.SOCK_DGRAM)
-    s3 = socket.socket(socket.AF_INET, socket.SOCK_DGRAM)
-    s4 = socket.socket(socket.AF_INET, socket.SOCK_DGRAM)
-    s5 = socket.socket(socket.AF_INET, socket.SOCK_DGRAM)
-    s6 = socket.socket(socket.AF_INET, socket.SOCK_DGRAM)
-    s1tuple = (string1 ,6454)
-    s2tuple = (string2 ,6454)
-    s3tuple = (string3 ,6454)
-    s4tuple = (string4 ,6454)
-    s5tuple = (string5 ,6454)
-    s6tuple = (string6 ,6454)
+    s1 = socket.socket(socket.AF_INET, socket.SOCK_STREAM)
+    s2 = socket.socket(socket.AF_INET, socket.SOCK_STREAM)
+    s3 = socket.socket(socket.AF_INET, socket.SOCK_STREAM)
+    s4 = socket.socket(socket.AF_INET, socket.SOCK_STREAM)
+    s5 = socket.socket(socket.AF_INET, socket.SOCK_STREAM)
+    s6 = socket.socket(socket.AF_INET, socket.SOCK_STREAM)
+    s1.connect((string1, 6454))
+    s2.connect((string2, 6454))
+    s3.connect((string3, 6454))
+    s4.connect((string4, 6454))
+    s5.connect((string5, 6454))
+    s6.connect((string6, 6454))
     while(True):
         end1 = len(sb43)
         end2 = len(sb44)
@@ -325,40 +325,40 @@ def Threadfun8(string1, string2, string3, string4, string5, string6, *args):
         end5 = len(sb47)
         end6 = len(sb48)
         if end1 > 6:
-            s1.sendto(sb43, s1tuple)
+            s1.send(sb43)
             sb43 = "artnet"
         if end2 > 6:
-            s2.sendto(sb44, s2tuple)
+            s2.send(sb44)
             sb44 = "artnet"
         if end3 > 6:
-            s3.sendto(sb45, s3tuple)
+            s3.send(sb45)
             sb45 = "artnet"
         if end4 > 6:
-            s4.sendto(sb46, s4tuple)
+            s4.send(sb46)
             sb46 = "artnet"
         if end5 > 6:
-            s5.sendto(sb47, s5tuple)
+            s5.send(sb47)
             sb47 = "artnet"
         if end6 > 6:
-            s6.sendto(sb48, s6tuple)
+            s6.send(sb48)
             sb48 = "artnet"
         time.sleep(sleeptime)
 
 def Threadfun9(string1, string2, string3, string4, string5, string6, *args):
     global sleeptime
     global sb49,sb50,sb51,sb52,sb53,sb54
-    s1 = socket.socket(socket.AF_INET, socket.SOCK_DGRAM)
-    s2 = socket.socket(socket.AF_INET, socket.SOCK_DGRAM)
-    s3 = socket.socket(socket.AF_INET, socket.SOCK_DGRAM)
-    s4 = socket.socket(socket.AF_INET, socket.SOCK_DGRAM)
-    s5 = socket.socket(socket.AF_INET, socket.SOCK_DGRAM)
-    s6 = socket.socket(socket.AF_INET, socket.SOCK_DGRAM)
-    s1tuple = (string1 ,6454)
-    s2tuple = (string2 ,6454)
-    s3tuple = (string3 ,6454)
-    s4tuple = (string4 ,6454)
-    s5tuple = (string5 ,6454)
-    s6tuple = (string6 ,6454)
+    s1 = socket.socket(socket.AF_INET, socket.SOCK_STREAM)
+    s2 = socket.socket(socket.AF_INET, socket.SOCK_STREAM)
+    s3 = socket.socket(socket.AF_INET, socket.SOCK_STREAM)
+    s4 = socket.socket(socket.AF_INET, socket.SOCK_STREAM)
+    s5 = socket.socket(socket.AF_INET, socket.SOCK_STREAM)
+    s6 = socket.socket(socket.AF_INET, socket.SOCK_STREAM)
+    s1.connect((string1, 6454))
+    s2.connect((string2, 6454))
+    s3.connect((string3, 6454))
+    s4.connect((string4, 6454))
+    s5.connect((string5, 6454))
+    s6.connect((string6, 6454))
     while(True):
         end1 = len(sb49)
         end2 = len(sb50)
@@ -367,40 +367,40 @@ def Threadfun9(string1, string2, string3, string4, string5, string6, *args):
         end5 = len(sb53)
         end6 = len(sb54)
         if end1 > 6:
-            s1.sendto(sb49, s1tuple)
+            s1.send(sb49)
             sb49 = "artnet"
         if end2 > 6:
-            s2.sendto(sb50, s2tuple)
+            s2.send(sb50)
             sb50 = "artnet"
         if end3 > 6:
-            s3.sendto(sb51, s3tuple)
+            s3.send(sb51)
             sb51 = "artnet"
         if end4 > 6:
-            s4.sendto(sb52, s4tuple)
+            s4.send(sb52)
             sb52 = "artnet"
         if end5 > 6:
-            s5.sendto(sb53, s5tuple)
+            s5.send(sb53)
             sb53 = "artnet"
         if end6 > 6:
-            s6.sendto(sb54, s6tuple)
+            s6.send(sb54)
             sb54 = "artnet"
         time.sleep(sleeptime)
 
 def Threadfun10(string1, string2, string3, string4, string5, string6, *args):
     global sleeptime
     global sb55,sb56,sb57,sb58,sb59,sb60
-    s1 = socket.socket(socket.AF_INET, socket.SOCK_DGRAM)
-    s2 = socket.socket(socket.AF_INET, socket.SOCK_DGRAM)
-    s3 = socket.socket(socket.AF_INET, socket.SOCK_DGRAM)
-    s4 = socket.socket(socket.AF_INET, socket.SOCK_DGRAM)
-    s5 = socket.socket(socket.AF_INET, socket.SOCK_DGRAM)
-    s6 = socket.socket(socket.AF_INET, socket.SOCK_DGRAM)
-    s1tuple = (string1 ,6454)
-    s2tuple = (string2 ,6454)
-    s3tuple = (string3 ,6454)
-    s4tuple = (string4 ,6454)
-    s5tuple = (string5 ,6454)
-    s6tuple = (string6 ,6454)
+    s1 = socket.socket(socket.AF_INET, socket.SOCK_STREAM)
+    s2 = socket.socket(socket.AF_INET, socket.SOCK_STREAM)
+    s3 = socket.socket(socket.AF_INET, socket.SOCK_STREAM)
+    s4 = socket.socket(socket.AF_INET, socket.SOCK_STREAM)
+    s5 = socket.socket(socket.AF_INET, socket.SOCK_STREAM)
+    s6 = socket.socket(socket.AF_INET, socket.SOCK_STREAM)
+    s1.connect((string1, 6454))
+    s2.connect((string2, 6454))
+    s3.connect((string3, 6454))
+    s4.connect((string4, 6454))
+    s5.connect((string5, 6454))
+    s6.connect((string6, 6454))
     while(True):
         end1 = len(sb55)
         end2 = len(sb56)
@@ -409,40 +409,40 @@ def Threadfun10(string1, string2, string3, string4, string5, string6, *args):
         end5 = len(sb59)
         end6 = len(sb60)
         if end1 > 6:
-            s1.sendto(sb55, s1tuple)
+            s1.send(sb55)
             sb55 = "artnet"
         if end2 > 6:
-            s2.sendto(sb56, s2tuple)
+            s2.send(sb56)
             sb56 = "artnet"
         if end3 > 6:
-            s3.sendto(sb57, s3tuple)
+            s3.send(sb57)
             sb57 = "artnet"
         if end4 > 6:
-            s4.sendto(sb58, s4tuple)
+            s4.send(sb58)
             sb58 = "artnet"
         if end5 > 6:
-            s5.sendto(sb59, s5tuple)
+            s5.send(sb59)
             sb59 = "artnet"
         if end6 > 6:
-            s6.sendto(sb60, s6tuple)
+            s6.send(sb60)
             sb60 = "artnet"
         time.sleep(sleeptime)
 
 def Threadfun11(string1, string2, string3, string4, string5, string6, *args):
     global sleeptime
     global sb61,sb62,sb63,sb64,sb65,sb66
-    s1 = socket.socket(socket.AF_INET, socket.SOCK_DGRAM)
-    s2 = socket.socket(socket.AF_INET, socket.SOCK_DGRAM)
-    s3 = socket.socket(socket.AF_INET, socket.SOCK_DGRAM)
-    s4 = socket.socket(socket.AF_INET, socket.SOCK_DGRAM)
-    s5 = socket.socket(socket.AF_INET, socket.SOCK_DGRAM)
-    s6 = socket.socket(socket.AF_INET, socket.SOCK_DGRAM)
-    s1tuple = (string1 ,6454)
-    s2tuple = (string2 ,6454)
-    s3tuple = (string3 ,6454)
-    s4tuple = (string4 ,6454)
-    s5tuple = (string5 ,6454)
-    s6tuple = (string6 ,6454)
+    s1 = socket.socket(socket.AF_INET, socket.SOCK_STREAM)
+    s2 = socket.socket(socket.AF_INET, socket.SOCK_STREAM)
+    s3 = socket.socket(socket.AF_INET, socket.SOCK_STREAM)
+    s4 = socket.socket(socket.AF_INET, socket.SOCK_STREAM)
+    s5 = socket.socket(socket.AF_INET, socket.SOCK_STREAM)
+    s6 = socket.socket(socket.AF_INET, socket.SOCK_STREAM)
+    s1.connect((string1, 6454))
+    s2.connect((string2, 6454))
+    s3.connect((string3, 6454))
+    s4.connect((string4, 6454))
+    s5.connect((string5, 6454))
+    s6.connect((string6, 6454))
     while(True):
         end1 = len(sb61)
         end2 = len(sb62)
@@ -451,22 +451,22 @@ def Threadfun11(string1, string2, string3, string4, string5, string6, *args):
         end5 = len(sb65)
         end6 = len(sb66)
         if end1 > 6:
-            s1.sendto(sb61, s1tuple)
+            s1.send(sb61)
             sb61 = "artnet"
         if end2 > 6:
-            s2.sendto(sb62, s2tuple)
+            s2.send(sb62)
             sb62 = "artnet"
         if end3 > 6:
-            s3.sendto(sb63, s3tuple)
+            s3.send(sb63)
             sb63 = "artnet"
         if end4 > 6:
-            s4.sendto(sb64, s4tuple)
+            s4.send(sb64)
             sb64 = "artnet"
         if end5 > 6:
-            s5.sendto(sb65, s5tuple)
+            s5.send(sb65)
             sb65 = "artnet"
         if end6 > 6:
-            s6.sendto(sb66, s6tuple)
+            s6.send(sb66)
             sb66 = "artnet"
         time.sleep(sleeptime)
 
@@ -591,137 +591,137 @@ def average_video(filepath, outpath, start=None, end=None, sample_every=1):
                     g = f[y][x-1][1]
                     b = f[y][x-1][2]
                     if x == 1:
-                        sb1 += pack('BBBB', r, g, b, y)
+                        sb1 += pack('BBBBB', r, g, b, y, x)
                     elif x == 2:
-                        sb2 += pack('BBBB', r, g, b, y)
+                        sb2 += pack('BBBBB', r, g, b, y, x)
                     elif x == 3:
-                        sb3 += pack('BBBB', r, g, b, y)
+                        sb3 += pack('BBBBB', r, g, b, y, x)
                     elif x == 4:
-                        sb4 += pack('BBBB', r, g, b, y)
+                        sb4 += pack('BBBBB', r, g, b, y, x)
                     elif x == 5:
-                        sb5 += pack('BBBB', r, g, b, y)
+                        sb5 += pack('BBBBB', r, g, b, y, x)
                     elif x == 6:
-                        sb6 += pack('BBBB', r, g, b, y)
+                        sb6 += pack('BBBBB', r, g, b, y, x)
                     elif x == 7:
-                        sb7 += pack('BBBB', r, g, b, y)
+                        sb7 += pack('BBBBB', r, g, b, y, x)
                     elif x == 8:
-                        sb8 += pack('BBBB', r, g, b, y)
+                        sb8 += pack('BBBBB', r, g, b, y, x)
                     elif x == 9:
-                        sb9 += pack('BBBB', r, g, b, y)
+                        sb9 += pack('BBBBB', r, g, b, y, x)
                     elif x == 10:
-                        sb10 += pack('BBBB', r, g, b, y)
+                        sb10 += pack('BBBBB', r, g, b, y, x)
                     elif x == 11:
-                        sb11 += pack('BBBB', r, g, b, y)
+                        sb11 += pack('BBBBB', r, g, b, y, x)
                     elif x == 12:
-                        sb12 += pack('BBBB', r, g, b, y)
+                        sb12 += pack('BBBBB', r, g, b, y, x)
                     elif x == 13:
-                        sb13 += pack('BBBB', r, g, b, y)
+                        sb13 += pack('BBBBB', r, g, b, y, x)
                     elif x == 14:
-                        sb14 += pack('BBBB', r, g, b, y)
+                        sb14 += pack('BBBBB', r, g, b, y, x)
                     elif x == 15:
-                        sb15 += pack('BBBB', r, g, b, y)
+                        sb15 += pack('BBBBB', r, g, b, y, x)
                     elif x == 16:
-                        sb16 += pack('BBBB', r, g, b, y)
+                        sb16 += pack('BBBBB', r, g, b, y, x)
                     elif x == 17:
-                        sb17 += pack('BBBB', r, g, b, y)
+                        sb17 += pack('BBBBB', r, g, b, y, x)
                     elif x == 18:
-                        sb18 += pack('BBBB', r, g, b, y)
+                        sb18 += pack('BBBBB', r, g, b, y, x)
                     elif x == 19:
-                        sb19 += pack('BBBB', r, g, b, y)
+                        sb19 += pack('BBBBB', r, g, b, y, x)
                     elif x == 20:
-                        sb20 += pack('BBBB', r, g, b, y)
+                        sb20 += pack('BBBBB', r, g, b, y, x)
                     elif x == 21:
-                        sb21 += pack('BBBB', r, g, b, y)
+                        sb21 += pack('BBBBB', r, g, b, y, x)
                     elif x == 22:
-                        sb22 += pack('BBBB', r, g, b, y)
+                        sb22 += pack('BBBBB', r, g, b, y, x)
                     elif x == 23:
-                        sb23 += pack('BBBB', r, g, b, y)
+                        sb23 += pack('BBBBB', r, g, b, y, x)
                     elif x == 24:
-                        sb24 += pack('BBBB', r, g, b, y)
+                        sb24 += pack('BBBBB', r, g, b, y, x)
                     elif x == 25:
-                        sb25 += pack('BBBB', r, g, b, y)
+                        sb25 += pack('BBBBB', r, g, b, y, x)
                     elif x == 26:
-                        sb26 += pack('BBBB', r, g, b, y)
+                        sb26 += pack('BBBBB', r, g, b, y, x)
                     elif x == 27:
-                        sb27 += pack('BBBB', r, g, b, y)
+                        sb27 += pack('BBBBB', r, g, b, y, x)
                     elif x == 28:
-                        sb28 += pack('BBBB', r, g, b, y)
+                        sb28 += pack('BBBBB', r, g, b, y, x)
                     elif x == 29:
-                        sb29 += pack('BBBB', r, g, b, y)
+                        sb29 += pack('BBBBB', r, g, b, y, x)
                     elif x == 30:
-                        sb30 += pack('BBBB', r, g, b, y)
+                        sb30 += pack('BBBBB', r, g, b, y, x)
                     elif x == 31:
-                        sb31 += pack('BBBB', r, g, b, y)
+                        sb31 += pack('BBBBB', r, g, b, y, x)
                     elif x == 32:
-                        sb32 += pack('BBBB', r, g, b, y)
+                        sb32 += pack('BBBBB', r, g, b, y, x)
                     elif x == 33:
-                        sb33 += pack('BBBB', r, g, b, y)
+                        sb33 += pack('BBBBB', r, g, b, y, x)
                     elif x == 34:
-                        sb34 += pack('BBBB', r, g, b, y)
+                        sb34 += pack('BBBBB', r, g, b, y, x)
                     elif x == 35:
-                        sb35 += pack('BBBB', r, g, b, y)
+                        sb35 += pack('BBBBB', r, g, b, y, x)
                     elif x == 36:
-                        sb36 += pack('BBBB', r, g, b, y)
+                        sb36 += pack('BBBBB', r, g, b, y, x)
                     elif x == 37:
-                        sb37 += pack('BBBB', r, g, b, y)
+                        sb37 += pack('BBBBB', r, g, b, y, x)
                     elif x == 38:
-                        sb38 += pack('BBBB', r, g, b, y)
+                        sb38 += pack('BBBBB', r, g, b, y, x)
                     elif x == 39:
-                        sb39 += pack('BBBB', r, g, b, y)
+                        sb39 += pack('BBBBB', r, g, b, y, x)
                     elif x == 40:
-                        sb40 += pack('BBBB', r, g, b, y)
+                        sb40 += pack('BBBBB', r, g, b, y, x)
                     elif x == 41:
-                        sb41 += pack('BBBB', r, g, b, y)
+                        sb41 += pack('BBBBB', r, g, b, y, x)
                     elif x == 42:
-                        sb42 += pack('BBBB', r, g, b, y)
+                        sb42 += pack('BBBBB', r, g, b, y, x)
                     elif x == 43:
-                        sb43 += pack('BBBB', r, g, b, y)
+                        sb43 += pack('BBBBB', r, g, b, y, x)
                     elif x == 44:
-                        sb44 += pack('BBBB', r, g, b, y)
+                        sb44 += pack('BBBBB', r, g, b, y, x)
                     elif x == 45:
-                        sb45 += pack('BBBB', r, g, b, y)
+                        sb45 += pack('BBBBB', r, g, b, y, x)
                     elif x == 46:
-                        sb46 += pack('BBBB', r, g, b, y)
+                        sb46 += pack('BBBBB', r, g, b, y, x)
                     elif x == 47:
-                        sb47 += pack('BBBB', r, g, b, y)
+                        sb47 += pack('BBBBB', r, g, b, y, x)
                     elif x == 48:
-                        sb48 += pack('BBBB', r, g, b, y)
+                        sb48 += pack('BBBBB', r, g, b, y, x)
                     elif x == 49:
-                        sb49 += pack('BBBB', r, g, b, y)
+                        sb49 += pack('BBBBB', r, g, b, y, x)
                     elif x == 50:
-                        sb50 += pack('BBBB', r, g, b, y)
+                        sb50 += pack('BBBBB', r, g, b, y, x)
                     elif x == 51:
-                        sb51 += pack('BBBB', r, g, b, y)
+                        sb51 += pack('BBBBB', r, g, b, y, x)
                     elif x == 52:
-                        sb52 += pack('BBBB', r, g, b, y)
+                        sb52 += pack('BBBBB', r, g, b, y, x)
                     elif x == 53:
-                        sb53 += pack('BBBB', r, g, b, y)
+                        sb53 += pack('BBBBB', r, g, b, y, x)
                     elif x == 54:
-                        sb54 += pack('BBBB', r, g, b, y)
+                        sb54 += pack('BBBBB', r, g, b, y, x)
                     elif x == 55:
-                        sb55 += pack('BBBB', r, g, b, y)
+                        sb55 += pack('BBBBB', r, g, b, y, x)
                     elif x == 56:
-                        sb56 += pack('BBBB', r, g, b, y)
+                        sb56 += pack('BBBBB', r, g, b, y, x)
                     elif x == 57:
-                        sb57 += pack('BBBB', r, g, b, y)
+                        sb57 += pack('BBBBB', r, g, b, y, x)
                     elif x == 58:
-                        sb58 += pack('BBBB', r, g, b, y)
+                        sb58 += pack('BBBBB', r, g, b, y, x)
                     elif x == 59:
-                        sb59 += pack('BBBB', r, g, b, y)
+                        sb59 += pack('BBBBB', r, g, b, y, x)
                     elif x == 60:
-                        sb60 += pack('BBBB', r, g, b, y)
+                        sb60 += pack('BBBBB', r, g, b, y, x)
                     elif x == 61:
-                        sb61 += pack('BBBB', r, g, b, y)
+                        sb61 += pack('BBBBB', r, g, b, y, x)
                     elif x == 62:
-                        sb62 += pack('BBBB', r, g, b, y)
+                        sb62 += pack('BBBBB', r, g, b, y, x)
                     elif x == 63:
-                        sb63 += pack('BBBB', r, g, b, y)
+                        sb63 += pack('BBBBB', r, g, b, y, x)
                     elif x == 64:
-                        sb64 += pack('BBBB', r, g, b, y)
+                        sb64 += pack('BBBBB', r, g, b, y, x)
                     elif x == 65:
-                        sb65 += pack('BBBB', r, g, b, y)
+                        sb65 += pack('BBBBB', r, g, b, y, x)
                     elif x == 66:
-                        sb66 += pack('BBBB', r, g, b, y)
+                        sb66 += pack('BBBBB', r, g, b, y, x)
                                 
         time.sleep(1.0/float(sample_every))
 
