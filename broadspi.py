@@ -17,13 +17,49 @@ def Threadfun1(string1, string2, string3, string4, string5, string6, *args):
     s4 = socket.socket(socket.AF_INET, socket.SOCK_STREAM)
     s5 = socket.socket(socket.AF_INET, socket.SOCK_STREAM)
     s6 = socket.socket(socket.AF_INET, socket.SOCK_STREAM)
-    s1.connect((string1, 6454))
-    s2.connect((string2, 6454))
-    s3.connect((string3, 6454))
-    s4.connect((string4, 6454))
-    s5.connect((string5, 6454))
-    s6.connect((string6, 6454))
+    B1 = False
+    B2 = False
+    B3 = False
+    B4 = False
+    B5 = False
+    B6 = False
     while(True):
+        if False == B1:
+            try:
+                s1.connect((string1, 6454))
+                B1 = True
+            except socket.error:
+                time.sleep(0.1)
+        if False == B2:
+            try:
+                s2.connect((string2, 6454))
+                B2 = True
+            except socket.error:
+                time.sleep(0.1)
+        if False == B3:
+            try:
+                s3.connect((string3, 6454))
+                B3 = True
+            except socket.error:
+                time.sleep(0.1)
+        if False == B4:
+            try:
+                s4.connect((string4, 6454))
+                B4 = True
+            except socket.error:
+                time.sleep(0.1)
+        if False == B5:
+            try:
+                s5.connect((string5, 6454))
+                B5 = True
+            except socket.error:
+                time.sleep(0.1)
+        if False == B6:
+            try:
+                s6.connect((string6, 6454))
+                B6 = True
+            except socket.error:
+                time.sleep(0.1)
         end1 = len(sb1)
         end2 = len(sb2)
         end3 = len(sb3)
@@ -59,13 +95,43 @@ def Threadfun2(string1, string2, string3, string4, string5, string6, *args):
     s4 = socket.socket(socket.AF_INET, socket.SOCK_STREAM)
     s5 = socket.socket(socket.AF_INET, socket.SOCK_STREAM)
     s6 = socket.socket(socket.AF_INET, socket.SOCK_STREAM)
-    s1.connect((string1, 6454))
-    s2.connect((string2, 6454))
-    s3.connect((string3, 6454))
-    s4.connect((string4, 6454))
-    s5.connect((string5, 6454))
-    s6.connect((string6, 6454))
     while(True):
+        if False == B1:
+            try:
+                s1.connect((string1, 6454))
+                B1 = True
+            except socket.error:
+                time.sleep(0.1)
+        if False == B2:
+            try:
+                s2.connect((string2, 6454))
+                B2 = True
+            except socket.error:
+                time.sleep(0.1)
+        if False == B3:
+            try:
+                s3.connect((string3, 6454))
+                B3 = True
+            except socket.error:
+                time.sleep(0.1)
+        if False == B4:
+            try:
+                s4.connect((string4, 6454))
+                B4 = True
+            except socket.error:
+                time.sleep(0.1)
+        if False == B5:
+            try:
+                s5.connect((string5, 6454))
+                B5 = True
+            except socket.error:
+                time.sleep(0.1)
+        if False == B6:
+            try:
+                s6.connect((string6, 6454))
+                B6 = True
+            except socket.error:
+                time.sleep(0.1)
         end1 = len(sb7)
         end2 = len(sb8)
         end3 = len(sb9)
@@ -101,13 +167,43 @@ def Threadfun3(string1, string2, string3, string4, string5, string6, *args):
     s4 = socket.socket(socket.AF_INET, socket.SOCK_STREAM)
     s5 = socket.socket(socket.AF_INET, socket.SOCK_STREAM)
     s6 = socket.socket(socket.AF_INET, socket.SOCK_STREAM)
-    s1.connect((string1, 6454))
-    s2.connect((string2, 6454))
-    s3.connect((string3, 6454))
-    s4.connect((string4, 6454))
-    s5.connect((string5, 6454))
-    s6.connect((string6, 6454))
     while(True):
+        if False == B1:
+            try:
+                s1.connect((string1, 6454))
+                B1 = True
+            except socket.error:
+                time.sleep(0.1)
+        if False == B2:
+            try:
+                s2.connect((string2, 6454))
+                B2 = True
+            except socket.error:
+                time.sleep(0.1)
+        if False == B3:
+            try:
+                s3.connect((string3, 6454))
+                B3 = True
+            except socket.error:
+                time.sleep(0.1)
+        if False == B4:
+            try:
+                s4.connect((string4, 6454))
+                B4 = True
+            except socket.error:
+                time.sleep(0.1)
+        if False == B5:
+            try:
+                s5.connect((string5, 6454))
+                B5 = True
+            except socket.error:
+                time.sleep(0.1)
+        if False == B6:
+            try:
+                s6.connect((string6, 6454))
+                B6 = True
+            except socket.error:
+                time.sleep(0.1)
         end1 = len(sb13)
         end2 = len(sb14)
         end3 = len(sb15)
@@ -143,13 +239,43 @@ def Threadfun4(string1, string2, string3, string4, string5, string6, *args):
     s4 = socket.socket(socket.AF_INET, socket.SOCK_STREAM)
     s5 = socket.socket(socket.AF_INET, socket.SOCK_STREAM)
     s6 = socket.socket(socket.AF_INET, socket.SOCK_STREAM)
-    s1.connect((string1, 6454))
-    s2.connect((string2, 6454))
-    s3.connect((string3, 6454))
-    s4.connect((string4, 6454))
-    s5.connect((string5, 6454))
-    s6.connect((string6, 6454))
     while(True):
+        if False == B1:
+            try:
+                s1.connect((string1, 6454))
+                B1 = True
+            except socket.error:
+                time.sleep(0.1)
+        if False == B2:
+            try:
+                s2.connect((string2, 6454))
+                B2 = True
+            except socket.error:
+                time.sleep(0.1)
+        if False == B3:
+            try:
+                s3.connect((string3, 6454))
+                B3 = True
+            except socket.error:
+                time.sleep(0.1)
+        if False == B4:
+            try:
+                s4.connect((string4, 6454))
+                B4 = True
+            except socket.error:
+                time.sleep(0.1)
+        if False == B5:
+            try:
+                s5.connect((string5, 6454))
+                B5 = True
+            except socket.error:
+                time.sleep(0.1)
+        if False == B6:
+            try:
+                s6.connect((string6, 6454))
+                B6 = True
+            except socket.error:
+                time.sleep(0.1)
         end1 = len(sb19)
         end2 = len(sb20)
         end3 = len(sb21)
@@ -185,13 +311,43 @@ def Threadfun5(string1, string2, string3, string4, string5, string6, *args):
     s4 = socket.socket(socket.AF_INET, socket.SOCK_STREAM)
     s5 = socket.socket(socket.AF_INET, socket.SOCK_STREAM)
     s6 = socket.socket(socket.AF_INET, socket.SOCK_STREAM)
-    s1.connect((string1, 6454))
-    s2.connect((string2, 6454))
-    s3.connect((string3, 6454))
-    s4.connect((string4, 6454))
-    s5.connect((string5, 6454))
-    s6.connect((string6, 6454))
     while(True):
+        if False == B1:
+            try:
+                s1.connect((string1, 6454))
+                B1 = True
+            except socket.error:
+                time.sleep(0.1)
+        if False == B2:
+            try:
+                s2.connect((string2, 6454))
+                B2 = True
+            except socket.error:
+                time.sleep(0.1)
+        if False == B3:
+            try:
+                s3.connect((string3, 6454))
+                B3 = True
+            except socket.error:
+                time.sleep(0.1)
+        if False == B4:
+            try:
+                s4.connect((string4, 6454))
+                B4 = True
+            except socket.error:
+                time.sleep(0.1)
+        if False == B5:
+            try:
+                s5.connect((string5, 6454))
+                B5 = True
+            except socket.error:
+                time.sleep(0.1)
+        if False == B6:
+            try:
+                s6.connect((string6, 6454))
+                B6 = True
+            except socket.error:
+                time.sleep(0.1)
         end1 = len(sb25)
         end2 = len(sb26)
         end3 = len(sb27)
@@ -227,13 +383,43 @@ def Threadfun6(string1, string2, string3, string4, string5, string6, *args):
     s4 = socket.socket(socket.AF_INET, socket.SOCK_STREAM)
     s5 = socket.socket(socket.AF_INET, socket.SOCK_STREAM)
     s6 = socket.socket(socket.AF_INET, socket.SOCK_STREAM)
-    s1.connect((string1, 6454))
-    s2.connect((string2, 6454))
-    s3.connect((string3, 6454))
-    s4.connect((string4, 6454))
-    s5.connect((string5, 6454))
-    s6.connect((string6, 6454))
     while(True):
+        if False == B1:
+            try:
+                s1.connect((string1, 6454))
+                B1 = True
+            except socket.error:
+                time.sleep(0.1)
+        if False == B2:
+            try:
+                s2.connect((string2, 6454))
+                B2 = True
+            except socket.error:
+                time.sleep(0.1)
+        if False == B3:
+            try:
+                s3.connect((string3, 6454))
+                B3 = True
+            except socket.error:
+                time.sleep(0.1)
+        if False == B4:
+            try:
+                s4.connect((string4, 6454))
+                B4 = True
+            except socket.error:
+                time.sleep(0.1)
+        if False == B5:
+            try:
+                s5.connect((string5, 6454))
+                B5 = True
+            except socket.error:
+                time.sleep(0.1)
+        if False == B6:
+            try:
+                s6.connect((string6, 6454))
+                B6 = True
+            except socket.error:
+                time.sleep(0.1)
         end1 = len(sb31)
         end2 = len(sb32)
         end3 = len(sb33)
@@ -269,13 +455,43 @@ def Threadfun7(string1, string2, string3, string4, string5, string6, *args):
     s4 = socket.socket(socket.AF_INET, socket.SOCK_STREAM)
     s5 = socket.socket(socket.AF_INET, socket.SOCK_STREAM)
     s6 = socket.socket(socket.AF_INET, socket.SOCK_STREAM)
-    s1.connect((string1, 6454))
-    s2.connect((string2, 6454))
-    s3.connect((string3, 6454))
-    s4.connect((string4, 6454))
-    s5.connect((string5, 6454))
-    s6.connect((string6, 6454))
     while(True):
+        if False == B1:
+            try:
+                s1.connect((string1, 6454))
+                B1 = True
+            except socket.error:
+                time.sleep(0.1)
+        if False == B2:
+            try:
+                s2.connect((string2, 6454))
+                B2 = True
+            except socket.error:
+                time.sleep(0.1)
+        if False == B3:
+            try:
+                s3.connect((string3, 6454))
+                B3 = True
+            except socket.error:
+                time.sleep(0.1)
+        if False == B4:
+            try:
+                s4.connect((string4, 6454))
+                B4 = True
+            except socket.error:
+                time.sleep(0.1)
+        if False == B5:
+            try:
+                s5.connect((string5, 6454))
+                B5 = True
+            except socket.error:
+                time.sleep(0.1)
+        if False == B6:
+            try:
+                s6.connect((string6, 6454))
+                B6 = True
+            except socket.error:
+                time.sleep(0.1)
         end1 = len(sb37)
         end2 = len(sb38)
         end3 = len(sb39)
@@ -311,13 +527,43 @@ def Threadfun8(string1, string2, string3, string4, string5, string6, *args):
     s4 = socket.socket(socket.AF_INET, socket.SOCK_STREAM)
     s5 = socket.socket(socket.AF_INET, socket.SOCK_STREAM)
     s6 = socket.socket(socket.AF_INET, socket.SOCK_STREAM)
-    s1.connect((string1, 6454))
-    s2.connect((string2, 6454))
-    s3.connect((string3, 6454))
-    s4.connect((string4, 6454))
-    s5.connect((string5, 6454))
-    s6.connect((string6, 6454))
     while(True):
+        if False == B1:
+            try:
+                s1.connect((string1, 6454))
+                B1 = True
+            except socket.error:
+                time.sleep(0.1)
+        if False == B2:
+            try:
+                s2.connect((string2, 6454))
+                B2 = True
+            except socket.error:
+                time.sleep(0.1)
+        if False == B3:
+            try:
+                s3.connect((string3, 6454))
+                B3 = True
+            except socket.error:
+                time.sleep(0.1)
+        if False == B4:
+            try:
+                s4.connect((string4, 6454))
+                B4 = True
+            except socket.error:
+                time.sleep(0.1)
+        if False == B5:
+            try:
+                s5.connect((string5, 6454))
+                B5 = True
+            except socket.error:
+                time.sleep(0.1)
+        if False == B6:
+            try:
+                s6.connect((string6, 6454))
+                B6 = True
+            except socket.error:
+                time.sleep(0.1)
         end1 = len(sb43)
         end2 = len(sb44)
         end3 = len(sb45)
@@ -353,13 +599,43 @@ def Threadfun9(string1, string2, string3, string4, string5, string6, *args):
     s4 = socket.socket(socket.AF_INET, socket.SOCK_STREAM)
     s5 = socket.socket(socket.AF_INET, socket.SOCK_STREAM)
     s6 = socket.socket(socket.AF_INET, socket.SOCK_STREAM)
-    s1.connect((string1, 6454))
-    s2.connect((string2, 6454))
-    s3.connect((string3, 6454))
-    s4.connect((string4, 6454))
-    s5.connect((string5, 6454))
-    s6.connect((string6, 6454))
     while(True):
+        if False == B1:
+            try:
+                s1.connect((string1, 6454))
+                B1 = True
+            except socket.error:
+                time.sleep(0.1)
+        if False == B2:
+            try:
+                s2.connect((string2, 6454))
+                B2 = True
+            except socket.error:
+                time.sleep(0.1)
+        if False == B3:
+            try:
+                s3.connect((string3, 6454))
+                B3 = True
+            except socket.error:
+                time.sleep(0.1)
+        if False == B4:
+            try:
+                s4.connect((string4, 6454))
+                B4 = True
+            except socket.error:
+                time.sleep(0.1)
+        if False == B5:
+            try:
+                s5.connect((string5, 6454))
+                B5 = True
+            except socket.error:
+                time.sleep(0.1)
+        if False == B6:
+            try:
+                s6.connect((string6, 6454))
+                B6 = True
+            except socket.error:
+                time.sleep(0.1)
         end1 = len(sb49)
         end2 = len(sb50)
         end3 = len(sb51)
@@ -395,13 +671,43 @@ def Threadfun10(string1, string2, string3, string4, string5, string6, *args):
     s4 = socket.socket(socket.AF_INET, socket.SOCK_STREAM)
     s5 = socket.socket(socket.AF_INET, socket.SOCK_STREAM)
     s6 = socket.socket(socket.AF_INET, socket.SOCK_STREAM)
-    s1.connect((string1, 6454))
-    s2.connect((string2, 6454))
-    s3.connect((string3, 6454))
-    s4.connect((string4, 6454))
-    s5.connect((string5, 6454))
-    s6.connect((string6, 6454))
     while(True):
+        if False == B1:
+            try:
+                s1.connect((string1, 6454))
+                B1 = True
+            except socket.error:
+                time.sleep(0.1)
+        if False == B2:
+            try:
+                s2.connect((string2, 6454))
+                B2 = True
+            except socket.error:
+                time.sleep(0.1)
+        if False == B3:
+            try:
+                s3.connect((string3, 6454))
+                B3 = True
+            except socket.error:
+                time.sleep(0.1)
+        if False == B4:
+            try:
+                s4.connect((string4, 6454))
+                B4 = True
+            except socket.error:
+                time.sleep(0.1)
+        if False == B5:
+            try:
+                s5.connect((string5, 6454))
+                B5 = True
+            except socket.error:
+                time.sleep(0.1)
+        if False == B6:
+            try:
+                s6.connect((string6, 6454))
+                B6 = True
+            except socket.error:
+                time.sleep(0.1)
         end1 = len(sb55)
         end2 = len(sb56)
         end3 = len(sb57)
@@ -437,13 +743,43 @@ def Threadfun11(string1, string2, string3, string4, string5, string6, *args):
     s4 = socket.socket(socket.AF_INET, socket.SOCK_STREAM)
     s5 = socket.socket(socket.AF_INET, socket.SOCK_STREAM)
     s6 = socket.socket(socket.AF_INET, socket.SOCK_STREAM)
-    s1.connect((string1, 6454))
-    s2.connect((string2, 6454))
-    s3.connect((string3, 6454))
-    s4.connect((string4, 6454))
-    s5.connect((string5, 6454))
-    s6.connect((string6, 6454))
     while(True):
+        if False == B1:
+            try:
+                s1.connect((string1, 6454))
+                B1 = True
+            except socket.error:
+                time.sleep(0.1)
+        if False == B2:
+            try:
+                s2.connect((string2, 6454))
+                B2 = True
+            except socket.error:
+                time.sleep(0.1)
+        if False == B3:
+            try:
+                s3.connect((string3, 6454))
+                B3 = True
+            except socket.error:
+                time.sleep(0.1)
+        if False == B4:
+            try:
+                s4.connect((string4, 6454))
+                B4 = True
+            except socket.error:
+                time.sleep(0.1)
+        if False == B5:
+            try:
+                s5.connect((string5, 6454))
+                B5 = True
+            except socket.error:
+                time.sleep(0.1)
+        if False == B6:
+            try:
+                s6.connect((string6, 6454))
+                B6 = True
+            except socket.error:
+                time.sleep(0.1)
         end1 = len(sb61)
         end2 = len(sb62)
         end3 = len(sb63)
