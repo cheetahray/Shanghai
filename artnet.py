@@ -194,8 +194,8 @@ def rgbwave(mydelay, myduty, red, green, blue):
     
 AmIBoomNow = False    
 islightout = True
-tcpsock = socket.socket(socket.AF_INET, socket.SOCK_STREAM) # UDP
-tcpsock.bind(("0.0.0.0", 6454))
+sock = socket.socket(socket.AF_INET, socket.SOCK_DGRAM) # UDP
+sock.bind(("0.0.0.0", 6454))
 ips = commands.getoutput("/sbin/ifconfig | grep -iA2 \"eth0\" | grep -i \"inet\" | grep -iv \"inet6\" | " +
                          "awk {'print $2'} | sed -ne 's/addr\://p'")
 mylist = ips.split(".")
@@ -251,14 +251,12 @@ nowduty = 0
 threeight = 0
 try:        
     sparksock.bind(("0.0.0.0",9999))
-    sparksock.listen(1)
+    sparksock.listen(2)
     clientsocket, clientaddr = sparksock.accept()
     thread.start_new_thread(handler, (clientsocket, clientaddr))
-    tcpsock.listen(1)
-    sock, sockaddr = tcpsock.accept()
     while True:
         try:
-            data = sock.recv(1024)
+            data, addr = sock.recvfrom(1024)
             if True == AmIBoomNow:
                 pass
             elif ( len(data) == 10 and data[0:4] == "boom" ):
@@ -329,20 +327,18 @@ try:
                             #    y += 1
                 elif data[0:6] == "artnet" and len(data) > 6:
                     #mylist = data[6:].split(" ")
-                    for ii in range(6, len(data), 5):
+                    for ii in range(6, len(data), 4):
                         r = ord(data[ii])
                         g = ord(data[ii+1])
                         b = ord(data[ii+2])
                         y = ord(data[ii+3])
-                        x = ord(data[ii+4])
-                        if x == whoami:
-                            if threeight == 0 and 0 == y and False == QQ:
-                                p31.ChangeDutyCycle(int(r/2.55))
-                                p33.ChangeDutyCycle(int(g/2.55))
-                                p35.ChangeDutyCycle(int(b/2.55))
-                            else:
-                                anim.drawone(0, y, r, g, b)
-                                anim.drawone(1, y, r, g, b)        
+                        if threeight == 0 and 0 == y and False == QQ:
+                            p31.ChangeDutyCycle(int(r/2.55))
+                            p33.ChangeDutyCycle(int(g/2.55))
+                            p35.ChangeDutyCycle(int(b/2.55))
+                        else:
+                            anim.drawone(0, y, r, g, b)
+                            anim.drawone(1, y, r, g, b)        
             '''
             elif False == islightout:
                 if data[0:4] == "RGBW":
@@ -374,9 +370,8 @@ try:
             pass
                 
 except (KeyboardInterrupt):
-    tcpsock.shutdown(1)
-    tcpsock.close()
-    sparksock.shutdown(1)
+    sock.close()
+    sparksock.shutdown(2)
     sparksock.close()
     p31.stop()
     #p13.stop()
