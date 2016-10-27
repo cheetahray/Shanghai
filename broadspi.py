@@ -29,61 +29,68 @@ def Threadfun1(string1, string2, string3, string4, string5, string6, *args):
                 s1.connect((string1, 6454))
                 B1 = True
             except socket.error:
-                time.sleep(0.1)
+                pass
+        else:
+            end1 = len(sb1)
+            if end1 > 6:
+                s1.send(sb1)
+        sb1 = "artnet"
         if False == B2:
             try:
                 s2.connect((string2, 6454))
                 B2 = True
             except socket.error:
-                time.sleep(0.1)
+                pass
+        else:
+            end2 = len(sb2)
+            if end2 > 6:
+                s2.send(sb2)
+        sb2 = "artnet"
         if False == B3:
             try:
                 s3.connect((string3, 6454))
                 B3 = True
             except socket.error:
-                time.sleep(0.1)
+                pass
+        else:
+            end3 = len(sb3)
+            if end3 > 6:
+                s3.send(sb3)
+        sb3 = "artnet"
         if False == B4:
             try:
                 s4.connect((string4, 6454))
                 B4 = True
             except socket.error:
-                time.sleep(0.1)
+                pass
+        else:
+            end4 = len(sb4)
+            if end4 > 6:
+                s4.send(sb4)
+        sb4 = "artnet"
         if False == B5:
             try:
                 s5.connect((string5, 6454))
                 B5 = True
             except socket.error:
-                time.sleep(0.1)
+                pass
+        else:
+            end5 = len(sb5)
+            if end5 > 6:
+                s5.send(sb5)
+        sb5 = "artnet"
         if False == B6:
             try:
                 s6.connect((string6, 6454))
                 B6 = True
             except socket.error:
-                time.sleep(0.1)
-        end1 = len(sb1)
-        end2 = len(sb2)
-        end3 = len(sb3)
-        end4 = len(sb4)
-        end5 = len(sb5)
-        end6 = len(sb6)
-        if end1 > 6:
-            s1.send(sb1)
-            sb1 = "artnet"
-        if end2 > 6:
-            s2.send(sb2)
-            sb2 = "artnet"
-        if end3 > 6:
-            s3.send(sb3)
-            sb3 = "artnet"
-        if end4 > 6:
-            s4.send(sb4)
-            sb4 = "artnet"
-        if end5 > 6:
-            s5.send(sb5)
-            sb5 = "artnet"
-        if end6 > 6:
-            s6.send(sb6)
-            sb6 = "artnet"
+                pass
+        else:
+            end6 = len(sb6)
+            if end6 > 6:
+                s6.send(sb6)
+        sb6 = "artnet"
+        
         time.sleep(sleeptime)
 
 def Threadfun2(string1, string2, string3, string4, string5, string6, *args):
@@ -107,61 +114,68 @@ def Threadfun2(string1, string2, string3, string4, string5, string6, *args):
                 s1.connect((string1, 6454))
                 B1 = True
             except socket.error:
-                time.sleep(0.1)
+                pass
+        else:
+            end1 = len(sb1)
+            if end1 > 6:
+                s1.send(sb1)
+        sb1 = "artnet"
         if False == B2:
             try:
                 s2.connect((string2, 6454))
                 B2 = True
             except socket.error:
-                time.sleep(0.1)
+                pass
+        else:
+            end2 = len(sb2)
+            if end2 > 6:
+                s2.send(sb2)
+        sb2 = "artnet"
         if False == B3:
             try:
                 s3.connect((string3, 6454))
                 B3 = True
             except socket.error:
-                time.sleep(0.1)
+                pass
+        else:
+            end3 = len(sb3)
+            if end3 > 6:
+                s3.send(sb3)
+        sb3 = "artnet"
         if False == B4:
             try:
                 s4.connect((string4, 6454))
                 B4 = True
             except socket.error:
-                time.sleep(0.1)
+                pass
+        else:
+            end4 = len(sb4)
+            if end4 > 6:
+                s4.send(sb4)
+        sb4 = "artnet"
         if False == B5:
             try:
                 s5.connect((string5, 6454))
                 B5 = True
             except socket.error:
-                time.sleep(0.1)
+                pass
+        else:
+            end5 = len(sb5)
+            if end5 > 6:
+                s5.send(sb5)
+        sb5 = "artnet"
         if False == B6:
             try:
                 s6.connect((string6, 6454))
                 B6 = True
             except socket.error:
-                time.sleep(0.1)
-        end1 = len(sb7)
-        end2 = len(sb8)
-        end3 = len(sb9)
-        end4 = len(sb10)
-        end5 = len(sb11)
-        end6 = len(sb12)
-        if end1 > 6:
-            s1.send(sb7)
-            sb7 = "artnet"
-        if end2 > 6:
-            s2.send(sb8)
-            sb8 = "artnet"
-        if end3 > 6:
-            s3.send(sb9)
-            sb9 = "artnet"
-        if end4 > 6:
-            s4.send(sb10)
-            sb10 = "artnet"
-        if end5 > 6:
-            s5.send(sb11)
-            sb11 = "artnet"
-        if end6 > 6:
-            s6.send(sb12)
-            sb12 = "artnet"
+                pass
+        else:
+            end6 = len(sb6)
+            if end6 > 6:
+                s6.send(sb6)
+        sb6 = "artnet"
+
         time.sleep(sleeptime)
 
 def Threadfun3(string1, string2, string3, string4, string5, string6, *args):
@@ -180,66 +194,73 @@ def Threadfun3(string1, string2, string3, string4, string5, string6, *args):
     B5 = False
     B6 = False
     while(True):
-        if False == B1:
+                if False == B1:
             try:
                 s1.connect((string1, 6454))
                 B1 = True
             except socket.error:
-                time.sleep(0.1)
+                pass
+        else:
+            end1 = len(sb1)
+            if end1 > 6:
+                s1.send(sb1)
+        sb1 = "artnet"
         if False == B2:
             try:
                 s2.connect((string2, 6454))
                 B2 = True
             except socket.error:
-                time.sleep(0.1)
+                pass
+        else:
+            end2 = len(sb2)
+            if end2 > 6:
+                s2.send(sb2)
+        sb2 = "artnet"
         if False == B3:
             try:
                 s3.connect((string3, 6454))
                 B3 = True
             except socket.error:
-                time.sleep(0.1)
+                pass
+        else:
+            end3 = len(sb3)
+            if end3 > 6:
+                s3.send(sb3)
+        sb3 = "artnet"
         if False == B4:
             try:
                 s4.connect((string4, 6454))
                 B4 = True
             except socket.error:
-                time.sleep(0.1)
+                pass
+        else:
+            end4 = len(sb4)
+            if end4 > 6:
+                s4.send(sb4)
+        sb4 = "artnet"
         if False == B5:
             try:
                 s5.connect((string5, 6454))
                 B5 = True
             except socket.error:
-                time.sleep(0.1)
+                pass
+        else:
+            end5 = len(sb5)
+            if end5 > 6:
+                s5.send(sb5)
+        sb5 = "artnet"
         if False == B6:
             try:
                 s6.connect((string6, 6454))
                 B6 = True
             except socket.error:
-                time.sleep(0.1)
-        end1 = len(sb13)
-        end2 = len(sb14)
-        end3 = len(sb15)
-        end4 = len(sb16)
-        end5 = len(sb17)
-        end6 = len(sb18)
-        if end1 > 6:
-            s1.send(sb13)
-            sb13 = "artnet"
-        if end2 > 6:
-            s2.send(sb14)
-            sb14 = "artnet"
-        if end3 > 6:
-            s3.send(sb15)
-            sb15 = "artnet"
-        if end4 > 6:
-            s4.send(sb16)
-            sb16 = "artnet"
-        if end5 > 6:
-            s5.send(sb17)
-            sb17 = "artnet"
-        if end6 > 6:
-            s6.send(sb18)
-            sb18 = "artnet"
+                pass
+        else:
+            end6 = len(sb6)
+            if end6 > 6:
+                s6.send(sb6)
+        sb6 = "artnet"
+
         time.sleep(sleeptime)
 
 def Threadfun4(string1, string2, string3, string4, string5, string6, *args):
@@ -263,61 +284,68 @@ def Threadfun4(string1, string2, string3, string4, string5, string6, *args):
                 s1.connect((string1, 6454))
                 B1 = True
             except socket.error:
-                time.sleep(0.1)
+                pass
+        else:
+            end1 = len(sb1)
+            if end1 > 6:
+                s1.send(sb1)
+        sb1 = "artnet"
         if False == B2:
             try:
                 s2.connect((string2, 6454))
                 B2 = True
             except socket.error:
-                time.sleep(0.1)
+                pass
+        else:
+            end2 = len(sb2)
+            if end2 > 6:
+                s2.send(sb2)
+        sb2 = "artnet"
         if False == B3:
             try:
                 s3.connect((string3, 6454))
                 B3 = True
             except socket.error:
-                time.sleep(0.1)
+                pass
+        else:
+            end3 = len(sb3)
+            if end3 > 6:
+                s3.send(sb3)
+        sb3 = "artnet"
         if False == B4:
             try:
                 s4.connect((string4, 6454))
                 B4 = True
             except socket.error:
-                time.sleep(0.1)
+                pass
+        else:
+            end4 = len(sb4)
+            if end4 > 6:
+                s4.send(sb4)
+        sb4 = "artnet"
         if False == B5:
             try:
                 s5.connect((string5, 6454))
                 B5 = True
             except socket.error:
-                time.sleep(0.1)
+                pass
+        else:
+            end5 = len(sb5)
+            if end5 > 6:
+                s5.send(sb5)
+        sb5 = "artnet"
         if False == B6:
             try:
                 s6.connect((string6, 6454))
                 B6 = True
             except socket.error:
-                time.sleep(0.1)
-        end1 = len(sb19)
-        end2 = len(sb20)
-        end3 = len(sb21)
-        end4 = len(sb22)
-        end5 = len(sb23)
-        end6 = len(sb24)
-        if end1 > 6:
-            s1.send(sb19)
-            sb19 = "artnet"
-        if end2 > 6:
-            s2.send(sb20)
-            sb20 = "artnet"
-        if end3 > 6:
-            s3.send(sb21)
-            sb21 = "artnet"
-        if end4 > 6:
-            s4.send(sb22)
-            sb22 = "artnet"
-        if end5 > 6:
-            s5.send(sb23)
-            sb23 = "artnet"
-        if end6 > 6:
-            s6.send(sb24)
-            sb24 = "artnet"
+                pass
+        else:
+            end6 = len(sb6)
+            if end6 > 6:
+                s6.send(sb6)
+        sb6 = "artnet"
+
         time.sleep(sleeptime)
 
 def Threadfun5(string1, string2, string3, string4, string5, string6, *args):
@@ -341,61 +369,68 @@ def Threadfun5(string1, string2, string3, string4, string5, string6, *args):
                 s1.connect((string1, 6454))
                 B1 = True
             except socket.error:
-                time.sleep(0.1)
+                pass
+        else:
+            end1 = len(sb1)
+            if end1 > 6:
+                s1.send(sb1)
+        sb1 = "artnet"
         if False == B2:
             try:
                 s2.connect((string2, 6454))
                 B2 = True
             except socket.error:
-                time.sleep(0.1)
+                pass
+        else:
+            end2 = len(sb2)
+            if end2 > 6:
+                s2.send(sb2)
+        sb2 = "artnet"
         if False == B3:
             try:
                 s3.connect((string3, 6454))
                 B3 = True
             except socket.error:
-                time.sleep(0.1)
+                pass
+        else:
+            end3 = len(sb3)
+            if end3 > 6:
+                s3.send(sb3)
+        sb3 = "artnet"
         if False == B4:
             try:
                 s4.connect((string4, 6454))
                 B4 = True
             except socket.error:
-                time.sleep(0.1)
+                pass
+        else:
+            end4 = len(sb4)
+            if end4 > 6:
+                s4.send(sb4)
+        sb4 = "artnet"
         if False == B5:
             try:
                 s5.connect((string5, 6454))
                 B5 = True
             except socket.error:
-                time.sleep(0.1)
+                pass
+        else:
+            end5 = len(sb5)
+            if end5 > 6:
+                s5.send(sb5)
+        sb5 = "artnet"
         if False == B6:
             try:
                 s6.connect((string6, 6454))
                 B6 = True
             except socket.error:
-                time.sleep(0.1)
-        end1 = len(sb25)
-        end2 = len(sb26)
-        end3 = len(sb27)
-        end4 = len(sb28)
-        end5 = len(sb29)
-        end6 = len(sb30)
-        if end1 > 6:
-            s1.send(sb25)
-            sb25 = "artnet"
-        if end2 > 6:
-            s2.send(sb26)
-            sb26 = "artnet"
-        if end3 > 6:
-            s3.send(sb27)
-            sb27 = "artnet"
-        if end4 > 6:
-            s4.send(sb28)
-            sb28 = "artnet"
-        if end5 > 6:
-            s5.send(sb29)
-            sb29 = "artnet"
-        if end6 > 6:
-            s6.send(sb30)
-            sb30 = "artnet"
+                pass
+        else:
+            end6 = len(sb6)
+            if end6 > 6:
+                s6.send(sb6)
+        sb6 = "artnet"
+
         time.sleep(sleeptime)
 
 def Threadfun6(string1, string2, string3, string4, string5, string6, *args):
@@ -419,61 +454,68 @@ def Threadfun6(string1, string2, string3, string4, string5, string6, *args):
                 s1.connect((string1, 6454))
                 B1 = True
             except socket.error:
-                time.sleep(0.1)
+                pass
+        else:
+            end1 = len(sb1)
+            if end1 > 6:
+                s1.send(sb1)
+        sb1 = "artnet"
         if False == B2:
             try:
                 s2.connect((string2, 6454))
                 B2 = True
             except socket.error:
-                time.sleep(0.1)
+                pass
+        else:
+            end2 = len(sb2)
+            if end2 > 6:
+                s2.send(sb2)
+        sb2 = "artnet"
         if False == B3:
             try:
                 s3.connect((string3, 6454))
                 B3 = True
             except socket.error:
-                time.sleep(0.1)
+                pass
+        else:
+            end3 = len(sb3)
+            if end3 > 6:
+                s3.send(sb3)
+        sb3 = "artnet"
         if False == B4:
             try:
                 s4.connect((string4, 6454))
                 B4 = True
             except socket.error:
-                time.sleep(0.1)
+                pass
+        else:
+            end4 = len(sb4)
+            if end4 > 6:
+                s4.send(sb4)
+        sb4 = "artnet"
         if False == B5:
             try:
                 s5.connect((string5, 6454))
                 B5 = True
             except socket.error:
-                time.sleep(0.1)
+                pass
+        else:
+            end5 = len(sb5)
+            if end5 > 6:
+                s5.send(sb5)
+        sb5 = "artnet"
         if False == B6:
             try:
                 s6.connect((string6, 6454))
                 B6 = True
             except socket.error:
-                time.sleep(0.1)
-        end1 = len(sb31)
-        end2 = len(sb32)
-        end3 = len(sb33)
-        end4 = len(sb34)
-        end5 = len(sb35)
-        end6 = len(sb36)
-        if end1 > 6:
-            s1.send(sb31)
-            sb31 = "artnet"
-        if end2 > 6:
-            s2.send(sb32)
-            sb32 = "artnet"
-        if end3 > 6:
-            s3.send(sb33)
-            sb33 = "artnet"
-        if end4 > 6:
-            s4.send(sb34)
-            sb34 = "artnet"
-        if end5 > 6:
-            s5.send(sb35)
-            sb35 = "artnet"
-        if end6 > 6:
-            s6.send(sb36)
-            sb36 = "artnet"
+                pass
+        else:
+            end6 = len(sb6)
+            if end6 > 6:
+                s6.send(sb6)
+        sb6 = "artnet"
+
         time.sleep(sleeptime)
 
 def Threadfun7(string1, string2, string3, string4, string5, string6, *args):
@@ -497,61 +539,68 @@ def Threadfun7(string1, string2, string3, string4, string5, string6, *args):
                 s1.connect((string1, 6454))
                 B1 = True
             except socket.error:
-                time.sleep(0.1)
+                pass
+        else:
+            end1 = len(sb1)
+            if end1 > 6:
+                s1.send(sb1)
+        sb1 = "artnet"
         if False == B2:
             try:
                 s2.connect((string2, 6454))
                 B2 = True
             except socket.error:
-                time.sleep(0.1)
+                pass
+        else:
+            end2 = len(sb2)
+            if end2 > 6:
+                s2.send(sb2)
+        sb2 = "artnet"
         if False == B3:
             try:
                 s3.connect((string3, 6454))
                 B3 = True
             except socket.error:
-                time.sleep(0.1)
+                pass
+        else:
+            end3 = len(sb3)
+            if end3 > 6:
+                s3.send(sb3)
+        sb3 = "artnet"
         if False == B4:
             try:
                 s4.connect((string4, 6454))
                 B4 = True
             except socket.error:
-                time.sleep(0.1)
+                pass
+        else:
+            end4 = len(sb4)
+            if end4 > 6:
+                s4.send(sb4)
+        sb4 = "artnet"
         if False == B5:
             try:
                 s5.connect((string5, 6454))
                 B5 = True
             except socket.error:
-                time.sleep(0.1)
+                pass
+        else:
+            end5 = len(sb5)
+            if end5 > 6:
+                s5.send(sb5)
+        sb5 = "artnet"
         if False == B6:
             try:
                 s6.connect((string6, 6454))
                 B6 = True
             except socket.error:
-                time.sleep(0.1)
-        end1 = len(sb37)
-        end2 = len(sb38)
-        end3 = len(sb39)
-        end4 = len(sb40)
-        end5 = len(sb41)
-        end6 = len(sb42)
-        if end1 > 6:
-            s1.send(sb37)
-            sb37 = "artnet"
-        if end2 > 6:
-            s2.send(sb38)
-            sb38 = "artnet"
-        if end3 > 6:
-            s3.send(sb39)
-            sb39 = "artnet"
-        if end4 > 6:
-            s4.send(sb40)
-            sb40 = "artnet"
-        if end5 > 6:
-            s5.send(sb41)
-            sb41 = "artnet"
-        if end6 > 6:
-            s6.send(sb42)
-            sb42 = "artnet"
+                pass
+        else:
+            end6 = len(sb6)
+            if end6 > 6:
+                s6.send(sb6)
+        sb6 = "artnet"
+
         time.sleep(sleeptime)
 
 def Threadfun8(string1, string2, string3, string4, string5, string6, *args):
@@ -575,61 +624,68 @@ def Threadfun8(string1, string2, string3, string4, string5, string6, *args):
                 s1.connect((string1, 6454))
                 B1 = True
             except socket.error:
-                time.sleep(0.1)
+                pass
+        else:
+            end1 = len(sb1)
+            if end1 > 6:
+                s1.send(sb1)
+        sb1 = "artnet"
         if False == B2:
             try:
                 s2.connect((string2, 6454))
                 B2 = True
             except socket.error:
-                time.sleep(0.1)
+                pass
+        else:
+            end2 = len(sb2)
+            if end2 > 6:
+                s2.send(sb2)
+        sb2 = "artnet"
         if False == B3:
             try:
                 s3.connect((string3, 6454))
                 B3 = True
             except socket.error:
-                time.sleep(0.1)
+                pass
+        else:
+            end3 = len(sb3)
+            if end3 > 6:
+                s3.send(sb3)
+        sb3 = "artnet"
         if False == B4:
             try:
                 s4.connect((string4, 6454))
                 B4 = True
             except socket.error:
-                time.sleep(0.1)
+                pass
+        else:
+            end4 = len(sb4)
+            if end4 > 6:
+                s4.send(sb4)
+        sb4 = "artnet"
         if False == B5:
             try:
                 s5.connect((string5, 6454))
                 B5 = True
             except socket.error:
-                time.sleep(0.1)
+                pass
+        else:
+            end5 = len(sb5)
+            if end5 > 6:
+                s5.send(sb5)
+        sb5 = "artnet"
         if False == B6:
             try:
                 s6.connect((string6, 6454))
                 B6 = True
             except socket.error:
-                time.sleep(0.1)
-        end1 = len(sb43)
-        end2 = len(sb44)
-        end3 = len(sb45)
-        end4 = len(sb46)
-        end5 = len(sb47)
-        end6 = len(sb48)
-        if end1 > 6:
-            s1.send(sb43)
-            sb43 = "artnet"
-        if end2 > 6:
-            s2.send(sb44)
-            sb44 = "artnet"
-        if end3 > 6:
-            s3.send(sb45)
-            sb45 = "artnet"
-        if end4 > 6:
-            s4.send(sb46)
-            sb46 = "artnet"
-        if end5 > 6:
-            s5.send(sb47)
-            sb47 = "artnet"
-        if end6 > 6:
-            s6.send(sb48)
-            sb48 = "artnet"
+                pass
+        else:
+            end6 = len(sb6)
+            if end6 > 6:
+                s6.send(sb6)
+        sb6 = "artnet"
+
         time.sleep(sleeptime)
 
 def Threadfun9(string1, string2, string3, string4, string5, string6, *args):
@@ -653,61 +709,68 @@ def Threadfun9(string1, string2, string3, string4, string5, string6, *args):
                 s1.connect((string1, 6454))
                 B1 = True
             except socket.error:
-                time.sleep(0.1)
+                pass
+        else:
+            end1 = len(sb1)
+            if end1 > 6:
+                s1.send(sb1)
+        sb1 = "artnet"
         if False == B2:
             try:
                 s2.connect((string2, 6454))
                 B2 = True
             except socket.error:
-                time.sleep(0.1)
+                pass
+        else:
+            end2 = len(sb2)
+            if end2 > 6:
+                s2.send(sb2)
+        sb2 = "artnet"
         if False == B3:
             try:
                 s3.connect((string3, 6454))
                 B3 = True
             except socket.error:
-                time.sleep(0.1)
+                pass
+        else:
+            end3 = len(sb3)
+            if end3 > 6:
+                s3.send(sb3)
+        sb3 = "artnet"
         if False == B4:
             try:
                 s4.connect((string4, 6454))
                 B4 = True
             except socket.error:
-                time.sleep(0.1)
+                pass
+        else:
+            end4 = len(sb4)
+            if end4 > 6:
+                s4.send(sb4)
+        sb4 = "artnet"
         if False == B5:
             try:
                 s5.connect((string5, 6454))
                 B5 = True
             except socket.error:
-                time.sleep(0.1)
+                pass
+        else:
+            end5 = len(sb5)
+            if end5 > 6:
+                s5.send(sb5)
+        sb5 = "artnet"
         if False == B6:
             try:
                 s6.connect((string6, 6454))
                 B6 = True
             except socket.error:
-                time.sleep(0.1)
-        end1 = len(sb49)
-        end2 = len(sb50)
-        end3 = len(sb51)
-        end4 = len(sb52)
-        end5 = len(sb53)
-        end6 = len(sb54)
-        if end1 > 6:
-            s1.send(sb49)
-            sb49 = "artnet"
-        if end2 > 6:
-            s2.send(sb50)
-            sb50 = "artnet"
-        if end3 > 6:
-            s3.send(sb51)
-            sb51 = "artnet"
-        if end4 > 6:
-            s4.send(sb52)
-            sb52 = "artnet"
-        if end5 > 6:
-            s5.send(sb53)
-            sb53 = "artnet"
-        if end6 > 6:
-            s6.send(sb54)
-            sb54 = "artnet"
+                pass
+        else:
+            end6 = len(sb6)
+            if end6 > 6:
+                s6.send(sb6)
+        sb6 = "artnet"
+
         time.sleep(sleeptime)
 
 def Threadfun10(string1, string2, string3, string4, string5, string6, *args):
@@ -731,61 +794,68 @@ def Threadfun10(string1, string2, string3, string4, string5, string6, *args):
                 s1.connect((string1, 6454))
                 B1 = True
             except socket.error:
-                time.sleep(0.1)
+                pass
+        else:
+            end1 = len(sb1)
+            if end1 > 6:
+                s1.send(sb1)
+        sb1 = "artnet"
         if False == B2:
             try:
                 s2.connect((string2, 6454))
                 B2 = True
             except socket.error:
-                time.sleep(0.1)
+                pass
+        else:
+            end2 = len(sb2)
+            if end2 > 6:
+                s2.send(sb2)
+        sb2 = "artnet"
         if False == B3:
             try:
                 s3.connect((string3, 6454))
                 B3 = True
             except socket.error:
-                time.sleep(0.1)
+                pass
+        else:
+            end3 = len(sb3)
+            if end3 > 6:
+                s3.send(sb3)
+        sb3 = "artnet"
         if False == B4:
             try:
                 s4.connect((string4, 6454))
                 B4 = True
             except socket.error:
-                time.sleep(0.1)
+                pass
+        else:
+            end4 = len(sb4)
+            if end4 > 6:
+                s4.send(sb4)
+        sb4 = "artnet"
         if False == B5:
             try:
                 s5.connect((string5, 6454))
                 B5 = True
             except socket.error:
-                time.sleep(0.1)
+                pass
+        else:
+            end5 = len(sb5)
+            if end5 > 6:
+                s5.send(sb5)
+        sb5 = "artnet"
         if False == B6:
             try:
                 s6.connect((string6, 6454))
                 B6 = True
             except socket.error:
-                time.sleep(0.1)
-        end1 = len(sb55)
-        end2 = len(sb56)
-        end3 = len(sb57)
-        end4 = len(sb58)
-        end5 = len(sb59)
-        end6 = len(sb60)
-        if end1 > 6:
-            s1.send(sb55)
-            sb55 = "artnet"
-        if end2 > 6:
-            s2.send(sb56)
-            sb56 = "artnet"
-        if end3 > 6:
-            s3.send(sb57)
-            sb57 = "artnet"
-        if end4 > 6:
-            s4.send(sb58)
-            sb58 = "artnet"
-        if end5 > 6:
-            s5.send(sb59)
-            sb59 = "artnet"
-        if end6 > 6:
-            s6.send(sb60)
-            sb60 = "artnet"
+                pass
+        else:
+            end6 = len(sb6)
+            if end6 > 6:
+                s6.send(sb6)
+        sb6 = "artnet"
+
         time.sleep(sleeptime)
 
 def Threadfun11(string1, string2, string3, string4, string5, string6, *args):
@@ -809,61 +879,68 @@ def Threadfun11(string1, string2, string3, string4, string5, string6, *args):
                 s1.connect((string1, 6454))
                 B1 = True
             except socket.error:
-                time.sleep(0.1)
+                pass
+        else:
+            end1 = len(sb1)
+            if end1 > 6:
+                s1.send(sb1)
+        sb1 = "artnet"
         if False == B2:
             try:
                 s2.connect((string2, 6454))
                 B2 = True
             except socket.error:
-                time.sleep(0.1)
+                pass
+        else:
+            end2 = len(sb2)
+            if end2 > 6:
+                s2.send(sb2)
+        sb2 = "artnet"
         if False == B3:
             try:
                 s3.connect((string3, 6454))
                 B3 = True
             except socket.error:
-                time.sleep(0.1)
+                pass
+        else:
+            end3 = len(sb3)
+            if end3 > 6:
+                s3.send(sb3)
+        sb3 = "artnet"
         if False == B4:
             try:
                 s4.connect((string4, 6454))
                 B4 = True
             except socket.error:
-                time.sleep(0.1)
+                pass
+        else:
+            end4 = len(sb4)
+            if end4 > 6:
+                s4.send(sb4)
+        sb4 = "artnet"
         if False == B5:
             try:
                 s5.connect((string5, 6454))
                 B5 = True
             except socket.error:
-                time.sleep(0.1)
+                pass
+        else:
+            end5 = len(sb5)
+            if end5 > 6:
+                s5.send(sb5)
+        sb5 = "artnet"
         if False == B6:
             try:
                 s6.connect((string6, 6454))
                 B6 = True
             except socket.error:
-                time.sleep(0.1)
-        end1 = len(sb61)
-        end2 = len(sb62)
-        end3 = len(sb63)
-        end4 = len(sb64)
-        end5 = len(sb65)
-        end6 = len(sb66)
-        if end1 > 6:
-            s1.send(sb61)
-            sb61 = "artnet"
-        if end2 > 6:
-            s2.send(sb62)
-            sb62 = "artnet"
-        if end3 > 6:
-            s3.send(sb63)
-            sb63 = "artnet"
-        if end4 > 6:
-            s4.send(sb64)
-            sb64 = "artnet"
-        if end5 > 6:
-            s5.send(sb65)
-            sb65 = "artnet"
-        if end6 > 6:
-            s6.send(sb66)
-            sb66 = "artnet"
+                pass
+        else:
+            end6 = len(sb6)
+            if end6 > 6:
+                s6.send(sb6)
+        sb6 = "artnet"
+
         time.sleep(sleeptime)
 
 def frange(x, y, inc):
