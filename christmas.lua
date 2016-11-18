@@ -26,12 +26,12 @@ end
 --]]
 
 wifi.setmode(wifi.STATIONAP)
-wifi.sta.config("DAC-1F(rear)","yellowsub")
+wifi.sta.config("DAC-2F(rear)","yellowsub")
 foundap = 1
 
 cfg={}
-cfg.ssid = "HornHorn"
-cfg.pwd = "nk88888888"
+cfg.ssid = "DiDiDa"
+cfg.pwd = "nk888888"
 cfg.auth=wifi.WPA_WPA2_PSK
 
 --register callback
@@ -50,6 +50,15 @@ wifi.sta.eventMonReg(wifi.STA_APNOTFOUND, function()
         print(cfg.ssid)
         wifi.ap.config(cfg)
         wifi.sta.eventMonStop()
+         -- 30s time out for a inactive client
+        sv = net.createServer(net.UDP, 30)
+        -- server listens on 80, if data received, print data to console and send "hello world" back to caller
+        sv:listen(80, function(c)
+            c:on("receive", function(c, pl) 
+                print(pl)
+            end)
+            c:send("hello world")
+        end)
     end 
 end)
 
@@ -82,6 +91,22 @@ wifi.eventmon.register(wifi.eventmon.STA_GOT_IP, function(T)
     wifi.sta.eventMonStop()
     wifi.eventmon.unregister(wifi.eventmon.STA_CONNECTED)
     wifi.eventmon.unregister(wifi.eventmon.STA_GOT_IP)
+    srv = net.createConnection(net.UDP, 0)
+    srv:on("receive", function(sck, c) 
+        print(c) 
+    end)
+    --[[
+    srv:connect(80,"192.168.0.66")
+    srv:on("connection", function(sck, c)
+        -- Wait for connection before sending.
+        sck:send("GET / HTTP/1.1\r\nHost: 192.168.0.66\r\nConnection: keep-alive\r\nAccept: */*\r\n\r\n")
+    end)
+    --]]
+end)
+
+wifi.eventmon.register(wifi.eventmon.AP_STACONNECTED, function(T) 
+    print("\n\tAP - STATION CONNECTED".."\n\tMAC: "..T.MAC.."\n\tAID: "..T.AID)
+    wifi.eventmon.unregister(wifi.eventmon.AP_STACONNECTED)
 end)
 
 --unregister callback
