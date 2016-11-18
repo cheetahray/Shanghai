@@ -27,13 +27,28 @@ def ktype_string(god,rest):
 #while True: 
 #for ii in range(31,36):
 time.sleep(1.5)
-for ii in range(1,67):
+
+ktype_string('ping 192.168.12.114',3)
+combine('c')
+ktype_string('ping 192.168.12.126',3)
+combine('c')
+ktype_string('ping 192.168.12.133',3)
+combine('c')
+ktype_string('ping 192.168.12.134',3)
+combine('c')
+ktype_string('ping 192.168.12.153',3)
+combine('c')
+ktype_string('ping 192.168.12.154',3)
+combine('c')
+
+for ii in range(46,53):
+    #pass
+    #ktype_string('ping 192.168.12.' + str(ii),3)
+    #combine('c')
     '''
     time.sleep(1)
     ktype_string('5',73)
     '''
-    ktype_string('ping 192.168.12.' + str(ii),3)
-    combine('c')
     '''
     ktype_string('ssh pi@192.168.12.' + str(ii),6)
     ktype_string('chu67925',2)
@@ -44,6 +59,16 @@ for ii in range(1,67):
     ktype_string('ssh pi@192.168.12.' + str(ii),1)
     ktype_string('raspberry',2)
     ktype_string('amixer cset numid=6 70% 70%', 1)
+    ktype_string('exit',1)
+    '''
+    '''
+    ktype_string('ssh pi@192.168.12.' + str(ii),6)
+    ktype_string('raspberry',2)
+    ktype_string('sudo reboot', 1)
+    ktype_string('exit',1)
+    ktype_string('ssh pi@192.168.12.1' + str(ii),6)
+    ktype_string('chu67925',2)
+    ktype_string('sudo reboot', 1)
     ktype_string('exit',1)
     '''
     '''
