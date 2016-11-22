@@ -96,6 +96,7 @@ wifi.sta.eventMonReg(wifi.STA_APNOTFOUND, function()
         foundap = foundap + 1
     else
         print(cfg.ssid)
+        wifi.setmode(wifi.SOFTAP)
         wifi.ap.config(cfg)
         wifi.sta.eventMonStop()
         
