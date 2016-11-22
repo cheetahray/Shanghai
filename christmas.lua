@@ -62,7 +62,7 @@ end
 
 if not file.exists(wifiFile) then
     -- writeWifi("bellclass","NoiseKitchen")
-    writeWifi("DAC-2F(rear)","yellowsub")
+    writeWifi("bellclass","NoiseKitchen")
 end
 
 wifi.setmode(wifi.STATIONAP)
