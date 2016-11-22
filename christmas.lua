@@ -92,6 +92,7 @@ wifi.sta.eventMonReg(wifi.STA_WRONGPWD, function() print("STATION_WRONG_PASSWORD
 wifi.sta.eventMonReg(wifi.STA_APNOTFOUND, function() 
     print("STATION_NO_AP_FOUND_" .. foundap)
     if foundap == 1 then
+        wifi.setmode(wifi.STATION)
         wifi.sta.config(cfg.ssid,cfg.pwd)
         foundap = foundap + 1
     else
