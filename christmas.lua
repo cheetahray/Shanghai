@@ -1,9 +1,40 @@
 wifiFile = "wifi.txt"
+light1File = "light1.txt"
+light2File = "light2.txt"
+
+function readLight(lightFile)
+    theduty = 0
+    if file.open(lightFile, "r") then
+        tempduty = file.readline()
+        tempduty = string.sub(tempduty, 0, string.len(tempduty) - 1 )
+        theduty = tonumber(tempduty)
+        file.close()
+    end
+    return theduty
+end
+
+function writeLight(lightfile,dutycycle) 
+    -- open 'init.lua' in 'a+' mode
+    if file.open(lightfile, "w+") then
+         -- write 'foo bar' to the end of the file
+         file.writeline(tostring(dutycycle))
+         file.close()
+    end
+end 
+
+if not file.exists(light1File) then
+    -- writeWifi("bellclass","NoiseKitchen")
+    writeLight(light1File,"0")
+end
+if not file.exists(light2File) then
+    -- writeWifi("bellclass","NoiseKitchen")
+    writeLight(light2File,"0")
+end
 
 _1stpin = 1
 _2ndpin = 2
-pwm.setup(_1stpin, 1000, 0)
-pwm.setup(_2ndpin, 1000, 0)
+pwm.setup(_1stpin, 1000, readLight(light1File))
+pwm.setup(_2ndpin, 1000, readLight(light2File))
 --pwm.setup(3, 500, 0)
 pwm.start(_1stpin)
 pwm.start(_2ndpin)
@@ -41,12 +72,24 @@ function checkitout(cc)
     else
         -- 7th bit is 1 ?
         -- print( bit.isset(c, 7) )
-        if bit.isset(cc, 7) == 1 then
-            pwm.setduty(_1stpin, bit.lshift(bit.band(cc, 127), 3) )
+        if2ndlight = (bit.isset(cc, 7))
+        myduty = ( bit.lshift(bit.band(cc, 127), 3) )
+        if if2ndlight == false then
+            pwm.setduty(_1stpin, myduty)
         else
-            pwm.setduty(_2ndpin, bit.lshift(bit.band(cc, 127), 3) )
+            pwm.setduty(_2ndpin, myduty)
         end
-        print (bit.lshift(bit.band(cc, 127), 3))
+        if not tmr.alarm(0, 550, tmr.ALARM_SINGLE, 
+            function() 
+            end) 
+        then
+        else
+            if if2ndlight == false then
+                writeLight(light1File, myduty)
+            else
+                writeLight(light2File, myduty)
+            end            
+        end
     end
 end
 
