@@ -1,6 +1,4 @@
 wifiFile = "wifi.txt"
--- 30s time out for a inactive client
-sv = net.createServer(net.UDP, 30)
 
 _1stpin = 1
 _2ndpin = 2
@@ -12,19 +10,21 @@ pwm.start(_2ndpin)
 --pwm.start(3)
 myport = 8008
 
-function opennet()
-    -- server listens on 80, if data received, print data to console and send "hello world" back to caller
-    sv:listen(myport, function(c)
-        c:on("receive", function(c, pl) 
-            checkitout(pl)
-        end)
+isudp = false
+sv = net.createServer(net.UDP)
+-- server listens on 80, if data received, print data to console and send "hello world" back to caller
+sv:on("receive", function(sv, pl)
+    if isudp == true then
+        checkitout(pl)
         -- c:send("hello world")
-    end)
-end
+    end
+end)
+sv:listen(myport)
 
 function checkitout(cc)
     print( cc )
-    if string.len(cc) > 1 then
+    -- print (string.len(cc))
+    if string.len(cc) > 4 then
         count = 1
         ssid = ""
         pwd = ""
@@ -82,15 +82,7 @@ cfg.ssid = "DiDiDa"
 cfg.pwd = "nk888888"
 cfg.auth=wifi.WPA_WPA2_PSK
 
---register callback
-wifi.sta.eventMonReg(wifi.STA_IDLE, function() print("STATION_IDLE") end)
-
--- wifi.sta.eventMonReg(wifi.STA_CONNECTING, function() print("STATION_CONNECTING") end)
-
-wifi.sta.eventMonReg(wifi.STA_WRONGPWD, function() print("STATION_WRONG_PASSWORD") end)
-
-wifi.sta.eventMonReg(wifi.STA_APNOTFOUND, function() 
-    print("STATION_NO_AP_FOUND_" .. foundap)
+function apnotright()
     if foundap == 1 then
         wifi.sta.config(cfg.ssid,cfg.pwd)
         foundap = foundap + 1
@@ -100,13 +92,24 @@ wifi.sta.eventMonReg(wifi.STA_APNOTFOUND, function()
         wifi.ap.config(cfg)
         wifi.sta.eventMonStop()
         
-        opennet()
+        isudp = true
     end 
+end
+--register callback
+wifi.sta.eventMonReg(wifi.STA_IDLE, function() print("STATION_IDLE") end)
+
+-- wifi.sta.eventMonReg(wifi.STA_CONNECTING, function() print("STATION_CONNECTING") end)
+
+wifi.sta.eventMonReg(wifi.STA_WRONGPWD, function() print("STATION_WRONG_PASSWORD") end)
+
+wifi.sta.eventMonReg(wifi.STA_APNOTFOUND, function() 
+    print("STATION_NO_AP_FOUND_" .. foundap)
+    apnotright()
 end)
 
 wifi.sta.eventMonReg(wifi.STA_FAIL, function() 
-    print("STATION_CONNECT_FAIL")
-    wifi.sta.eventMonStop() 
+    print("STATION_CONNECT_FAIL" .. foundap)
+    apnotright()
 end)
 
 --wifi.sta.eventMonReg(wifi.STA_GOTIP, function() print("STATION_GOT_IP") end)
@@ -134,7 +137,7 @@ wifi.eventmon.register(wifi.eventmon.STA_GOT_IP, function(T)
     wifi.eventmon.unregister(wifi.eventmon.STA_CONNECTED)
     wifi.eventmon.unregister(wifi.eventmon.STA_GOT_IP)
     wifi.setmode(wifi.STATION)
-    opennet()
+    isudp = true
 end)
 
 wifi.eventmon.register(wifi.eventmon.AP_STACONNECTED, function(T) 
