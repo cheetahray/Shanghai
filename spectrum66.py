@@ -13,14 +13,13 @@ print >>sys.stderr, 'starting up on %s port %s' % server_address
 sock.bind(server_address)
 
 while True:
+    data, address = sock.recvfrom(4096)
     now = datetime.datetime.now()
     mymin = (now.minute % 30)
-    data, address = sock.recvfrom(4096)
     print "==>", data
     if data == "tss":
-        pass #subprocess.call('./closeJames.sh', shell=False)
+        pass #subprocess.call('/home/oem/Shanghai/closeJames.sh', shell=True)
     elif mymin < 4:
         pass
     else:
-        subprocess.call('../' + data + '.sh', shell=True)
-        time.sleep(240)
+        subprocess.call('/home/oem/' + data + '.sh', shell=True)
