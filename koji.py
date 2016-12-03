@@ -16,18 +16,54 @@ from mido import MidiFile
 #import serial
 import socket
 from struct import *
-import OSC
+from OSC import *
+import types
 
-cc = OSC.OSCClient()
-cc.connect(('192.168.12.203', 53000))   # localhost, port 57120
+server = OSCServer( ("localhost", 7110) )
+server.timeout = 0
+run = True
+server.handle_timeout = types.MethodType(handle_timeout, server)
+cc = OSCClient()
+cc.connect(('192.168.12.248', 53000))   # localhost, port 57120
 
 mid = None
 debug = False        #Boolean for on/off our debug print 
 isplay = False      #Boolean to judge whether the midi is playing
 
+# this method of reporting timeouts only works by convention
+# that before calling handle_request() field .timed_out is 
+# set to False
+def handle_timeout(self):
+    self.timed_out = True
+
+def user_callback(path, tags, args, source):
+    # which user will be determined by path:
+    # we just throw away all slashes and join together what's left
+    user = ''.join(path.split("/"))
+    # tags will contain 'fff'
+    # args is a OSCMessage with data
+    # source is where the message came from (in case you need to reply)
+
+    #mid = MidiFile('/home/oem/midi/' + args.song + '.mid')
+        
+    print ("Now do something with", user,args[2],args[0],1-args[1]) 
+
+def quit_callback(path, tags, args, source):
+    # don't do this at home (or it'll quit blender)
+    global run
+    run = False
+
+# user script that's called by the game engine every frame
+def each_frame():
+    # clear timed_out flag
+    server.timed_out = False
+    # handle all pending requests then return
+    while not server.timed_out:
+        server.handle_request()
+
 def click(msg):
     global cc
-    oscmsg = OSC.OSCMessage()
+    oscmsg = OSCMessage()
     print "%s" % ("/eleven")
     oscmsg.setAddress("%s" % ("/eleven") )
     oscmsg.append(msg)
@@ -71,18 +107,8 @@ def checkbound(whattype, oidx):
             else:
                 oidx += 1
     return oidx                
-        
-def play_midi():
-    global isplay
-    global myshift
-    global port
-    global boidx,toidx,aoidx,soidx
-    #workbook = xlsxwriter.Workbook('demo.xlsx')
-    #worksheet = workbook.add_worksheet()
-    #f = []
-    boundary = 0
-    #port.flush()
-        
+
+def play_head():
     for i in range(1,67):
         port.sendto(pack('BB', 249, 3), ("192.168.12." + str(i), 5005) )
         time.sleep(0.01)
@@ -93,9 +119,14 @@ def play_midi():
         time.sleep(0.02)
         #f.append(0)
         #worksheet.write(i, 0, 0)
-    threading.Timer(1.2, click, [1]).start()
+
+def play_midi():
+    global port
+    global boidx,toidx,aoidx,soidx
+    boundary = 0
+    #threading.Timer(1.2, click, [1]).start()
+    
     for message in mid.play():  #Next note from midi in this moment
-        isplay = False          #To avoid duplicate doorbell button press during midi play
         if False:
             print(message)
         if 'note_on' == message.type :
@@ -249,6 +280,7 @@ def play_midi():
                 if pickidx[8].has_key(message.note):
                     port.sendto(rayv, ("192.168.12." + str(pickidx[8][message.note]), 5005) )
                     del pickidx[8][message.note]
+def play_foot():
     time.sleep(3.5);
     for i in range(66,33,-1):
         port.sendto(pack('BB', 225, 1), ("192.168.12." + str(i), 5005) )
@@ -303,19 +335,30 @@ try:
 
     whoami = "65"
     #Register the door bell button GPIO input call back function
-    if '__main__' == __name__ :
+    # simulate a "game engine"
+    while run:
+        # do the game stuff:
+        #sleep(1)
+        # call user script
+        each_frame()
+
+        #if '__main__' == __name__ :
+        '''
         parser = argparse.ArgumentParser()
         parser.add_argument("--song",
                              default="chu", help="Midi file")
         args = parser.parse_args()
-        mid = MidiFile('/home/oem/midi/' + args.song + '.mid')
+        mid = MidiFile('/home/oem/midi/' + args.song + '.mid')     
         midi_suite = unittest.TestSuite()   #Add play midi test function
         all_suite = unittest.TestSuite()
         midi_suite.addTest(Tests("test_0"))
         all_suite.addTest(midi_suite)
         unittest.TextTestRunner(verbosity=1).run(all_suite)
+        '''
     elif False:
         port.sendto("Home", ("192.168.12." + whoami, 5005))
+
+    server.close()
 
 except KeyboardInterrupt:
     print "Cleaning up the GPIO" 
