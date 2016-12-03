@@ -22,7 +22,6 @@ import types
 server = OSCServer( ("localhost", 7110) )
 server.timeout = 0
 run = True
-server.handle_timeout = types.MethodType(handle_timeout, server)
 cc = OSCClient()
 cc.connect(('192.168.12.248', 53000))   # localhost, port 57120
 
@@ -35,6 +34,8 @@ isplay = False      #Boolean to judge whether the midi is playing
 # set to False
 def handle_timeout(self):
     self.timed_out = True
+
+server.handle_timeout = types.MethodType(handle_timeout, server)
 
 def user_callback(path, tags, args, source):
     # which user will be determined by path:
