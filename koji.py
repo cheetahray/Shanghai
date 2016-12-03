@@ -355,8 +355,8 @@ try:
         all_suite.addTest(midi_suite)
         unittest.TextTestRunner(verbosity=1).run(all_suite)
         '''
-    elif False:
-        port.sendto("Home", ("192.168.12." + whoami, 5005))
+    #elif False:
+        #port.sendto("Home", ("192.168.12." + whoami, 5005))
 
     server.close()
 
