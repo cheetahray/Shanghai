@@ -18,12 +18,13 @@ import socket
 from struct import *
 from OSC import *
 import types
+import thread
 
 server = OSCServer( ("0.0.0.0", 6666) )
 server.timeout = 0
 run = True
 cc = OSCClient()
-cc.connect(('192.168.12.248', 53000))   # localhost, port 57120
+cc.connect(('192.168.12.248', 1225))   # localhost, port 57120
 
 mid1 = MidiFile('/home/oem/midi/CM_66midi_1.mid')
 mid2 = MidiFile('/home/oem/midi/CM_66midi_2.mid')
@@ -33,8 +34,7 @@ mid5 = MidiFile('/home/oem/midi/CM_66midi_5.mid')
 mid6 = MidiFile('/home/oem/midi/CM_66midi_6.mid')
 mid7 = MidiFile('/home/oem/midi/CM_66midi_7.mid')
 debug = False        #Boolean for on/off our debug print 
-isplay = False      #Boolean to judge whether the midi is playing
-
+isplay = 0      #Boolean to judge whether the midi is playing
 # this method of reporting timeouts only works by convention
 # that before calling handle_request() field .timed_out is 
 # set to False
@@ -51,22 +51,32 @@ def user_callback(path, tags, args, source):
     # args is a OSCMessage with data
     # source is where the message came from (in case you need to reply)
     global mid1,mid2,mid3,mid4,mid5,mid6,mid7
+    global isplay
+    print args[0]
+    isplay = args[0]
     if 0 == args[0]:
        play_head() 
     elif 1 == args[0]:
-       play_midi(mid1)
+       thread.start_new_thread(play_midi,(mid1,))
+       time.sleep(1)
     elif 2 == args[0]:
-       play_midi(mid2)
+       thread.start_new_thread(play_midi,(mid2,))
+       time.sleep(1)
     elif 3 == args[0]:
-       play_midi(mid3)
+       thread.start_new_thread(play_midi,(mid3,))
+       time.sleep(1)
     elif 4 == args[0]:
-       play_midi(mid4)
+       thread.start_new_thread(play_midi,(mid4,))
+       time.sleep(1)
     elif 5 == args[0]:
-       play_midi(mid5)
+       thread.start_new_thread(play_midi,(mid5,))
+       time.sleep(1)
     elif 6 == args[0]:
-       play_midi(mid6)
-    elif 7 == args[0]:
-       play_midi(mid7)
+       thread.start_new_thread(play_midi,(mid6,))
+       time.sleep(1)
+    elif False: #7 == args[0]:
+       thread.start_new_thread(play_midi,(mid7,))
+       time.sleep(1)
     elif -1 == args[0]:
        play_foot()
         
@@ -87,9 +97,10 @@ def each_frame():
 
 def click(msg):
     global cc
+    mymsg = "/start"
     oscmsg = OSCMessage()
-    print "%s" % ("/eleven")
-    oscmsg.setAddress("%s" % ("/eleven") )
+    print "%s" % (mymsg)
+    oscmsg.setAddress("%s" % (mymsg) )
     oscmsg.append(msg)
     cc.send(oscmsg)
 
@@ -148,12 +159,13 @@ def play_midi(midd):
     global port
     global boidx,toidx,aoidx,soidx
     boundary = 0
-    #threading.Timer(1.2, click, [1]).start()
-    
+    global isplay
+    lastplay = isplay
     for message in midd.play():  #Next note from midi in this moment
-        if False:
-            print(message)
-        if 'note_on' == message.type :
+        if  lastplay != isplay:
+            print "break"
+            break #print(message)
+        elif 'note_on' == message.type :
             if 0 == message.velocity:
                 rayv = pack('BBB', 144, message.note, 0)
                 if message.channel == 3:
@@ -304,7 +316,10 @@ def play_midi(midd):
                 if pickidx[8].has_key(message.note):
                     port.sendto(rayv, ("192.168.12." + str(pickidx[8][message.note]), 5005) )
                     del pickidx[8][message.note]
+    print str(lastplay) + "_Done"
+
 def play_foot():
+    global run
     time.sleep(3.5);
     for i in range(66,33,-1):
         port.sendto(pack('BB', 225, 1), ("192.168.12." + str(i), 5005) )
@@ -335,11 +350,8 @@ def play_foot():
     for i in range(1,67):
         port.sendto(pack('BB', 249, 2), ("192.168.12." + str(i), 5005))
         time.sleep(0.01)
-    
-    #time.sleep(10)
-    #for i in range(1,67):
-        #port.sendto("Home", ("192.168.12." + str(i), 5005))        
-    
+    run = False   
+
      #0  1  2  3  4  5  6  7  8  9 10 11 12 13 14 15 16 17 18 19 20 21 22 23 24 25 26 27 28 29 30 31 32 33 34 35 36 37 38 39 40 41 42 43 44 45 46 47 48 49 50 51 52 53 54 55 56 57 58 59 60 61 62 63 64 65 66
 ST = [0, 1, 1, 1, 1, 1, 1, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0 ,0 ,0 ,0, 0, 0, 0, 0, 1, 1, 1, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 1, 1, 1, 1, 1, 1]
 AT = [0, 0, 0, 0, 0, 0, 0, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 0, 0, 0, 0, 0, 0, 0, 0 ,0 ,0 ,0, 0, 1, 1, 1, 0, 0, 0, 1, 1, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 0, 0, 0, 0, 0, 0]
@@ -357,7 +369,7 @@ server.addMsgHandler( "/cue", user_callback )
 try:
     #port.flushInput()
     #port.flushOutput()
-
+    click(1)
     whoami = "65"
     #Register the door bell button GPIO input call back function
     # simulate a "game engine"
