@@ -19,13 +19,19 @@ from struct import *
 from OSC import *
 import types
 
-server = OSCServer( ("localhost", 6666) )
+server = OSCServer( ("0.0.0.0", 6666) )
 server.timeout = 0
 run = True
 cc = OSCClient()
 cc.connect(('192.168.12.248', 53000))   # localhost, port 57120
 
-mid = None
+mid1 = MidiFile('/home/oem/midi/CM_66midi_1.mid')
+mid2 = MidiFile('/home/oem/midi/CM_66midi_2.mid')
+mid3 = MidiFile('/home/oem/midi/CM_66midi_3.mid')
+mid4 = MidiFile('/home/oem/midi/CM_66midi_4.mid')
+mid5 = MidiFile('/home/oem/midi/CM_66midi_5.mid')
+mid6 = MidiFile('/home/oem/midi/CM_66midi_6.mid')
+mid7 = MidiFile('/home/oem/midi/CM_66midi_7.mid')
 debug = False        #Boolean for on/off our debug print 
 isplay = False      #Boolean to judge whether the midi is playing
 
@@ -40,14 +46,31 @@ server.handle_timeout = types.MethodType(handle_timeout, server)
 def user_callback(path, tags, args, source):
     # which user will be determined by path:
     # we just throw away all slashes and join together what's left
-    user = ''.join(path.split("/"))
+    #user = ''.join(path.split("/"))
     # tags will contain 'fff'
     # args is a OSCMessage with data
     # source is where the message came from (in case you need to reply)
-
-    #mid = MidiFile('/home/oem/midi/' + args.song + '.mid')
+    global mid1,mid2,mid3,mid4,mid5,mid6,mid7
+    if 0 == args[0]:
+       play_head() 
+    elif 1 == args[0]:
+       play_midi(mid1)
+    elif 2 == args[0]:
+       play_midi(mid2)
+    elif 3 == args[0]:
+       play_midi(mid3)
+    elif 4 == args[0]:
+       play_midi(mid4)
+    elif 5 == args[0]:
+       play_midi(mid5)
+    elif 6 == args[0]:
+       play_midi(mid6)
+    elif 7 == args[0]:
+       play_midi(mid7)
+    elif -1 == args[0]:
+       play_foot()
         
-    print ("Now do something with", user,args[2],args[0],1-args[1]) 
+    #print ("Now do something with", user,args[2],args[0],1-args[1]) 
 
 def quit_callback(path, tags, args, source):
     # don't do this at home (or it'll quit blender)
@@ -72,7 +95,7 @@ def click(msg):
 
 class Tests(unittest.TestCase):
     def test_0(self):   #Test play midi file
-        play_midi();
+        play_midi(mid1);
 
 def raymap(value, istart, istop, ostart, ostop):
     #wierd = ostart + (ostop - ostart) * (value - istart) / (istop - istart); 
@@ -121,13 +144,13 @@ def play_head():
         #f.append(0)
         #worksheet.write(i, 0, 0)
 
-def play_midi():
+def play_midi(midd):
     global port
     global boidx,toidx,aoidx,soidx
     boundary = 0
     #threading.Timer(1.2, click, [1]).start()
     
-    for message in mid.play():  #Next note from midi in this moment
+    for message in midd.play():  #Next note from midi in this moment
         if False:
             print(message)
         if 'note_on' == message.type :
@@ -330,6 +353,7 @@ pickidx = [{},{},{},{},{},{},{},{},{},{},{},{}]
 slideidx = [{},{},{},{},{},{},{},{},{},{},{},{}]
 port = socket.socket(socket.AF_INET, socket.SOCK_DGRAM)      
 #port = serial.Serial("\\\\.\\COM7", baudrate=115200)
+server.addMsgHandler( "/cue", user_callback )
 try:
     #port.flushInput()
     #port.flushOutput()
