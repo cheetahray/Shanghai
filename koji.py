@@ -19,7 +19,7 @@ from struct import *
 from OSC import *
 import types
 
-server = OSCServer( ("localhost", 7110) )
+server = OSCServer( ("localhost", 6666) )
 server.timeout = 0
 run = True
 cc = OSCClient()
