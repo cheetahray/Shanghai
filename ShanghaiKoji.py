@@ -95,13 +95,13 @@ def each_frame():
     while not server.timed_out:
         server.handle_request()
 
-def click(msg):
+def click(msg, val):
     global cc
-    mymsg = "/start"
+    mymsg = "/" + msg
     oscmsg = OSCMessage()
     print "%s" % (mymsg)
     oscmsg.setAddress("%s" % (mymsg) )
-    oscmsg.append(msg)
+    oscmsg.append(val)
     cc.send(oscmsg)
 
 class Tests(unittest.TestCase):
@@ -369,7 +369,9 @@ server.addMsgHandler( "/cue", user_callback )
 try:
     #port.flushInput()
     #port.flushOutput()
-    click(1)
+    click("stop")
+    time.sleep(0.1)
+    click("start")
     whoami = "65"
     #Register the door bell button GPIO input call back function
     # simulate a "game engine"
