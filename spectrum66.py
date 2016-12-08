@@ -28,8 +28,8 @@ while True:
     print "==>", data
     if data == "tss":
         pass #subprocess.call('/home/oem/Shanghai/closeJames.sh', shell=True)
-    elif mymin <= 4:
-        pass
-    elif minutes >= 4:
+    #elif mymin <= 5 or mymin >= 25:
+    #    pass
+    elif True: #minutes >= 5:
         commands.getoutput('/home/oem/' + data + '.sh')
         start_time = time()
