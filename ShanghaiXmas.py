@@ -369,9 +369,9 @@ server.addMsgHandler( "/cue", user_callback )
 try:
     #port.flushInput()
     #port.flushOutput()
-    click("stop")
+    click("stop",0)
     time.sleep(0.1)
-    click("start")
+    click("start",1)
     whoami = "65"
     #Register the door bell button GPIO input call back function
     # simulate a "game engine"
