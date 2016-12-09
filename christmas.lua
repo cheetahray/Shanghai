@@ -31,8 +31,8 @@ if not file.exists(light2File) then
     writeLight(light2File,"0")
 end
 
-_1stpin = 1
-_2ndpin = 2
+_1stpin = 6
+_2ndpin = 7
 pwm.setup(_1stpin, 1000, readLight(light1File))
 pwm.setup(_2ndpin, 1000, readLight(light2File))
 --pwm.setup(3, 500, 0)
