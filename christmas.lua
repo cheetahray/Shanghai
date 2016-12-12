@@ -54,21 +54,10 @@ sv:listen(myport)
 
 function checkitout(cc)
     print( cc )
-    -- print (string.len(cc))
     if string.len(cc) > 4 then
-        count = 1
-        ssid = ""
-        pwd = ""
-        for word in string.gmatch(cc, "%a+") do 
-            if count == 1 then
-                ssid = word
-                count = count + 1
-            else
-                pwd = word
-            end
-            print(word) 
-        end
-        writeWifi(ssid, pwd)
+        wtf = string.find(cc, "77360708")
+        writeWifi(string.sub(cc, 0, wtf-1), string.sub(cc, wtf+8))
+        sv:send("Fa")
     else
         -- 7th bit is 1 ?
         -- print( bit.isset(c, 7) )
@@ -105,7 +94,7 @@ end
 
 if not file.exists(wifiFile) then
     -- writeWifi("bellclass","NoiseKitchen")
-    writeWifi("DAC-2F(rear)","yellowsub")
+    writeWifi("dac_public","dac_public")
 end
 
 wifi.setmode(wifi.STATIONAP)
