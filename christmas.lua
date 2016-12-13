@@ -31,6 +31,10 @@ if not file.exists(light2File) then
     writeLight(light2File,"0")
 end
 
+pin=4
+gpio.mode(pin, gpio.OUTPUT)
+gpio.write(pin, gpio.HIGH)
+
 _1stpin = 6
 _2ndpin = 7
 pwm.setup(_1stpin, 1000, readLight(light1File))
@@ -57,19 +61,22 @@ function checkitout(cc)
     if string.len(cc) > 4 then
         wtf = string.find(cc, "77360708")
         writeWifi(string.sub(cc, 0, wtf-1), string.sub(cc, wtf+8))
-        sv:send("Fa")
+        sv:send("Successfully Save.")
     else
         -- 7th bit is 1 ?
         -- print( bit.isset(c, 7) )
         if2ndlight = (bit.isset(cc, 7))
         myduty = ( bit.lshift(bit.band(cc, 127), 3) )
         if if2ndlight == false then
+            gpio.write(pin, gpio.LOW)
             pwm.setduty(_1stpin, myduty)
         else
+            gpio.write(pin, gpio.LOW)
             pwm.setduty(_2ndpin, myduty)
         end
-        if not tmr.alarm(0, 550, tmr.ALARM_SINGLE, 
+        if not tmr.alarm(0, 450, tmr.ALARM_SINGLE, 
             function() 
+                gpio.write(pin, gpio.HIGH)
             end) 
         then
         else
@@ -169,6 +176,7 @@ wifi.eventmon.register(wifi.eventmon.STA_GOT_IP, function(T)
     wifi.eventmon.unregister(wifi.eventmon.STA_CONNECTED)
     wifi.eventmon.unregister(wifi.eventmon.STA_GOT_IP)
     wifi.setmode(wifi.STATION)
+    -- wifi.sta.sleeptype(wifi.MODOM_SLEEP)
     isudp = true
 end)
 
