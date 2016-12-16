@@ -176,7 +176,7 @@ wifi.eventmon.register(wifi.eventmon.STA_GOT_IP, function(T)
     wifi.eventmon.unregister(wifi.eventmon.STA_CONNECTED)
     wifi.eventmon.unregister(wifi.eventmon.STA_GOT_IP)
     wifi.setmode(wifi.STATION)
-    -- wifi.sta.sleeptype(wifi.MODOM_SLEEP)
+    wifi.sta.sleeptype(wifi.MODOM_SLEEP)
     isudp = true
 end)
 
