@@ -14,20 +14,16 @@ function readLight(lightFile)
 end
 
 function writeLight(lightfile,dutycycle) 
-    -- open 'init.lua' in 'a+' mode
     if file.open(lightfile, "w+") then
-         -- write 'foo bar' to the end of the file
          file.writeline(tostring(dutycycle))
          file.close()
     end
 end 
 
 if not file.exists(light1File) then
-    -- writeWifi("bellclass","NoiseKitchen")
     writeLight(light1File,"0")
 end
 if not file.exists(light2File) then
-    -- writeWifi("bellclass","NoiseKitchen")
     writeLight(light2File,"0")
 end
 
@@ -39,32 +35,32 @@ _1stpin = 6
 _2ndpin = 7
 pwm.setup(_1stpin, 1000, readLight(light1File))
 pwm.setup(_2ndpin, 1000, readLight(light2File))
---pwm.setup(3, 500, 0)
 pwm.start(_1stpin)
 pwm.start(_2ndpin)
---pwm.start(3)
 myport = 8008
 
 isudp = false
 sv = net.createServer(net.UDP)
--- server listens on 80, if data received, print data to console and send "hello world" back to caller
 sv:on("receive", function(sv, pl)
     if isudp == true then
         checkitout(pl)
-        -- c:send("hello world")
     end
 end)
 sv:listen(myport)
 
+tmrid = 0
+tmr.register(tmrid, 100, tmr.ALARM_SEMI, 
+    function() 
+        gpio.write(pin, gpio.HIGH) 
+    end)
+    
 function checkitout(cc)
     print( cc )
     if string.len(cc) > 4 then
         wtf = string.find(cc, "77360708")
         writeWifi(string.sub(cc, 0, wtf-1), string.sub(cc, wtf+8))
-        sv:send("Successfully Save.")
+        sv:send("Successful Save.")
     else
-        -- 7th bit is 1 ?
-        -- print( bit.isset(c, 7) )
         if2ndlight = (bit.isset(cc, 7))
         myduty = ( bit.lshift(bit.band(cc, 127), 3) )
         if if2ndlight == false then
@@ -74,25 +70,26 @@ function checkitout(cc)
             gpio.write(pin, gpio.LOW)
             pwm.setduty(_2ndpin, myduty)
         end
-        if not tmr.alarm(0, 450, tmr.ALARM_SINGLE, 
-            function() 
-                gpio.write(pin, gpio.HIGH)
-            end) 
-        then
-        else
+        running, mode = tmr.state(tmrid)
+        if false == running then
             if if2ndlight == false then
                 writeLight(light1File, myduty)
             else
                 writeLight(light2File, myduty)
-            end            
+            end
+        else
+            if not tmr.stop(tmrid) then 
+                print("uh no") 
+            end
+        end
+        if not tmr.start(tmrid) then 
+            print("uh oh") 
         end
     end
 end
 
 function writeWifi(ssid,password) 
-    -- open 'init.lua' in 'a+' mode
     if file.open(wifiFile, "w+") then
-         -- write 'foo bar' to the end of the file
          file.writeline(ssid)
          file.writeline(password)
          file.close()
@@ -100,7 +97,6 @@ function writeWifi(ssid,password)
 end 
 
 if not file.exists(wifiFile) then
-    -- writeWifi("bellclass","NoiseKitchen")
     writeWifi("dac_public","dac_public")
 end
 
@@ -134,10 +130,6 @@ function apnotright()
         isudp = true
     end 
 end
---register callback
-wifi.sta.eventMonReg(wifi.STA_IDLE, function() print("STATION_IDLE") end)
-
--- wifi.sta.eventMonReg(wifi.STA_CONNECTING, function() print("STATION_CONNECTING") end)
 
 wifi.sta.eventMonReg(wifi.STA_WRONGPWD, function() print("STATION_WRONG_PASSWORD") end)
 
@@ -151,9 +143,6 @@ wifi.sta.eventMonReg(wifi.STA_FAIL, function()
     apnotright()
 end)
 
---wifi.sta.eventMonReg(wifi.STA_GOTIP, function() print("STATION_GOT_IP") end)
-
---register callback: use previous state
 wifi.sta.eventMonReg(wifi.STA_CONNECTING, function(previous_State)
     if(previous_State==wifi.STA_GOTIP) then 
         print("Station lost connection with access point\n\tAttempting to reconnect...")
@@ -184,6 +173,3 @@ wifi.eventmon.register(wifi.eventmon.AP_STACONNECTED, function(T)
     print("\n\tAP - STATION CONNECTED".."\n\tMAC: "..T.MAC.."\n\tAID: "..T.AID)
     wifi.eventmon.unregister(wifi.eventmon.AP_STACONNECTED)
 end)
-
---unregister callback
-wifi.sta.eventMonReg(wifi.STA_IDLE)
