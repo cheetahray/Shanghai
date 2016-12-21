@@ -2,6 +2,24 @@ wifiFile = "wifi.txt"
 light1File = "light1.txt"
 light2File = "light2.txt"
 
+
+function readButton()
+    if (gpio.read(btn)==HIGH) then
+        lightstate=not lightstate
+        --print("!!!")
+        if (lightstate == true) then
+            pwm.setduty(_1stpin, readLight(light1File))
+            pwm.setduty(_2ndpin, readLight(light2File))
+        else
+            pwm.setduty(_1stpin, 0)
+            pwm.setduty(_2ndpin, 0)
+        end
+    else
+
+    end  
+    
+end
+
 function readLight(lightFile)
     theduty = 0
     if file.open(lightFile, "r") then
@@ -27,9 +45,13 @@ if not file.exists(light2File) then
     writeLight(light2File,"0")
 end
 
-pin=4
+pin=0
 gpio.mode(pin, gpio.OUTPUT)
 gpio.write(pin, gpio.HIGH)
+
+btn=1
+gpio.mode(btn,gpio.INPUT)
+lightstate=true
 
 _1stpin = 6
 _2ndpin = 7
@@ -51,7 +73,17 @@ sv:listen(myport)
 tmrid = 0
 tmr.register(tmrid, 100, tmr.ALARM_SEMI, 
     function() 
-        gpio.write(pin, gpio.HIGH) 
+        gpio.write(pin, gpio.HIGH)
+        running, mode = tmr.state(tmrid)
+        if false == running then
+            if if2ndlight == false then
+                writeLight(light1File, myduty)
+                print ("Save I " .. myduty)
+            else
+                writeLight(light2File, myduty)
+                print ("Save II " .. myduty)
+            end 
+        end
     end)
     
 function checkitout(cc)
@@ -59,33 +91,30 @@ function checkitout(cc)
     if string.len(cc) > 4 then
         wtf = string.find(cc, "77360708")
         writeWifi(string.sub(cc, 0, wtf-1), string.sub(cc, wtf+8))
-        sv:send("Successful Save.")
+        sv:send("Save OK.")
     else
         if2ndlight = (bit.isset(cc, 7))
         myduty = ( bit.lshift(bit.band(cc, 127), 3) )
+        gpio.write(pin, gpio.LOW)
         if if2ndlight == false then
-            gpio.write(pin, gpio.LOW)
             pwm.setduty(_1stpin, myduty)
         else
-            gpio.write(pin, gpio.LOW)
             pwm.setduty(_2ndpin, myduty)
         end
-        running, mode = tmr.state(tmrid)
-        if false == running then
-            if if2ndlight == false then
-                writeLight(light1File, myduty)
-            else
-                writeLight(light2File, myduty)
-            end
-        else
-            if not tmr.stop(tmrid) then 
-                print("uh no") 
-            end
+        if not tmr.stop(tmrid) then
+            -- print("No timer stop") 
         end
-        if not tmr.start(tmrid) then 
-            print("uh oh") 
+        if not tmr.start(tmrid) then
+            -- print("No timer start")
         end
     end
+end
+
+if not tmr.alarm(1, 100, tmr.ALARM_AUTO, 
+    function()
+        readButton()            
+    end) 
+then   
 end
 
 function writeWifi(ssid,password) 

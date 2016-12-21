@@ -8,7 +8,7 @@ port = socket.socket(socket.AF_INET, socket.SOCK_DGRAM)
 thetuple = ("192.168.11.250", 6936)
 #Listen port
 #port.bind(("0.0.0.0", 6936))
-mycmd = 0x51
+mycmd = 0x57
 port.sendto( pack('15sb32b', 'EMA830812345678',mycmd,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0), thetuple )
 #
 rcv, addr = port.recvfrom(1024)
