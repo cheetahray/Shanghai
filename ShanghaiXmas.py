@@ -162,10 +162,11 @@ def play_midi(midd):
     global isplay
     lastplay = isplay
     for message in midd.play():  #Next note from midi in this moment
-        if  lastplay != isplay:
+        if lastplay != isplay:
             print "break"
-            break #print(message)
+            break
         elif 'note_on' == message.type :
+            #print(message)
             if 0 == message.velocity:
                 rayv = pack('BBB', 144, message.note, 0)
                 if message.channel == 3:
