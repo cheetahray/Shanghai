@@ -3,7 +3,7 @@ light1File = "light1.txt"
 light2File = "light2.txt"
 
 function readButton(level)
-    if not tmr.alarm(1, 200, tmr.ALARM_SINGLE, 
+    if not tmr.alarm(1, 300, tmr.ALARM_SINGLE, 
         function()
             lightstate=not lightstate
             -- print(level)
