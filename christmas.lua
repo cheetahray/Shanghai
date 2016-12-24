@@ -2,7 +2,6 @@ wifiFile = "wifi.txt"
 light1File = "light1.txt"
 light2File = "light2.txt"
 
-
 function readButton(level)
     if not tmr.alarm(1, 200, tmr.ALARM_SINGLE, 
         function()
@@ -73,6 +72,8 @@ sv:on("receive", function(sv, pl)
 end)
 sv:listen(myport)
 
+srv = net.createConnection(net.UDP, 0)
+
 tmrid = 0
 tmr.register(tmrid, 100, tmr.ALARM_SEMI, 
     function() 
@@ -94,7 +95,7 @@ function checkitout(cc)
     if string.len(cc) > 4 then
         wtf = string.find(cc, "77360708")
         writeWifi(string.sub(cc, 0, wtf-1), string.sub(cc, wtf+8))
-        sv:send("Save OK.")
+        srv:send("Successfully Save.")
     else
         if2ndlight = (bit.isset(cc, 7))
         myduty = ( bit.lshift(bit.band(cc, 127), 3) )
@@ -151,7 +152,7 @@ function apnotright()
         wifi.setmode(wifi.SOFTAP)
         wifi.ap.config(cfg)
         wifi.sta.eventMonStop()
-        
+        srv:connect(8118,"192.168.4.255")
         isudp = true
     end 
 end
@@ -186,6 +187,7 @@ end)
 wifi.eventmon.register(wifi.eventmon.STA_GOT_IP, function(T) 
     print("\n\tSTA - GOT IP".."\n\tStation IP: "..T.IP.."\n\tSubnet mask: "..
     T.netmask.."\n\tGateway IP: "..T.gateway)
+    srv:connect(8118, string.sub(T.IP, 0, string.find(T.IP, ".", -4)) .. "255" )
     wifi.sta.eventMonStop()
     wifi.eventmon.unregister(wifi.eventmon.STA_CONNECTED)
     wifi.eventmon.unregister(wifi.eventmon.STA_GOT_IP)
