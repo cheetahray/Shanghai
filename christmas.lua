@@ -3,21 +3,23 @@ light1File = "light1.txt"
 light2File = "light2.txt"
 
 
-function readButton()
-    if (gpio.read(btn)==HIGH) then
-        lightstate=not lightstate
-        --print("!!!")
-        if (lightstate == true) then
-            pwm.setduty(_1stpin, readLight(light1File))
-            pwm.setduty(_2ndpin, readLight(light2File))
-        else
-            pwm.setduty(_1stpin, 0)
-            pwm.setduty(_2ndpin, 0)
-        end
-    else
-
-    end  
+function readButton(level)
+    if not tmr.alarm(1, 200, tmr.ALARM_SINGLE, 
+        function()
+            lightstate=not lightstate
+            -- print(level)
+            if (lightstate == true) then
+                pwm.setduty(_1stpin, readLight(light1File))
+                pwm.setduty(_2ndpin, readLight(light2File))
+            else
+                pwm.setduty(_1stpin, 0)
+                pwm.setduty(_2ndpin, 0)
+            end
+        end) 
+    then   
     
+    end
+
 end
 
 function readLight(lightFile)
@@ -39,10 +41,10 @@ function writeLight(lightfile,dutycycle)
 end 
 
 if not file.exists(light1File) then
-    writeLight(light1File,"0")
+    writeLight(light1File,"512")
 end
 if not file.exists(light2File) then
-    writeLight(light2File,"0")
+    writeLight(light2File,"512")
 end
 
 pin=0
@@ -50,11 +52,12 @@ gpio.mode(pin, gpio.OUTPUT)
 gpio.write(pin, gpio.HIGH)
 
 btn=1
-gpio.mode(btn,gpio.INPUT)
+gpio.mode(btn, gpio.INT)
+gpio.trig(btn, "down", readButton)
 lightstate=true
 
-_1stpin = 6
-_2ndpin = 7
+_1stpin = 7
+_2ndpin = 6
 pwm.setup(_1stpin, 1000, readLight(light1File))
 pwm.setup(_2ndpin, 1000, readLight(light2File))
 pwm.start(_1stpin)
@@ -110,13 +113,6 @@ function checkitout(cc)
     end
 end
 
-if not tmr.alarm(1, 100, tmr.ALARM_AUTO, 
-    function()
-        readButton()            
-    end) 
-then   
-end
-
 function writeWifi(ssid,password) 
     if file.open(wifiFile, "w+") then
          file.writeline(ssid)
@@ -126,7 +122,7 @@ function writeWifi(ssid,password)
 end 
 
 if not file.exists(wifiFile) then
-    writeWifi("dac_public","dac_public")
+    writeWifi("bellclass","noisekitchen")
 end
 
 wifi.setmode(wifi.STATIONAP)

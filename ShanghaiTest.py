@@ -310,9 +310,9 @@ port = socket.socket(socket.AF_INET, socket.SOCK_DGRAM)
 #port = serial.Serial("\\\\.\\COM7", baudrate=115200)
 try:
     #port.flushInput()
-    #port.flushOutput()
+    #port.flushOutput
 
-    whoami = "5"
+    whoami = "70"
     #Register the door bl button GPIO input call back function
     #port.sendto(pack('BBB', 253, int(whoami),100), ("192.168.12." + whoami, 5005) )
     time.sleep(0.01)
