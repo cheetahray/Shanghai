@@ -1,64 +1,67 @@
 import socket
 import subprocess
 import time
-sock = socket.socket(socket.AF_INET, socket.SOCK_DGRAM) # UDP
-sock.bind(("0.0.0.0", 11111))
-while True:
-    data, addr = sock.recvfrom(1024)
-    mydata = ord(data)
+from OSC import *
+
+server = OSCServer( ("0.0.0.0", 6666) )
+server.timeout = 0
+run = True
+
+def handle_timeout(self):
+    self.timed_out = True
+
+server.handle_timeout = types.MethodType(handle_timeout, server)
+
+def user_callback(path, tags, args, source):
+    # which user will be determined by path:
+    # we just throw away all slashes and join together what's left
+    #user = ''.join(path.split("/"))
+    # tags will contain 'fff'
+    # args is a OSCMessage with data
+    # source is where the message came from (in case you need to reply)
     playwhat = ""
-    if(mydata == 1):
-        playwhat = "back"
-    elif(mydata == 4):
-        playwhat = "y"
-    elif(mydata == 31):
-        playwhat = "m0"
-    elif(mydata == 36):
-        playwhat = "sky01"
-    elif(mydata == 40):
-        playwhat = "white_1"
-    elif(mydata == 43):
-        playwhat = "m1"
-    elif(mydata == 48):
-        playwhat = "sky02"
-    elif(mydata == 55):
-        playwhat = "m1"
-    elif(mydata == 57):
-        playwhat = "green_2"
-    elif(mydata == 58):
-        playwhat = "red"
-    elif(mydata == 60):
-        playwhat = "sky02"
-    elif(mydata == 61):
-        playwhat =  "w1"
-    elif(mydata == 62):
-        playwhat =  "w3"
-    elif(mydata == 63):
-        playwhat =  "w4"
-    elif(mydata == 64):
-        playwhat =  "W5"
-    elif(mydata == 65):
-        playwhat = "C1"
-    elif(mydata == 66):
-        playwhat = "C2"
-    elif(mydata == 67):
-        #playwhat = "C3"
-        playwhat = "m3"
-    elif(mydata == 68):
-        playwhat = "Sm1"
-    elif(mydata == 69):
-        playwhat = "Sm2"
-    elif(mydata == 70):
-        playwhat = "Sm3"
-    elif(mydata == 71):
-        playwhat = "B3"
-    elif(mydata == 72):
-        playwhat = "W5"
-    elif(mydata == 79):
-        playwhat = "m4"
-    elif(mydata == 110):
-        playwhat = "p"
-    if len(playwhat) > 0:
-        subprocess.call('./reart.sh ' + playwhat + '.mov&', shell=True)
-        print "==>", playwhat
+	if 0 == args[0]:
+       playwhat = "" 
+    elif 1 == args[0]:
+       playwhat = ""
+    elif 2 == args[0]:
+       playwhat = ""
+    elif 3 == args[0]:
+       playwhat = ""
+    elif 4 == args[0]:
+       playwhat = ""
+    elif 5 == args[0]:
+       playwhat = ""
+    elif 6 == args[0]:
+       playwhat = ""
+    elif False: #7 == args[0]:
+       playwhat = ""
+    elif -1 == args[0]:
+       playwhat = ""
     
+	subprocess.call('./reart.sh ' + playwhat + '.mov&', shell=True)
+    print "==>", playwhat
+    
+    #print ("Now do something with", user,args[2],args[0],1-args[1]) 
+
+def quit_callback(path, tags, args, source):
+    # don't do this at home (or it'll quit blender)
+    global run
+    run = False
+
+# user script that's called by the game engine every frame
+def each_frame():
+    # clear timed_out flag
+    server.timed_out = False
+    # handle all pending requests then return
+    while not server.timed_out:
+        server.handle_request()
+		
+try:
+    while run:
+        each_frame()
+
+    server.close()
+
+except KeyboardInterrupt:
+    print "Cleaning up the GPIO" 
