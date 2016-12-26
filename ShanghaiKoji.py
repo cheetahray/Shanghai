@@ -19,6 +19,7 @@ from struct import *
 from OSC import *
 import types
 import thread
+import random
 
 server = OSCServer( ("0.0.0.0", 6666) )
 server.timeout = 0
@@ -454,14 +455,14 @@ def play_foot():
 
 def lightinout(lightin):
     global nowisin
-    if False: #nowisin != 1 and lightin == 1:
-        print "67"
+    if nowisin != 1 and lightin == 1:
+        print "lightin"
         subprocess.call('./closeart.sh', shell=True)
         for i in range(1,67):
             port2.sendto( pack('BB', 225, 0), ("%s%d" % ("192.168.12.", i), 5005) )
             threading.Timer(0.1, port2.sendto, [pack('BB', 225, 0), ("%s%d" % ("192.168.12.", i), 5005) ]).start()
     elif nowisin != 0 and lightin == 0:
-        print "67"
+        print "lightout"
         for i in range(1,67):
             port2.sendto( pack('BB', 225, 1), ("%s%d" % ("192.168.12.", i), 5005) )
             threading.Timer(0.1, port2.sendto, [pack('BB', 225, 1), ("%s%d" % ("192.168.12.", i), 5005) ]).start()
