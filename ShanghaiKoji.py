@@ -560,7 +560,9 @@ toidx = 1
 boidx = 1
 pickidx = [{},{},{},{},{},{},{},{},{},{},{},{}]
 slideidx = [{},{},{},{},{},{},{},{},{},{},{},{}]
-port = socket.socket(socket.AF_INET, socket.SOCK_DGRAM)      
+port = socket.socket(socket.AF_INET, socket.SOCK_DGRAM)
+port2 = socket.socket(socket.AF_INET, socket.SOCK_DGRAM)
+port4 = socket.socket(socket.AF_INET, socket.SOCK_DGRAM)      
 #port = serial.Serial("\\\\.\\COM7", baudrate=115200)
 server.addMsgHandler( "/cue", user_callback )
 server.addMsgHandler( "/backLight", light_callback )
