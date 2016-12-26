@@ -25,7 +25,7 @@ server.timeout = 0
 run = True
 cc = OSCClient()
 cc.connect(('192.168.12.248', 1225))   # localhost, port 57120
-
+'''
 mid1 = MidiFile('/home/oem/midi/1-1_TEST.mid')
 mid2 = MidiFile('/home/oem/midi/1-2_TEST.mid')
 mid3 = MidiFile('/home/oem/midi/1-3_TEST.mid')
@@ -33,6 +33,28 @@ mid4 = MidiFile('/home/oem/midi/1-4_TEST.mid')
 mid5 = MidiFile('/home/oem/midi/1-5_TEST.mid')
 mid6 = MidiFile('/home/oem/midi/CM_66midi_6.mid')
 mid7 = MidiFile('/home/oem/midi/CM_66midi_7.mid')
+'''
+mid1 = MidiFile('/home/oem/midi/Spectrum66_NYperformance_part_1-1.mid')
+mid2 = MidiFile('/home/oem/midi/Spectrum66_NYperformance_part_1-2.mid')
+mid3 = MidiFile('/home/oem/midi/Spectrum66_NYperformance_part_1-3.mid')
+mid4 = MidiFile('/home/oem/midi/Spectrum66_NYperformance_part_1-4.mid')
+mid5 = MidiFile('/home/oem/midi/Spectrum66_NYperformance_part_1-5.mid')
+mid6 = MidiFile('/home/oem/midi/Spectrum66_NYperformance_part_1-6.mid')
+mid7 = MidiFile('/home/oem/midi/Spectrum66_NYperformance_part_1-7.mid')
+mid8 = MidiFile('/home/oem/midi/Spectrum66_NYperformance_part_1-8.mid')
+mid9 = MidiFile('/home/oem/midi/Spectrum66_NYperformance_part_1-9.mid')
+mid10 = MidiFile('/home/oem/midi/Spectrum66_NYperformance_part_2-1.mid')
+mid11 = MidiFile('/home/oem/midi/Spectrum66_NYperformance_part_2-2.mid')
+mid12 = MidiFile('/home/oem/midi/Spectrum66_NYperformance_part_2-3.mid')
+mid13 = MidiFile('/home/oem/midi/Spectrum66_NYperformance_part_2-4.mid')
+mid14 = MidiFile('/home/oem/midi/Spectrum66_NYperformance_part_2-5.mid')
+mid15 = MidiFile('/home/oem/midi/Spectrum66_NYperformance_part_3n4-1.mid')
+mid16 = MidiFile('/home/oem/midi/Spectrum66_NYperformance_part_3n4-2.mid')
+mid17 = MidiFile('/home/oem/midi/Spectrum66_NYperformance_part_3n4-3.mid')
+mid18 = MidiFile('/home/oem/midi/Spectrum66_NYperformance_part_3n4-4.mid')
+mid19 = MidiFile('/home/oem/midi/Spectrum66_NYperformance_part_3n4-5.mid')
+mid20 = MidiFile('/home/oem/midi/Spectrum66_NYperformance_part_3n4-6.mid')
+mid21 = MidiFile('/home/oem/midi/Spectrum66_NYperformance_part_3n4-7.mid')
 debug = False        #Boolean for on/off our debug print 
 isplay = 0      #Boolean to judge whether the midi is playing
 # this method of reporting timeouts only works by convention
@@ -71,11 +93,53 @@ def user_callback(path, tags, args, source):
     elif 5 == args[0]:
        thread.start_new_thread(play_midi,(mid5,))
        time.sleep(1)
-    elif False: #6 == args[0]:
+    elif 6 == args[0]:
        thread.start_new_thread(play_midi,(mid6,))
        time.sleep(1)
-    elif False: #7 == args[0]:
+    elif 7 == args[0]:
        thread.start_new_thread(play_midi,(mid7,))
+       time.sleep(1)
+    elif 8 == args[0]:
+       thread.start_new_thread(play_midi,(mid8,))
+       time.sleep(1)
+    elif 9 == args[0]:
+       thread.start_new_thread(play_midi,(mid9,))
+       time.sleep(1)
+    elif 10 == args[0]:
+       thread.start_new_thread(play_midi,(mid10,))
+       time.sleep(1)
+    elif 11 == args[0]:
+       thread.start_new_thread(play_midi,(mid11,))
+       time.sleep(1)
+    elif 12 == args[0]:
+       thread.start_new_thread(play_midi,(mid12,))
+       time.sleep(1)
+    elif 13 == args[0]:
+       thread.start_new_thread(play_midi,(mid13,))
+       time.sleep(1)
+    elif 14 == args[0]:
+       thread.start_new_thread(play_midi,(mid14,))
+       time.sleep(1)
+    elif 15 == args[0]:
+       thread.start_new_thread(play_midi,(mid15,))
+       time.sleep(1)
+    elif 16 == args[0]:
+       thread.start_new_thread(play_midi,(mid16,))
+       time.sleep(1)
+    elif 17 == args[0]:
+       thread.start_new_thread(play_midi,(mid17,))
+       time.sleep(1)
+    elif 18 == args[0]:
+       thread.start_new_thread(play_midi,(mid18,))
+       time.sleep(1)
+    elif 19 == args[0]:
+       thread.start_new_thread(play_midi,(mid19,))
+       time.sleep(1)
+    elif 20 == args[0]:
+       thread.start_new_thread(play_midi,(mid20,))
+       time.sleep(1)
+    elif 21 == args[0]:
+       thread.start_new_thread(play_midi,(mid21,))
        time.sleep(1)
     elif -1 == args[0]:
        play_foot()
