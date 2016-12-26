@@ -66,39 +66,39 @@ def handle_timeout(self):
 server.handle_timeout = types.MethodType(handle_timeout, server)
 
 def movie_callback(path, tags, args, source):
-    if arg[0] == 0:
+    if args[0] == 0:
         print "HighHighLowLow"
         lightinout(1)
     else:
         print "Animation"
         lightinout(0)
-        port.sendto(pack('B',arg[0]), ("127.0.0.1",11111) )
+        port.sendto(pack('B',args[0]), ("127.0.0.1",11111) )
 
 def light_callback(path, tags, args, source):
-    if arg[0] == 1:
+    if args[0] == 1:
         BoomBoom(random.randint(0,128),0)
-    elif arg[0] == 2:
+    elif args[0] == 2:
         BoomBoom(random.randint(0,128),1)
-    elif arg[0] == 3:
+    elif args[0] == 3:
         BoomBoom(random.randint(0,128),2)
-    elif arg[0] == 4:
+    elif args[0] == 4:
         BoomBoom(random.randint(0,128),3)
         #print "HighHighLowLow"
         #lightinout(1)
-    elif arg[0] == 5:
+    elif args[0] == 5:
         BoomBoom(random.randint(0,128),4)
         #print "Animation"
         #lightinout(0)
         #port.sendto(pack('B',message.note), ("127.0.0.1",11111) )
-    elif arg[0] == 0:
+    elif args[0] == 0:
         nomatterwhat()
-    elif arg[0] == 6:
+    elif args[0] == 6:
         WaveWave(1)
-    elif arg[0] == 7:
+    elif args[0] == 7:
         rgbWave(2)
-    elif arg[0] == 8:
+    elif args[0] == 8:
         rgbWave(3)
-    elif arg[0] == 9:
+    elif args[0] == 9:
         WaveWave(4)
 
 def user_callback(path, tags, args, source):
