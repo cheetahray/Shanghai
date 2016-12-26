@@ -19,27 +19,8 @@ def user_callback(path, tags, args, source):
     # tags will contain 'fff'
     # args is a OSCMessage with data
     # source is where the message came from (in case you need to reply)
-    playwhat = ""
-    if 0 == args[0]:
-       playwhat = "" 
-    elif 1 == args[0]:
-       playwhat = ""
-    elif 2 == args[0]:
-       playwhat = ""
-    elif 3 == args[0]:
-       playwhat = ""
-    elif 4 == args[0]:
-       playwhat = ""
-    elif 5 == args[0]:
-       playwhat = ""
-    elif 6 == args[0]:
-       playwhat = ""
-    elif False: #7 == args[0]:
-       playwhat = ""
-    elif -1 == args[0]:
-       playwhat = ""
     
-    subprocess.call('./reart.sh ' + playwhat + '.mov&', shell=True)
+    subprocess.call('./reart.sh movie_' + str(arg[0]) + '.mov&', shell=True)
     print "==>", playwhat
     
     #print ("Now do something with", user,args[2],args[0],1-args[1]) 
@@ -57,6 +38,7 @@ def each_frame():
     while not server.timed_out:
         server.handle_request()
 		
+server.addMsgHandler( "/movie", user_callback )		
 try:
     while run:
         each_frame()
