@@ -1,0 +1,10 @@
+ifconfig | grep -iA1 eth0 | awk {'print $2'} | sed -ne 's/addr\://p'; ifconfig | grep -iA1 eth0 | awk {'print $2'}
+
+cd /etc/network/if-up.d
+sudo touch staticarp
+sudo chmod 777 staticarp
+sudo echo -e '#!/bin/sh\narp -f /etc/ethers\n' > staticarp
+cd /etc
+sudo touch ethers
+sudo chmod 777 ethers
+sudo echo -e '192.168.12.201 00:0b:ab:a3:16:a3' > ethers
