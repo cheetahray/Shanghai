@@ -97,8 +97,8 @@ def light_callback(path, tags, args, source):
         nomatterwhat()
     elif args[0] == 6:
         WaveWave(1)
-    elif args[0] == 7:
-        rgbWave(2)
+    #elif args[0] == 7:
+    #    rgbWave(2)
     elif args[0] == 8:
         rgbWave(3)
     elif args[0] == 9:
