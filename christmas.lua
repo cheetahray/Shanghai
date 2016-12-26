@@ -22,7 +22,7 @@ Step1byStep = 1
 Step2byStep = 1
 
 cfg={}
-cfg.ssid = "DiDiDa"
+cfg.ssid = "Drop1"
 cfg.pwd = "nk888888"
 cfg.auth=wifi.WPA_WPA2_PSK
 
@@ -169,7 +169,7 @@ end
 
 tmr.register(bdid, 30000, tmr.ALARM_SEMI, 
     function() 
-        tmr.interval(bdid, 3000)
+        tmr.interval(bdid, 2500)
     end)
 
 tmr.register(tmrid, 100, tmr.ALARM_SEMI, 
