@@ -20,7 +20,7 @@ def user_callback(path, tags, args, source):
     # args is a OSCMessage with data
     # source is where the message came from (in case you need to reply)
     playwhat = ""
-	if 0 == args[0]:
+    if 0 == args[0]:
        playwhat = "" 
     elif 1 == args[0]:
        playwhat = ""
@@ -39,7 +39,7 @@ def user_callback(path, tags, args, source):
     elif -1 == args[0]:
        playwhat = ""
     
-	subprocess.call('./reart.sh ' + playwhat + '.mov&', shell=True)
+    subprocess.call('./reart.sh ' + playwhat + '.mov&', shell=True)
     print "==>", playwhat
     
     #print ("Now do something with", user,args[2],args[0],1-args[1]) 

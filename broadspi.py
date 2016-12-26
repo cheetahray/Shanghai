@@ -859,13 +859,13 @@ parser = ArgumentParser(description="Creates image with averaged pixels"
                                         "for a given movie clip")
 parser.add_argument("-i", default="video_effect_for_light.mov", type=str,
                         help="filepath to movie clip")
-parser.add_argument("-o", default="/home/oem/Shanghai/", type=str,
+parser.add_argument("-o", default="/home/oem/movie/", type=str,
                         help="filepath to save image to")
 parser.add_argument("-s", type=int, required=False,
                         help="Start time for image processing, in seconds")
 parser.add_argument("-e", type=int, required=False,
                         help="End time for image processing, in seconds")
-parser.add_argument("-f", type=int, default=5,
+parser.add_argument("-f", type=int, default=15,
                         help="Sample every f frames (default 24)")
 args = parser.parse_args()
     
