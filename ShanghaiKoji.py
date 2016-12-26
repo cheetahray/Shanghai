@@ -20,6 +20,7 @@ from OSC import *
 import types
 import thread
 import random
+import subprocess
 
 server = OSCServer( ("0.0.0.0", 6666) )
 server.timeout = 0
@@ -76,7 +77,7 @@ def movie_callback(path, tags, args, source):
         port.sendto(pack('B',args[0]), ("127.0.0.1",11111) )
 
 def light_callback(path, tags, args, source):
-    print twohu, args[0]
+    print "twohu", args[0]
     if args[0] == 1:
         BoomBoom(random.randint(0,128),0)
     elif args[0] == 2:
