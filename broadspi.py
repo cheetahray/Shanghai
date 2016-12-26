@@ -546,7 +546,7 @@ def average_video(filepath, outpath, start=None, end=None, sample_every=1):
     """Calculate average of video frames"""
 
     # Load video
-    vid = VideoFileClip(filepath, audio=False).resize(width=66)
+    vid = VideoFileClip(outpath + filepath, audio=False).resize(width=66)
     width = vid.w
     height = vid.h
 
