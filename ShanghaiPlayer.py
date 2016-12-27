@@ -81,6 +81,7 @@ def play_midi():
         time.sleep(0.02)
         #f.append(0)
         #worksheet.write(i, 0, 0)
+    time.sleep(1)
     for message in mid.play():  #Next note from midi in this moment
         isplay = False          #To avoid duplicate doorbell button press during midi play
         if False:
@@ -241,6 +242,7 @@ def play_midi():
         port.sendto(pack('BB', 225, 1), ("192.168.12." + str(i), 5005) )
         port.sendto(pack('BB', 225, 1), ("192.168.12." + str(67-i), 5005) )
         time.sleep(0.02)
+    time.sleep(1)
     for i in range(1,67):
         if 1 == ST[i]:
             port.sendto(pack('BBB', 144, 60, 1), ("192.168.12." + str(i), 5005))

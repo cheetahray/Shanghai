@@ -154,6 +154,7 @@ def play_head():
         time.sleep(0.02)
         #f.append(0)
         #worksheet.write(i, 0, 0)
+    time.sleep(1)
 
 def play_midi(midd):
     global port
@@ -326,6 +327,7 @@ def play_foot():
         port.sendto(pack('BB', 225, 1), ("192.168.12." + str(i), 5005) )
         port.sendto(pack('BB', 225, 1), ("192.168.12." + str(67-i), 5005) )
         time.sleep(0.02)
+    time.sleep(1)
     for i in range(1,67):
         if 1 == ST[i]:
             port.sendto(pack('BBB', 144, 60, 1), ("192.168.12." + str(i), 5005))
