@@ -81,13 +81,13 @@ def movie_callback(path, tags, args, source):
 def light_callback(path, tags, args, source):
     print "twohu", args[0]
     if args[0] == 1:
-        BoomBoom(0'''random.randint(0,128)''',0)
+        BoomBoom(0,0)#random.randint(0,128),0)
     elif args[0] == 2:
-        BoomBoom(0'''random.randint(0,128)''',1)
+        BoomBoom(0,1)#random.randint(0,128),1)
     elif args[0] == 3:
-        BoomBoom(0'''random.randint(0,128)''',2)
+        BoomBoom(0,2)#random.randint(0,128),2)
     elif args[0] == 4:
-        BoomBoom(0'''random.randint(0,128)''',3)
+        BoomBoom(0,3)#random.randint(0,128),3)
         #print "HighHighLowLow"
         #lightinout(1)
     elif args[0] == 5:
@@ -100,7 +100,7 @@ def light_callback(path, tags, args, source):
     elif args[0] == 6:
         WaveWave(1)
     elif args[0] == 7:
-        BoomBoom(0'''random.randint(0,128)''',7)
+        BoomBoom(0,7)#random.randint(0,128),7)
     elif args[0] == 8:
         rgbWave(3)
     elif args[0] == 9:
