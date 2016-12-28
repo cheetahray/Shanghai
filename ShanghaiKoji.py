@@ -530,11 +530,11 @@ def BoomBoom(rayrandom, myType):
         nowisboom = True
         #red, green, blue = rgbrandom(rayrandom)
         if myType == 7:
-            BOOM = pack('4sBBBBBB', "boom" ,77, 100, 10, 0, 0, 0 )
+            BOOM = pack('4sBBBBBB', "boom" ,77, 30, 1, 0, 0, 0 )
         else:
             BOOM = pack('4sBBBBBB', "boom" ,0, 0, 0, 0, 0, 0 )
         #print BOOM
-        if myType == 0:
+        if myType == 0 or myType == 7:
             for i in range(1,67):
                 port4.sendto(BOOM, ("%s%d" % ("192.168.12.", i), 6454))
         elif myType == 1:
