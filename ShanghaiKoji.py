@@ -81,13 +81,13 @@ def movie_callback(path, tags, args, source):
 def light_callback(path, tags, args, source):
     print "twohu", args[0]
     if args[0] == 1:
-        BoomBoom(random.randint(0,128),0)
+        BoomBoom(0'''random.randint(0,128)''',0)
     elif args[0] == 2:
-        BoomBoom(random.randint(0,128),1)
+        BoomBoom(0'''random.randint(0,128)''',1)
     elif args[0] == 3:
-        BoomBoom(random.randint(0,128),2)
+        BoomBoom(0'''random.randint(0,128)''',2)
     elif args[0] == 4:
-        BoomBoom(random.randint(0,128),3)
+        BoomBoom(0'''random.randint(0,128)''',3)
         #print "HighHighLowLow"
         #lightinout(1)
     elif args[0] == 5:
@@ -99,8 +99,8 @@ def light_callback(path, tags, args, source):
         nomatterwhat()
     elif args[0] == 6:
         WaveWave(1)
-    #elif args[0] == 7:
-    #    rgbWave(2)
+    elif args[0] == 7:
+        BoomBoom(0'''random.randint(0,128)''',7)
     elif args[0] == 8:
         rgbWave(3)
     elif args[0] == 9:
@@ -528,8 +528,11 @@ def BoomBoom(rayrandom, myType):
         for i in range(1,67):
             port4.sendto( pack('4sBBBBBB',"wrgb",0,0,0,0,0,0), ("%s%d" % ("192.168.12.", i), 6454) )
         nowisboom = True
-        red, green, blue = rgbrandom(rayrandom)
-        BOOM = pack('4sBBBBBB', "boom" ,red, green, blue, int(red/2.55), int(green/2.55), int(blue/2.55) )
+        #red, green, blue = rgbrandom(rayrandom)
+        if myType == 7:
+            BOOM = pack('4sBBBBBB', "boom" ,77, 100, 10, 0, 0, 0 )
+        else:
+            BOOM = pack('4sBBBBBB', "boom" ,0, 0, 0, 0, 0, 0 )
         #print BOOM
         if myType == 0:
             for i in range(1,67):
