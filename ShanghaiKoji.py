@@ -71,9 +71,11 @@ def movie_callback(path, tags, args, source):
     if args[0] == 0:
         print "HighHighLowLow"
         lightinout(1)
+    elif args[0] == 28:
+        upup()
     else:
         print "Animation"
-        lightinout(0)
+        #lightinout(0)
         port.sendto(pack('B',args[0]), ("127.0.0.1",11111) )
 
 def light_callback(path, tags, args, source):
@@ -247,17 +249,20 @@ def checkbound(whattype, oidx):
     return oidx                
 
 def play_head():
-    for i in range(1,67):
-        port.sendto(pack('BB', 249, 3), ("192.168.12." + str(i), 5005) )
-        time.sleep(0.01)
-    time.sleep(4)
     for i in range(34,67):
         port.sendto(pack('BB', 225, 0), ("192.168.12." + str(i), 5005) )
         port.sendto(pack('BB', 225, 0), ("192.168.12." + str(67-i), 5005) )
         time.sleep(0.02)
         #f.append(0)
         #worksheet.write(i, 0, 0)
-    time.sleep(1)
+    for i in range(34,67):
+        port.sendto(pack('BB', 225, 1), ("192.168.12." + str(i), 5005) )
+        port.sendto(pack('BB', 225, 1), ("192.168.12." + str(67-i), 5005) )
+        time.sleep(0.02)
+    for i in range(1,67):
+        port.sendto(pack('BB', 249, 3), ("192.168.12." + str(i), 5005) )
+        time.sleep(0.01)
+    time.sleep(4)
 
 def play_midi(midd):
     global port
@@ -426,45 +431,36 @@ def play_foot():
     global run
     time.sleep(3.5);
     for i in range(66,33,-1):
-        port.sendto(pack('BB', 225, 1), ("192.168.12." + str(i), 5005) )
-        port.sendto(pack('BB', 225, 1), ("192.168.12." + str(67-i), 5005) )
+        #port.sendto(pack('BB', 225, 1), ("192.168.12." + str(i), 5005) )
+        #port.sendto(pack('BB', 225, 1), ("192.168.12." + str(67-i), 5005) )
         time.sleep(0.02)
     time.sleep(1)
-    for i in range(1,67):
-        if 1 == ST[i]:
-            port.sendto(pack('BBB', 144, 60, 1), ("192.168.12." + str(i), 5005))
-        if 1 == AT[i]:
-            port.sendto(pack('BBB', 144, 48, 1), ("192.168.12." + str(i), 5005))
-        if 1 == TT[i]:
-            port.sendto(pack('BBB', 144, 38, 1), ("192.168.12." + str(i), 5005))
-        if 1 == BT[i]:
-            port.sendto(pack('BBB', 144, 28, 1), ("192.168.12." + str(i), 5005))
-        time.sleep(0.02)
-    time.sleep(3.5);
-    for i in range(1,67):
-        if 1 == ST[i]:
-            port.sendto(pack('BBB', 144, 60, 0), ("192.168.12." + str(i), 5005))
-        if 1 == AT[i]:
-            port.sendto(pack('BBB', 144, 48, 0), ("192.168.12." + str(i), 5005))
-        if 1 == TT[i]:
-            port.sendto(pack('BBB', 144, 38, 0), ("192.168.12." + str(i), 5005))
-        if 1 == BT[i]:
-            port.sendto(pack('BBB', 144, 28, 0), ("192.168.12." + str(i), 5005))
-        time.sleep(0.02)
+    upup()
     time.sleep(3.5);
     for i in range(1,67):
         port.sendto(pack('BB', 249, 2), ("192.168.12." + str(i), 5005))
         time.sleep(0.01)
-    run = False   
+    #run = False   
+
+def upup():
+    for i in range(1,67):
+        if 1 == ST[i]:
+            port.sendto(pack('BBB', 224, 60, 1), ("192.168.12." + str(i), 5005))
+        elif 1 == AT[i]:
+            port.sendto(pack('BBB', 224, 48, 1), ("192.168.12." + str(i), 5005))
+        elif 1 == TT[i]:
+            port.sendto(pack('BBB', 224, 38, 1), ("192.168.12." + str(i), 5005))
+        elif 1 == BT[i]:
+            port.sendto(pack('BBB', 224, 28, 1), ("192.168.12." + str(i), 5005))
 
 def lightinout(lightin):
     global nowisin
-    if nowisin != 1 and lightin == 1:
+    if True: #nowisin != 1 and lightin == 1:
         print "lightin"
         subprocess.call('./closeart.sh', shell=True)
         for i in range(1,67):
             port2.sendto( pack('BB', 225, 0), ("%s%d" % ("192.168.12.", i), 5005) )
-            threading.Timer(0.1, port2.sendto, [pack('BB', 225, 0), ("%s%d" % ("192.168.12.", i), 5005) ]).start()
+            threading.Timer(0.1, port2.sendto, [pack('BB', 225, 1), ("%s%d" % ("192.168.12.", i), 5005) ]).start()
     elif nowisin != 0 and lightin == 0:
         print "lightout"
         for i in range(1,67):

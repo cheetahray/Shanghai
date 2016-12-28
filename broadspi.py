@@ -865,7 +865,7 @@ parser.add_argument("-s", type=int, required=False,
                         help="Start time for image processing, in seconds")
 parser.add_argument("-e", type=int, required=False,
                         help="End time for image processing, in seconds")
-parser.add_argument("-f", type=int, default=15,
+parser.add_argument("-f", type=int, default=14,
                         help="Sample every f frames (default 24)")
 args = parser.parse_args()
     
