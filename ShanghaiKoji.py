@@ -72,6 +72,7 @@ def movie_callback(path, tags, args, source):
         print "HighHighLowLow"
         lightinout(1)
     elif args[0] == 28:
+        print "upup"
         upup()
     else:
         print "Animation"
