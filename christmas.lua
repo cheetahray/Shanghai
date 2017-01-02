@@ -1,3 +1,4 @@
+num = 1
 wifiFile = "wifi.txt"
 light1File = "light1.txt"
 light2File = "light2.txt"
@@ -14,7 +15,7 @@ tmrid = 0
 bdid = 1
 foid = 2
 fiid = 3
-foundap = 1
+foundap = 0
 AreWeDone = true
 raydebug = true
 FadeInOutInt = 20
@@ -22,7 +23,7 @@ Step1byStep = 1
 Step2byStep = 1
 
 cfg={}
-cfg.ssid = "Drop1"
+cfg.ssid = "Drop" .. num
 cfg.pwd = "nk888888"
 cfg.auth=wifi.WPA_WPA2_PSK
 
