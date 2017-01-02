@@ -1,4 +1,7 @@
 num = 1
+highorlow = "high"
+raydebug = true
+
 wifiFile = "wifi.txt"
 light1File = "light1.txt"
 light2File = "light2.txt"
@@ -17,13 +20,12 @@ foid = 2
 fiid = 3
 foundap = 0
 AreWeDone = true
-raydebug = true
 FadeInOutInt = 20
 Step1byStep = 1
 Step2byStep = 1
 
 cfg={}
-cfg.ssid = "Drop" .. num
+cfg.ssid = "Drop" .. tostring(num)
 cfg.pwd = "nk888888"
 cfg.auth=wifi.WPA_WPA2_PSK
 
@@ -40,7 +42,7 @@ function readButton(level)
     if true == running
     then
         if true == raydebug then
-            print("double click")
+            srv:send("double click")
         end 
     else
         if not tmr.start(bdid) then
@@ -118,6 +120,9 @@ function writeLight(lightfile,dutycycle)
 end 
         
 function checkitout(cc)
+    if true == raydebug then
+        print(cc)
+    end
     if string.len(cc) > 4 then
         wtf = string.find(cc, "77360708")
         writeWifi(string.sub(cc, 0, wtf-1), string.sub(cc, wtf+8))
@@ -198,16 +203,16 @@ tmr.register(foid, FadeInOutInt, tmr.ALARM_AUTO,
     function()
         if(tmp1light > 0) then    
             tmp1light = tmp1light - Step1byStep
-			if 0 > tmp1light then
-			    tmp1light = 0
-			end
+            if 0 > tmp1light then
+                tmp1light = 0
+            end
             pwm.setduty(_1stpin, tmp1light)
         end
         if(tmp2light > 0) then    
             tmp2light = tmp2light - Step2byStep
             if 0 > tmp2light then
-			    tmp2light = 0
-			end
+                tmp2light = 0
+            end
             pwm.setduty(_2ndpin, tmp2light)
         end
         if(tmp1light == 0 and tmp2light == 0) then
@@ -230,15 +235,15 @@ tmr.register(fiid, FadeInOutInt, tmr.ALARM_AUTO,
         if(tmp1light < final1light) then    
             tmp1light = tmp1light + Step1byStep
             if final1light < tmp1light then
-			    tmp1light = final1light
-			end
+                tmp1light = final1light
+            end
             pwm.setduty(_1stpin, tmp1light)
         end
         if(tmp2light < final2light) then    
             tmp2light = tmp2light + Step2byStep
             if final2light < tmp2light then
-			    tmp2light = final2light
-			end
+                tmp2light = final2light
+            end
             pwm.setduty(_2ndpin, tmp2light)
         end
         if(tmp1light == final1light and tmp2light == final2light) then
@@ -255,14 +260,14 @@ tmr.register(fiid, FadeInOutInt, tmr.ALARM_AUTO,
             end       
         end
     end)
-
+--[[
 wifi.sta.eventMonReg(wifi.STA_WRONGPWD, 
     function() 
         if true == raydebug then
             print("STATION_WRONG_PASSWORD") 
         end
     end)
-
+]]--
 wifi.sta.eventMonReg(wifi.STA_APNOTFOUND, 
     function()
         if true == raydebug then     
@@ -337,7 +342,7 @@ end
 final1light = readLight(light1File)
 final2light = readLight(light2File)
 gpio.write(pin, gpio.HIGH)
-gpio.trig(btn, "low", readButton)
+gpio.trig(btn, highorlow, readButton)
 
 if file.open(wifiFile, "r") then
     ssid = file.readline()
