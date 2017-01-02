@@ -1,7 +1,7 @@
 num = 1
-highorlow = "high"
-raydebug = true
+highourlow = "low"
 
+raydebug = true
 wifiFile = "wifi.txt"
 light1File = "light1.txt"
 light2File = "light2.txt"
@@ -47,7 +47,7 @@ function readButton(level)
     else
         if not tmr.start(bdid) then
             if true == raydebug then
-                srv:send("No click start")
+                -- srv:send("No click start")
             end
         else
             if true == raydebug then
