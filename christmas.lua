@@ -1,5 +1,5 @@
 num = 1
-highourlow = "low"
+highorlow = "low"
 
 raydebug = true
 wifiFile = "wifi.txt"
@@ -23,7 +23,8 @@ AreWeDone = true
 FadeInOutInt = 20
 Step1byStep = 1
 Step2byStep = 1
-
+whiteyellow = 0
+brightness = 0
 cfg={}
 cfg.ssid = "Drop" .. tostring(num)
 cfg.pwd = "nk888888"
@@ -37,12 +38,17 @@ pwm.start(_1stpin)
 pwm.start(_2ndpin)
 wifi.setmode(wifi.STATIONAP)
 
+function findLast(haystack, needle)
+    local i=haystack:match(".*"..needle.."()")
+    if i==nil then return nil else return i-1 end
+end
+
 function readButton(level)
     running, mode = tmr.state(bdid)
     if true == running
     then
         if true == raydebug then
-            srv:send("double click")
+            print("double click")
         end 
     else
         if not tmr.start(bdid) then
@@ -57,17 +63,7 @@ function readButton(level)
         if true == AreWeDone then
             AreWeDone = false
             Step1byStep = ( final1light / ( 1024 / FadeInOutInt ) )
-            if Step1byStep < 1.0 then
-                Step1byStep = 1
-            else
-                Step1byStep = math.floor(Step1byStep)    
-            end
             Step2byStep = ( final2light / ( 1024 / FadeInOutInt ) )
-            if Step2byStep < 1.0 then
-                Step2byStep = 1
-            else
-                Step2byStep = math.floor(Step2byStep)    
-            end
             if true == raydebug then
                 srv:send(Step1byStep)
                 srv:send(Step2byStep)
@@ -119,6 +115,21 @@ function writeLight(lightfile,dutycycle)
     end
 end 
         
+function setmylight(realset)
+    final2light = 127 - whiteyellow 
+    final1light = ( bit.rshift( whiteyellow * brightness, 4 ) )
+    final2light = ( bit.rshift( final2light * brightness, 4 ) )
+    if realset == true then    
+        if raydebug == true then
+            srv:send(final1light)
+            srv:send(final2light)
+        end        
+        lightstate = true
+        pwm.setduty(_1stpin, final1light )
+        pwm.setduty(_2ndpin, final2light )
+    end
+end
+
 function checkitout(cc)
     if true == raydebug then
         print(cc)
@@ -129,13 +140,13 @@ function checkitout(cc)
         srv:send("Successfully Save.")
     else
         if2ndlight = (bit.isset(cc, 7))
-        myduty = ( bit.lshift(bit.band(cc, 127), 3) )
         gpio.write(pin, gpio.LOW)
         if if2ndlight == false then
-            pwm.setduty(_1stpin, myduty)
+            whiteyellow = ( bit.band(cc, 127) )
         else
-            pwm.setduty(_2ndpin, myduty)
+            brightness = ( bit.band(cc, 127) )
         end
+        setmylight(true)
         if not tmr.stop(tmrid) then
             if true == raydebug then
                 srv:send("No savelight stop") 
@@ -173,9 +184,9 @@ function apnotright()
     end 
 end
 
-tmr.register(bdid, 30000, tmr.ALARM_SEMI, 
+tmr.register(bdid, 20000, tmr.ALARM_SEMI, 
     function() 
-        tmr.interval(bdid, 2500)
+        tmr.interval(bdid, 2000)
     end)
 
 tmr.register(tmrid, 100, tmr.ALARM_SEMI, 
@@ -184,16 +195,14 @@ tmr.register(tmrid, 100, tmr.ALARM_SEMI,
         running, mode = tmr.state(tmrid)
         if false == running then
             if if2ndlight == false then
-                final1light = myduty
-                writeLight(light1File, final1light)
+                writeLight(light1File, whiteyellow)
                 if true == raydebug then
-                    srv:send(myduty)
+                    srv:send(whiteyellow)
                 end
             else
-                final2light = myduty
-                writeLight(light2File, final2light)
+                writeLight(light2File, brightness)
                 if true == raydebug then
-                    srv:send(myduty)
+                    srv:send(brightness)
                 end
             end 
         end
@@ -206,14 +215,14 @@ tmr.register(foid, FadeInOutInt, tmr.ALARM_AUTO,
             if 0 > tmp1light then
                 tmp1light = 0
             end
-            pwm.setduty(_1stpin, tmp1light)
+            pwm.setduty(_1stpin, math.floor(tmp1light))
         end
         if(tmp2light > 0) then    
             tmp2light = tmp2light - Step2byStep
             if 0 > tmp2light then
                 tmp2light = 0
             end
-            pwm.setduty(_2ndpin, tmp2light)
+            pwm.setduty(_2ndpin, math.floor(tmp2light))
         end
         if(tmp1light == 0 and tmp2light == 0) then
             if not tmr.stop(foid) then
@@ -237,14 +246,14 @@ tmr.register(fiid, FadeInOutInt, tmr.ALARM_AUTO,
             if final1light < tmp1light then
                 tmp1light = final1light
             end
-            pwm.setduty(_1stpin, tmp1light)
+            pwm.setduty(_1stpin, math.floor(tmp1light))
         end
         if(tmp2light < final2light) then    
             tmp2light = tmp2light + Step2byStep
             if final2light < tmp2light then
                 tmp2light = final2light
             end
-            pwm.setduty(_2ndpin, tmp2light)
+            pwm.setduty(_2ndpin, math.floor(tmp2light))
         end
         if(tmp1light == final1light and tmp2light == final2light) then
             if not tmr.stop(fiid) then
@@ -286,15 +295,17 @@ wifi.sta.eventMonReg(wifi.STA_FAIL,
 
 wifi.sta.eventMonReg(wifi.STA_CONNECTING, 
     function(previous_State)
+        --[[
         if(previous_State==wifi.STA_GOTIP) then
             if true == raydebug then        
                 print("Station lost connection with access point\n\tAttempting to reconnect...")
             end
         else
+        ]]--
             if true == raydebug then
                 print("STATION_CONNECTING")
             end
-        end
+        -- end
     end)
 
 wifi.sta.eventMonStart()
@@ -310,8 +321,9 @@ wifi.eventmon.register(wifi.eventmon.STA_GOT_IP, function(T)
     if true == raydebug then
         print("\n\tSTA - GOT IP".."\n\tStation IP: "..T.IP.."\n\tSubnet mask: "..
         T.netmask.."\n\tGateway IP: "..T.gateway)
+        -- print(string.sub(T.IP, 0, findLast(T.IP,"%.")) .. "255")
     end
-    srv:connect(8118, string.sub(T.IP, 0, string.find(T.IP, ".", -4)) .. "255" )
+    srv:connect(8118, string.sub(T.IP, 0, findLast(T.IP,"%.")) .. "255" )
     wifi.sta.eventMonStop()
     wifi.eventmon.unregister(wifi.eventmon.STA_CONNECTED)
     wifi.eventmon.unregister(wifi.eventmon.STA_GOT_IP)
@@ -328,19 +340,20 @@ wifi.eventmon.register(wifi.eventmon.AP_STACONNECTED, function(T)
 end)
 
 if not file.exists(light1File) then
-    writeLight(light1File,512)
+    writeLight(light1File,64)
 end
 
 if not file.exists(light2File) then
-    writeLight(light2File,512)
+    writeLight(light2File,64)
 end
 
 if not file.exists(wifiFile) then
-    writeWifi("bellclass","noisekitchen")
+    writeWifi("JQ-VIP","lifehub123456")
 end
 
-final1light = readLight(light1File)
-final2light = readLight(light2File)
+whiteyellow = readLight(light1File)
+brightness = readLight(light2File)
+setmylight(false)
 gpio.write(pin, gpio.HIGH)
 gpio.trig(btn, highorlow, readButton)
 
