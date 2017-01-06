@@ -264,11 +264,12 @@ def play_midi():
         if 1 == BT[i]:
             port.sendto(pack('BBB', 144, 28, 0), ("192.168.12." + str(i), 5005))
         time.sleep(0.02)
+    '''
     time.sleep(3.5);
     for i in range(1,67):
         port.sendto(pack('BB', 249, 2), ("192.168.12." + str(i), 5005))
         time.sleep(0.01)
-    
+    '''
     #time.sleep(10)
     #for i in range(1,67):
         #port.sendto("Home", ("192.168.12." + str(i), 5005))        
