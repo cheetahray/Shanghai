@@ -1,6 +1,6 @@
 import socket
 import sys
-import commands
+import subprocess #import commands
 from time import time
 
 # Create a TCP/IP socket
@@ -31,5 +31,5 @@ while True:
     #elif mymin <= 5 or mymin >= 25:
     #    pass
     elif True: #minutes >= 5:
-        commands.getoutput('/home/oem/' + data + '.sh')
+        subprocess.call('/home/oem/' + data + '.sh&', shell=True) #commands.getoutput('/home/oem/' + data + '.sh')
         start_time = time()
