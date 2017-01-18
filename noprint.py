@@ -6,5 +6,5 @@ sock.bind(("0.0.0.0", 11111))
 while True:
     playwhat, addr = sock.recvfrom(1024)
     if len(playwhat) > 0:
-        subprocess.call('./reart.sh movie_' + str(ord(playwhat)) + '.mov&', shell=True)
+        subprocess.call('/home/oem/Shanghai/reart.sh movie_' + str(ord(playwhat)) + '.mov&', shell=True)
     print "==>", playwhat
