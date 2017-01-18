@@ -392,7 +392,7 @@ def lightinout(lightin):
     global nowisin
     if True: #nowisin != 1 and lightin == 1:
         print "lightin"
-        subprocess.call('./closeart.sh', shell=True)
+        subprocess.call('/home/oem/Shanghai/closeart.sh', shell=True)
         for i in range(1,67):
             port2.sendto( pack('BB', 225, 0), ("%s%d" % ("192.168.12.", i), 5005) )
             threading.Timer(0.1, port2.sendto, [pack('BB', 225, 1), ("%s%d" % ("192.168.12.", i), 5005) ]).start()
@@ -500,6 +500,7 @@ boidx = 1
 pickidx = [{},{},{},{},{},{},{},{},{},{},{},{}]
 slideidx = [{},{},{},{},{},{},{},{},{},{},{},{}]
 port = socket.socket(socket.AF_INET, socket.SOCK_DGRAM)      
+port2 = socket.socket(socket.AF_INET, socket.SOCK_DGRAM)
 port4 = socket.socket(socket.AF_INET, socket.SOCK_DGRAM)      
 server.addMsgHandler( "/cue", user_callback )
 server.addMsgHandler( "/backLight", light_callback )
