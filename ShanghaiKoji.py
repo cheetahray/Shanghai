@@ -28,11 +28,11 @@ run = True
 cc = OSCClient()
 cc.connect(('192.168.12.248', 1225))   # localhost, port 57120
 '''
-mid1 = MidiFile('/home/oem/midi/CM_66midi_1.mid')
-mid2 = MidiFile('/home/oem/midi/CM_66midi_2.mid')
-mid3 = MidiFile('/home/oem/midi/CM_66midi_3.mid')
-mid4 = MidiFile('/home/oem/midi/CM_66midi_4.mid')
-mid5 = MidiFile('/home/oem/midi/CM_66midi_5.mid')
+mid1 = MidiFile('/home/oem/midi/1-1_TEST.mid')
+mid2 = MidiFile('/home/oem/midi/1-2_TEST.mid')
+mid3 = MidiFile('/home/oem/midi/1-3_TEST.mid')
+mid4 = MidiFile('/home/oem/midi/1-4_TEST.mid')
+mid5 = MidiFile('/home/oem/midi/1-5_TEST.mid')
 mid6 = MidiFile('/home/oem/midi/CM_66midi_6.mid')
 mid7 = MidiFile('/home/oem/midi/CM_66midi_7.mid')
 '''
@@ -250,12 +250,6 @@ def checkbound(whattype, oidx):
     return oidx                
 
 def play_head():
-    for i in range(34,67):
-        port.sendto(pack('BB', 225, 0), ("192.168.12." + str(i), 5005) )
-        port.sendto(pack('BB', 225, 0), ("192.168.12." + str(67-i), 5005) )
-        time.sleep(0.02)
-        #f.append(0)
-        #worksheet.write(i, 0, 0)
     for i in range(34,67):
         port.sendto(pack('BB', 225, 1), ("192.168.12." + str(i), 5005) )
         port.sendto(pack('BB', 225, 1), ("192.168.12." + str(67-i), 5005) )
