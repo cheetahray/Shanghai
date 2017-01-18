@@ -20,6 +20,7 @@ from OSC import *
 import types
 import thread
 import random
+import subprocess
 
 server = OSCServer( ("0.0.0.0", 6666) )
 server.timeout = 0
