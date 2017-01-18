@@ -19,6 +19,7 @@ from struct import *
 from OSC import *
 import types
 import thread
+import random
 
 server = OSCServer( ("0.0.0.0", 6666) )
 server.timeout = 0
@@ -42,6 +43,46 @@ def handle_timeout(self):
     self.timed_out = True
 
 server.handle_timeout = types.MethodType(handle_timeout, server)
+
+def movie_callback(path, tags, args, source):
+    if args[0] == 0:
+        print "HighHighLowLow"
+        lightinout(1)
+    elif args[0] == 28:
+        print "upup"
+        upup()
+    else:
+        print "Animation"
+        #lightinout(0)
+        port.sendto(pack('B',args[0]), ("127.0.0.1",11111) )
+
+def light_callback(path, tags, args, source):
+    print "twohu", args[0]
+    if args[0] == 1:
+        BoomBoom(0,0)#random.randint(0,128),0)
+    elif args[0] == 2:
+        BoomBoom(0,1)#random.randint(0,128),1)
+    elif args[0] == 3:
+        BoomBoom(0,2)#random.randint(0,128),2)
+    elif args[0] == 4:
+        BoomBoom(0,3)#random.randint(0,128),3)
+        #print "HighHighLowLow"
+        #lightinout(1)
+    elif args[0] == 5:
+        BoomBoom(random.randint(0,128),4)
+        #print "Animation"
+        #lightinout(0)
+        #port.sendto(pack('B',message.note), ("127.0.0.1",11111) )
+    elif args[0] == 0:
+        nomatterwhat()
+    elif args[0] == 6:
+        WaveWave(1)
+    elif args[0] == 7:
+        BoomBoom(0,7)#random.randint(0,128),7)
+    elif args[0] == 8:
+        rgbWave(3)
+    elif args[0] == 9:
+        WaveWave(4)
 
 def user_callback(path, tags, args, source):
     # which user will be determined by path:
@@ -328,32 +369,123 @@ def play_foot():
         port.sendto(pack('BB', 225, 1), ("192.168.12." + str(67-i), 5005) )
         time.sleep(0.02)
     time.sleep(1)
-    for i in range(1,67):
-        if 1 == ST[i]:
-            port.sendto(pack('BBB', 144, 60, 1), ("192.168.12." + str(i), 5005))
-        if 1 == AT[i]:
-            port.sendto(pack('BBB', 144, 48, 1), ("192.168.12." + str(i), 5005))
-        if 1 == TT[i]:
-            port.sendto(pack('BBB', 144, 38, 1), ("192.168.12." + str(i), 5005))
-        if 1 == BT[i]:
-            port.sendto(pack('BBB', 144, 28, 1), ("192.168.12." + str(i), 5005))
-        time.sleep(0.02)
-    time.sleep(3.5);
-    for i in range(1,67):
-        if 1 == ST[i]:
-            port.sendto(pack('BBB', 144, 60, 0), ("192.168.12." + str(i), 5005))
-        if 1 == AT[i]:
-            port.sendto(pack('BBB', 144, 48, 0), ("192.168.12." + str(i), 5005))
-        if 1 == TT[i]:
-            port.sendto(pack('BBB', 144, 38, 0), ("192.168.12." + str(i), 5005))
-        if 1 == BT[i]:
-            port.sendto(pack('BBB', 144, 28, 0), ("192.168.12." + str(i), 5005))
-        time.sleep(0.02)
+    upup()
     time.sleep(3.5);
     for i in range(1,67):
         port.sendto(pack('BB', 249, 2), ("192.168.12." + str(i), 5005))
         time.sleep(0.01)
     run = False   
+
+def upup():
+    for i in range(1,67):
+        if 1 == ST[i]:
+            port.sendto(pack('BBB', 224, 60, 1), ("192.168.12." + str(i), 5005))
+        elif 1 == AT[i]:
+            port.sendto(pack('BBB', 224, 48, 1), ("192.168.12." + str(i), 5005))
+        elif 1 == TT[i]:
+            port.sendto(pack('BBB', 224, 38, 1), ("192.168.12." + str(i), 5005))
+        elif 1 == BT[i]:
+            port.sendto(pack('BBB', 224, 28, 1), ("192.168.12." + str(i), 5005))
+
+def lightinout(lightin):
+    global nowisin
+    if True: #nowisin != 1 and lightin == 1:
+        print "lightin"
+        subprocess.call('./closeart.sh', shell=True)
+        for i in range(1,67):
+            port2.sendto( pack('BB', 225, 0), ("%s%d" % ("192.168.12.", i), 5005) )
+            threading.Timer(0.1, port2.sendto, [pack('BB', 225, 1), ("%s%d" % ("192.168.12.", i), 5005) ]).start()
+    elif nowisin != 0 and lightin == 0:
+        print "lightout"
+        for i in range(1,67):
+            port2.sendto( pack('BB', 225, 1), ("%s%d" % ("192.168.12.", i), 5005) )
+            threading.Timer(0.1, port2.sendto, [pack('BB', 225, 1), ("%s%d" % ("192.168.12.", i), 5005) ]).start()
+    nowisin = lightin
+
+def WaveWave(mytype):
+    #global openwave, openrgbw
+    #if openrgbw == False:
+    #    if openwave == False:
+    nomatterwhat()
+    for i in range(1,67):
+        if(mytype == 4):
+            threading.Timer(0.1*i, port4.sendto, [pack('4sBB',"wave",100,10), ("%s%d" % ("192.168.12.", i), 6454) ]).start()
+        elif(mytype == 1):
+            port4.sendto( pack('4sBB',"wave",100,10), ("%s%d" % ("192.168.12.", i), 6454) )
+    #        openwave = True
+    #    else:
+    #        for i in range(1,67):
+    #            port4.sendto( pack('4sBB',"wave",0,0), ("%s%d" % ("192.168.12.", i), 6454) )
+    #            threading.Timer(0.1, port4.sendto, [pack('4sBB',"wave",0,0), ("%s%d" % ("192.168.12.", i), 6454) ]).start()
+    #        openwave = False
+            
+def rgbWave(mytype):
+    #global openwave, openrgbw
+    #if openwave == False:
+    #    if openrgbw == False:
+    nomatterwhat()
+    red, green, blue = rgbrandom(random.randint(0,128))
+    if mytype == 2:
+        for i in range(1,67):
+            port4.sendto( pack('4sBBBBBB',"wrgb", 100,10, int(red/2.55), int(green/2.55), int(blue/2.55), 1 ), ("%s%d" % ("192.168.12.", i), 6454) )
+    elif mytype == 3:
+        nums = [i for i in range(67)]
+        random.shuffle(nums)
+        for i in range(1,67):
+            threading.Timer(0.1*nums[i-1], port4.sendto, [pack('4sBBBBBB',"wrgb", 100,10, int(red/2.55), int(green/2.55), int(blue/2.55), 2 ), ("%s%d" % ("192.168.12.", i), 6454) ]).start()
+    #        openrgbw = True            
+    #    else:
+    #        for i in range(1,67):
+    #            port4.sendto( pack('4sBBBBBB',"wrgb",0,0,0,0,0,0), ("%s%d" % ("192.168.12.", i), 6454) )
+    #            threading.Timer(0.1, port4.sendto, [pack('4sBBBBBB',"wrgb",0,0,0,0,0,0), ("%s%d" % ("192.168.12.", i), 6454) ]).start()
+    #        openrgbw = False
+
+def nomatterwhat():
+    for i in range(1,67):
+        port4.sendto( pack('4sBBBBBB',"wrgb",0,0,0,0,0,0), ("%s%d" % ("192.168.12.", i), 6454) )
+            
+def rgbrandom(rayrandom):
+    pixel = (rayrandom << 9)
+    red_value = (pixel & 0xF800) >> 11;
+    green_value = (pixel & 0x7E0) >> 5;
+    blue_value = (pixel & 0x1F);
+    red   = red_value << 3;
+    green = green_value << 2;
+    blue  = blue_value << 3;
+    return red, green, blue
+                
+def BoomBoom(rayrandom, myType):
+    global nowisboom
+    if True == nowisboom:
+        pass
+    else:
+        for i in range(1,67):
+            port4.sendto( pack('4sBBBBBB',"wrgb",0,0,0,0,0,0), ("%s%d" % ("192.168.12.", i), 6454) )
+        nowisboom = True
+        #red, green, blue = rgbrandom(rayrandom)
+        if myType == 7:
+            BOOM = pack('4sBBBBBB', "boom" ,77, 30, 1, 0, 0, 0 )
+        else:
+            BOOM = pack('4sBBBBBB', "boom" ,0, 0, 0, 0, 0, 0 )
+        #print BOOM
+        if myType == 0 or myType == 7:
+            for i in range(1,67):
+                port4.sendto(BOOM, ("%s%d" % ("192.168.12.", i), 6454))
+        elif myType == 1:
+            for i in range(1,67):
+                threading.Timer(0.01*i, port4.sendto, [BOOM, ("%s%d" % ("192.168.12.", i), 6454) ]).start()
+        elif myType == 2:
+            for i in range(1,67):
+                threading.Timer(0.67-0.01*i, port4.sendto, [BOOM, ("%s%d" % ("192.168.12.", i), 6454) ]).start()
+        elif myType == 3:
+            for i in range(34,67):
+                threading.Timer(0.02*i-0.67, port4.sendto, [BOOM, ("%s%d" % ("192.168.12.", i), 6454) ]).start()
+                threading.Timer(0.02*i-0.67, port4.sendto, [BOOM, ("%s%d" % ("192.168.12.", 67-i), 6454) ]).start()
+        elif myType == 4:
+            for i in range(34,67):
+                threading.Timer(1.33-0.02*i, port4.sendto, [BOOM, ("%s%d" % ("192.168.12.", i), 6454) ]).start()
+                threading.Timer(1.33-0.02*i, port4.sendto, [BOOM, ("%s%d" % ("192.168.12.", 67-i), 6454) ]).start()
+        nowisboom = False
 
      #0  1  2  3  4  5  6  7  8  9 10 11 12 13 14 15 16 17 18 19 20 21 22 23 24 25 26 27 28 29 30 31 32 33 34 35 36 37 38 39 40 41 42 43 44 45 46 47 48 49 50 51 52 53 54 55 56 57 58 59 60 61 62 63 64 65 66
 ST = [0, 1, 1, 1, 1, 1, 1, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0 ,0 ,0 ,0, 0, 0, 0, 0, 1, 1, 1, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 1, 1, 1, 1, 1, 1]
@@ -367,8 +499,12 @@ boidx = 1
 pickidx = [{},{},{},{},{},{},{},{},{},{},{},{}]
 slideidx = [{},{},{},{},{},{},{},{},{},{},{},{}]
 port = socket.socket(socket.AF_INET, socket.SOCK_DGRAM)      
-#port = serial.Serial("\\\\.\\COM7", baudrate=115200)
+port4 = socket.socket(socket.AF_INET, socket.SOCK_DGRAM)      
 server.addMsgHandler( "/cue", user_callback )
+server.addMsgHandler( "/backLight", light_callback )
+server.addMsgHandler( "/movie", movie_callback )
+nowisin = 2
+nowisboom = False
 try:
     #port.flushInput()
     #port.flushOutput()
