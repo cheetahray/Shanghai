@@ -190,8 +190,8 @@ def play_head():
         time.sleep(0.01)
     time.sleep(4)
     for i in range(34,67):
-        port.sendto(pack('BB', 225, 1), ("192.168.12." + str(i), 5005) )
-        port.sendto(pack('BB', 225, 1), ("192.168.12." + str(67-i), 5005) )
+        port.sendto(pack('BB', 225, 0), ("192.168.12." + str(i), 5005) )
+        port.sendto(pack('BB', 225, 0), ("192.168.12." + str(67-i), 5005) )
         time.sleep(0.02)
         #f.append(0)
         #worksheet.write(i, 0, 0)
