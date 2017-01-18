@@ -28,11 +28,11 @@ run = True
 cc = OSCClient()
 cc.connect(('192.168.12.248', 1225))   # localhost, port 57120
 '''
-mid1 = MidiFile('/home/oem/midi/1-1_TEST.mid')
-mid2 = MidiFile('/home/oem/midi/1-2_TEST.mid')
-mid3 = MidiFile('/home/oem/midi/1-3_TEST.mid')
-mid4 = MidiFile('/home/oem/midi/1-4_TEST.mid')
-mid5 = MidiFile('/home/oem/midi/1-5_TEST.mid')
+mid1 = MidiFile('/home/oem/midi/CM_66midi_1.mid')
+mid2 = MidiFile('/home/oem/midi/CM_66midi_2.mid')
+mid3 = MidiFile('/home/oem/midi/CM_66midi_3.mid')
+mid4 = MidiFile('/home/oem/midi/CM_66midi_4.mid')
+mid5 = MidiFile('/home/oem/midi/CM_66midi_5.mid')
 mid6 = MidiFile('/home/oem/midi/CM_66midi_6.mid')
 mid7 = MidiFile('/home/oem/midi/CM_66midi_7.mid')
 '''
