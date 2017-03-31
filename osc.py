@@ -8,7 +8,7 @@ def click(msg):
     oscmsg = OSC.OSCMessage()
     print "%s" % ("/track16/connect")
     #print "%s" % ("/cue")
-    oscmsg.setAddress("%s" % ("/track16/connect") )
+    oscmsg.setAddress("%s" % ("/track34/connect") )
     #oscmsg.setAddress("%s" % ("/cue") )
     oscmsg.append(1)
     cc.send(oscmsg)
