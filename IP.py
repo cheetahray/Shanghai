@@ -30,46 +30,6 @@ def handle_timeout(self):
 
 server.handle_timeout = types.MethodType(handle_timeout, server)
 
-def movie_callback(path, tags, args, source):
-    if args[0] == 0:
-        print "HighHighLowLow"
-        lightinout(1)
-    elif args[0] == 28:
-        print "upup"
-        upup()
-    else:
-        print "Animation"
-        #lightinout(0)
-        port.sendto(pack('B',args[0]), ("127.0.0.1",11111) )
-
-def light_callback(path, tags, args, source):
-    print "twohu", args[0]
-    if args[0] == 1:
-        BoomBoom(0,0)#random.randint(0,128),0)
-    elif args[0] == 2:
-        BoomBoom(0,1)#random.randint(0,128),1)
-    elif args[0] == 3:
-        BoomBoom(0,2)#random.randint(0,128),2)
-    elif args[0] == 4:
-        BoomBoom(0,3)#random.randint(0,128),3)
-        #print "HighHighLowLow"
-        #lightinout(1)
-    elif args[0] == 5:
-        BoomBoom(random.randint(0,128),4)
-        #print "Animation"
-        #lightinout(0)
-        #port.sendto(pack('B',message.note), ("127.0.0.1",11111) )
-    elif args[0] == 0:
-        nomatterwhat()
-    elif args[0] == 6:
-        WaveWave(1)
-    elif args[0] == 7:
-        BoomBoom(0,7)#random.randint(0,128),7)
-    elif args[0] == 8:
-        rgbWave(3)
-    elif args[0] == 9:
-        WaveWave(4)
-
 def user_callback(path, tags, args, source):
     # which user will be determined by path:
     # we just throw away all slashes and join together what's left
@@ -168,8 +128,8 @@ if __name__ == '__main__':
     for ii in range(32):
         BrightList.append(255)
         RList.append(0)
-		GList.append(0)
-		BList.append(0)
+	GList.append(0)
+	BList.append(0)
      
 	# Create NeoPixel object with appropriate configuration.
 	strip = Adafruit_NeoPixel(LED_COUNT, LED_PIN, LED_FREQ_HZ, LED_DMA, LED_INVERT, LED_BRIGHTNESS)
