@@ -30,84 +30,55 @@ def handle_timeout(self):
 
 server.handle_timeout = types.MethodType(handle_timeout, server)
 
-def movie_callback(path, tags, args, source):
-    if args[0] == 0:
-        print "HighHighLowLow"
-        lightinout(1)
-    elif args[0] == 28:
-        print "upup"
-        upup()
-    else:
-        print "Animation"
-        #lightinout(0)
-        port.sendto(pack('B',args[0]), ("127.0.0.1",11111) )
+def roundround(onoff, red = 0, green = 0, blue = 0, wait_ms = 1, howmanytail = 2):
+    global strip
+    global BrightList,RList,GList,BList
+    global LED_COUNT
+    """Movie theater light style chaser animation."""
+    if True = onoff and red > 10 and green > 10 and blue > 10:
+        RList = red
+        GList = green
+        BList = blue
+    if howmanytail > 10:
+        howmanytail = 10
+    while True == onoff:
+        for j in range(LED_COUNT):
+            BrightList[j] = ((BrightList[j]+1) % 255) 
+            strip.setPixelColor(j, wheel(j))
+            strip.show()
+            time.sleep( wait_ms * 1000 / (33-howmanytail) )
+            if j-howmanytail+1 :
+                strip.setPixelColor(j, 0)
+
+def breathe(onoff, red = 0, green = 0, blue = 0, wait_ms = 1):
+    global strip
+    global BrightList,RList,GList,BList
+    global LED_COUNT
+    """Movie theater light style chaser animation."""
+    if True = onoff and red > 10 and green > 10 and blue > 10:
+        RList = red
+        GList = green
+        BList = blue
+    if wait_ms < 0.255:
+        wait_ms = 0.255
+    while True == onoff:
+        for j in range(LED_COUNT):
+            BrightList[j] = ((BrightList[j]+1) % 255) 
+            strip.setPixelColor(j, wheel(j))
+            strip.show()
+            time.sleep(wait_ms * 1000 / 255)
 
 def light_callback(path, tags, args, source):
-    print "twohu", args[0]
-    if args[0] == 1:
-        BoomBoom(0,0)#random.randint(0,128),0)
-    elif args[0] == 2:
-        BoomBoom(0,1)#random.randint(0,128),1)
-    elif args[0] == 3:
-        BoomBoom(0,2)#random.randint(0,128),2)
-    elif args[0] == 4:
-        BoomBoom(0,3)#random.randint(0,128),3)
-        #print "HighHighLowLow"
-        #lightinout(1)
-    elif args[0] == 5:
-        BoomBoom(random.randint(0,128),4)
-        #print "Animation"
-        #lightinout(0)
-        #port.sendto(pack('B',message.note), ("127.0.0.1",11111) )
-    elif args[0] == 0:
-        nomatterwhat()
-    elif args[0] == 6:
-        WaveWave(1)
-    elif args[0] == 7:
-        BoomBoom(0,7)#random.randint(0,128),7)
-    elif args[0] == 8:
-        rgbWave(3)
-    elif args[0] == 9:
-        WaveWave(4)
+    if args[0] == 0.0:
+        roundround(False)
+    elif args[0] == 1.0:
+        threading.Thread( target = roundround, args = ( (True, int(args[1]), int(args[2]), int(args[3]), float(args[4]) ) )
 
-def user_callback(path, tags, args, source):
-    # which user will be determined by path:
-    # we just throw away all slashes and join together what's left
-    #user = ''.join(path.split("/"))
-    # tags will contain 'fff'
-    # args is a OSCMessage with data
-    # source is where the message came from (in case you need to reply)
-    global mid1,mid2,mid3,mid4,mid5,mid6,mid7
-    global isplay
-    print args[0]
-    isplay = args[0]
-    if 0 == args[0]:
-       play_head() 
-    elif 1 == args[0]:
-       thread.start_new_thread(play_midi,(mid1,))
-       time.sleep(1)
-    elif 2 == args[0]:
-       thread.start_new_thread(play_midi,(mid2,))
-       time.sleep(1)
-    elif 3 == args[0]:
-       thread.start_new_thread(play_midi,(mid3,))
-       time.sleep(1)
-    elif 4 == args[0]:
-       thread.start_new_thread(play_midi,(mid4,))
-       time.sleep(1)
-    elif 5 == args[0]:
-       thread.start_new_thread(play_midi,(mid5,))
-       time.sleep(1)
-    elif False: #6 == args[0]:
-       thread.start_new_thread(play_midi,(mid6,))
-       time.sleep(1)
-    elif False: #7 == args[0]:
-       thread.start_new_thread(play_midi,(mid7,))
-       time.sleep(1)
-    elif -1 == args[0]:
-       play_foot()
-        
-    #print ("Now do something with", user,args[2],args[0],1-args[1]) 
+def circle_callback(path, tags, args, source):
+    if args[0] == 0.0:
+        breathe(False)
+    elif args[0] == 1.0:
+        threading.Thread( target = breathe, args = ( True, int(args[1]), int(args[2]), int(args[3]), float(args[4]), int(arg[5]) ) )
 
 def quit_callback(path, tags, args, source):
     # don't do this at home (or it'll quit blender)
@@ -122,65 +93,28 @@ def each_frame():
     while not server.timed_out:
         server.handle_request()
 
-# Define functions which animate LEDs in various ways.
-def colorWipe(strip, color, wait_ms=50):
-	"""Wipe color across display a pixel at a time."""
-	for i in range(strip.numPixels()):
-		strip.setPixelColor(i, color)
-		strip.show()
-		time.sleep(wait_ms/1000.0)
-
-def theaterChase(strip, color, wait_ms=50, iterations=10):
-	"""Movie theater light style chaser animation."""
-	for j in range(iterations):
-		for q in range(3):
-			for i in range(0, strip.numPixels(), 3):
-				strip.setPixelColor(i+q, color)
-			strip.show()
-			time.sleep(wait_ms/1000.0)
-			for i in range(0, strip.numPixels(), 3):
-				strip.setPixelColor(i+q, 0)
-
 def wheel(pos):
     return Color(int(RList[pos] * BrightList[pos] / 255), int(GList[pos] * BrightList[pos] / 255), int(BList[pos] * BrightList[pos] / 255))
-    			
-def rainbow(strip, wait_ms=20, iterations=1):
-	"""Draw rainbow that fades across all pixels at once."""
-	for j in range(256*iterations):
-		for i in range(strip.numPixels()):
-			strip.setPixelColor(i, wheel((i+j) & 255))
-		strip.show()
-		time.sleep(wait_ms/1000.0)
-
-def theaterChaseRainbow(strip, wait_ms=10):
-	"""Rainbow movie theater light style chaser animation."""
-    while True:
-	    for i in range(0, strip.numPixels()):
-	        strip.setPixelColor(i, wheel(i))
-            strip.show()
-		time.sleep(wait_ms/1000.0)
-	time.sleep(wait_ms/1000.0)
-
-
+    
 # Main program logic follows:
-if __name__ == '__main__':
+#if __name__ == '__main__':
 
-    for ii in range(32):
-        BrightList.append(255)
-        RList.append(0)
-		GList.append(0)
-		BList.append(0)
+for ii in range(32):
+    BrightList.append(255)
+    RList.append(0)
+    GList.append(0)
+    BList.append(0)
      
-	# Create NeoPixel object with appropriate configuration.
-	strip = Adafruit_NeoPixel(LED_COUNT, LED_PIN, LED_FREQ_HZ, LED_DMA, LED_INVERT, LED_BRIGHTNESS)
-	# Intialize the library (must be called once before other functions).
-	strip.begin()
+# Create NeoPixel object with appropriate configuration.
+strip = Adafruit_NeoPixel(LED_COUNT, LED_PIN, LED_FREQ_HZ, LED_DMA, LED_INVERT, LED_BRIGHTNESS)
+# Intialize the library (must be called once before other functions).
+strip.begin()
 
-	print ('Press Ctrl-C to quit.')
+print ('Press Ctrl-C to quit.')
 
-server.addMsgHandler( "/cue", user_callback )
-server.addMsgHandler( "/backLight", light_callback )
-server.addMsgHandler( "/movie", movie_callback )
+server.addMsgHandler( "/light", light_callback )
+server.addMsgHandler( "/circle", circle_callback )
+#server.addMsgHandler( "/movie", movie_callback )
 
 try:
     while run:
@@ -194,4 +128,3 @@ try:
 
 except KeyboardInterrupt:
     print "Cleaning up the GPIO" 
-	
