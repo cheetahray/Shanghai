@@ -80,6 +80,45 @@ def circle_callback(path, tags, args, source):
     elif args[0] == 1.0:
         threading.Thread( target = breathe, args = ( True, int(args[1]), int(args[2]), int(args[3]), float(args[4]), int(arg[5]) ) )
 
+def user_callback(path, tags, args, source):
+    # which user will be determined by path:
+    # we just throw away all slashes and join together what's left
+    #user = ''.join(path.split("/"))
+    # tags will contain 'fff'
+    # args is a OSCMessage with data
+    # source is where the message came from (in case you need to reply)
+    global mid1,mid2,mid3,mid4,mid5,mid6,mid7
+    global isplay
+    print args[0]
+    isplay = args[0]
+    if 0 == args[0]:
+       play_head() 
+    elif 1 == args[0]:
+       thread.start_new_thread(play_midi,(mid1,))
+       time.sleep(1)
+    elif 2 == args[0]:
+       thread.start_new_thread(play_midi,(mid2,))
+       time.sleep(1)
+    elif 3 == args[0]:
+       thread.start_new_thread(play_midi,(mid3,))
+       time.sleep(1)
+    elif 4 == args[0]:
+       thread.start_new_thread(play_midi,(mid4,))
+       time.sleep(1)
+    elif 5 == args[0]:
+       thread.start_new_thread(play_midi,(mid5,))
+       time.sleep(1)
+    elif False: #6 == args[0]:
+       thread.start_new_thread(play_midi,(mid6,))
+       time.sleep(1)
+    elif False: #7 == args[0]:
+       thread.start_new_thread(play_midi,(mid7,))
+       time.sleep(1)
+    elif -1 == args[0]:
+       play_foot()
+        
+    #print ("Now do something with", user,args[2],args[0],1-args[1]) 
+
 def quit_callback(path, tags, args, source):
     # don't do this at home (or it'll quit blender)
     global run
@@ -104,6 +143,12 @@ for ii in range(32):
     RList.append(0)
     GList.append(0)
     BList.append(0)
+
+    for ii in range(32):
+        BrightList.append(255)
+        RList.append(0)
+	GList.append(0)
+	BList.append(0)
      
 # Create NeoPixel object with appropriate configuration.
 strip = Adafruit_NeoPixel(LED_COUNT, LED_PIN, LED_FREQ_HZ, LED_DMA, LED_INVERT, LED_BRIGHTNESS)
