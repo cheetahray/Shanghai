@@ -144,12 +144,6 @@ for ii in range(32):
     GList.append(0)
     BList.append(0)
 
-    for ii in range(32):
-        BrightList.append(255)
-        RList.append(0)
-	GList.append(0)
-	BList.append(0)
-     
 # Create NeoPixel object with appropriate configuration.
 strip = Adafruit_NeoPixel(LED_COUNT, LED_PIN, LED_FREQ_HZ, LED_DMA, LED_INVERT, LED_BRIGHTNESS)
 # Intialize the library (must be called once before other functions).
