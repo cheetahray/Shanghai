@@ -8,6 +8,7 @@ import time
 from neopixel import *
 from threading import Thread
 from OSC import *
+from datetime import datetime
 
 # LED strip configuration:
 LED_COUNT      = 32      # Number of LED pixels.
@@ -16,15 +17,16 @@ LED_FREQ_HZ    = 800000  # LED signal frequency in hertz (usually 800khz)
 LED_DMA        = 5       # DMA channel to use for generating signal (try 5)
 LED_BRIGHTNESS = 255     # Set to 0 for darkest and 255 for brightest
 LED_INVERT     = False   # True to invert the signal (when using NPN transistor level shift)
-BrightList = []
+BrightList = 255
 RList = []
 GList = []
 BList = []
-wait_ms_breathe = 1
-wait_ms_round = 1
+wait_ms_breathe = 0.5
+wait_ms_round = 1.0
 howmanytail = 2
-roundonoff = False
+roundpos = -1
 breathonoff = False
+breathdirection = 1
 
 server = OSCServer( ("0.0.0.0", 6666) )
 server.timeout = 0.01
@@ -41,13 +43,21 @@ def breathe():
     global LED_COUNT
     global breathonoff
     global wait_ms_breathe
-    """Movie theater light style chaser animation."""
+    global breathdirection
     while True == breathonoff:
+        if BrightList >= 255:
+            breathdirection = -1
+        elif BrightList <= 0:
+            breathdirection = 1
+        if breathdirection == 1:
+            BrightList = BrightList+1
+        elif breathdirection == -1:
+            BrightList = BrightList-1
+        strip.setBrightness(BrightList);
         for j in range(LED_COUNT):
-            BrightList[j] = ((BrightList[j]+1) % 255) 
             strip.setPixelColor(j, wheel(j))
-            strip.show()
-            time.sleep(wait_ms_breathe / 255)
+        strip.show()
+        time.sleep(wait_ms_breathe / 255.0)
 
 def breathe_callback(path, tags, args, source):
     global wait_ms_breathe
@@ -56,55 +66,67 @@ def breathe_callback(path, tags, args, source):
         breathonoff = False
     elif args[0] == 1.0:
         if len(args) == 2:
-            wait_ms_breathe = float(args[1])
+            wait_ms_breathe = float(args[1]) * 0.27260029
             if wait_ms_breathe < 0.255:
                 wait_ms_breathe = 0.255
         if breathonoff == False:
-            threading.Thread( target = roundround )    
-        breathonoff = True        
+            breathonoff = True
+            threading.Thread( target = breathe ).start()
+            print "New breathe"
         
 def roundround():
     global strip
     global BrightList,RList,GList,BList
     global LED_COUNT
-    global roundonoff
+    global roundpos
     global wait_ms_round
     global howmanytail
     """Movie theater light style chaser animation."""
-    while True == roundonoff:
-        for j in range(LED_COUNT):
-            BrightList[j] = ((BrightList[j]+1) % 255) 
+    while 0 <= roundpos:
+        for j in range(roundpos):
             strip.setPixelColor(j, wheel(j))
-            strip.show()
-            time.sleep( wait_ms_round * 1000 / (33-howmanytail) )
-            if j-howmanytail+1 :
-                strip.setPixelColor(j, 0)
+            if j-howmanytail >= 0:
+                strip.setPixelColor(j-howmanytail, 0)
+            else:
+                strip.setPixelColor(j-howmanytail+LED_COUNT, 0)
+        for j in range(roundpos, LED_COUNT):
+            strip.setPixelColor(j, wheel(j))
+            if j-howmanytail >= 0:
+                strip.setPixelColor(j-howmanytail, 0)
+            else:
+                strip.setPixelColor(j-howmanytail+LED_COUNT, 0)
+        strip.show()
+        time.sleep( wait_ms_round / float(33-howmanytail) )
+        roundpos = roundpos + 1
+        if roundpos == LED_COUNT:
+            roundpos = 0
 
 def round_callback(path, tags, args, source):
     global wait_ms_round
-    global roundonoff
+    global roundpos
+    global howmanytail
     if args[0] == 0.0:
-        roundonoff = False
+        roundpos = -1
     elif args[0] == 1.0:
         if len(args) >= 2:
             wait_ms_round = float(args[1])
-            if wait_ms_round < 0.01
+            if wait_ms_round < 0.01:
                 wait_ms_round = 0.01
             if len(args) == 3:
                 howmanytail = int(args[2])
-        if roundonoff == False:                
-            threading.Thread( target = roundround )
-        roundonoff = True
+        if roundpos == -1:                
+            roundpos = 0
+            threading.Thread( target = roundround ).start()
 
 def rgb_callback(path, tags, args, source):
     global RList,GList,BList
-    r = int(arg[0])
-    g = int(arg[1])
-    b = int(arg[2])
-    for ii in range(LED_COUNT):
-        RList[ii] = r
-        GList[ii] = g
-        BList[ii] = b
+    mylen = len(args)
+    if mylen >= 3:
+        for ii in range(LED_COUNT):
+            my3 = ii%(mylen/3)
+            RList[ii] = args[my3]
+            GList[ii] = args[my3+1]
+            BList[ii] = args[my3+2]
 
 def quit_callback(path, tags, args, source):
     # don't do this at home (or it'll quit blender)
@@ -120,16 +142,15 @@ def each_frame():
         server.handle_request()
 
 def wheel(pos):
-    return Color(int(RList[pos] * BrightList[pos] / 255), int(GList[pos] * BrightList[pos] / 255), int(BList[pos] * BrightList[pos] / 255))
+    return Color( RList[pos] , GList[pos] , BList[pos] )
     
 # Main program logic follows:
 #if __name__ == '__main__':
 
 for ii in range(LED_COUNT):
-    BrightList.append(255)
-    RList.append(0)
-    GList.append(0)
-    BList.append(0)
+    RList.append(255)
+    GList.append(255)
+    BList.append(255)
 
 # Create NeoPixel object with appropriate configuration.
 strip = Adafruit_NeoPixel(LED_COUNT, LED_PIN, LED_FREQ_HZ, LED_DMA, LED_INVERT, LED_BRIGHTNESS)
@@ -148,7 +169,6 @@ try:
         #sleep(1)
         # call user script
         each_frame()
-
 
     server.close()
 
