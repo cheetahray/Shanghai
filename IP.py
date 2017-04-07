@@ -20,6 +20,11 @@ BrightList = []
 RList = []
 GList = []
 BList = []
+wait_ms_breathe = 1
+wait_ms_round = 1
+howmanytail = 2
+roundonoff = False
+breathonoff = False
 
 server = OSCServer( ("0.0.0.0", 6666) )
 server.timeout = 0.01
@@ -30,94 +35,76 @@ def handle_timeout(self):
 
 server.handle_timeout = types.MethodType(handle_timeout, server)
 
-def roundround(onoff, red = 0, green = 0, blue = 0, wait_ms = 1, howmanytail = 2):
+def breathe():
     global strip
     global BrightList,RList,GList,BList
     global LED_COUNT
+    global breathonoff
+	global wait_ms_breathe
     """Movie theater light style chaser animation."""
-    if True = onoff and red > 10 and green > 10 and blue > 10:
-        RList = red
-        GList = green
-        BList = blue
-    if howmanytail > 10:
-        howmanytail = 10
-    while True == onoff:
+    while True == breathonoff:
         for j in range(LED_COUNT):
             BrightList[j] = ((BrightList[j]+1) % 255) 
             strip.setPixelColor(j, wheel(j))
             strip.show()
-            time.sleep( wait_ms * 1000 / (33-howmanytail) )
+            time.sleep(wait_ms_breathe / 255)
+
+def breathe_callback(path, tags, args, source):
+    global wait_ms_breathe
+	global breathonoff
+    if args[0] == 0.0:
+        breathonoff = False
+    elif args[0] == 1.0:
+        if len(args) == 2:
+		    wait_ms_breathe = float(args[1])
+            if wait_ms_breathe < 0.255:
+                wait_ms_breathe = 0.255
+        if breathonoff == False:
+            threading.Thread( target = roundround )	
+        breathonoff = True        
+        
+def roundround():
+    global strip
+    global BrightList,RList,GList,BList
+    global LED_COUNT
+    global roundonoff
+	global wait_ms_round
+	global howmanytail
+    """Movie theater light style chaser animation."""
+    while True == roundonoff:
+        for j in range(LED_COUNT):
+            BrightList[j] = ((BrightList[j]+1) % 255) 
+            strip.setPixelColor(j, wheel(j))
+            strip.show()
+            time.sleep( wait_ms_round * 1000 / (33-howmanytail) )
             if j-howmanytail+1 :
                 strip.setPixelColor(j, 0)
 
-def breathe(onoff, red = 0, green = 0, blue = 0, wait_ms = 1):
-    global strip
-    global BrightList,RList,GList,BList
-    global LED_COUNT
-    """Movie theater light style chaser animation."""
-    if True = onoff and red > 10 and green > 10 and blue > 10:
-        RList = red
-        GList = green
-        BList = blue
-    if wait_ms < 0.255:
-        wait_ms = 0.255
-    while True == onoff:
-        for j in range(LED_COUNT):
-            BrightList[j] = ((BrightList[j]+1) % 255) 
-            strip.setPixelColor(j, wheel(j))
-            strip.show()
-            time.sleep(wait_ms * 1000 / 255)
-
-def light_callback(path, tags, args, source):
+def round_callback(path, tags, args, source):
+    global wait_ms_round
+	global roundonoff
     if args[0] == 0.0:
-        roundround(False)
+        roundonoff = False
     elif args[0] == 1.0:
-        threading.Thread( target = roundround, args = ( (True, int(args[1]), int(args[2]), int(args[3]), float(args[4]) ) )
+        if len(args) >= 2:
+		    wait_ms_round = float(args[1])
+			if wait_ms_round < 0.01
+		        wait_ms_round = 0.01
+            if len(args) == 3:
+			    howmanytail = int(args[2])
+        if roundonoff == False:				
+		    threading.Thread( target = roundround )
+		roundonoff = True
 
-def circle_callback(path, tags, args, source):
-    if args[0] == 0.0:
-        breathe(False)
-    elif args[0] == 1.0:
-        threading.Thread( target = breathe, args = ( True, int(args[1]), int(args[2]), int(args[3]), float(args[4]), int(arg[5]) ) )
-
-def user_callback(path, tags, args, source):
-    # which user will be determined by path:
-    # we just throw away all slashes and join together what's left
-    #user = ''.join(path.split("/"))
-    # tags will contain 'fff'
-    # args is a OSCMessage with data
-    # source is where the message came from (in case you need to reply)
-    global mid1,mid2,mid3,mid4,mid5,mid6,mid7
-    global isplay
-    print args[0]
-    isplay = args[0]
-    if 0 == args[0]:
-       play_head() 
-    elif 1 == args[0]:
-       thread.start_new_thread(play_midi,(mid1,))
-       time.sleep(1)
-    elif 2 == args[0]:
-       thread.start_new_thread(play_midi,(mid2,))
-       time.sleep(1)
-    elif 3 == args[0]:
-       thread.start_new_thread(play_midi,(mid3,))
-       time.sleep(1)
-    elif 4 == args[0]:
-       thread.start_new_thread(play_midi,(mid4,))
-       time.sleep(1)
-    elif 5 == args[0]:
-       thread.start_new_thread(play_midi,(mid5,))
-       time.sleep(1)
-    elif False: #6 == args[0]:
-       thread.start_new_thread(play_midi,(mid6,))
-       time.sleep(1)
-    elif False: #7 == args[0]:
-       thread.start_new_thread(play_midi,(mid7,))
-       time.sleep(1)
-    elif -1 == args[0]:
-       play_foot()
-        
-    #print ("Now do something with", user,args[2],args[0],1-args[1]) 
+def rgb_callback(path, tags, args, source):
+    global RList,GList,BList
+    r = int(arg[0])
+	g = int(arg[1])
+	b = int(arg[2])
+    for ii in range(LED_COUNT):
+        RList[ii] = r
+        GList[ii] = g
+        BList[ii] = b
 
 def quit_callback(path, tags, args, source):
     # don't do this at home (or it'll quit blender)
@@ -138,7 +125,7 @@ def wheel(pos):
 # Main program logic follows:
 #if __name__ == '__main__':
 
-for ii in range(32):
+for ii in range(LED_COUNT):
     BrightList.append(255)
     RList.append(0)
     GList.append(0)
@@ -151,9 +138,9 @@ strip.begin()
 
 print ('Press Ctrl-C to quit.')
 
-server.addMsgHandler( "/light", light_callback )
-server.addMsgHandler( "/circle", circle_callback )
-#server.addMsgHandler( "/movie", movie_callback )
+server.addMsgHandler( "/breathe", breathe_callback )
+server.addMsgHandler( "/round", round_callback )
+server.addMsgHandler( "/RGB", rgb_callback )
 
 try:
     while run:
