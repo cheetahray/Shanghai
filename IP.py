@@ -40,7 +40,7 @@ def breathe():
     global BrightList,RList,GList,BList
     global LED_COUNT
     global breathonoff
-	global wait_ms_breathe
+    global wait_ms_breathe
     """Movie theater light style chaser animation."""
     while True == breathonoff:
         for j in range(LED_COUNT):
@@ -51,16 +51,16 @@ def breathe():
 
 def breathe_callback(path, tags, args, source):
     global wait_ms_breathe
-	global breathonoff
+    global breathonoff
     if args[0] == 0.0:
         breathonoff = False
     elif args[0] == 1.0:
         if len(args) == 2:
-		    wait_ms_breathe = float(args[1])
+            wait_ms_breathe = float(args[1])
             if wait_ms_breathe < 0.255:
                 wait_ms_breathe = 0.255
         if breathonoff == False:
-            threading.Thread( target = roundround )	
+            threading.Thread( target = roundround )    
         breathonoff = True        
         
 def roundround():
@@ -68,8 +68,8 @@ def roundround():
     global BrightList,RList,GList,BList
     global LED_COUNT
     global roundonoff
-	global wait_ms_round
-	global howmanytail
+    global wait_ms_round
+    global howmanytail
     """Movie theater light style chaser animation."""
     while True == roundonoff:
         for j in range(LED_COUNT):
@@ -82,25 +82,25 @@ def roundround():
 
 def round_callback(path, tags, args, source):
     global wait_ms_round
-	global roundonoff
+    global roundonoff
     if args[0] == 0.0:
         roundonoff = False
     elif args[0] == 1.0:
         if len(args) >= 2:
-		    wait_ms_round = float(args[1])
-			if wait_ms_round < 0.01
-		        wait_ms_round = 0.01
+            wait_ms_round = float(args[1])
+            if wait_ms_round < 0.01
+                wait_ms_round = 0.01
             if len(args) == 3:
-			    howmanytail = int(args[2])
-        if roundonoff == False:				
-		    threading.Thread( target = roundround )
-		roundonoff = True
+                howmanytail = int(args[2])
+        if roundonoff == False:                
+            threading.Thread( target = roundround )
+        roundonoff = True
 
 def rgb_callback(path, tags, args, source):
     global RList,GList,BList
     r = int(arg[0])
-	g = int(arg[1])
-	b = int(arg[2])
+    g = int(arg[1])
+    b = int(arg[2])
     for ii in range(LED_COUNT):
         RList[ii] = r
         GList[ii] = g
