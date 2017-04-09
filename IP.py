@@ -54,8 +54,9 @@ def breathe():
         elif breathdirection == -1:
             BrightList = BrightList-1
         strip.setBrightness(BrightList);
-        for j in range(LED_COUNT):
-            strip.setPixelColor(j, wheel(j))
+        if roundpos < 0:
+            for j in range(LED_COUNT):
+                strip.setPixelColor(j, wheel(j))
         strip.show()
         time.sleep(wait_ms_breathe / 255.0)
 
@@ -72,7 +73,6 @@ def breathe_callback(path, tags, args, source):
         if breathonoff == False:
             breathonoff = True
             threading.Thread( target = breathe ).start()
-            print "New breathe"
         
 def roundround():
     global strip
@@ -85,11 +85,16 @@ def roundround():
         for j in range(0, LED_COUNT):
             mytail = roundpos - howmanytail
             if mytail < 0:
-                mytail = mytail + LED_COUNT - 1
-            if j == roundpos and j > mytail:
-                strip.setPixelColor(j, wheel(j))
-            elif j <= mytail:
-                strip.setPixelColor(j, 0)
+                mytail = mytail + LED_COUNT
+                if j <= roundpos or j > mytail:
+                    strip.setPixelColor(j, wheel(j))
+                else:
+                    strip.setPixelColor(j, 0)
+            else:
+                if j == roundpos:
+                    strip.setPixelColor(j, wheel(j))
+                elif j <= mytail:
+                    strip.setPixelColor(j, 0)
         strip.show()
         time.sleep( wait_ms_round / float(33-howmanytail) )
         roundpos = roundpos + 1
