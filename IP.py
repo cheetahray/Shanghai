@@ -81,12 +81,11 @@ def roundround():
     global roundpos
     global wait_ms_round
     global howmanytail
-    """Movie theater light style chaser animation."""
     while 0 <= roundpos:
         for j in range(0, LED_COUNT):
             mytail = roundpos - howmanytail
-			if mytail < 0:
-			    mytail = mytail + LED_COUNT
+            if mytail < 0:
+                mytail = mytail + LED_COUNT
             if j == roundpos and j >= mytail:
                 strip.setPixelColor(j, wheel(j))
             elif j < mytail:
