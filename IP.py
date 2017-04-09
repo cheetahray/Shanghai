@@ -83,18 +83,14 @@ def roundround():
     global howmanytail
     """Movie theater light style chaser animation."""
     while 0 <= roundpos:
-        for j in range(roundpos):
-            strip.setPixelColor(j, wheel(j))
-            if j-howmanytail >= 0:
-                strip.setPixelColor(j-howmanytail, 0)
-            else:
-                strip.setPixelColor(j-howmanytail+LED_COUNT, 0)
-        for j in range(roundpos, LED_COUNT):
-            strip.setPixelColor(j, wheel(j))
-            if j-howmanytail >= 0:
-                strip.setPixelColor(j-howmanytail, 0)
-            else:
-                strip.setPixelColor(j-howmanytail+LED_COUNT, 0)
+        for j in range(0, LED_COUNT):
+            mytail = roundpos - howmanytail
+			if mytail < 0:
+			    mytail = mytail + LED_COUNT
+            if j == roundpos and j >= mytail:
+                strip.setPixelColor(j, wheel(j))
+            elif j < mytail:
+                strip.setPixelColor(j, 0)
         strip.show()
         time.sleep( wait_ms_round / float(33-howmanytail) )
         roundpos = roundpos + 1
