@@ -85,10 +85,10 @@ def roundround():
         for j in range(0, LED_COUNT):
             mytail = roundpos - howmanytail
             if mytail < 0:
-                mytail = mytail + LED_COUNT
-            if j == roundpos and j >= mytail:
+                mytail = mytail + LED_COUNT - 1
+            if j == roundpos and j > mytail:
                 strip.setPixelColor(j, wheel(j))
-            elif j < mytail:
+            elif j <= mytail:
                 strip.setPixelColor(j, 0)
         strip.show()
         time.sleep( wait_ms_round / float(33-howmanytail) )
@@ -101,7 +101,7 @@ def round_callback(path, tags, args, source):
     global roundpos
     global howmanytail
     if args[0] == 0.0:
-        roundpos = -1
+        roundpos = -2
     elif args[0] == 1.0:
         if len(args) >= 2:
             wait_ms_round = float(args[1])
