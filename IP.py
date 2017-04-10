@@ -99,7 +99,6 @@ def roundround():
         time.sleep( wait_ms_round / float(LED_COUNT+1) )
         roundpos = roundpos + 1
         if roundpos == LED_COUNT:
-            print datetime.now()
             roundpos = 0
 
 def round_callback(path, tags, args, source):
