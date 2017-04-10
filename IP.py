@@ -57,7 +57,7 @@ def breathe():
         if roundpos < 0:
             for j in range(LED_COUNT):
                 strip.setPixelColor(j, wheel(j))
-        strip.show()
+            strip.show()
         time.sleep(wait_ms_breathe / 255.0)
 
 def breathe_callback(path, tags, args, source):
@@ -96,9 +96,10 @@ def roundround():
                 elif j <= mytail:
                     strip.setPixelColor(j, 0)
         strip.show()
-        time.sleep( wait_ms_round / float(33-howmanytail) )
+        time.sleep( wait_ms_round / float(LED_COUNT+1) )
         roundpos = roundpos + 1
         if roundpos == LED_COUNT:
+            print datetime.now()
             roundpos = 0
 
 def round_callback(path, tags, args, source):
@@ -122,11 +123,14 @@ def rgb_callback(path, tags, args, source):
     global RList,GList,BList
     mylen = len(args)
     if mylen >= 3:
-        for ii in range(LED_COUNT):
-            my3 = ii%(mylen/3)
-            RList[ii] = args[my3]
-            GList[ii] = args[my3+1]
-            BList[ii] = args[my3+2]
+        for j in range(LED_COUNT):
+            my3 = j%(mylen/3)
+            RList[j] = args[my3]
+            GList[j] = args[my3+1]
+            BList[j] = args[my3+2]
+            if roundpos < 0 and breathonoff == False:
+                strip.setPixelColor(j, wheel(j))
+        strip.show()
 
 def quit_callback(path, tags, args, source):
     # don't do this at home (or it'll quit blender)
