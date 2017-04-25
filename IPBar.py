@@ -14,7 +14,7 @@ import threading
 import socket
 from OSC import *
 
-server = OSCServer( ("0.0.0.0", 6666) )
+server = OSCServer( ("0.0.0.0", 7777) )
 server.timeout = 0.01
 run = True
 
