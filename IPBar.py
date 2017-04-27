@@ -13,6 +13,7 @@ import time
 import threading
 import socket
 from OSC import *
+from struct import *
 
 server = OSCServer( ("0.0.0.0", 7777) )
 server.timeout = 0.01
@@ -25,30 +26,31 @@ server.handle_timeout = types.MethodType(handle_timeout, server)
 
 debug = False        #Boolean for on/off our debug print 
 pianoDELAY = 0.01
+duration = 20
 
 def do_callback(path, tags, args, source):
-    threading.Timer( pianoDELAY, port.sendto, ["127", ("192.168.13.255", 8888)]).start()
+    threading.Timer( pianoDELAY, port.sendto, [pack('BH', 127, duration), ("192.168.13.255", 8888)]).start()
 	
 def re_callback(path, tags, args, source):
-    threading.Timer( pianoDELAY, port.sendto, ["143", ("192.168.13.255", 8888)]).start()
+    threading.Timer( pianoDELAY, port.sendto, [pack('BH', 143, duration), ("192.168.13.255", 8888)]).start()
     
 def mi_callback(path, tags, args, source):
-    threading.Timer( pianoDELAY, port.sendto, ["159", ("192.168.13.255", 8888)]).start()
+    threading.Timer( pianoDELAY, port.sendto, [pack('BH', 159, duration), ("192.168.13.255", 8888)]).start()
 
 def fa_callback(path, tags, args, source):
-    threading.Timer( pianoDELAY, port.sendto, ["175", ("192.168.13.255", 8888)]).start()
+    threading.Timer( pianoDELAY, port.sendto, [pack('BH', 175, duration), ("192.168.13.255", 8888)]).start()
  
 def so_callback(path, tags, args, source):
-    threading.Timer( pianoDELAY, port.sendto, ["191", ("192.168.13.255", 8888)]).start()
+    threading.Timer( pianoDELAY, port.sendto, [pack('BH', 191, duration), ("192.168.13.255", 8888)]).start()
  
 def la_callback(path, tags, args, source):
-    threading.Timer( pianoDELAY, port.sendto, ["207", ("192.168.13.255", 8888)]).start()
+    threading.Timer( pianoDELAY, port.sendto, [pack('BH', 207, duration), ("192.168.13.255", 8888)]).start()
  
 def ti_callback(path, tags, args, source):
-    threading.Timer( pianoDELAY, port.sendto, ["223", ("192.168.13.255", 8888)]).start()
+    threading.Timer( pianoDELAY, port.sendto, [pack('BH', 223, duration), ("192.168.13.255", 8888)]).start()
  
 def doo_callback(path, tags, args, source):
-    threading.Timer( pianoDELAY, port.sendto, ["239", ("192.168.13.255", 8888)]).start()
+    threading.Timer( pianoDELAY, port.sendto, [pack('BH', 239, duration), ("192.168.13.255", 8888)]).start()
 
 def quit_callback(path, tags, args, source):
     # don't do this at home (or it'll quit blender)
