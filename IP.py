@@ -114,7 +114,7 @@ def round_callback(path, tags, args, source):
                 wait_ms_round = 0.01
             if len(args) == 3:
                 howmanytail = int(args[2])
-        if roundpos == -1:                
+        if roundpos <= -1:                
             roundpos = 0
             threading.Thread( target = roundround ).start()
 
