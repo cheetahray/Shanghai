@@ -1,7 +1,10 @@
 from OSC import *
 import subprocess
 import time
+import socket
+from struct import *
 
+port = socket.socket(socket.AF_INET, socket.SOCK_DGRAM) 
 server = OSCServer( ("0.0.0.0", 22222) )
 server.timeout = 0
 run = True
