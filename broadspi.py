@@ -724,7 +724,7 @@ def average_video(filepath, outpath, start=None, end=None, sample_every=1):
                         sb66 += pack('BBBB', r, g, b, y)
                                 
         time.sleep(1.0/float(sample_every))
-
+    time.sleep(5)
     # average out the values for each frame
     #average_delta_f = sum_delta_fs / n_frames
     #average_f = sum_fs / n_frames
