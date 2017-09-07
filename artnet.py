@@ -125,9 +125,11 @@ def boom():
     p38.ChangeDutyCycle(0) #GPIO.output(38, True)
     p40.ChangeDutyCycle(0) #GPIO.output(40, False)
     #anim.cleargb()
+    '''
     p31.ChangeDutyCycle(0)
     p33.ChangeDutyCycle(0)
     p35.ChangeDutyCycle(0)
+    '''
     AmIBoomNow = False        
 def func():
     #global p13
@@ -152,10 +154,12 @@ def musicstart():
 def twohuwave(mydelay, myduty):
     global direction
     global nowduty
+    global AmIBoomNow
     if nowduty == 100:
         direction = -1
     elif nowduty == 0:
-        direction = 1    
+        direction = 0 #1
+        AmIBoomNow = False        
     if direction == 1:
         nowduty += myduty
     elif direction == -1:
@@ -180,17 +184,21 @@ def rgbwave(mydelay, myduty, red, green, blue):
     elif direction == -1:
         nowduty -= myduty
     if(direction != 0):
+        '''
         p31.ChangeDutyCycle(red*nowduty/100)
         p33.ChangeDutyCycle(green*nowduty/100)
         p35.ChangeDutyCycle(blue*nowduty/100)
+        '''
         if threeight == 2:
             p38.ChangeDutyCycle(nowduty)
         Timer(float(mydelay)/1000, rgbwave, [mydelay, myduty, red, green, blue]).start()
     else:
         nowduty = 0
+        '''
         p31.ChangeDutyCycle(nowduty)
         p33.ChangeDutyCycle(nowduty)
         p35.ChangeDutyCycle(nowduty)
+        '''
     
 AmIBoomNow = False    
 islightout = True
@@ -266,10 +274,16 @@ try:
                 p38.ChangeDutyCycle(100) #GPIO.output(38, True)
                 p40.ChangeDutyCycle(0) #GPIO.output(40, False)
                 #anim.rayanim(int(mylist2[0]),int(mylist2[1]),int(mylist2[2]),255,20,0.1)
+                '''
                 p31.ChangeDutyCycle(ord(mylist2[3]))
                 p33.ChangeDutyCycle(ord(mylist2[4]))
                 p35.ChangeDutyCycle(ord(mylist2[5]))
-                Timer(0.1, boom).start()
+                '''
+                if ( ord(mylist2[0]) == 77 ):
+                    nowduty = 100
+                    twohuwave(ord(mylist2[1]), ord(mylist2[2]))
+                else:
+                    Timer(0.1, boom).start()
             elif ( len(data) == 6 and data[0:4] == "wave" ):
                 if(ord(data[4]) == 0):
                     direction = 0
