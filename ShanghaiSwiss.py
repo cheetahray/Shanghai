@@ -141,7 +141,7 @@ def click(msg, val):
     global cc
     mymsg = "/" + msg
     oscmsg = OSCMessage()
-	oscstr = "%s" % (mymsg)
+    oscstr = "%s" % (mymsg)
     print oscstr
     oscmsg.setAddress( oscstr )
     oscmsg.append(val)
