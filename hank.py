@@ -32,11 +32,12 @@ def raymap(value, istart, istop, ostart, ostop):
 
 def checkbound(whattype, oidx):
     global ST,AT,TT,BT
-    if oidx > 6:
+    '''
+	if oidx > 6:
         oidx = oidx-6
     if 6 == oidx:
         oidx = 1
-
+    '''
     if 3 == whattype:
         while 0 == BT[oidx]:
             if 5 == oidx:
@@ -61,7 +62,7 @@ def checkbound(whattype, oidx):
                 oidx = 1
             else:
                 oidx += 1
-    return oidx+6                
+    return oidx#+6                
         
 def play_midi():
     global isplay
@@ -74,19 +75,19 @@ def play_midi():
     boundary = 0
     #port.flush()
         
-    for i in range(73,78):
+    for i in range(1,6):
         port.sendto("249 3", ("192.168.12." + str(i), 5005) )
         time.sleep(0.01)
     time.sleep(4)
-    for i in range(73,78):
+    for i in range(1,6):
         port.sendto("225 0", ("192.168.12." + str(i), 5005) )
         time.sleep(0.02)
         #f.append(0)
         #worksheet.write(i, 0, 0)
     for message in mid.play():  #Next note from midi in this moment
         isplay = False          #To avoid duplicate doorbell button press during midi play
-        if False:
-            print(message.note)
+        if True:
+            print(message)
         if 'note_on' == message.type :
             if 0 == message.velocity:
                 if message.channel == 3:
@@ -261,32 +262,32 @@ def play_midi():
                     port.sendto("128 " + str(message.note) + " " + str(message.velocity) + " " + str(pickidx[8][message.note]) , ("192.168.12." + str(pickidx[8][message.note]), 5005) )
                     del pickidx[8][message.note]
     time.sleep(3.5);
-    for i in range(73,78):
+    for i in range(1,6):
         port.sendto("225 1", ("192.168.12." + str(i), 5005) )
         time.sleep(0.02)
-    for i in range(73,78):
-        if 1 == ST[i-6]:
+    for i in range(1,6):
+        if 1 == ST[i]:
             port.sendto("144 60 1", ("192.168.12." + str(i), 5005))
-        if 1 == AT[i-6]:
+        if 1 == AT[i]:
             port.sendto("144 48 1", ("192.168.12." + str(i), 5005))
-        if 1 == TT[i-6]:
+        if 1 == TT[i]:
             port.sendto("144 38 1", ("192.168.12." + str(i), 5005))
-        if 1 == BT[i-6]:
+        if 1 == BT[i]:
             port.sendto("144 28 1", ("192.168.12." + str(i), 5005))
         time.sleep(0.02)
     time.sleep(3.5);
-    for i in range(73,78):
-        if 1 == ST[i-6]:
+    for i in range(1,6):
+        if 1 == ST[i]:
             port.sendto("144 60 0", ("192.168.12." + str(i), 5005))
-        if 1 == AT[i-6]:
+        if 1 == AT[i]:
             port.sendto("144 48 0", ("192.168.12." + str(i), 5005))
-        if 1 == TT[i-6]:
+        if 1 == TT[i]:
             port.sendto("144 38 0", ("192.168.12." + str(i), 5005))
-        if 1 == BT[i-6]:
+        if 1 == BT[i]:
             port.sendto("144 28 0", ("192.168.12." + str(i), 5005))
         time.sleep(0.02)
     time.sleep(3.5);
-    for i in range(73,78):
+    for i in range(1,6):
         port.sendto("249 2" , ("192.168.12." + str(i), 5005))
         time.sleep(0.01)
     
@@ -295,8 +296,8 @@ def play_midi():
         #port.sendto("Home", ("192.168.12." + str(i), 5005))        
     
      #0  1  2  3  4  5  
-AT = [0, 1, 1, 1, 1, 1]
-ST = [0, 0, 0, 0, 0, 0]
+ST = [0, 1, 1, 1, 1, 1]
+AT = [0, 0, 0, 0, 0, 0]
 TT = [0, 0, 0, 0, 0, 0]
 BT = [0, 0, 0, 0, 0, 0]
 soidx = 1
