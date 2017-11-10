@@ -173,7 +173,7 @@ def rayudp():
         input = True,
         frames_per_buffer = thischunk
     )
-    time.sleep(10)
+    #time.sleep(10)
     data = ''
     if whoami < 9:
         while os.system("ping -c 1 192.168.12.10" + str(whoami+1) ) != 0:
@@ -574,14 +574,12 @@ def raylist(mylist):
                     )
                     strm.start_stream()
                 elif True == issoundfont and fl is None:
-                    '''
                     fl = fluidsynth.Synth()
                     fl.start('alsa')
                     sfid = fl.sfload("/home/pi/Shanghai/FluidR3_GM.sf2")
                     fl.program_select(chnl, sfid, 0, soundtype[whoami] )
                     if autooff:
                         fl.pitch_bend(0, 512)
-                    '''
             elif 2 == ord(mylist[1]):
                 if False == issoundfont and pa is not None:
                     strm.stop_stream()
@@ -596,13 +594,11 @@ def raylist(mylist):
                     strm.stop_stream()
                     strm.close()    
                     pa.terminate()
-                    '''
                     fl = fluidsynth.Synth()
                     fl.start('alsa')
                     sfid = fl.sfload("/home/pi/Shanghai/FluidR3_GM.sf2")
                     if autooff:
                         fl.pitch_bend(0, 512)
-                    '''
                 fl.program_select(chnl, sfid, 0, ord(mylist[2]) )
                 issoundfont = True
             elif 0 == ord(mylist[1]):
@@ -714,14 +710,12 @@ while True:
     rayudp()
     
     if True == issoundfont:
-        '''
         fl = fluidsynth.Synth()
         fl.start('alsa')
         sfid = fl.sfload("/home/pi/Shanghai/FluidR3_GM.sf2")
         fl.program_select(chnl, sfid, 0, soundtype[whoami])
         if autooff:    
             fl.pitch_bend(0, 512)
-        '''
     else:    
         pa = pyaudio.PyAudio()
         strm = pa.open(
