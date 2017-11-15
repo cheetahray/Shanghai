@@ -16,6 +16,8 @@ from mido import MidiFile
 #import serial
 import socket
 from struct import *
+import sys
+import WConio
 mid = None
 debug = False        #Boolean for on/off our debug print 
 isplay = False      #Boolean to judge whether the midi is playing
@@ -65,9 +67,8 @@ def play_midi():
     global myshift
     global port
     global boidx,toidx,aoidx,soidx
-    #workbook = xlsxwriter.Workbook('demo.xlsx')
-    #worksheet = workbook.add_worksheet()
-    #f = []
+    global AmIPlay
+    AmIPlay = True    
     boundary = 0
     #port.flush()
         
@@ -266,10 +267,8 @@ def play_midi():
     for i in range(1,6):
         port.sendto(pack('BB', 249, 2), ("192.168.12." + str(i), 5005))
         time.sleep(0.01)
-    #time.sleep(10)
-    #for i in range(1,67):
-        #port.sendto("Home", ("192.168.12." + str(i), 5005))        
-    
+    AmIPlay = False    
+AmIPlay = False
      #0  1  2  3  4  5  
 ST = [0, 1, 1, 1, 1, 1]
 AT = [0, 0, 0, 0, 0, 0]
@@ -284,24 +283,21 @@ slideidx = [{},{},{},{},{},{},{},{},{},{},{},{}]
 port = socket.socket(socket.AF_INET, socket.SOCK_DGRAM)      
 #port = serial.Serial("\\\\.\\COM7", baudrate=115200)
 try:
-    #port.flushInput()
-    #port.flushOutput()
-
-    whoami = "65"
-    #Register the door bell button GPIO input call back function
-    if '__main__' == __name__ :
-        parser = argparse.ArgumentParser()
-        parser.add_argument("--song",
-                             default="TEST_1", help="Midi file")
-        args = parser.parse_args()
-        mid = MidiFile(args.song + '.mid')
-        midi_suite = unittest.TestSuite()   #Add play midi test function
-        all_suite = unittest.TestSuite()
-        midi_suite.addTest(Tests("test_0"))
-        all_suite.addTest(midi_suite)
-        unittest.TextTestRunner(verbosity=1).run(all_suite)
-    elif False:
-        port.sendto("Home", ("192.168.12." + whoami, 5005))
-
+    while True:
+        ans = WConio.getkey()
+        print ans
+        if AmIPlay == False:
+            print ans
+            parser = argparse.ArgumentParser()
+            parser.add_argument("--song", default="TEST_1", help="Midi file")
+            args = parser.parse_args()
+            mid = MidiFile(args.song + '.mid')
+            midi_suite = unittest.TestSuite()   #Add play midi test function
+            all_suite = unittest.TestSuite()
+            midi_suite.addTest(Tests("test_0"))
+            all_suite.addTest(midi_suite)
+            unittest.TextTestRunner(verbosity=1).run(all_suite)
+        
 except KeyboardInterrupt:
     print "Cleaning up the GPIO" 
+
