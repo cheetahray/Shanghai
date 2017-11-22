@@ -71,14 +71,6 @@ def user_callback(path, tags, args, source):
     elif 5 == args[0]:
        thread.start_new_thread(play_midi,(mid5,))
        time.sleep(1)
-    '''
-    elif 6 == args[0]:
-       thread.start_new_thread(play_midi,(mid6,))
-       time.sleep(1)
-    elif False: #7 == args[0]:
-       thread.start_new_thread(play_midi,(mid7,))
-       time.sleep(1)
-    '''
     elif -1 == args[0]:
        play_foot()
         
