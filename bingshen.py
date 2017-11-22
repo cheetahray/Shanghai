@@ -1,14 +1,37 @@
 import socket
 import subprocess
 import time
+from OSC import *
+
+server = OSCServer( ("0.0.0.0", 6666) )
+server.timeout = 0
+run = True
+
+def handle_timeout(self):
+    self.timed_out = True
+
+server.handle_timeout = types.MethodType(handle_timeout, server)
+
+def movie_callback(path, tags, args, source):
+    if True:
+        print "Animation"
+        #lightinout(0)
+        port.sendto(pack('B',args[0]), ("127.0.0.1",11111) )
+
+def each_frame():
+    # clear timed_out flag
+    server.timed_out = False
+    # handle all pending requests then return
+    while not server.timed_out:
+        server.handle_request()
+
 sock = socket.socket(socket.AF_INET, socket.SOCK_DGRAM) # UDP
 sock.setsockopt(socket.SOL_SOCKET, socket.SO_BROADCAST, 1)
 sock.bind(("0.0.0.0", 11111))
-while True:
-    playwhat, addr = sock.recvfrom(1024)
-    if len(playwhat) > 0:
-        if playwhat == 'up':
-            sock.sendto("resound", ("192.168.12.255",11111))
-        elif playwhat != 'resound':
-            subprocess.call('/home/oem/Shanghai/reart.sh movie_' + str(ord(playwhat)) + '.mov&', shell=True)
-    print "==>", playwhat
+
+server.addMsgHandler( "/movie", movie_callback )
+
+while run:
+    each_frame()
+		
+server.close()
