@@ -26,13 +26,13 @@ run = True
 cc = OSCClient()
 cc.connect(('192.168.12.248', 1225))   # localhost, port 57120
 
-mid1 = MidiFile('/home/oem/midi/CM_66midi_1.mid')
-mid2 = MidiFile('/home/oem/midi/CM_66midi_2.mid')
-mid3 = MidiFile('/home/oem/midi/CM_66midi_3.mid')
-mid4 = MidiFile('/home/oem/midi/CM_66midi_4.mid')
-mid5 = MidiFile('/home/oem/midi/CM_66midi_5.mid')
-mid6 = MidiFile('/home/oem/midi/CM_66midi_6.mid')
-mid7 = MidiFile('/home/oem/midi/CM_66midi_7.mid')
+mid1 = MidiFile('/home/oem/midi/xmas_1.mid')
+mid2 = MidiFile('/home/oem/midi/xmas_2.mid')
+mid3 = MidiFile('/home/oem/midi/xmas_3.mid')
+mid4 = MidiFile('/home/oem/midi/xmas_4.mid')
+mid5 = MidiFile('/home/oem/midi/xmas_5.mid')
+#mid6 = MidiFile('/home/oem/midi/CM_66midi_6.mid')
+#mid7 = MidiFile('/home/oem/midi/CM_66midi_7.mid')
 debug = False        #Boolean for on/off our debug print 
 isplay = 0      #Boolean to judge whether the midi is playing
 # this method of reporting timeouts only works by convention
@@ -50,7 +50,7 @@ def user_callback(path, tags, args, source):
     # tags will contain 'fff'
     # args is a OSCMessage with data
     # source is where the message came from (in case you need to reply)
-    global mid1,mid2,mid3,mid4,mid5,mid6,mid7
+    global mid1,mid2,mid3,mid4,mid5#,mid6,mid7
     global isplay
     print args[0]
     isplay = args[0]
@@ -71,12 +71,14 @@ def user_callback(path, tags, args, source):
     elif 5 == args[0]:
        thread.start_new_thread(play_midi,(mid5,))
        time.sleep(1)
+    '''
     elif 6 == args[0]:
        thread.start_new_thread(play_midi,(mid6,))
        time.sleep(1)
     elif False: #7 == args[0]:
        thread.start_new_thread(play_midi,(mid7,))
        time.sleep(1)
+    '''
     elif -1 == args[0]:
        play_foot()
         
