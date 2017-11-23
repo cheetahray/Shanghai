@@ -95,16 +95,16 @@ def user_callback(path, tags, args, source):
     isplay = args[0]
     if 0 == args[0]:
        play_head() 
-    elif 12 == args[0]:
+    elif 11 == args[0]:
        thread.start_new_thread(play_midi,(mid1,))
        time.sleep(1)
-    elif 13 == args[0]:
+    elif 12 == args[0]:
        thread.start_new_thread(play_midi,(mid2,))
        time.sleep(1)
-    elif 14 == args[0]:
+    elif 13 == args[0]:
        thread.start_new_thread(play_midi,(mid3,))
        time.sleep(1)
-    elif 15 == args[0]:
+    elif 14 == args[0]:
        thread.start_new_thread(play_midi,(mid4,))
        time.sleep(1)
     elif -1 == args[0]:
@@ -197,7 +197,7 @@ def play_midi(midd):
             print "break"
             break
         elif 'note_on' == message.type :
-            print(message)
+            #print(message)
             if 0 == message.velocity:
                 rayv = pack('BBB', 144, message.note, 0)
                 if message.channel == 3:
