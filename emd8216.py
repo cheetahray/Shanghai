@@ -17,12 +17,12 @@ def click(msg, val):
 
 port = socket.socket(socket.AF_INET, socket.SOCK_DGRAM)
 #EMD8308 IP Port
-thetuple = ("192.168.11.216", 6936)
+thetuple = ("192.168.11.217", 6936)
 #Listen port
 #port.bind(("0.0.0.0", 6936))
 mycmd = 0x3D
 while True:
-    port.sendto( pack('15sb32b', 'EMD821612345678',mycmd,0xFF,0xFF,0xFF,0xFF,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0), thetuple )
+    port.sendto( pack('15sb32b', 'EMD821612345678',mycmd,127,127,127,127,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0), thetuple )
     #
     rcv, addr = port.recvfrom(1024)
     if( ord( rcv[33] ) == mycmd ):
@@ -32,11 +32,11 @@ while True:
             for ii in range(0,8):
                 print hex( ord( rcv[ii] ) ),
             #bb = struct.unpack('>f', struct.pack('4B', ord(rcv[11]), ord(rcv[10]), ord(rcv[9]), ord(rcv[8])))
-            print bb
-            click("chicken" ,bb)
+            #print bb
+            #click("chicken" ,bb)
         else:
             print ("Fail")
             print ( hex ( ord ( rcv[32] )  ) )
     else:
         print ("Not this command")
-    time.sleep(0.1)
+    time.sleep(1)
