@@ -28,10 +28,10 @@ run = True
 cc = OSCClient()
 cc.connect(('192.168.12.248', 1225))   # localhost, port 57120
 
-mid1 = MidiFile('/home/oem/midi/Intro_1.mid')
-mid2 = MidiFile('/home/oem/midi/Intro_2.mid')
-mid3 = MidiFile('/home/oem/midi/Intro_3.mid')
-mid4 = MidiFile('/home/oem/midi/Intro_4.mid')
+mid1 = MidiFile('/home/oem/midi/intro_1.mid')
+mid2 = MidiFile('/home/oem/midi/intro_2.mid')
+mid3 = MidiFile('/home/oem/midi/intro_3.mid')
+mid4 = MidiFile('/home/oem/midi/intro_4.mid')
 debug = False        #Boolean for on/off our debug print 
 isplay = 0      #Boolean to judge whether the midi is playing
 # this method of reporting timeouts only works by convention
@@ -197,7 +197,7 @@ def play_midi(midd):
             print "break"
             break
         elif 'note_on' == message.type :
-            #print(message)
+            print(message)
             if 0 == message.velocity:
                 rayv = pack('BBB', 144, message.note, 0)
                 if message.channel == 3:
