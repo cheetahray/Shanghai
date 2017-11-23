@@ -55,7 +55,7 @@ def movie_callback(path, tags, args, source):
         upup()
     else:
         print "Animation"
-        #lightinout(0)
+        lightinout(0)
         port.sendto(pack('B',args[0]), ("127.0.0.1",11111) )
 
 def light_callback(path, tags, args, source):
@@ -68,12 +68,12 @@ def light_callback(path, tags, args, source):
         BoomBoom(0,2)#random.randint(0,128),2)
     elif args[0] == 4:
         BoomBoom(0,3)#random.randint(0,128),3)
-        #print "HighHighLowLow"
-        #lightinout(1)
+        print "HighHighLowLow"
+        lightinout(1)
     elif args[0] == 5:
         BoomBoom(random.randint(0,128),4)
-        #print "Animation"
-        #lightinout(0)
+        print "Animation"
+        lightinout(0)
         #port.sendto(pack('B',message.note), ("127.0.0.1",11111) )
     elif args[0] == 0:
         nomatterwhat()
@@ -186,8 +186,8 @@ def play_head():
         time.sleep(0.01)
     time.sleep(4)
     for i in range(34,67):
-        port.sendto(pack('BB', 225, 1), ("192.168.12." + str(i), 5005) )
-        port.sendto(pack('BB', 225, 1), ("192.168.12." + str(67-i), 5005) )
+        port.sendto(pack('BB', 225, 0), ("192.168.12." + str(i), 5005) )
+        port.sendto(pack('BB', 225, 0), ("192.168.12." + str(67-i), 5005) )
         time.sleep(0.02)
         #f.append(0)
         #worksheet.write(i, 0, 0)
@@ -385,17 +385,17 @@ def upup():
 
 def lightinout(lightin):
     global nowisin
-    if True: #nowisin != 1 and lightin == 1:
+    if nowisin != 1 and lightin == 1:
         print "lightin"
         subprocess.call('/home/oem/Shanghai/closeart.sh', shell=True)
         for i in range(1,67):
             port2.sendto( pack('BB', 225, 0), ("%s%d" % ("192.168.12.", i), 5005) )
-            threading.Timer(0.1, port2.sendto, [pack('BB', 225, 1), ("%s%d" % ("192.168.12.", i), 5005) ]).start()
+            #threading.Timer(0.1, port2.sendto, [pack('BB', 225, 0), ("%s%d" % ("192.168.12.", i), 5005) ]).start()
     elif nowisin != 0 and lightin == 0:
         print "lightout"
         for i in range(1,67):
             port2.sendto( pack('BB', 225, 1), ("%s%d" % ("192.168.12.", i), 5005) )
-            threading.Timer(0.1, port2.sendto, [pack('BB', 225, 1), ("%s%d" % ("192.168.12.", i), 5005) ]).start()
+            #threading.Timer(0.1, port2.sendto, [pack('BB', 225, 1), ("%s%d" % ("192.168.12.", i), 5005) ]).start()
     nowisin = lightin
 
 def WaveWave(mytype):

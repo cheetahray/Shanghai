@@ -2,6 +2,7 @@ import socket
 import subprocess
 import time
 from OSC import *
+from struct import *
 
 server = OSCServer( ("0.0.0.0", 6666) )
 server.timeout = 0
@@ -25,9 +26,7 @@ def each_frame():
     while not server.timed_out:
         server.handle_request()
 
-sock = socket.socket(socket.AF_INET, socket.SOCK_DGRAM) # UDP
-sock.setsockopt(socket.SOL_SOCKET, socket.SO_BROADCAST, 1)
-sock.bind(("0.0.0.0", 11111))
+port = socket.socket(socket.AF_INET, socket.SOCK_DGRAM)      
 
 server.addMsgHandler( "/movie", movie_callback )
 
