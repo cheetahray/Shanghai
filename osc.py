@@ -1,17 +1,20 @@
 import OSC
+import random
 
 cc = OSC.OSCClient()
-cc.connect(('192.168.12.249', 7000))   # localhost, port 57120
+cc.connect(('192.168.11.134', 7730))   # localhost, port 57120
 #cc.connect(('127.0.0.1', 6666))
 def click(msg):
     global cc
-    tracknum = "34"
     oscmsg = OSC.OSCMessage()
-    print "%s" % ("/track" + tracknum + "/connect")
-    #print "%s" % ("/cue")
-    oscmsg.setAddress("%s" % ("/track" + tracknum + "/connect") )
-    #oscmsg.setAddress("%s" % ("/cue") )
+    oscstr = "/motor"
+    oscmsg.setAddress(oscstr)
+    pos = random.randint(0,128)
+    speed = random.randint(10,50)
+    print("%s %d %d %d" % (oscstr, 1, pos, speed))
     oscmsg.append(1)
+    oscmsg.append(pos)
+    oscmsg.append(speed)
     cc.send(oscmsg)
 
 click(1)

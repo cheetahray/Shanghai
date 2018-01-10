@@ -4,7 +4,7 @@ import time
 # Create a UDP socket
 sock = socket.socket(socket.AF_INET, socket.SOCK_DGRAM)
 
-server_address = ('192.168.11.4', 9930)
+server_address = ('192.168.11.60', 5000)
 message = ['p1on','p1off']
 try:
     mycnt = 0
