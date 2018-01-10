@@ -10,7 +10,7 @@ def click(msg):
     oscstr = "/motor"
     oscmsg.setAddress(oscstr)
     pos = random.randint(0,128)
-    speed = random.randint(10,50)
+    speed = random.randint(50,200)
     print("%s %d %d %d" % (oscstr, 1, pos, speed))
     oscmsg.append(1)
     oscmsg.append(pos)
