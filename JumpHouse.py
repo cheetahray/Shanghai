@@ -59,9 +59,8 @@ def click(msg, val):
     oscmsg.append(val)
     cc.send(oscmsg)
 
-while True:
-    item = random.randint(1,412)
-    for ii in range(0, len(grp)):
+def shiftcheck(item, forfrom, forto):
+    for ii in range(forfrom, forto):
         if True == binary_search(grp[ii], item, ii):
             try:
                 if temp[ii].index(item) >= 0:
@@ -77,33 +76,57 @@ while True:
         else:    
             cc = datetime.datetime.now() - aa[ii]
             #print cc.seconds
-            if cc.microseconds > 2000:
+            if cc.seconds > 3:
                 del temp[ii][:]
             
 port = socket.socket(socket.AF_INET, socket.SOCK_DGRAM)
 #EMD8308 IP Port
-thetuple = ("192.168.11.217", 6936)
+thetuple = [("192.168.11.217", 6936)]
 #Listen port
 #port.bind(("0.0.0.0", 6936))
 mycmd = 0x3D
-
+port.settimeout(0.01)
 while False:
-    port.sendto( pack('15sb32b', 'EMD821612345678',mycmd,127,127,127,127,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0), thetuple )
-    #
-    rcv, addr = port.recvfrom(1024)
-    if( ord( rcv[33] ) == mycmd ):
-        #print ("This Command")
-        if( ord( rcv[32] ) == 0x63 ):
-            #print ("successful")
-            for ii in range(0,8):
-                print hex( ord( rcv[ii] ) ),
-                
-            #bb = struct.unpack('>f', struct.pack('4B', ord(rcv[11]), ord(rcv[10]), ord(rcv[9]), ord(rcv[8])))
-            #print bb
-            #click("chicken" ,bb)
-        else:
-            print ("Fail")
-            print ( hex ( ord ( rcv[32] )  ) )
-    else:
-        print ("Not this command")
-    time.sleep(1)
+    shiftcheck(random.randint(1,412),0,len(grp))
+
+while True:
+    try:
+        for ii in range( 0, len(thetuple) ):
+            port.sendto( pack('15sb32b', 'EMD821612345678',mycmd,127,127,127,127,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0), thetuple[ii] )
+            #
+            rcv, addr = port.recvfrom(1024)
+            if( ord( rcv[33] ) == mycmd ):
+                #print ("This Command")
+                if( ord( rcv[32] ) == 0x63 ):
+                    #print ("successful")
+                    '''
+                    for ii in range(0,8):
+                        print hex( ord( rcv[ii] ) ),
+                    print
+                    '''
+                    num = ord( rcv[4] )
+                    for jj in range(0,8): #7,6,5,4,3,2,1,0
+                        bit = num & 1
+                        if 1 == bit:
+                            print '0{0}'.format(jj)
+                            shiftcheck(random.randint(1,412),0,len(grp))
+                        num >>= 1            
+                    num = ord( rcv[5] ) 
+                    for jj in range(0,8): #17,16,15,14,13,12,11,10
+                        bit = num & 1
+                        if 1 == bit:
+                            print '1{0}'.format(jj)
+                            shiftcheck(random.randint(1,412),0,len(grp))
+                        num >>= 1            
+                    
+                    #bb = struct.unpack('>f', struct.pack('4B', ord(rcv[11]), ord(rcv[10]), ord(rcv[9]), ord(rcv[8])))
+                    #print bb
+                    #click("chicken" ,bb)
+                else:
+                    print ("Fail")
+                    print ( hex ( ord ( rcv[32] )  ) )
+            else:
+                print ("Not this command")
+    except socket.timeout, e:
+        pass
+    #time.sleep(0.001)
