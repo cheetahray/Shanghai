@@ -42,12 +42,10 @@ combine('c')
 ktype_string('ping 192.168.12.154',3)
 combine('c')
 '''
-for ii in range(1,2):
+for ii in range(1,255):
     #pass
-    '''
-    ktype_string('ping 192.168.12.' + str(ii),3)
+    ktype_string('ping 192.168.0.' + str(ii),3)
     combine('c')
-    '''
     '''
     time.sleep(1)
     ktype_string('5',73)
@@ -69,7 +67,7 @@ for ii in range(1,2):
     ktype_string('ssh pi@192.168.12.' + str(ii),6)
     ktype_string('raspberry',2)
     '''
-        
+    '''    
     if False:
         ktype_string('sudo vi /etc/rc.local', 1)
         ktype_string(':20,20d', 1)
@@ -93,7 +91,7 @@ for ii in range(1,2):
         ktype_string('ps aux | grep pi_main',1)
         ktype_string('ps aux | grep sync',1)
         ktype_string('sudo shutdown -h now',1)
-	
+    '''
     '''
     else:    
         ktype_string('ssh pi@192.168.12.' + str(ii),6)
