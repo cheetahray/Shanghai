@@ -68,7 +68,7 @@ grp = [
       [337,338,316,315,293,294,272,271,248,249,250,251,228,227,205,206,184,183,161,162,140,139],[120,121,122,145,144,143,142,141,164,165,166],
       [232,253,254,255,276],[344,322,321,343,342],[13,14,36,35,57,58],[39,60,61,62,83],[193,194,195,173,172,171,149,150,151,147,169,191,197,175],
       [20,21,43,42],[66,88,87,86,108,130,131,109,110,132,154],     
-      [370,363,369,375,368,361,367,373,372,366,360,359,365,371],[400,399,392,398,404,397,396,390,389,395,401,402]
+      [370,363,369,375,368,361,367,366,365,371],[400,399,392,398,404,397,396,390,389,395,401,402]
       ]
 
 grp2 = [
@@ -235,6 +235,7 @@ def shiftcheck(item, forfrom, forto):
             click("SE", smallii+arena)
         
 def each_frame(leftfrom, rightto):
+    roundclear = 0
     while True:
         for ii in range( leftfrom, rightto ):
             try:
@@ -292,8 +293,12 @@ def each_frame(leftfrom, rightto):
                     print ("Not this command")
             except socket.timeout, e:
                 pass #print e
-        for kk in range(0, len(IN)):
-            IN[kk] = False
+        if 6 == roundclear: 
+            roundclear = 0
+            for kk in range(0, len(IN)):
+                IN[kk] = False
+        else:
+            roundclear += 1
         
 port = socket.socket(socket.AF_INET, socket.SOCK_DGRAM)
 #port2 = socket.socket(socket.AF_INET, socket.SOCK_DGRAM)
