@@ -115,11 +115,11 @@ emd8216 = [
       [253,254,255,256,265,266,267,268,269,270,271,272,273,274,275,276],
       [277,278,287,288,289,290,291,292,293,294,295,296,297,298,299,300],
       [309,310,311,312,313,314,315,316,317,318,319,320,321,322,331,332],
-      [333,334,335,336,337,338,339,340,341,342,343,344],
+      [333,334,335,336,337,338,339,340,341,342,343,344,999,999,999,999],
       [353,354,355,356,357,358,359,360,361,362,363,364,365,366,367,368],
-      [369,370,371,372,373,374,375,376,377,378,379,380,381,382],
+      [369,370,371,372,373,374,375,376,377,378,379,380,381,382,999,999],
       [383,384,385,386,387,388,389,390,391,392,393,394,395,396,397,398],
-      [399,400,401,402,403,404,405,406,407,408,409,410,411,412]
+      [399,400,401,402,403,404,405,406,407,408,409,410,411,412,999,999]
       ]      
       
 #aa = [datetime.datetime.now()] * len(grp)
@@ -173,6 +173,7 @@ def click(msg, val):
     #print "%s" % (mymsg)
     oscmsg.setAddress("%s" % (mymsg) )
     oscmsg.append(val)
+    print oscmsg
     cc.send(oscmsg)
 
 def releasejump(item, forfrom, forto):
@@ -221,19 +222,18 @@ def shiftcheck(item, forfrom, forto):
                 print cc.seconds
         '''
     if smallii >= 0:
+        arena = 4
         cntlist[smallii]+=1
         print cntlist
         if len(grp2[smallii]) == cntlist[smallii]:
-            print "Middle Arena", smallii
-            click("/ME", smallii)
+            print "Middle Arena", smallii + arena
+            click("ME", smallii + arena)
             cntlist[smallii] = 0
             TT[smallii].cancel()
-        '''
         else:                
-            print "Small Arena", item
-            click("/SE", item)
-        '''
-
+            print "Small Arena", smallii+arena
+            click("SE", smallii+arena)
+        
 def each_frame(leftfrom, rightto):
     while True:
         for ii in range( leftfrom, rightto ):
@@ -244,7 +244,6 @@ def each_frame(leftfrom, rightto):
                 else:
                     port2.sendto( pack('15sb32b', 'EMD821612345678',mycmd,127,127,127,127,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0), thetuple[ii] )
                     rcv, addr = port2.recvfrom(64)
-                #print thetuple[ii]
                 if( ord( rcv[33] ) == mycmd ):
                     #print ("This Command")
                     if( ord( rcv[32] ) == 0x63 ):
@@ -257,22 +256,28 @@ def each_frame(leftfrom, rightto):
                         num = ord( rcv[4] )
                         for jj in range(0,8): #7,6,5,4,3,2,1,0
                             bit = num & 1
-                            if 1 == bit:
+                            if emd8216[ii][jj] == 999:
+                                pass
+                            elif 1 == bit:
+                                #print thetuple[ii]
                                 #print 'IO_0{0}'.format(jj)
                                 shiftcheck(emd8216[ii][jj],0,len(grp))
                                 #print "Small Arena", emd8216[ii][jj]
-                                click("/SE", emd8216[ii][jj])
+                                #click("SE", emd8216[ii][jj])
                             else:
                                 releasejump(emd8216[ii][jj],0,len(grp))
                             num >>= 1            
                         num = ord( rcv[5] ) 
                         for jj in range(8,16): #17,16,15,14,13,12,11,10
                             bit = num & 1
-                            if 1 == bit:
+                            if emd8216[ii][jj] == 999:
+                                pass
+                            elif 1 == bit:
+                                #print thetuple[ii]
                                 #print 'IO_1{0}'.format(jj)
                                 shiftcheck(emd8216[ii][jj],0,len(grp))
                                 #print "Small Arena", emd8216[ii][jj]
-                                click("/SE", emd8216[ii][jj])
+                                #click("SE", emd8216[ii][jj])
                             else:
                                 releasejump(emd8216[ii][jj],0,len(grp))
                             num >>= 1            
@@ -291,7 +296,7 @@ def each_frame(leftfrom, rightto):
             IN[kk] = False
         
 port = socket.socket(socket.AF_INET, socket.SOCK_DGRAM)
-port2 = socket.socket(socket.AF_INET, socket.SOCK_DGRAM)
+#port2 = socket.socket(socket.AF_INET, socket.SOCK_DGRAM)
 #EMD8308 IP Port
 thetuple = [
             ("192.168.0.1", 6936), ("192.168.0.2", 6936), ("192.168.0.3", 6936), ("192.168.0.4", 6936), ("192.168.0.5", 6936),
@@ -314,7 +319,7 @@ for ii in range(0,len(grp)):
 while False:
     shiftcheck(random.randint(1,412),0,len(grp))
 
-thread.start_new_thread(each_frame,(0,len(thetuple)/2))
+#thread.start_new_thread(each_frame,(0,len(thetuple)/2))
 
-each_frame(len(thetuple)/2,len(thetuple))
+each_frame(0,len(thetuple))
 
