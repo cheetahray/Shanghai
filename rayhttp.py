@@ -64,18 +64,24 @@ def swim_callback(path, tags, args, source):
         value = crm("GetYu", {"phone": args[0]})
         if value.get('Data') == args[0]:
             fishcnt -= 1
-            YuList.remove(args[0])
             print "unlock"
 
 def delallfish():
     global fishcnt
-    for ii in YuList:
-        value = crm("GetYu", {"phone": ii})
-        if value.get('Data') == ii:
-            print "unlock", ii
+    aa = crm("GAME_BAMEYU&CRM_bonus&ext=1", {}).get('Data')
+    for i, val in enumerate(aa):
+        value = crm("GetYu", {"phone": val.get('M_ID')})
+        if value.get('Data') == val.get('M_ID'):
+            print "unlock", val.get('M_ID')
         time.sleep(0.25)
-    del YuList[:]
     fishcnt = 0
+    bb = crm("GAME_MID&CRM_bonus&ext=1", {}).get('Data')
+    for i, val in enumerate(bb):
+        value = crm("GetGamesdes", {"phone": val.get('M_ID')})
+        if value.get('Data') == val.get('M_ID'):
+            print "UNLOCK", val.get('M_ID')
+        time.sleep(0.25)
+
 
 def delfish_callback(path, tags, args, source):
     print (path)
@@ -188,7 +194,6 @@ class GetHandler(BaseHTTPRequestHandler):
                         over("/swimplayer", str(god), random.randint(0,11), random.randint(0,2)) #phone number, role number, color num         
                         '''
                         #sock.sendto(message.get('m_id') + "!@#" + "N+Ray",("192.168.1.200",8765))
-                        YuList.append(message.get('m_id'))
                         self.wfile.write(json.dumps({"Result":"1"}, sort_keys=True, indent=4, separators=(',', ': ')))
                     else:
                         print value
@@ -221,7 +226,6 @@ StandbyMode = 1
 GameMode = 2
 ShowMode = 3
 NowMode = 1
-YuList = []
 
 if __name__ == '__main__':
     server = ThreadedHTTPServer(('0.0.0.0', 6161), GetHandler)
