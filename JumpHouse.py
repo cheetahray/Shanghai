@@ -29,32 +29,37 @@ class _TimerReset(Thread):
         self.kwargs = kwargs
         self.finished = Event()
         self.resetted = True
-
+        self.debug = False
     def cancel(self):
         """Stop the timer if it hasn't finished yet"""
         self.finished.set()
 
     def run(self):
-        print "Time: %s - timer running..." % time.asctime()
+        if self.debug:
+            print "Time: %s - timer running..." % time.asctime()
 
         while self.resetted:
-            print "Time: %s - timer waiting for timeout in %.2f..." % (time.asctime(), self.interval)
+            if self.debug:
+                print "Time: %s - timer waiting for timeout in %.2f..." % (time.asctime(), self.interval)
             self.resetted = False
             self.finished.wait(self.interval)
 
         if not self.finished.isSet():
             self.function(*self.args, **self.kwargs)
         self.finished.set()
-        print "Time: %s - timer finished!" % time.asctime()
+        if self.debug:
+            print "Time: %s - timer finished!" % time.asctime()
 
     def reset(self, interval=None):
         """ Reset the timer """
 
         if interval:
-            print "Time: %s - timer resetting to %.2f..." % (time.asctime(), interval)
+            if self.debug:
+                print "Time: %s - timer resetting to %.2f..." % (time.asctime(), interval)
             self.interval = interval
         else:
-            print "Time: %s - timer resetting..." % time.asctime()
+            if self.debug:
+                print "Time: %s - timer resetting..." % time.asctime()
 
         self.resetted = True
         self.finished.set()
@@ -180,8 +185,9 @@ def releasejump(item, forfrom, forto):
     for ii in range(forfrom, forto):
         index = binary_search(grp2[ii], item, ii)
         if index >= 0:
-            #if True == grpbool[ii][index]:
-            grpbool[ii][index] = False
+            if True == grpbool[ii][index]:
+                grpbool[ii][index] = False
+                print str(item) + " OFF"
 
 def shiftcheck(item, forfrom, forto):
     smallii = -1
@@ -198,7 +204,8 @@ def shiftcheck(item, forfrom, forto):
                 if False == IN[smallii]:
                     IN[smallii] = True
                     smallii = ii
-                
+                    print "\n"
+                    print str(item) + " ON"
             #aa[ii] = datetime.datetime.now()
             '''            
             try:
