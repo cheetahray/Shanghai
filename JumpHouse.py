@@ -242,7 +242,6 @@ def shiftcheck(item, forfrom, forto):
             click("SE", smallii+arena)
         
 def each_frame(leftfrom, rightto):
-    roundclear = 0
     while True:
         for ii in range( leftfrom, rightto ):
             try:
@@ -300,12 +299,12 @@ def each_frame(leftfrom, rightto):
                     print ("Not this command")
             except socket.timeout, e:
                 pass #print e
-        if 6 == roundclear: 
-            roundclear = 0
-            for kk in range(0, len(IN)):
-                IN[kk] = False
-        else:
-            roundclear += 1
+        for kk in range(0, len(grpbool)):
+            IN[kk] = False
+            for ll in range(0, len(grpbool[kk])):
+                if True == grpbool[kk][ll]:
+                    IN[kk] = True
+                    break
         
 port = socket.socket(socket.AF_INET, socket.SOCK_DGRAM)
 #port2 = socket.socket(socket.AF_INET, socket.SOCK_DGRAM)
