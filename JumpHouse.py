@@ -128,14 +128,14 @@ emd8216 = [
       ]      
       
 #aa = [datetime.datetime.now()] * len(grp)
-
+'''
 TT = [ 
       None,None,None,
       None,None,None,None,None,
       None,None,None,
       None,None,None
       ]
-
+'''
 IN = [ 
       False,False,False,
       False,False,False,False,False,
@@ -143,9 +143,13 @@ IN = [
       False,False,False
       ]
 
-def tensec(idx,idx2):
+def tensec(ii,index): #tensec(idx,idx2):
+    '''
     cntlist[idx] = 0
     IN[idx] = False
+    '''
+    if 1 == grpbool[ii][index]:
+        grpbool[ii][index] = 2
     
 def binary_search(a_list, item, idx):
     """Performs iterative binary search to find the position of an integer in a given, sorted, list.
@@ -185,8 +189,8 @@ def releasejump(item, forfrom, forto):
     for ii in range(forfrom, forto):
         index = binary_search(grp2[ii], item, ii)
         if index >= 0:
-            if True == grpbool[ii][index]:
-                grpbool[ii][index] = False
+            if 0 != grpbool[ii][index]:
+                grpbool[ii][index] = 0
                 print str(item) + " OFF"
 
 def shiftcheck(item, forfrom, forto):
@@ -194,18 +198,21 @@ def shiftcheck(item, forfrom, forto):
     for ii in range(forfrom, forto):
         index = binary_search(grp2[ii], item, ii)
         if index >= 0:
-            if False == grpbool[ii][index]:
+            if 0 == grpbool[ii][index]:
+                '''
                 if 0 == cntlist[ii]:
                     TT[ii] = TimerReset(10, tensec, (ii,ii))
                     TT[ii].start()
                 else:
                     TT[ii].reset()
-                grpbool[ii][index] = True
+                '''
+                TimerReset(0.1, tensec, (ii,index)).start()
+                grpbool[ii][index] = 1
+            elif 2 == grpbool[ii][index]:
                 if False == IN[smallii]:
                     IN[smallii] = True
                     smallii = ii
-                    print "\n"
-                    print str(item) + " ON"
+                    print "\n" + str(item) + " ON"
             #aa[ii] = datetime.datetime.now()
             '''            
             try:
@@ -236,7 +243,7 @@ def shiftcheck(item, forfrom, forto):
             print "Middle Arena", smallii + arena
             click("ME", smallii + arena)
             cntlist[smallii] = 0
-            TT[smallii].cancel()
+            #TT[smallii].cancel()
         else:                
             print "Small Arena", smallii+arena
             click("SE", smallii+arena)
@@ -302,7 +309,7 @@ def each_frame(leftfrom, rightto):
         for kk in range(0, len(grpbool)):
             IN[kk] = False
             for ll in range(0, len(grpbool[kk])):
-                if True == grpbool[kk][ll]:
+                if 2 == grpbool[kk][ll]:
                     IN[kk] = True
                     break
         
@@ -323,7 +330,7 @@ port.settimeout(0.01)
 for ii in range(0,len(grp)):
     for jj in range(0,len(grp[ii])):
         grp2[ii].append(grp[ii][jj])
-        grpbool[ii].append(False)
+        grpbool[ii].append(0)
     grp2[ii].sort()
 #print grp2
 #print grpbool
