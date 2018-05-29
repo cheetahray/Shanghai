@@ -69,12 +69,15 @@ cc = OSCClient()
 cc.connect(('127.0.0.1', 20000))   # localhost, port 57120
 
 grp = [
-      [114,113,112,111,133,155,156,157,158,180,202,201,179,178,200,177,199,221,243,244,245],[332,333,311,310,288,289],[93,94,95,116],
-      [337,338,316,315,293,294,272,271,248,249,250,251,228,227,205,206,184,183,161,162,140,139],[120,121,122,145,144,143,142,141,164,165,166],
-      [232,253,254,255,276],[344,322,321,343,342],[13,14,36,35,57,58],[39,60,61,62,83],[193,194,195,173,172,171,149,150,151,147,169,191,197,175],
+      [114,113,112,111,133,155,156,157,158,180,202,201,179,178,200,177,199,221,999,244,245],[332,333,999,310,288,289],[93,94,95,116],
+                                                                              #243                  #311 
+      [337,338,316,315,293,294,272,271,248,249,250,251,228,227,205,206,184,183,161,162,140,139],[120,121,999,145,144,143,142,141,164,999,166],
+                                                                                                        #122                        #165
+      [232,253,254,255,276],[999,322,321,343,342],[13,14,36,35,57,58],[39,60,61,62,83],[193,194,195,173,172,171,149,150,151,147,999,191,197,175],
+                            #344                                                                                               #169
       [20,21,43,42],[66,88,87,86,108,130,131,109,110,132,154],     
-      [370,363,369,375,368,361,367,366,365,371],[400,399,392,398,404,397,396,390,389,395,401,402]
-      ]
+      [370,363,369,375,368,361,367,366,365,371],[400,399,392,398,404,999,396,390,389,395,401,402]
+      ]                                                             #397
 
 grp2 = [
       [],[],[],
@@ -126,16 +129,16 @@ emd8216 = [
       [383,384,385,386,387,388,389,390,391,392,393,394,395,396,397,398],
       [399,400,401,402,403,404,405,406,407,408,409,410,411,412,999,999]
       ]      
-      
+
 #aa = [datetime.datetime.now()] * len(grp)
-'''
+
 TT = [ 
       None,None,None,
       None,None,None,None,None,
       None,None,None,
       None,None,None
       ]
-'''
+
 IN = [ 
       False,False,False,
       False,False,False,False,False,
@@ -143,14 +146,9 @@ IN = [
       False,False,False
       ]
 
-def tensec(ii,index): #tensec(idx,idx2):
-    '''
+def tensec(idx,idx2):
     cntlist[idx] = 0
     IN[idx] = False
-    '''
-    if 1 == grpbool[ii][index]:
-        grpbool[ii][index] = 2
-    print "timeout grpbool is " + str(grpbool[ii][index])
     
 def binary_search(a_list, item, idx):
     """Performs iterative binary search to find the position of an integer in a given, sorted, list.
@@ -190,8 +188,8 @@ def releasejump(item, forfrom, forto):
     for ii in range(forfrom, forto):
         index = binary_search(grp2[ii], item, ii)
         if index >= 0:
-            if 0 != grpbool[ii][index]:
-                grpbool[ii][index] = 0
+            if True == grpbool[ii][index]:
+                grpbool[ii][index] = False
                 print str(item) + " OFF"
 
 def shiftcheck(item, forfrom, forto):
@@ -199,23 +197,18 @@ def shiftcheck(item, forfrom, forto):
     for ii in range(forfrom, forto):
         index = binary_search(grp2[ii], item, ii)
         if index >= 0:
-            if 0 == grpbool[ii][index]:
-                '''
+            if False == grpbool[ii][index]:
                 if 0 == cntlist[ii]:
                     TT[ii] = TimerReset(10, tensec, (ii,ii))
                     TT[ii].start()
                 else:
                     TT[ii].reset()
-                '''
-                TimerReset(0.1, tensec, (ii,index)).start()
-                grpbool[ii][index] = 1
-                print "Timer starts"
-            elif 2 == grpbool[ii][index]:
+                grpbool[ii][index] = True
                 if False == IN[smallii]:
                     IN[smallii] = True
                     smallii = ii
-                    print "\n" + str(item) + " ON"
-                print "Is there any 2?"
+                    print "\n"
+                    print str(item) + " ON"
             #aa[ii] = datetime.datetime.now()
             '''            
             try:
@@ -246,7 +239,7 @@ def shiftcheck(item, forfrom, forto):
             print "Middle Arena", smallii + arena
             click("ME", smallii + arena)
             cntlist[smallii] = 0
-            #TT[smallii].cancel()
+            TT[smallii].cancel()
         else:                
             print "Small Arena", smallii+arena
             click("SE", smallii+arena)
@@ -261,6 +254,7 @@ def each_frame(leftfrom, rightto):
                 else:
                     port2.sendto( pack('15sb32b', 'EMD821612345678',mycmd,127,127,127,127,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0), thetuple[ii] )
                     rcv, addr = port2.recvfrom(64)
+                #print thetuple[ii]                
                 if( ord( rcv[33] ) == mycmd ):
                     #print ("This Command")
                     if( ord( rcv[32] ) == 0x63 ):
@@ -276,7 +270,6 @@ def each_frame(leftfrom, rightto):
                             if emd8216[ii][jj] == 999:
                                 pass
                             elif 1 == bit:
-                                #print thetuple[ii]
                                 #print 'IO_0{0}'.format(jj)
                                 shiftcheck(emd8216[ii][jj],0,len(grp))
                                 #print "Small Arena", emd8216[ii][jj]
@@ -290,7 +283,6 @@ def each_frame(leftfrom, rightto):
                             if emd8216[ii][jj] == 999:
                                 pass
                             elif 1 == bit:
-                                #print thetuple[ii]
                                 #print 'IO_1{0}'.format(jj)
                                 shiftcheck(emd8216[ii][jj],0,len(grp))
                                 #print "Small Arena", emd8216[ii][jj]
@@ -312,31 +304,33 @@ def each_frame(leftfrom, rightto):
         for kk in range(0, len(grpbool)):
             IN[kk] = False
             for ll in range(0, len(grpbool[kk])):
-                if 2 == grpbool[kk][ll]:
+                if True == grpbool[kk][ll]:
                     IN[kk] = True
                     break
         
 port = socket.socket(socket.AF_INET, socket.SOCK_DGRAM)
 #port2 = socket.socket(socket.AF_INET, socket.SOCK_DGRAM)
 #EMD8308 IP Port
+
 thetuple = [
             ("192.168.0.1", 6936), ("192.168.0.2", 6936), ("192.168.0.3", 6936), ("192.168.0.4", 6936), ("192.168.0.5", 6936),
             ("192.168.0.6", 6936), ("192.168.0.7", 6936), ("192.168.0.8", 6936), ("192.168.0.9", 6936), ("192.168.0.10",6936),
             ("192.168.0.11",6936), ("192.168.0.12",6936), ("192.168.0.13",6936), ("192.168.0.14",6936), ("192.168.0.15",6936),
             ("192.168.0.16",6936), ("192.168.0.17",6936), ("192.168.0.18",6936), ("192.168.0.19",6936), ("192.168.0.20",6936)
            ]
+
 #Listen port
 #port.bind(("0.0.0.0", 6936))
 mycmd = 0x3D
-port.settimeout(0.01)
+port.settimeout(0.025)
 #print grp
 for ii in range(0,len(grp)):
     for jj in range(0,len(grp[ii])):
         grp2[ii].append(grp[ii][jj])
-        grpbool[ii].append(0)
+        grpbool[ii].append(False)
     grp2[ii].sort()
 #print grp2
-print grpbool
+#print grpbool
 while False:
     shiftcheck(random.randint(1,412),0,len(grp))
 
