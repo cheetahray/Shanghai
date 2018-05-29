@@ -215,8 +215,8 @@ def shiftcheck(item, forfrom, forto):
                 else:
                     TT[ii].reset()
                 grpbool[ii][index] = True
-                if False == IN[smallii]:
-                    IN[smallii] = True
+                if False == IN[ii]:
+                    IN[ii] = True
                     smallii = ii
                     print "\n"
                     print str(item) + " ON"
