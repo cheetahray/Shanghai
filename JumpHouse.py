@@ -150,6 +150,7 @@ def tensec(ii,index): #tensec(idx,idx2):
     '''
     if 1 == grpbool[ii][index]:
         grpbool[ii][index] = 2
+    print "timeout grpbool is " + str(grpbool[ii][index])
     
 def binary_search(a_list, item, idx):
     """Performs iterative binary search to find the position of an integer in a given, sorted, list.
@@ -208,11 +209,13 @@ def shiftcheck(item, forfrom, forto):
                 '''
                 TimerReset(0.1, tensec, (ii,index)).start()
                 grpbool[ii][index] = 1
+                print "Timer starts"
             elif 2 == grpbool[ii][index]:
                 if False == IN[smallii]:
                     IN[smallii] = True
                     smallii = ii
                     print "\n" + str(item) + " ON"
+                print "Is there any 2?"
             #aa[ii] = datetime.datetime.now()
             '''            
             try:
@@ -333,7 +336,7 @@ for ii in range(0,len(grp)):
         grpbool[ii].append(0)
     grp2[ii].sort()
 #print grp2
-#print grpbool
+print grpbool
 while False:
     shiftcheck(random.randint(1,412),0,len(grp))
 
