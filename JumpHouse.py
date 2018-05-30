@@ -80,12 +80,12 @@ grp = [
       ]                                         #400                #397
 '''
 grp = [
-      [114,113,112,111,133,155,156,157,158,180,202,201,179,178,200,177,199,221,243,244,245],[332,333,311,310,288,289],[93,94,95,116],
+      [999,113,112,111,133,155,156,157,158,180,202,201,179,178,200,177,199,221,243,244,245],[332,333,311,310,288,289],[93,94,95,116],
       #114                                                                    #243                  #311 
-      [337,338,316,315,293,294,272,271,248,249,250,251,228,227,205,206,184,183,161,162,140,139],[120,121,122,145,144,143,142,141,164,165,166],
+      [337,338,316,315,293,294,272,271,248,249,250,251,228,227,205,206,184,183,161,162,140,139],[120,121,999,145,144,143,142,141,164,165,166],
                                                                                                         #122                        #165
-      [232,253,254,255,276],[344,322,321,343,342],[13,14,36,35,57,58],[39,60,61,62,83],[193,194,195,173,172,171,149,150,151,147,169,191,197,175],
-                            #344                                                                                               #169
+      [232,253,254,255,276],[999,999,321,343,342],[13,14,36,35,57,58],[39,60,61,62,83],[193,194,195,173,172,171,149,150,151,999,999,191,197,175],
+                            #344 322                                                                                       #147#169
       [20,21,43,42],[66,88,87,86,108,130,131,109,110,132,154],     
       [370,363,369,375,368,361,367,366,365,371],[400,399,392,398,404,397,396,390,389,395,401,402]
       ]                                         #400                #397
@@ -149,14 +149,14 @@ emd8216 = [
       ]      
 
 #aa = [datetime.datetime.now()] * len(grp)
-'''
+
 TT = [ 
       None,None,None,
       None,None,None,None,None,
       None,None,None,
       None,None,None
       ]
-'''
+
 IN = [ 
       False,False,False,
       False,False,False,False,False,
@@ -216,13 +216,11 @@ def shiftcheck(item, forfrom, forto):
         index = binary_search(grp2[ii], item, ii)
         if index >= 0:
             if False == grpbool[ii][index]:
-                '''
                 if 0 == cntlist[ii]:
                     TT[ii] = TimerReset(10, tensec, (ii,ii))
                     TT[ii].start()
                 else:
                     TT[ii].reset()
-                '''
                 grpbool[ii][index] = True
                 if False == IN[ii]:
                     IN[ii] = True
@@ -260,17 +258,18 @@ def shiftcheck(item, forfrom, forto):
             print "Middle Arena", smallii + arena
             click("ME", smallii + arena)
             cntlist[smallii] = 0
-            #TT[smallii].cancel()
-
+            TT[smallii].cancel()
+        else:
+            click("SE", smallii+arena)
+    
 def groupcheck():
-    arena = 4
     while True:
         for smallii in range(0,len(grp)):
             if grpbool[smallii] != lastgrpbool[smallii]:                
-                print grpbool[smallii]
-                print lastgrpbool[smallii]
-                click("SE", smallii+arena)
-                lastgrpbool[smallii] = grpbool[smallii]
+                #print grpbool[smallii]
+                #print lastgrpbool[smallii]
+                for ii in range(0, len(lastgrpbool[smallii])):
+                    lastgrpbool[smallii][ii] = grpbool[smallii][ii]
                 IN[smallii] = False
         time.sleep(0.1)
             
