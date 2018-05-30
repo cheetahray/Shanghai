@@ -80,14 +80,14 @@ grp = [
       ]                                         #400                #397
 '''
 grp = [
-      [114,113,112,111,133,155,156,157,158,180,202,201,179,178,200,177,199,221,999,244,245],[332,333,311,310,288,289],[93,94,95,116],
-                                                                              #243                  #311 
-      [337,338,316,315,293,294,272,271,248,249,250,251,228,227,205,206,184,183,161,162,140,139],[120,121,999,145,144,143,142,141,164,165,166],
+      [114,113,112,111,133,155,156,157,158,180,202,201,179,178,200,177,199,221,243,244,245],[332,333,311,310,288,289],[93,94,95,116],
+      #114                                                                    #243                  #311 
+      [337,338,316,315,293,294,272,271,248,249,250,251,228,227,205,206,184,183,161,162,140,139],[120,121,122,145,144,143,142,141,164,165,166],
                                                                                                         #122                        #165
       [232,253,254,255,276],[344,322,321,343,342],[13,14,36,35,57,58],[39,60,61,62,83],[193,194,195,173,172,171,149,150,151,147,169,191,197,175],
                             #344                                                                                               #169
       [20,21,43,42],[66,88,87,86,108,130,131,109,110,132,154],     
-      [370,363,369,375,368,361,367,366,365,371],[400,399,392,398,404,999,396,390,389,395,401,402]
+      [370,363,369,375,368,361,367,366,365,371],[400,399,392,398,404,397,396,390,389,395,401,402]
       ]                                         #400                #397
 
 grp2 = [
@@ -156,17 +156,17 @@ TT = [
       None,None,None,
       None,None,None
       ]
-
+'''
 IN = [ 
       False,False,False,
       False,False,False,False,False,
       False,False,False,
       False,False,False
       ]
-'''
+
 def tensec(idx,idx2):
     cntlist[idx] = 0
-    #IN[idx] = False
+    IN[idx] = False
     
 def binary_search(a_list, item, idx):
     """Performs iterative binary search to find the position of an integer in a given, sorted, list.
@@ -209,7 +209,7 @@ def releasejump(item, forfrom, forto):
             if True == grpbool[ii][index]:
                 grpbool[ii][index] = False
                 print str(item) + " OFF"
-
+                
 def shiftcheck(item, forfrom, forto):
     smallii = -1
     for ii in range(forfrom, forto):
@@ -224,14 +224,12 @@ def shiftcheck(item, forfrom, forto):
                     TT[ii].reset()
                 '''
                 grpbool[ii][index] = True
-                '''
                 if False == IN[ii]:
                     IN[ii] = True
                     smallii = ii
                     print "\n"
                     print str(item) + " ON"
-                '''
-                smallii = ii
+                
             #aa[ii] = datetime.datetime.now()
             '''            
             try:
@@ -258,15 +256,24 @@ def shiftcheck(item, forfrom, forto):
         arena = 4
         cntlist[smallii]+=1
         print cntlist
-        if (len(grp2[smallii]) >> 1) == cntlist[smallii]:
+        if (len(grp2[smallii]) ) == cntlist[smallii]:
             print "Middle Arena", smallii + arena
             click("ME", smallii + arena)
             cntlist[smallii] = 0
             #TT[smallii].cancel()
-        elif grpbool[smallii] != lastgrpbool[smallii]:                
-            print "Small Arena", smallii+arena
-            click("SE", smallii+arena)
-            lastgrpbool[smallii] = grpbool[smallii]
+
+def groupcheck():
+    arena = 4
+    while True:
+        for smallii in range(0,len(grp)):
+            if grpbool[smallii] != lastgrpbool[smallii]:                
+                print grpbool[smallii]
+                print lastgrpbool[smallii]
+                click("SE", smallii+arena)
+                lastgrpbool[smallii] = grpbool[smallii]
+                IN[smallii] = False
+        time.sleep(0.1)
+            
 def each_frame(leftfrom, rightto):
     while True:
         for ii in range( leftfrom, rightto ):
@@ -353,12 +360,15 @@ for ii in range(0,len(grp)):
     for jj in range(0,len(grp[ii])):
         grp2[ii].append(grp[ii][jj])
         grpbool[ii].append(False)
+        lastgrpbool[ii].append(False)
     grp2[ii].sort()
 #print grp2
-#print grpbool
+
 while False:
     shiftcheck(random.randint(1,412),0,len(grp))
 
+thread.start_new_thread(groupcheck,())
+    
 thread.start_new_thread(each_frame,(0,len(thetuple) >> 1))
 
 each_frame(len(thetuple) >> 1,len(thetuple))
