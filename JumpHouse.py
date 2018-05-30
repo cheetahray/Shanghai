@@ -97,6 +97,13 @@ grp2 = [
       [],[],[]
       ]
 
+lastgrpbool = [
+      [],[],[],
+      [],[],[],[],[],
+      [],[],[],
+      [],[],[]
+      ]
+      
 grpbool = [
       [],[],[],
       [],[],[],[],[],
@@ -142,7 +149,7 @@ emd8216 = [
       ]      
 
 #aa = [datetime.datetime.now()] * len(grp)
-
+'''
 TT = [ 
       None,None,None,
       None,None,None,None,None,
@@ -156,10 +163,10 @@ IN = [
       False,False,False,
       False,False,False
       ]
-
+'''
 def tensec(idx,idx2):
     cntlist[idx] = 0
-    IN[idx] = False
+    #IN[idx] = False
     
 def binary_search(a_list, item, idx):
     """Performs iterative binary search to find the position of an integer in a given, sorted, list.
@@ -209,17 +216,22 @@ def shiftcheck(item, forfrom, forto):
         index = binary_search(grp2[ii], item, ii)
         if index >= 0:
             if False == grpbool[ii][index]:
+                '''
                 if 0 == cntlist[ii]:
                     TT[ii] = TimerReset(10, tensec, (ii,ii))
                     TT[ii].start()
                 else:
                     TT[ii].reset()
+                '''
                 grpbool[ii][index] = True
+                '''
                 if False == IN[ii]:
                     IN[ii] = True
                     smallii = ii
                     print "\n"
                     print str(item) + " ON"
+                '''
+                smallii = ii
             #aa[ii] = datetime.datetime.now()
             '''            
             try:
@@ -250,11 +262,11 @@ def shiftcheck(item, forfrom, forto):
             print "Middle Arena", smallii + arena
             click("ME", smallii + arena)
             cntlist[smallii] = 0
-            TT[smallii].cancel()
-        else:                
+            #TT[smallii].cancel()
+        elif grpbool[smallii] != lastgrpbool[smallii]:                
             print "Small Arena", smallii+arena
             click("SE", smallii+arena)
-        
+            lastgrpbool[smallii] = grpbool[smallii]
 def each_frame(leftfrom, rightto):
     while True:
         for ii in range( leftfrom, rightto ):
@@ -312,13 +324,14 @@ def each_frame(leftfrom, rightto):
                     print ("Not this command")
             except socket.timeout, e:
                 pass #print e
+        '''
         for kk in range(0, len(grpbool)):
             IN[kk] = False
             for ll in range(0, len(grpbool[kk])):
                 if True == grpbool[kk][ll]:
                     IN[kk] = True
                     break
-        
+        '''
 port = socket.socket(socket.AF_INET, socket.SOCK_DGRAM)
 port2 = socket.socket(socket.AF_INET, socket.SOCK_DGRAM)
 #EMD8308 IP Port
