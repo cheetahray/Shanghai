@@ -103,10 +103,12 @@ def scene_callback(path, tags, args, source):
 def doexcel(message, mykey, loginret):
     global sheetrow
     if message.has_key(mykey):
+        mynum = mykey[-1:]
+        mykey = "user" + mynum + "_id"
         SHEETROWs[mykey] = sheetrow
         excel.write(sheetrow, 0, message.get(mykey))
         sheetrow += 1
-        loginret[mykey] = 7-int(mykey[-1:])
+        loginret[mykey] = 7-int(mynum)
     return loginret
 
 def doupdate(message, mykey):
@@ -251,17 +253,19 @@ class GetHandler(BaseHTTPRequestHandler):
             doexcel(message,'user_id6',loginret)
             if 0 == len(loginret):
                 loginret['login'] = 'false'
+            else:
+                excel.save()
             self.wfile.write(json.dumps(loginret, sort_keys=True, indent=4, separators=(',', ': ')))
-            excel.save()
+            
         elif self.path[1:] == "update":
             updateret = {}
             updateret['update_score'] = message.get('comp_id')
-            doupdate(message, 'user_id1')
-            doupdate(message, 'user_id2')
-            doupdate(message, 'user_id3')
-            doupdate(message, 'user_id4')
-            doupdate(message, 'user_id5')
-            doupdate(message, 'user_id6')
+            doupdate(message, 'user1_id')
+            doupdate(message, 'user2_id')
+            doupdate(message, 'user3_id')
+            doupdate(message, 'user4_id')
+            doupdate(message, 'user5_id')
+            doupdate(message, 'user6_id')
             excel.save()
             self.wfile.write(json.dumps(updateret, sort_keys=True, indent=4, separators=(',', ': ')))
         #data = json.loads(post_body)
