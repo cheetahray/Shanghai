@@ -104,9 +104,9 @@ def doexcel(message, mykey, loginret):
     global sheetrow
     if message.has_key(mykey):
         mynum = mykey[-1:]
+        excel.write(sheetrow, 0, message.get(mykey))
         mykey = "user" + mynum + "_id"
         SHEETROWs[mykey] = sheetrow
-        excel.write(sheetrow, 0, message.get(mykey))
         sheetrow += 1
         loginret[mykey] = 7-int(mynum)
     return loginret
