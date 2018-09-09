@@ -16,6 +16,22 @@ from expy.excel import Excel
 # that before calling handle_request() field .timed_out is 
 # set to False
 
+def to252(msg,arg0):
+    global cc
+    oscmsg = OSCMessage()
+    oscmsg.setAddress(msg)
+    oscmsg.append(arg0)
+    print oscmsg
+    cc.send(oscmsg)
+
+def to253(msg,arg0):
+    global dd
+    oscmsg = OSCMessage()
+    oscmsg.setAddress(msg)
+    oscmsg.append(arg0)
+    print oscmsg
+    dd.send(oscmsg)
+
 def over(msg,arg0,arg1,arg2):
     global cc
     oscmsg = OSCMessage()
@@ -243,7 +259,10 @@ class GetHandler(BaseHTTPRequestHandler):
         #print message
         self.send_response(200)
         self.end_headers()
-        if self.path[1:] == "login":
+        if self.path[1:] == "nEW" or self.path[1:] == "oLD":
+            to252(self.path[1:])
+            to253(self.path[1:])
+        elif self.path[1:] == "login":
             loginret = {}
             doexcel(message,'user_id1',loginret)
             doexcel(message,'user_id2',loginret)
@@ -276,14 +295,16 @@ class GetHandler(BaseHTTPRequestHandler):
 fishcnt = 0
 sock = socket.socket(socket.AF_INET, socket.SOCK_DGRAM) # UDP
 cc = OSCClient()
-cc.connect(('192.168.1.200', 6666))   # localhost, port 57120
+cc.connect(('192.168.0.252', 8899))   # localhost, port 57120
+dd = OSCClient()
+dd.connect(('192.168.0.253', 8899))   # localhost, port 57120
 StandbyMode = 1
 GameMode = 2
 ShowMode = 3
 NowMode = 1
 
 SHEETROWs = {}
-excel = Excel( "data.xls", "sheet1", False)
+excel = Excel( "C:\Users\Radar III\Desktop\Shanghai\data.xls", "sheet1", False)
 sheet = excel.read()
 sheetrow = sheet.nrows
 
