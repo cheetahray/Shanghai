@@ -12,23 +12,24 @@ import urllib
 import thread
 from SocketServer import ThreadingMixIn
 from expy.excel import Excel
+import datetime
 # this method of reporting timeouts only works by convention
 # that before calling handle_request() field .timed_out is 
 # set to False
 
-def to252(msg,arg0):
+def to252(msg):
     global cc
     oscmsg = OSCMessage()
     oscmsg.setAddress(msg)
-    oscmsg.append(arg0)
+    #oscmsg.append(arg0)
     print oscmsg
     cc.send(oscmsg)
 
-def to253(msg,arg0):
+def to253(msg):
     global dd
     oscmsg = OSCMessage()
     oscmsg.setAddress(msg)
-    oscmsg.append(arg0)
+    #oscmsg.append(arg0)
     print oscmsg
     dd.send(oscmsg)
 
@@ -104,18 +105,6 @@ def delfish_callback(path, tags, args, source):
     print (path)
     delallfish()
 
-def scene_callback(path, tags, args, source):
-    global NowMode, fishcnt
-    # don't do this at home (or it'll quit blender)
-    #global run
-    #run = False
-    #add old data then restore back
-    print (path, args[0], args[1]) #Mode auto/hand
-    NowMode = args[0]
-    fishcnt = 0
-    #now = datetime.datetime.now()
-    #print now.year, now.month, now.day, now.hour, now.minute, now.second
-
 def doexcel(message, mykey, loginret):
     global sheetrow
     if message.has_key(mykey):
@@ -146,7 +135,6 @@ class GetHandler(BaseHTTPRequestHandler):
         BaseHTTPRequestHandler.end_headers(self)
         
     def do_GET(self):
-        global fishcnt
         '''
         parsed_path = urlparse.urlparse(self.path)
         message = '\n'.join([
@@ -166,7 +154,6 @@ class GetHandler(BaseHTTPRequestHandler):
             '',
             ])
         '''
-        message = dict(urlparse.parse_qsl(urlparse.urlsplit(self.path).query))
         self.send_response(200)
         self.end_headers()
         '''
@@ -180,68 +167,9 @@ class GetHandler(BaseHTTPRequestHandler):
                 print "OnGame 0"
                 self.wfile.write(json.dumps({"OnGame":"0"}, sort_keys=True, indent=4, separators=(',', ': ')))
         '''
-        if message.has_key('m_id'): # Got to change to http request
-            
-            '''
-            value = crm("PlayGames", {"phone": message.get('m_id')})
-            if value.get('Data') == "B":
-                print "Not be a member yet."   #如果此會員還沒註冊，回傳 /error 0or1or2...
-                self.wfile.write(json.dumps({"Result":"0", "errmsg":"不是会员，抱歉"}, sort_keys=True, indent=4, separators=(',', ': ')))
-            '''
-            if message.has_key('put') and message.get('put') == 'no':
-                value = crm("CheckYu", {"phone": message.get('m_id')})
-                #print value.get('Data')
-                if value.get('Data') == "C":
-                    print "OnScreen 1"
-                    self.wfile.write(json.dumps({"OnScreen":"1"}, sort_keys=True, indent=4, separators=(',', ': ')))
-                else:
-                    print "OnScreen 0"
-                    self.wfile.write(json.dumps({"OnScreen":"0"}, sort_keys=True, indent=4, separators=(',', ': ')))
-            else:
-                boolMode = False
-                print "Now is ", fishcnt
-        
-                now = datetime.datetime.now()
-                if False: #now.minute % 30 == 28 :
-                    print "Close to halftime show"
-                    self.wfile.write(json.dumps({"Result": "0", "errmsg":"要整点秀了"}, sort_keys=True, indent=4, separators=(',', ': ')))
-                        
-                elif NowMode == GameMode and fishcnt < 6:
-                    boolMode = True
-                elif NowMode == StandbyMode and fishcnt < 12:
-                    boolMode = True
-                
-                if(False == boolMode):
-                    print "Result 0"
-                    self.wfile.write(json.dumps({"Result": "0", "errmsg":"鱼池满了"}, sort_keys=True, indent=4, separators=(',', ': ')))
-                else:
-                
-                    value = crm("SetYu", {"phone": message.get('m_id')})
-                    if value.get('Data') == "C":
-                        print "Just in your game."
-                        self.wfile.write(json.dumps({"Result":"0", "errmsg":"您还在大屏上"}, sort_keys=True, indent=4, separators=(',', ': ')))
-                    elif isinstance(value.get('Data'), dict):
-                        print value
-                        cpan = value.get('Data').get('C_PAN')
-                        #print cpan[-1:]
-                        over("/swimplayer", message.get('m_id'), int(value.get('Data').get('C_ID')), int(cpan[-1:])) #phone number, role number, color num         
-                        sock.sendto(message.get('m_id') + "!@#" + value.get('Data').get('C_NAME').encode('utf8'),("192.168.1.200",8765))
-                        '''
-                        god = random.randint(10000000000,99999999999)
-                        over("/swimplayer", str(god), random.randint(0,11), random.randint(0,2)) #phone number, role number, color num         
-                        '''
-                        #sock.sendto(message.get('m_id') + "!@#" + "N+Ray",("192.168.1.200",8765))
-                        self.wfile.write(json.dumps({"Result":"1"}, sort_keys=True, indent=4, separators=(',', ': ')))
-                    else:
-                        print value
-            '''
-            else: #elif value.get('Data')[0] == "A":
-                #XF_VIPCODE = value.get('Data')[value.get('Data').index(":")+1:]
-                print "Not opened card yet."     
-                self.wfile.write(json.dumps({"Result":"0", "errmsg":"尚未开卡，抱歉"}, sort_keys=True, indent=4, separators=(',', ': ')))  
-            '''
-        else:
-            self.wfile.write(json.dumps({"Result":"0", "errmsg":"没手机号"}, sort_keys=True, indent=4, separators=(',', ': ')))
+        if self.path[1:] == "nEW" or self.path[1:] == "oLD":
+            to252("/"+self.path[1:])
+            to253("/"+self.path[1:])
         return
 
     def do_POST(self):
@@ -259,10 +187,7 @@ class GetHandler(BaseHTTPRequestHandler):
         #print message
         self.send_response(200)
         self.end_headers()
-        if self.path[1:] == "nEW" or self.path[1:] == "oLD":
-            to252(self.path[1:])
-            to253(self.path[1:])
-        elif self.path[1:] == "login":
+        if self.path[1:] == "login":
             loginret = {}
             doexcel(message,'user_id1',loginret)
             doexcel(message,'user_id2',loginret)
@@ -298,10 +223,8 @@ cc = OSCClient()
 cc.connect(('192.168.0.252', 8899))   # localhost, port 57120
 dd = OSCClient()
 dd.connect(('192.168.0.253', 8899))   # localhost, port 57120
-StandbyMode = 1
-GameMode = 2
-ShowMode = 3
-NowMode = 1
+
+NowMode = 0
 
 SHEETROWs = {}
 excel = Excel( "C:\Users\Radar III\Desktop\Shanghai\data.xls", "sheet1", False)
@@ -318,9 +241,19 @@ if __name__ == '__main__':
     # funny python's way to add a method to an instance of a class
     server2.handle_timeout = types.MethodType(handle_timeout2, server2)
     server2.addMsgHandler( "/swim", swim_callback )
-    server2.addMsgHandler( "/Scene", scene_callback )
     server2.addMsgHandler( "/delfish", delfish_callback )
     #thread.start_new_thread(each_frame2,())
     while True:
+        NOW = datetime.datetime.now()
+        if NOW.hour >= 8 and NOW.hour <= 21:
+            if NOW.second == 30:
+                if NOW.minute == 28:
+                    to252("/oLD")
+                    to253("/oLD")
+                    time.sleep(1)
+                elif NOW.minute == 58:
+                    to252("/nEW")
+                    to253("/nEW")
+                    time.sleep(1)                    
         each_frame()
         each_frame2()
