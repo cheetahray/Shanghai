@@ -10,7 +10,7 @@ import random
 import requests
 import urllib
 import thread
-from SocketServer import ThreadingMixIn
+#from SocketServer import ThreadingMixIn
 # this method of reporting timeouts only works by convention
 # that before calling handle_request() field .timed_out is 
 # set to False
@@ -219,7 +219,7 @@ class GetHandler(BaseHTTPRequestHandler):
         return
 
 fishcnt = 0
-sock = socket.socket(socket.AF_INET, socket.SOCK_DGRAM) # UDP
+#sock = socket.socket(socket.AF_INET, socket.SOCK_DGRAM) # UDP
 cc = OSCClient()
 cc.connect(('192.168.1.200', 6666))   # localhost, port 57120
 StandbyMode = 1
