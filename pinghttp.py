@@ -10,12 +10,20 @@ import random
 import requests
 import urllib
 import thread
-from SocketServer import ThreadingMixIn
+#from SocketServer import ThreadingMixIn
 from expy.excel import Excel
 import datetime
 # this method of reporting timeouts only works by convention
 # that before calling handle_request() field .timed_out is 
 # set to False
+
+def quitmax():
+    global bb
+    oscmsg = OSCMessage()
+    oscmsg.setAddress("/quit")
+    oscmsg.append(1)
+    print oscmsg
+    bb.send(oscmsg)
 
 def to252(msg):
     global cc
@@ -218,7 +226,9 @@ class GetHandler(BaseHTTPRequestHandler):
         return
 
 fishcnt = 0
-sock = socket.socket(socket.AF_INET, socket.SOCK_DGRAM) # UDP
+#sock = socket.socket(socket.AF_INET, socket.SOCK_DGRAM) # UDP
+bb = OSCClient()
+bb.connect(('192.168.0.252', 6666))   # localhost, port 57120
 cc = OSCClient()
 cc.connect(('192.168.0.252', 8899))   # localhost, port 57120
 dd = OSCClient()
@@ -227,17 +237,17 @@ dd.connect(('192.168.0.253', 8899))   # localhost, port 57120
 NowMode = 0
 
 SHEETROWs = {}
-excel = Excel( "C:\Users\Radar III\Desktop\Shanghai\data.xls", "sheet1", False)
+excel = Excel( "C:\Users\NoiseKitchen_\Documents\Shanghai\data.xls", "sheet1", False)
 sheet = excel.read()
 sheetrow = sheet.nrows
 
 if __name__ == '__main__':
     server = ThreadedHTTPServer(('0.0.0.0', 8899), GetHandler)
-    server.timeout = 0.001
+    server.timeout = 0.01
     print 'Starting server at http://localhost:8899'
     server.handle_timeout = types.MethodType(handle_timeout, server)
     server2 = OSCServer( ("0.0.0.0", 7111) )
-    server2.timeout = 0.001
+    server2.timeout = 0.01
     # funny python's way to add a method to an instance of a class
     server2.handle_timeout = types.MethodType(handle_timeout2, server2)
     server2.addMsgHandler( "/swim", swim_callback )
@@ -245,13 +255,10 @@ if __name__ == '__main__':
     #thread.start_new_thread(each_frame2,())
     while True:
         NOW = datetime.datetime.now()
-        if NOW.hour >= 8 and NOW.hour <= 21:
-            if NOW.second == 30:
-                if NOW.minute == 28:
-                    to252("/oLD")
-                    to253("/oLD")
-                    time.sleep(1)
-                elif NOW.minute == 58:
+        if NOW.hour == 9:
+            if NOW.second == 0:
+                if NOW.minute == 15:
+                    quitmax()
                     to252("/nEW")
                     to253("/nEW")
                     time.sleep(1)                    
