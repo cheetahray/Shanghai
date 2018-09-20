@@ -254,13 +254,5 @@ if __name__ == '__main__':
     server2.addMsgHandler( "/delfish", delfish_callback )
     #thread.start_new_thread(each_frame2,())
     while True:
-        NOW = datetime.datetime.now()
-        if NOW.hour == 9:
-            if NOW.second == 0:
-                if NOW.minute == 15:
-                    quitmax()
-                    to252("/nEW")
-                    to253("/nEW")
-                    time.sleep(1)                    
         each_frame()
         each_frame2()
