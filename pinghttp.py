@@ -17,11 +17,38 @@ import datetime
 # that before calling handle_request() field .timed_out is 
 # set to False
 
-def quitmax():
+def to243(radar, upordown):
+    global ee
+    oscmsg = OSCMessage()
+    oscmsg.setAddress("/cell")
+    oscmsg.append(radar)
+    oscmsg.append(upordown)
+    print oscmsg
+    ee.send(oscmsg)
+    
+def to245(myauto):
+    global ff
+    oscmsg = OSCMessage()
+    oscmsg.setAddress("/cell")
+    oscmsg.append(radar)
+    oscmsg.append(upordown)
+    print oscmsg
+    ff.send(oscmsg)
+    
+def to247(myauto):
+    global gg
+    oscmsg = OSCMessage()
+    oscmsg.setAddress("/cell")
+    oscmsg.append(radar)
+    oscmsg.append(upordown)
+    print oscmsg
+    gg.send(oscmsg)
+
+def quitmax(myquit):
     global bb
     oscmsg = OSCMessage()
     oscmsg.setAddress("/quit")
-    oscmsg.append(1)
+    oscmsg.append(myquit)
     print oscmsg
     bb.send(oscmsg)
 
@@ -92,6 +119,12 @@ def swim_callback(path, tags, args, source):
             fishcnt -= 1
             print "unlock"
 
+def mode_callback(path, tags, args, source):
+    # don't do this at home (or it'll quit blender)
+    mode[args[0]] = args[1]
+    #print args[0], args[1], path
+    click(args[0], args[1], path)
+            
 def delallfish():
     global fishcnt
     aa = crm("GAME_BAMEYU&CRM_bonus&ext=1", {}).get('Data')
@@ -113,15 +146,37 @@ def delfish_callback(path, tags, args, source):
     print (path)
     delallfish()
 
+def findradar():
+    if mode[5] == 0:
+        to245(5, 1)    #0 Adult, 1 Child
+        return 5
+    if mode[6] == 0:
+        to245(6, 1)
+        return 6
+    if mode[7] == 0:
+        to247(7, 1)
+        return 7
+    if mode[8] == 0:
+        to247(8, 1)
+        return 8
+    if mode[3] == 0:
+        to243(3, 1)
+        return 3
+    if mode[4] == 0:
+        to243(4, 1)
+        return 4
+            
 def doexcel(message, mykey, loginret):
     global sheetrow
     if message.has_key(mykey):
         mynum = mykey[-1:]
         excel.write(sheetrow, 0, message.get(mykey))
+        idforradar = findradar()
+        idvsradar[mykey] = idforradar 
         mykey = "user" + mynum + "_id"
         SHEETROWs[mykey] = sheetrow
         sheetrow += 1
-        loginret[mykey] = 7-int(mynum)
+        loginret[mykey] = idforradar
     return loginret
 
 def doupdate(message, mykey):
@@ -175,7 +230,12 @@ class GetHandler(BaseHTTPRequestHandler):
                 print "OnGame 0"
                 self.wfile.write(json.dumps({"OnGame":"0"}, sort_keys=True, indent=4, separators=(',', ': ')))
         '''
-        if self.path[1:] == "nEW" or self.path[1:] == "oLD":
+        if self.path[1:] == "nEW":
+            quitmax(1)
+            to252("/"+self.path[1:])
+            to253("/"+self.path[1:])
+        elif self.path[1:] == "oLD":
+            quitmax(2)
             to252("/"+self.path[1:])
             to253("/"+self.path[1:])
         return
@@ -233,13 +293,21 @@ cc = OSCClient()
 cc.connect(('192.168.0.252', 8899))   # localhost, port 57120
 dd = OSCClient()
 dd.connect(('192.168.0.253', 8899))   # localhost, port 57120
+ee = OSCClient()
+ee.connect(('192.168.0.243', 12001))   # localhost, port 57120
+ff = OSCClient()
+ff.connect(('192.168.0.245', 12001))   # localhost, port 57120
+gg = OSCClient()
+gg.connect(('192.168.0.247', 12001))   # localhost, port 57120
 
 NowMode = 0
-
+idvsradar = {}
 SHEETROWs = {}
 excel = Excel( "C:\Users\NoiseKitchen_\Documents\Shanghai\data.xls", "sheet1", False)
 sheet = excel.read()
 sheetrow = sheet.nrows
+
+mode = [-1,-1,-1,-1,-1,-1,-1,-1,-1,-1]
 
 if __name__ == '__main__':
     server = ThreadedHTTPServer(('0.0.0.0', 8899), GetHandler)
@@ -252,6 +320,7 @@ if __name__ == '__main__':
     server2.handle_timeout = types.MethodType(handle_timeout2, server2)
     server2.addMsgHandler( "/swim", swim_callback )
     server2.addMsgHandler( "/delfish", delfish_callback )
+    server2.addMsgHandler( "/mode", mode_callback )
     #thread.start_new_thread(each_frame2,())
     while True:
         each_frame()
