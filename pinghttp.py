@@ -124,7 +124,17 @@ def mode_callback(path, tags, args, source):
     mode[args[0]] = args[1]
     #print args[0], args[1], path
     click(args[0], args[1], path)
-            
+
+def update_callback(path, tags, args, source):
+    # don't do this at home (or it'll quit blender)
+    prepareupdate[idvsradar[args[0]]] = args[1]
+    #print prepareupdate
+
+def winner_callback(path, tags, args, source):
+    print crm("port", prepareupdate)
+    preparupdate.clear()
+    idvsradar.clear()
+    
 def delallfish():
     global fishcnt
     aa = crm("GAME_BAMEYU&CRM_bonus&ext=1", {}).get('Data')
@@ -172,7 +182,7 @@ def doexcel(message, mykey, loginret):
         mynum = mykey[-1:]
         excel.write(sheetrow, 0, message.get(mykey))
         idforradar = findradar()
-        idvsradar[mykey] = idforradar 
+        idvsradar[idforradar] = mykey
         mykey = "user" + mynum + "_id"
         SHEETROWs[mykey] = sheetrow
         sheetrow += 1
@@ -299,7 +309,7 @@ ff = OSCClient()
 ff.connect(('192.168.0.245', 12001))   # localhost, port 57120
 gg = OSCClient()
 gg.connect(('192.168.0.247', 12001))   # localhost, port 57120
-
+preparupdate = {}
 NowMode = 0
 idvsradar = {}
 SHEETROWs = {}
@@ -321,6 +331,8 @@ if __name__ == '__main__':
     server2.addMsgHandler( "/swim", swim_callback )
     server2.addMsgHandler( "/delfish", delfish_callback )
     server2.addMsgHandler( "/mode", mode_callback )
+    server2.addMsgHandler( "/update", update_callback )
+    server2.addMsgHandler( "/winner", winner_callback )
     #thread.start_new_thread(each_frame2,())
     while True:
         each_frame()
