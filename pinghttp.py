@@ -12,7 +12,7 @@ import urllib
 import thread
 #from SocketServer import ThreadingMixIn
 from expy.excel import Excel
-import datetime
+
 # this method of reporting timeouts only works by convention
 # that before calling handle_request() field .timed_out is 
 # set to False
@@ -51,6 +51,24 @@ def quitmax(myquit):
     oscmsg.append(myquit)
     print oscmsg
     bb.send(oscmsg)
+
+def open252(comp_id, arg1, arg2, arg3, arg4, arg5, arg6):
+    global hh
+    oscmsg = OSCMessage()
+    oscmsg.setAddress("/comp_id")
+    oscmsg.append(arg1)
+    if arg2 > 0:
+        oscmsg.append(arg2)
+    if arg3 > 0:
+        oscmsg.append(arg3)
+    if arg4 > 0:
+        oscmsg.append(arg4)
+    if arg5 > 0:
+        oscmsg.append(arg5)
+    if arg6 > 0:
+        oscmsg.append(arg6)
+    print oscmsg
+    hh.send(oscmsg)
 
 def to252(msg):
     global cc
@@ -123,17 +141,22 @@ def mode_callback(path, tags, args, source):
     # don't do this at home (or it'll quit blender)
     mode[args[0]] = args[1]
     #print args[0], args[1], path
-    click(args[0], args[1], path)
-
+    
 def update_callback(path, tags, args, source):
     # don't do this at home (or it'll quit blender)
-    prepareupdate[idvsradar[args[0]]] = args[1]
+    prepareupdate = {}
+    winner = ""
+    score = 0
+    for ii in range(0, len(args), 2):
+        prepareupdate[idvsradar[args[ii]]] = args[ii+1]
+        if args[ii+1] > score:
+            score = args[ii+1]
+            winner = idvsradar[args[ii]]
+    prepareupdate['comp_id'] = gamenum[args[0]]
+    prepareupdate['play_time'] = str(datetime.datetime.now())
+    prepareupdate['winner'] = winner
     #print prepareupdate
-
-def winner_callback(path, tags, args, source):
     print crm("port", prepareupdate)
-    preparupdate.clear()
-    idvsradar.clear()
     
 def delallfish():
     global fishcnt
@@ -158,22 +181,22 @@ def delfish_callback(path, tags, args, source):
 
 def findradar():
     if mode[5] == 0:
-        to245(5, 1)    #0 Adult, 1 Child
+        #to245(5, 1)    #0 Adult, 1 Child
         return 5
     if mode[6] == 0:
-        to245(6, 1)
+        #to245(6, 1)
         return 6
     if mode[7] == 0:
-        to247(7, 1)
+        #to247(7, 1)
         return 7
     if mode[8] == 0:
-        to247(8, 1)
+        #to247(8, 1)
         return 8
     if mode[3] == 0:
-        to243(3, 1)
+        #to243(3, 1)
         return 3
     if mode[4] == 0:
-        to243(4, 1)
+        #to243(4, 1)
         return 4
             
 def doexcel(message, mykey, loginret):
@@ -181,12 +204,13 @@ def doexcel(message, mykey, loginret):
     if message.has_key(mykey):
         mynum = mykey[-1:]
         excel.write(sheetrow, 0, message.get(mykey))
-        idforradar = findradar()
-        idvsradar[idforradar] = mykey
         mykey = "user" + mynum + "_id"
         SHEETROWs[mykey] = sheetrow
         sheetrow += 1
+        idforradar = findradar()
+        idvsradar[idforradar] = mykey
         loginret[mykey] = idforradar
+        gamenum[idforradar] = message.get("comp_id")
     return loginret
 
 def doupdate(message, mykey):
@@ -276,6 +300,25 @@ class GetHandler(BaseHTTPRequestHandler):
             if 0 == len(loginret):
                 loginret['login'] = 'false'
             else:
+                arg1 = 0
+                arg2 = 0
+                arg3 = 0
+                arg4 = 0
+                arg5 = 0
+                arg6 = 0
+                if loginret.has_key['user1_id']:
+                    arg1 = loginret['user1_id']
+                if loginret.has_key['user2_id']:
+                    arg2 = loginret['user2_id']
+                if loginret.has_key['user3_id']:
+                    arg3 = loginret['user3_id']
+                if loginret.has_key['user4_id']:
+                    arg4 = loginret['user4_id']
+                if loginret.has_key['user5_id']:
+                    arg5 = loginret['user5_id']
+                if loginret.has_key['user6_id']:
+                    arg6 = loginret['user6_id']
+                open252(loginret['comp_id'], arg1, arg2, arg3, arg4, arg5, arg6)
                 excel.save()
             self.wfile.write(json.dumps(loginret, sort_keys=True, indent=4, separators=(',', ': ')))
             
@@ -296,9 +339,7 @@ class GetHandler(BaseHTTPRequestHandler):
         return
 
 fishcnt = 0
-#sock = socket.socket(socket.AF_INET, socket.SOCK_DGRAM) # UDP
-bb = OSCClient()
-bb.connect(('192.168.0.252', 6666))   # localhost, port 57120
+sock = socket.socket(socket.AF_INET, socket.SOCK_DGRAM) # UDP
 cc = OSCClient()
 cc.connect(('192.168.0.252', 8899))   # localhost, port 57120
 dd = OSCClient()
@@ -309,6 +350,8 @@ ff = OSCClient()
 ff.connect(('192.168.0.245', 12001))   # localhost, port 57120
 gg = OSCClient()
 gg.connect(('192.168.0.247', 12001))   # localhost, port 57120
+hh = OSCClient()
+hh.connect(('192.168.0.252', 12002))   # localhost, port 57120
 preparupdate = {}
 NowMode = 0
 idvsradar = {}
@@ -316,7 +359,7 @@ SHEETROWs = {}
 excel = Excel( "C:\Users\NoiseKitchen_\Documents\Shanghai\data.xls", "sheet1", False)
 sheet = excel.read()
 sheetrow = sheet.nrows
-
+gamenum = {}
 mode = [-1,-1,-1,-1,-1,-1,-1,-1,-1,-1]
 
 if __name__ == '__main__':
@@ -332,7 +375,6 @@ if __name__ == '__main__':
     server2.addMsgHandler( "/delfish", delfish_callback )
     server2.addMsgHandler( "/mode", mode_callback )
     server2.addMsgHandler( "/update", update_callback )
-    server2.addMsgHandler( "/winner", winner_callback )
     #thread.start_new_thread(each_frame2,())
     while True:
         each_frame()
