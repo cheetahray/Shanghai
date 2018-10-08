@@ -219,7 +219,7 @@ class GetHandler(BaseHTTPRequestHandler):
         return
 
 fishcnt = 0
-#sock = socket.socket(socket.AF_INET, socket.SOCK_DGRAM) # UDP
+sock = socket.socket(socket.AF_INET, socket.SOCK_DGRAM) # UDP
 cc = OSCClient()
 cc.connect(('192.168.1.200', 6666))   # localhost, port 57120
 StandbyMode = 1
