@@ -229,8 +229,8 @@ def doexcel(message, mykey, loginret):
         SHEETROWs[mykey] = sheetrow #標明上一次到第幾列為止
         sheetrow += 1 
         idforradar = findradar() #check 雷達柱要 mode 0, 回傳雷達 ID 3~8, 應該要有 error handling, 我甚麼都沒寫
-        idvsradar[idforradar] = mykey #暫時mapping 雷達 ID with 玩家雷達柱子
-        loginret[mykey] = idforradar #mapping 玩家雷達柱子 with 雷達 ID, 用意是回傳玩家分配到哪一個柱子
+        idvsradar[idforradar] = mykey #暫時mapping 雷達 ID with 玩家user_id
+        loginret[mykey] = idforradar #mapping 玩家user_id with 雷達 ID, 用意是回傳玩家分配到哪一個柱子
         gamenum[idforradar] = message.get("comp_id") #暫時mapping 雷達ID with 開局流水號
     return loginret
 
