@@ -226,7 +226,7 @@ def doexcel(message, mykey, loginret):
         mynum = mykey[-1:] #只是很無聊地把 user_id1 變成 user1_id
         excel.write(sheetrow, 0, message.get(mykey)) #把手機號放到 excel 的第一行
         mykey = "user" + mynum + "_id"
-        SHEETROWs[mykey] = sheetrow #標明上一次到第幾列為止
+        SHEETROWs[mykey] = sheetrow #暫時 mapping user_id 是 excel 第幾列
         sheetrow += 1 
         idforradar = findradar() #check 雷達柱要 mode 0, 回傳雷達 ID 3~8, 應該要有 error handling, 我甚麼都沒寫
         idvsradar[idforradar] = mykey #暫時mapping 雷達 ID with 玩家user_id
