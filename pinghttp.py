@@ -52,21 +52,28 @@ def quitmax(myquit):
     print oscmsg
     bb.send(oscmsg)
 
-def open252(comp_id, arg1, arg2, arg3, arg4, arg5, arg6):
+def open252(arg1, arg2, arg3, arg4, arg5, arg6):
     global hh
     oscmsg = OSCMessage()
     oscmsg.setAddress("/comp_id")
+    if arg1 > 0:
+        oscmsg.append(gamenum[arg1])
+    elif arg2 > 0:
+        oscmsg.append(gamenum[arg2])
+    elif arg3 > 0:
+        oscmsg.append(gamenum[arg3])
+    elif arg4 > 0:
+        oscmsg.append(gamenum[arg4])
+    elif arg5 > 0:
+        oscmsg.append(gamenum[arg5])
+    elif arg6 > 0:
+        oscmsg.append(gamenum[arg6])
     oscmsg.append(arg1)
-    if arg2 > 0:
-        oscmsg.append(arg2)
-    if arg3 > 0:
-        oscmsg.append(arg3)
-    if arg4 > 0:
-        oscmsg.append(arg4)
-    if arg5 > 0:
-        oscmsg.append(arg5)
-    if arg6 > 0:
-        oscmsg.append(arg6)
+    oscmsg.append(arg2)
+    oscmsg.append(arg3)
+    oscmsg.append(arg4)
+    oscmsg.append(arg5)
+    oscmsg.append(arg6)
     print oscmsg
     hh.send(oscmsg)
 
@@ -95,6 +102,12 @@ def over(msg,arg0,arg1,arg2):
     oscmsg.append(arg2)
     print oscmsg
     cc.send(oscmsg)
+
+def finalupdate(myDict):
+    url = 'http://yyy.yyy.yyy.yyy:7878/update' #https://yyy.yyy.yyy.yyy:7878/更新程式
+    headers = {'Content-Type': 'application/x-www-form-urlencoded'}     
+    res = requests.post(url, data= 'data=' + urllib.quote(json.dumps(myDict)), headers=headers)
+    return json.loads(res.text)#.get('Data')
 
 def crm(url2, myDict):
     url = 'http://183.131.3.182:9002/query.ashx?method=' #'http://47.97.194.91:8686/query.ashx?method='
@@ -147,16 +160,16 @@ def update_callback(path, tags, args, source):
     prepareupdate = {}
     winner = ""
     score = 0
-    for ii in range(0, len(args), 2):
-        prepareupdate[idvsradar[args[ii]]] = args[ii+1]
+    for ii in range(0, len(args), 2):  #比誰最高分
+        prepareupdate[idvsradar[args[ii]]] = args[ii+1] #把 osc 傳來的每個人的分數打包進去
         if args[ii+1] > score:
             score = args[ii+1]
-            winner = idvsradar[args[ii]]
-    prepareupdate['comp_id'] = gamenum[args[0]]
-    prepareupdate['play_time'] = str(datetime.datetime.now())
-    prepareupdate['winner'] = winner
-    #print prepareupdate
-    print crm("port", prepareupdate)
+            winner = idvsradar[args[ii]] 
+    prepareupdate['comp_id'] = gamenum[args[0]] #遊戲流水號
+    prepareupdate['play_time'] = str(datetime.datetime.now()) #抓時間
+    prepareupdate['winner'] = winner #誰最贏
+    print prepareupdate
+    print finalupdate(prepareupdate) #準備發出 http request, 檢查 reponse 內容是否格式如此 "update_score":201809010001 
     
 def delallfish():
     global fishcnt
@@ -182,35 +195,43 @@ def delfish_callback(path, tags, args, source):
 def findradar():
     if mode[5] == 0:
         #to245(5, 1)    #0 Adult, 1 Child
+        mode[5] = 1
         return 5
     if mode[6] == 0:
         #to245(6, 1)
+        mode[6] = 1
         return 6
     if mode[7] == 0:
         #to247(7, 1)
+        mode[7] = 1
         return 7
     if mode[8] == 0:
         #to247(8, 1)
+        mode[8] = 1
         return 8
     if mode[3] == 0:
         #to243(3, 1)
+        mode[3] = 1
         return 3
     if mode[4] == 0:
         #to243(4, 1)
+        mode[4] = 1
         return 4
+    else:
+	    print "No radar available"
             
 def doexcel(message, mykey, loginret):
     global sheetrow
     if message.has_key(mykey):
-        mynum = mykey[-1:]
-        excel.write(sheetrow, 0, message.get(mykey))
+        mynum = mykey[-1:] #只是很無聊地把 user_id1 變成 user1_id
+        excel.write(sheetrow, 0, message.get(mykey)) #把手機號放到 excel 的第一行
         mykey = "user" + mynum + "_id"
-        SHEETROWs[mykey] = sheetrow
-        sheetrow += 1
-        idforradar = findradar()
-        idvsradar[idforradar] = mykey
-        loginret[mykey] = idforradar
-        gamenum[idforradar] = message.get("comp_id")
+        SHEETROWs[mykey] = sheetrow #標明上一次到第幾列為止
+        sheetrow += 1 
+        idforradar = findradar() #check 雷達柱要 mode 0, 回傳雷達 ID 3~8, 應該要有 error handling, 我甚麼都沒寫
+        idvsradar[idforradar] = mykey #暫時mapping 雷達 ID with 玩家雷達柱子
+        loginret[mykey] = idforradar #mapping 玩家雷達柱子 with 雷達 ID, 用意是回傳玩家分配到哪一個柱子
+        gamenum[idforradar] = message.get("comp_id") #暫時mapping 雷達ID with 開局流水號
     return loginret
 
 def doupdate(message, mykey):
@@ -274,7 +295,7 @@ class GetHandler(BaseHTTPRequestHandler):
             to253("/"+self.path[1:])
         return
 
-    def do_POST(self):
+    def do_POST(self): #手機端進入點
         global sheetrow
         id1way = 0
         id2way = 0
@@ -285,19 +306,19 @@ class GetHandler(BaseHTTPRequestHandler):
         content_len = int(self.headers.getheader('content-length'))
         post_body = self.rfile.read(content_len)
         #print post_body
-        message = dict(urlparse.parse_qsl(post_body))
+        message = dict(urlparse.parse_qsl(post_body)) #解析 login 的 json 
         #print message
         self.send_response(200)
         self.end_headers()
-        if self.path[1:] == "login":
-            loginret = {}
+        if self.path[1:] == "login": # /not login.php 
+            loginret = {}     
             doexcel(message,'user_id1',loginret)
             doexcel(message,'user_id2',loginret)
             doexcel(message,'user_id3',loginret)
             doexcel(message,'user_id4',loginret)
             doexcel(message,'user_id5',loginret)
             doexcel(message,'user_id6',loginret)
-            if 0 == len(loginret):
+            if 0 == len(loginret): #如果是0 甚麼都沒分到 錯誤
                 loginret['login'] = 'false'
             else:
                 arg1 = 0
@@ -306,23 +327,24 @@ class GetHandler(BaseHTTPRequestHandler):
                 arg4 = 0
                 arg5 = 0
                 arg6 = 0
-                if loginret.has_key['user1_id']:
+                print loginret
+                if loginret.has_key('user1_id'):
                     arg1 = loginret['user1_id']
-                if loginret.has_key['user2_id']:
+                if loginret.has_key('user2_id'):
                     arg2 = loginret['user2_id']
-                if loginret.has_key['user3_id']:
+                if loginret.has_key('user3_id'):
                     arg3 = loginret['user3_id']
-                if loginret.has_key['user4_id']:
+                if loginret.has_key('user4_id'):
                     arg4 = loginret['user4_id']
-                if loginret.has_key['user5_id']:
+                if loginret.has_key('user5_id'):
                     arg5 = loginret['user5_id']
-                if loginret.has_key['user6_id']:
+                if loginret.has_key('user6_id'):
                     arg6 = loginret['user6_id']
-                open252(loginret['comp_id'], arg1, arg2, arg3, arg4, arg5, arg6)
+                open252(arg1, arg2, arg3, arg4, arg5, arg6) # 傳遊戲流水號 1st雷達柱子號 2nd雷達柱子號 3rd雷達柱子號 4th雷達柱子號 5th雷達柱子號 6th雷達柱子號
                 excel.save()
             self.wfile.write(json.dumps(loginret, sort_keys=True, indent=4, separators=(',', ': ')))
             
-        elif self.path[1:] == "update":
+        elif self.path[1:] == "update": #也是垃圾 沒有用到
             updateret = {}
             updateret['update_score'] = message.get('comp_id')
             doupdate(message, 'user1_id')
@@ -360,7 +382,7 @@ excel = Excel( "C:\Users\NoiseKitchen_\Documents\Shanghai\data.xls", "sheet1", F
 sheet = excel.read()
 sheetrow = sheet.nrows
 gamenum = {}
-mode = [-1,-1,-1,-1,-1,-1,-1,-1,-1,-1]
+mode = [0,0,0,0,0,0,0,0,0,0]
 
 if __name__ == '__main__':
     server = ThreadedHTTPServer(('0.0.0.0', 8899), GetHandler)
