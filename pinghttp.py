@@ -362,6 +362,8 @@ class GetHandler(BaseHTTPRequestHandler):
 
 fishcnt = 0
 sock = socket.socket(socket.AF_INET, socket.SOCK_DGRAM) # UDP
+bb = OSCClient()
+bb.connect(('192.168.0.252', 6666))   # localhost, port 57120
 cc = OSCClient()
 cc.connect(('192.168.0.252', 8899))   # localhost, port 57120
 dd = OSCClient()
