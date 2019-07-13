@@ -544,7 +544,7 @@ def average_video(filepath, outpath, start=None, end=None, sample_every=1):
     global sb65
     global sb66
     """Calculate average of video frames"""
-
+    s1 = socket.socket(socket.AF_INET, socket.SOCK_DGRAM)
     # Load video
     vid = VideoFileClip(outpath + filepath, audio=False).resize(width=66)
     width = vid.w
@@ -582,7 +582,7 @@ def average_video(filepath, outpath, start=None, end=None, sample_every=1):
 
         #n_frames += 1
         #prev_f = f
-        
+        s1tuple = ("192.168.12.255", 6454)
         #print len(f[0])
         for x in range(1,len(f[0])+1):
             for y in range(0,len(f)):
@@ -590,6 +590,10 @@ def average_video(filepath, outpath, start=None, end=None, sample_every=1):
                     r = f[y][x-1][0]
                     g = f[y][x-1][1]
                     b = f[y][x-1][2]
+                    sb1 += pack('BBBBB', r, g, b, x, y)
+                    s1.sendto(sb1, s1tuple)
+                    sb1 = "artnet"
+                    '''
                     if x == 1:
                         sb1 += pack('BBBB', r, g, b, y)
                     elif x == 2:
@@ -722,7 +726,7 @@ def average_video(filepath, outpath, start=None, end=None, sample_every=1):
                         sb65 += pack('BBBB', r, g, b, y)
                     elif x == 66:
                         sb66 += pack('BBBB', r, g, b, y)
-                                
+                    '''            
         time.sleep(1.0/float(sample_every))
     time.sleep(5)
     # average out the values for each frame
@@ -809,7 +813,7 @@ sb63="artnet"
 sb64="artnet"
 sb65="artnet"
 sb66="artnet"
-
+'''
 i = 1
 thread.start_new_thread(Threadfun1, ("192.168.12." + str(i), "192.168.12." + str(i+1), "192.168.12." + str(i+2), 
                                      "192.168.12." + str(i+3), "192.168.12." + str(i+4), "192.168.12." + str(i+5)
@@ -854,7 +858,7 @@ i = 61
 thread.start_new_thread(Threadfun11, ("192.168.12." + str(i), "192.168.12." + str(i+1), "192.168.12." + str(i+2), 
                                      "192.168.12." + str(i+3), "192.168.12." + str(i+4), "192.168.12." + str(i+5)
                                          ) )
-
+'''
 parser = ArgumentParser(description="Creates image with averaged pixels"
                                         "for a given movie clip")
 parser.add_argument("-i", default="video_effect_for_light.mov", type=str,

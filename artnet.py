@@ -341,18 +341,19 @@ try:
                             #    y += 1
                 elif data[0:6] == "artnet" and len(data) > 6:
                     #mylist = data[6:].split(" ")
-                    for ii in range(6, len(data), 4):
+                    for ii in range(6, len(data), 5):
                         r = ord(data[ii])
                         g = ord(data[ii+1])
                         b = ord(data[ii+2])
-                        y = ord(data[ii+3])
+                        x = ord(data[ii+3])
+                        y = ord(data[ii+4])
                         if threeight == 0 and 0 == y and False == QQ:
                             p31.ChangeDutyCycle(int(r/2.55))
                             p33.ChangeDutyCycle(int(g/2.55))
                             p35.ChangeDutyCycle(int(b/2.55))
-                        else:
-                            anim.drawone(0, y, r, g, b)
-                            anim.drawone(1, y, r, g, b)        
+                        else if x == whoami:
+                            anim.drawone(x-whoami, y, r, g, b)
+                            anim.drawone(x-whoami+1, y, r, g, b)        
             '''
             elif False == islightout:
                 if data[0:4] == "RGBW":
