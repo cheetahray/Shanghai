@@ -351,9 +351,10 @@ try:
                             p31.ChangeDutyCycle(int(r/2.55))
                             p33.ChangeDutyCycle(int(g/2.55))
                             p35.ChangeDutyCycle(int(b/2.55))
-                        else if x == whoami:
+                        elif x == whoami:
                             anim.drawone(x-whoami, y, r, g, b)
-                            anim.drawone(x-whoami+1, y, r, g, b)        
+                            anim.drawone(x-whoami+1, y, r, g, b)
+                        print (str(x) + ":" + str(y))							
             '''
             elif False == islightout:
                 if data[0:4] == "RGBW":

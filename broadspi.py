@@ -583,7 +583,7 @@ def average_video(filepath, outpath, start=None, end=None, sample_every=1):
 
         #n_frames += 1
         #prev_f = f
-        s1tuple = ("192.168.11.255", 6454)
+        s1tuple = ("192.168.12.255", 6454)
         #print len(f[0])
         for x in range(1,len(f[0])+1):
             for y in range(0,len(f)):
