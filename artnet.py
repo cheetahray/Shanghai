@@ -347,14 +347,15 @@ try:
                         b = ord(data[ii+2])
                         x = ord(data[ii+3])
                         y = ord(data[ii+4])
-                        if threeight == 0 and 0 == y and False == QQ:
-                            p31.ChangeDutyCycle(int(r/2.55))
-                            p33.ChangeDutyCycle(int(g/2.55))
-                            p35.ChangeDutyCycle(int(b/2.55))
-                        elif x == whoami:
-                            anim.drawone(x-whoami, y, r, g, b)
-                            anim.drawone(x-whoami+1, y, r, g, b)
-                        print (str(x) + ":" + str(y))							
+                        if x == whoami:
+                            if threeight == 0 and 0 == y and False == QQ:
+                                p31.ChangeDutyCycle(int(r/2.55))
+                                p33.ChangeDutyCycle(int(g/2.55))
+                                p35.ChangeDutyCycle(int(b/2.55))
+                            else:
+                                anim.drawone(x-whoami, y, r, g, b)
+                                anim.drawone(x-whoami+1, y, r, g, b)
+                            #print (str(x) + ":" + str(y))							
             '''
             elif False == islightout:
                 if data[0:4] == "RGBW":
