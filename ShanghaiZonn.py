@@ -300,7 +300,7 @@ def play_midi(midd):
     lastplay = isplay
     print "begin"
     for message in midd.play():  #Next note from midi in this moment
-        print message
+        #print message
         if  lastplay != isplay:
             print "break"
             break #print(message)
