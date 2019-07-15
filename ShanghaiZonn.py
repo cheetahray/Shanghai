@@ -492,15 +492,15 @@ def play_foot():
 
 def upup():
     print('I am upuping')
-    if True: #for i in range(1,67):
+    for i in range(1,67):
         if 1 == ST[i]:
-            port.sendto(pack('BBB', 224, 60, 1), ("192.168.12.255", 5005))
+            port.sendto(pack('BBB', 224, 60, 1), ("192.168.12." + str(i), 5005))
         elif 1 == AT[i]:
-            port.sendto(pack('BBB', 224, 48, 1), ("192.168.12.255", 5005))
+            port.sendto(pack('BBB', 224, 48, 1), ("192.168.12." + str(i), 5005))
         elif 1 == TT[i]:
-            port.sendto(pack('BBB', 224, 38, 1), ("192.168.12.255", 5005))
+            port.sendto(pack('BBB', 224, 38, 1), ("192.168.12." + str(i), 5005))
         elif 1 == BT[i]:
-            port.sendto(pack('BBB', 224, 28, 1), ("192.168.12.255", 5005))
+            port.sendto(pack('BBB', 224, 28, 1), ("192.168.12." + str(i), 5005))
 
 def lightinout(lightin):
     global nowisin
