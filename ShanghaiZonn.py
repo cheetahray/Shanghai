@@ -483,12 +483,12 @@ def play_foot():
     time.sleep(1)
     upup()
     time.sleep(3.5);
-    '''
-    for i in range(1,67):
-        port.sendto(pack('BB', 249, 2), ("192.168.12." + str(i), 5005))
-        time.sleep(0.01)
-    run = False   
-    '''
+    
+    #for i in range(1,67):
+    port.sendto(pack('BB', 249, 2), ("192.168.12.255", 5005))
+    #    time.sleep(0.01)
+    #run = False   
+    
 
 def upup():
     print('I am upuping')
