@@ -522,8 +522,8 @@ def WaveWave(mytype):
     #if openrgbw == False:
     #    if openwave == False:
     nomatterwhat()
-    for i in range(1,67):
-        if(mytype == 4):
+    if(mytype == 4):
+        for i in range(1,67):
             threading.Timer(0.1*i, port4.sendto, [pack('4sBB',"wave",100,10), ("%s%d" % ("192.168.12.", i), 6454) ]).start()
     if(mytype == 1):
         port4.sendto( pack('4sBB',"wave",100,10), ("%s%d" % ("192.168.12.", 255), 6454) )
